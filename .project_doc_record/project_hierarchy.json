@@ -1,0 +1,157 @@
+{
+  "agent_factory/utils.py": [
+    {
+      "type": "FunctionDef",
+      "name": "read_prompt_template",
+      "md_content": [
+        "**read_prompt_template**: The function of read_prompt_template is to read the contents of a specified file and return it as a string.\n\n**parameters**: The parameters of this Function.\n· file_path: A string representing the path to the file that contains the prompt template to be read.\n\n**Code Description**: The read_prompt_template function is designed to open a file located at the path specified by the file_path parameter. It uses a context manager (the 'with' statement) to ensure that the file is properly opened and closed after its contents are read. Inside the context manager, the file is opened in read mode ('r'), and the entire content of the file is read using the read() method. The contents are then stored in the variable prompt, which is subsequently returned as the output of the function. This function is useful for loading prompt templates or any text data stored in a file format.\n\n**Note**: It is important to ensure that the file specified by file_path exists and is accessible; otherwise, a FileNotFoundError will be raised. Additionally, the function assumes that the file contains text data and is encoded in a format compatible with the default encoding used by Python (usually UTF-8).\n\n**Output Example**: If the file located at the specified file_path contains the text \"Hello, this is a prompt template.\", the function will return the string \"Hello, this is a prompt template.\""
+      ],
+      "code_start_line": 5,
+      "code_end_line": 8,
+      "params": [
+        "file_path"
+      ],
+      "have_return": true,
+      "code_content": "def read_prompt_template(file_path):\n  with open(file_path, 'r') as file:\n    prompt = file.read()\n  return prompt\n",
+      "name_column": 4,
+      "item_status": "doc_up_to_date",
+      "who_reference_me": [],
+      "reference_who": [],
+      "special_reference_type": []
+    },
+    {
+      "type": "FunctionDef",
+      "name": "call_llm",
+      "md_content": [
+        "**call_llm**: The function of call_llm is to interact with a language model API to generate a response based on provided prompts.\n\n**parameters**: The parameters of this Function.\n· model: A string representing the name of the language model to be used for generating responses.\n· sys_prompt: A string containing the system-level prompt that sets the context for the model.\n· usr_prompt: A string that represents the user-level prompt, which is the specific query or input from the user.\n· config: A dictionary containing configuration settings such as API key, base URL, timeout, maximum retries, temperature, and maximum tokens for the model.\n\n**Code Description**: The call_llm function is designed to facilitate communication with a language model, specifically through the OpenAI API. It begins by initializing an OpenAI client using the provided model name and configuration settings. The configuration includes essential parameters such as the API key, base URL, timeout, and maximum retries, which are retrieved from the config dictionary.\n\nNext, the function constructs a list of messages that includes both the system prompt and the user prompt. This structured format is necessary for the chat completion request to the API. The function then calls the chat completion method of the OpenAI client, passing in the model name, the constructed messages, and additional parameters like temperature and maximum tokens.\n\nUpon receiving the response from the API, the function extracts the content of the first message choice from the response object and returns it. This content represents the model's generated reply based on the provided prompts.\n\nThe call_llm function is invoked within the breakdown_task method of the Manager class in the agent_factory/manager.py file. In this context, it is used to break down a larger task into smaller sub-tasks by rendering a prompt and sending it to the language model for processing. The response from call_llm is then returned as the output of the breakdown_task method, indicating its role in task decomposition and interaction with the language model.\n\n**Note**: When using this function, ensure that the configuration dictionary is properly populated with all necessary keys and values to avoid runtime errors. Additionally, be mindful of the API usage limits and the potential costs associated with calling the OpenAI API.\n\n**Output Example**: A possible return value from the call_llm function could be a string such as \"To break down the task, consider the following steps: 1. Analyze the requirements, 2. Identify key components, 3. Create sub-tasks for each component.\""
+      ],
+      "code_start_line": 11,
+      "code_end_line": 34,
+      "params": [
+        "model",
+        "sys_prompt",
+        "usr_prompt",
+        "config"
+      ],
+      "have_return": true,
+      "code_content": "def call_llm(model, sys_prompt, usr_prompt, config):\n\n    client = OpenAI(\n        api_key=config.get(\"models\").get(model).get(\"api_key\"),\n        base_url=config.get(\"models\").get(model).get(\"base_url\"),\n        timeout=config.get(\"timeout\"),\n        max_retries=config.get(\"max_retries\"),\n    )\n\n    messages = [\n        {\"role\": \"system\", \"content\": sys_prompt},\n        {\"role\": \"user\", \"content\": usr_prompt},\n    ]\n\n    response = client.chat.completions.create(\n        model=model,\n        messages=messages,\n        temperature=config.get(\"temperature\"),\n        max_tokens=config.get(\"models\").get(model).get(\"max_tokens\"),\n    )\n\n    response_message = response.choices[0].message\n\n    return response_message.content",
+      "name_column": 4,
+      "item_status": "doc_up_to_date",
+      "who_reference_me": [
+        "agent_factory/manager.py",
+        "agent_factory/manager.py/Manager/breakdown_task"
+      ],
+      "reference_who": [],
+      "special_reference_type": []
+    }
+  ],
+  "agent_factory/manager.py": [
+    {
+      "type": "ClassDef",
+      "name": "Manager",
+      "md_content": [
+        "**Manager**: The function of Manager is to manage tasks by receiving an original task and breaking it down into sub-tasks for further processing.\n\n**attributes**: The attributes of this Class.\n· original_task: A string that holds the original task received by the manager.  \n· sub_tasks: A list that stores the sub-tasks generated from the original task.  \n· config: A configuration object that is read from a configuration file.  \n· model: A string that specifies the default model to be used, defaulting to \"gpt-4o-mini\".  \n· env: An instance of the Environment class used for loading templates from the file system.  \n· sys_prompt: A string that holds the system prompt, initialized as an empty string.  \n· breakdown_prompt: A template loaded from a file named 'manager_break_down.txt' used for breaking down tasks.  \n· reflection_prompt: A placeholder for a reflection prompt, initialized as None.  \n· repeat_turns: An integer that defines the number of times to repeat the task breakdown, defaulting to 10.\n\n**Code Description**: The Manager class is designed to facilitate the management of tasks by allowing the user to input an original task and subsequently breaking it down into smaller, manageable sub-tasks. Upon initialization, the class sets up several attributes, including the original task, a list for sub-tasks, and configuration settings read from an external source. The class utilizes a templating engine to render prompts that guide the task breakdown process. \n\nThe `__init__` method initializes the Manager instance, setting up the necessary attributes and loading the configuration settings. The `receive_task` method allows the user to input an original task, which is stored in the `original_task` attribute. The `breakdown_task` method is responsible for taking the original task and rendering a prompt using the `breakdown_prompt` template. This rendered prompt is then passed to a function called `call_llm`, which presumably interacts with a language model to generate a response based on the task breakdown.\n\n**Note**: It is important to ensure that the configuration file is correctly set up and that the necessary template files are available in the specified prompt folder path. The `call_llm` function must also be properly defined elsewhere in the codebase to handle the interaction with the language model.\n\n**Output Example**: An example output from the `breakdown_task` method might look like this:\n```\n{\n    \"sub_tasks\": [\n        \"Research the topic\",\n        \"Draft an outline\",\n        \"Write the introduction\",\n        \"Gather references\"\n    ],\n    \"status\": \"success\",\n    \"message\": \"Task has been successfully broken down.\"\n}\n```"
+      ],
+      "code_start_line": 13,
+      "code_end_line": 41,
+      "params": [],
+      "have_return": true,
+      "code_content": "class Manager:\n    def __init__(self):\n        self.original_task = ''\n        self.sub_tasks = []\n        self.config = read_config()\n        self.model = self.config.get('default_model',\"gpt-4o-mini\")\n        self.env = Environment(loader=FileSystemLoader(self.config.get('prompt_folder_path')))\n        self.sys_prompt = ''\n        self.breakdown_prompt = self.env.get_template('manager_break_down.txt')\n        self.reflection_prompt = None\n        self.repeat_turns = 10\n\n\n    def receive_task(self, task):\n        \"\"\"\n        接收原始任务。\n        \"\"\"\n        self.original_task = task\n\n    def breakdown_task(self):\n        \"\"\"\n        将任务拆解成子任务。\n        \"\"\"\n        data = {\n            'task': self.original_task\n        }\n        rendered_prompt = self.breakdown_prompt.render(**data)\n        response_message = call_llm(model=self.model,sys_prompt=self.sys_prompt,usr_prompt=rendered_prompt,config=self.config)\n        return response_message\n",
+      "name_column": 6,
+      "item_status": "doc_up_to_date",
+      "who_reference_me": [],
+      "reference_who": [],
+      "special_reference_type": []
+    },
+    {
+      "type": "FunctionDef",
+      "name": "__init__",
+      "md_content": [
+        "**__init__**: The function of __init__ is to initialize a new instance of the Manager class, setting up its attributes with default values and loading configuration settings.\n\n**parameters**: The parameters of this Function.\n· There are no parameters for this __init__ method.\n\n**Code Description**: The __init__ method is a constructor for the Manager class, which is responsible for initializing the instance attributes when a new Manager object is created. Upon instantiation, the method performs the following actions:\n\n1. It initializes the `original_task` attribute as an empty string. This attribute is likely intended to hold the main task that the Manager will handle.\n2. The `sub_tasks` attribute is initialized as an empty list, which may be used to store any sub-tasks related to the original task.\n3. The `config` attribute is populated by calling the `read_config` function, which reads a configuration file and returns its contents as a dictionary. This function is defined in the agent_factory/config.py file and is crucial for loading the necessary settings for the Manager's operation.\n4. The `model` attribute is set by retrieving the value associated with the key 'default_model' from the `config` dictionary. If this key does not exist, it defaults to the string \"gpt-4o-mini\".\n5. The `env` attribute is initialized as an instance of the Environment class from the Jinja2 library, using a FileSystemLoader that points to the directory specified by the 'prompt_folder_path' key in the `config` dictionary. This setup allows the Manager to load templates for generating prompts.\n6. The `sys_prompt` attribute is initialized as an empty string, which may be used to store a system prompt for the Manager's operations.\n7. The `breakdown_prompt` attribute is assigned a template loaded from the file 'manager_break_down.txt' using the `env` object. This template is likely used for breaking down tasks or generating specific prompts.\n8. The `reflection_prompt` attribute is initialized as None, indicating that it may be set later in the process.\n9. Finally, the `repeat_turns` attribute is set to 10, which may define the number of iterations or turns the Manager will perform in certain operations.\n\nOverall, the __init__ method establishes the foundational state of the Manager object, ensuring that all necessary attributes are initialized and that configuration settings are loaded for subsequent use. The relationship with the `read_config` function is particularly important, as it provides the configuration data that influences the behavior of the Manager.\n\n**Note**: It is essential to ensure that the configuration file specified in the `read_config` function exists and is correctly formatted in YAML. Any issues with the configuration file may lead to errors during the initialization of the Manager instance."
+      ],
+      "code_start_line": 14,
+      "code_end_line": 23,
+      "params": [
+        "self"
+      ],
+      "have_return": false,
+      "code_content": "    def __init__(self):\n        self.original_task = ''\n        self.sub_tasks = []\n        self.config = read_config()\n        self.model = self.config.get('default_model',\"gpt-4o-mini\")\n        self.env = Environment(loader=FileSystemLoader(self.config.get('prompt_folder_path')))\n        self.sys_prompt = ''\n        self.breakdown_prompt = self.env.get_template('manager_break_down.txt')\n        self.reflection_prompt = None\n        self.repeat_turns = 10\n",
+      "name_column": 8,
+      "item_status": "doc_up_to_date",
+      "who_reference_me": [],
+      "reference_who": [
+        "agent_factory/config.py/read_config"
+      ],
+      "special_reference_type": [
+        false
+      ]
+    },
+    {
+      "type": "FunctionDef",
+      "name": "receive_task",
+      "md_content": [
+        "**receive_task**: The function of receive_task is to accept and store an original task.\n\n**parameters**: The parameters of this Function.\n· task: This parameter represents the original task that is being received and stored by the function.\n\n**Code Description**: The receive_task function is designed to accept a single parameter, which is expected to be the original task. When this function is called, it assigns the value of the task parameter to the instance variable self.original_task. This effectively stores the provided task within the instance of the class, allowing it to be accessed later as needed. The function does not perform any validation or processing on the task; it simply stores it for future use.\n\n**Note**: It is important to ensure that the task parameter passed to this function is of the expected type and format, as the function does not include any error handling or type checking. Users of this function should be aware that the stored task can be overwritten if receive_task is called multiple times with different tasks."
+      ],
+      "code_start_line": 26,
+      "code_end_line": 30,
+      "params": [
+        "self",
+        "task"
+      ],
+      "have_return": false,
+      "code_content": "    def receive_task(self, task):\n        \"\"\"\n        接收原始任务。\n        \"\"\"\n        self.original_task = task\n",
+      "name_column": 8,
+      "item_status": "doc_up_to_date",
+      "who_reference_me": [],
+      "reference_who": [],
+      "special_reference_type": []
+    },
+    {
+      "type": "FunctionDef",
+      "name": "breakdown_task",
+      "md_content": [
+        "**breakdown_task**: The function of breakdown_task is to decompose a larger task into smaller sub-tasks.\n\n**parameters**: The parameters of this Function.\n· None\n\n**Code Description**: The breakdown_task method is a member of the Manager class and is responsible for breaking down an original task into sub-tasks. It begins by creating a dictionary named `data`, which contains the key 'task' associated with the value of `self.original_task`. This dictionary is then used to render a prompt through the `self.breakdown_prompt.render(**data)` method call. The rendered prompt is a structured input that will guide the language model in generating a relevant response.\n\nFollowing the prompt rendering, the method invokes the `call_llm` function, passing in several parameters: `self.model`, `self.sys_prompt`, and the `rendered_prompt`. The `call_llm` function is designed to interact with a language model API, specifically to generate a response based on the provided prompts. It initializes an OpenAI client using the model name and configuration settings, constructs a list of messages that includes both the system prompt and the user prompt, and then sends this data to the language model for processing.\n\nThe response from the `call_llm` function is captured in the variable `response_message`, which is then returned as the output of the breakdown_task method. This indicates that the breakdown_task method not only facilitates the decomposition of tasks but also serves as a bridge to the language model, allowing for intelligent processing and generation of sub-tasks based on the original task.\n\n**Note**: Ensure that the `self.original_task` and `self.breakdown_prompt` are properly initialized before calling this method to avoid runtime errors. Additionally, be aware of the API usage limits and the potential costs associated with calling the language model API.\n\n**Output Example**: A possible return value from the breakdown_task method could be a string such as \"The task can be broken down into the following sub-tasks: 1. Research the topic, 2. Draft an outline, 3. Write the introduction.\""
+      ],
+      "code_start_line": 32,
+      "code_end_line": 41,
+      "params": [
+        "self"
+      ],
+      "have_return": true,
+      "code_content": "    def breakdown_task(self):\n        \"\"\"\n        将任务拆解成子任务。\n        \"\"\"\n        data = {\n            'task': self.original_task\n        }\n        rendered_prompt = self.breakdown_prompt.render(**data)\n        response_message = call_llm(model=self.model,sys_prompt=self.sys_prompt,usr_prompt=rendered_prompt,config=self.config)\n        return response_message\n",
+      "name_column": 8,
+      "item_status": "doc_up_to_date",
+      "who_reference_me": [],
+      "reference_who": [
+        "agent_factory/utils.py/call_llm"
+      ],
+      "special_reference_type": [
+        false
+      ]
+    }
+  ],
+  "agent_factory/config.py": [
+    {
+      "type": "FunctionDef",
+      "name": "read_config",
+      "md_content": [
+        "**read_config**: The function of read_config is to read a configuration file in YAML format and return its contents as a Python dictionary.\n\n**parameters**: The parameters of this Function.\n· file_path: A string representing the path to the configuration file. The default value is '../config/config.yaml'.\n\n**Code Description**: The read_config function opens a specified YAML configuration file in read mode and utilizes the `yaml.safe_load` method to parse the contents of the file into a Python dictionary. This function is designed to facilitate the loading of configuration settings that can be used throughout the application. The default file path points to a configuration file located in a 'config' directory, which is one level up from the current directory.\n\nIn the context of its usage, the read_config function is called within the __init__ method of the Manager class located in the agent_factory/manager.py file. During the initialization of a Manager object, the read_config function is invoked without any arguments, which means it will use the default file path to load the configuration settings. The resulting dictionary is stored in the `self.config` attribute of the Manager instance. This configuration dictionary is then used to retrieve various settings, such as the default model and the path to the prompt folder, which are essential for the operation of the Manager class.\n\n**Note**: It is important to ensure that the specified configuration file exists at the given path and is formatted correctly in YAML. Failure to do so will result in an error when attempting to open or parse the file.\n\n**Output Example**: A possible appearance of the code's return value could be:\n```python\n{\n    'default_model': 'gpt-4o-mini',\n    'prompt_folder_path': '/path/to/prompts',\n    'other_setting': 'value'\n}\n```"
+      ],
+      "code_start_line": 3,
+      "code_end_line": 6,
+      "params": [
+        "file_path"
+      ],
+      "have_return": true,
+      "code_content": "def read_config(file_path='../config/config.yaml'):\n  with open(file_path, 'r') as file:\n    config = yaml.safe_load(file)\n  return config\n",
+      "name_column": 4,
+      "item_status": "doc_up_to_date",
+      "who_reference_me": [
+        "agent_factory/manager.py",
+        "agent_factory/manager.py/Manager/__init__"
+      ],
+      "reference_who": [],
+      "special_reference_type": []
+    }
+  ]
+}
