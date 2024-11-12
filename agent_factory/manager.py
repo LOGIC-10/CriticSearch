@@ -38,14 +38,15 @@ class Manager:
         }
         rendered_prompt = self.breakdown_prompt.render(**data)
         response_message = call_llm(model=self.model,sys_prompt=self.sys_prompt,usr_prompt=rendered_prompt,config=self.config)
-        print(response_message)
+        return response_message
 
 
 manager = Manager()
 
 task = """Assuming scientists in the famous youtube video The Thinking Machine (Artificial Intelligence in the 1960s) were interviewed the same year, what is the name of the scientist predicting the sooner thinking machines or robots? Answer using the format First name Last name"""
 manager.receive_task(task)
-manager.breakdown_task()
+response_message = manager.breakdown_task()
+print(response_message)
 
 
 
