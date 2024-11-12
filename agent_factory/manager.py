@@ -47,7 +47,6 @@ task = """Assuming scientists in the famous youtube video The Thinking Machine (
 manager.receive_task(task)
 response_message = manager.breakdown_task()
 print(response_message)
-print("finished")
 
 
 
