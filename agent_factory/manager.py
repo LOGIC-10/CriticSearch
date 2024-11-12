@@ -46,7 +46,7 @@ manager = Manager()
 task = """Assuming scientists in the famous youtube video The Thinking Machine (Artificial Intelligence in the 1960s) were interviewed the same year, what is the name of the scientist predicting the sooner thinking machines or robots? Answer using the format First name Last name"""
 manager.receive_task(task)
 response_message = manager.breakdown_task()
-print(response_message)
+print(f"Decompose:\n\n{response_message}")
 
 
 
