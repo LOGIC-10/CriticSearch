@@ -26,7 +26,7 @@ def call_llm(model, sys_prompt, usr_prompt, config):
         model=model,
         messages=messages,
         temperature=config.get("temperature"),
-        max_tokens=config.get("models").get(model).get("max_tokens"),
+        # max_tokens=config.get("models").get(model).get("max_tokens","8192"),
     )
 
     response_message = response.choices[0].message
