@@ -49,3 +49,9 @@ class BaseAgent:
         # print(rendered_prompt)
         response_message = call_llm(model=self.model, sys_prompt=self.sys_prompt, usr_prompt=rendered_prompt, config=self.config)
         return response_message
+    
+    def receive_task(self, task):
+        """
+        接收原始任务。
+        """
+        self.original_task = task

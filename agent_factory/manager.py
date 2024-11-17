@@ -6,9 +6,6 @@
 
 from config import read_config
 import os
-
-from jinja2 import Environment, FileSystemLoader
-from utils import call_llm
 from agent import BaseAgent
 
 class Manager(BaseAgent):
@@ -18,13 +15,6 @@ class Manager(BaseAgent):
         self.sub_tasks = []
         self.breakdown_prompt = self.env.get_template('manager_break_down.txt')
         self.reflection_prompt = None
-
-
-    def receive_task(self, task):
-        """
-        接收原始任务。
-        """
-        self.original_task = task
 
     def breakdown_task(self):
         """
