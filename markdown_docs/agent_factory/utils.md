@@ -10,22 +10,35 @@
 
 **Output Example**: If the file located at the specified file_path contains the text "Hello, this is a prompt template.", the function will return the string "Hello, this is a prompt template."
 ## FunctionDef call_llm(model, sys_prompt, usr_prompt, config)
-**call_llm**: The function of call_llm is to interact with a language model API to generate a response based on provided prompts.
+**call_llm**: The function of call_llm is to make an API request to a language model service, sending a system and user prompt, and returning the model's response.
 
-**parameters**: The parameters of this Function.
-· model: A string representing the name of the language model to be used for generating responses.
-· sys_prompt: A string containing the system-level prompt that sets the context for the model.
-· usr_prompt: A string that represents the user-level prompt, which is the specific query or input from the user.
-· config: A dictionary containing configuration settings such as API key, base URL, timeout, maximum retries, temperature, and maximum tokens for the model.
+**parameters**: The parameters of this function.
+· model: The model name or identifier used for making the request to the language model service.
+· sys_prompt: A string that serves as the system message for the model, providing instructions or context for the conversation.
+· usr_prompt: A string that serves as the user's message or input for the model, to which the model should respond.
+· config: A dictionary containing configuration settings required for the request, including API keys, timeouts, retry settings, temperature, and model-specific settings.
 
-**Code Description**: The call_llm function is designed to facilitate communication with a language model, specifically through the OpenAI API. It begins by initializing an OpenAI client using the provided model name and configuration settings. The configuration includes essential parameters such as the API key, base URL, timeout, and maximum retries, which are retrieved from the config dictionary.
+**Code Description**:  
+The `call_llm` function is responsible for interfacing with a language model API (presumably OpenAI's API). It does so by creating a client instance for the OpenAI service using the configuration values passed in the `config` parameter. The function then constructs a list of messages that includes the system message (`sys_prompt`) and the user message (`usr_prompt`). This list is sent as part of the request to the `chat.completions.create` method of the API client.
 
-Next, the function constructs a list of messages that includes both the system prompt and the user prompt. This structured format is necessary for the chat completion request to the API. The function then calls the chat completion method of the OpenAI client, passing in the model name, the constructed messages, and additional parameters like temperature and maximum tokens.
+The function retrieves the response from the API and extracts the model's reply from the `choices` list in the response. Specifically, it fetches the content of the message from the first choice in the list, which is assumed to be the relevant response from the model.
 
-Upon receiving the response from the API, the function extracts the content of the first message choice from the response object and returns it. This content represents the model's generated reply based on the provided prompts.
+Key steps in the process:
+1. An instance of the OpenAI client is created using the provided configuration values, including the API key, base URL, timeout, and retry settings.
+2. A list of messages is constructed, where the system message provides context or instructions, and the user message contains the query or input.
+3. The request is sent to the API, specifying the model, the messages, and other parameters like temperature.
+4. The model's response is extracted from the API's response and returned as the result.
 
-The call_llm function is invoked within the breakdown_task method of the Manager class in the agent_factory/manager.py file. In this context, it is used to break down a larger task into smaller sub-tasks by rendering a prompt and sending it to the language model for processing. The response from call_llm is then returned as the output of the breakdown_task method, indicating its role in task decomposition and interaction with the language model.
+The `call_llm` function is called within the `chat` method of the `BaseAgent` class in the `agent_factory/agent.py` module. In this context, it is used to send a dynamically rendered prompt to the language model based on the input data. The system and user prompts are provided as part of this interaction, and the function returns the model's response to be processed further or sent back to the user.
 
-**Note**: When using this function, ensure that the configuration dictionary is properly populated with all necessary keys and values to avoid runtime errors. Additionally, be mindful of the API usage limits and the potential costs associated with calling the OpenAI API.
+**Note**:  
+- The `config` parameter must include valid API keys and any necessary configuration settings like `timeout`, `max_retries`, and `temperature` for the API request to be successful.
+- The function assumes the model will return a response in the form of a list of choices, with the actual message located in `response.choices[0].message`.
+- While the `max_tokens` parameter is mentioned in the code as a potential setting, it is commented out, implying it is either optional or controlled elsewhere in the codebase.
 
-**Output Example**: A possible return value from the call_llm function could be a string such as "To break down the task, consider the following steps: 1. Analyze the requirements, 2. Identify key components, 3. Create sub-tasks for each component."
+**Output Example**:  
+The return value of `call_llm` would typically be a string representing the content of the model's response. For example:
+
+```
+"Sure, here's the information you requested: ... "
+```
