@@ -1,28 +1,32 @@
 ## ClassDef Manager
-**Manager**: The function of Manager is to handle task management by receiving original tasks and breaking them down into sub-tasks.
+**Manager**: The function of Manager is to manage and break down tasks into sub-tasks for further processing.
 
 **attributes**: The attributes of this Class.
-· original_task: A string that stores the original task received by the Manager.  
-· sub_tasks: A list that holds the sub-tasks generated from the breakdown of the original task.  
-· breakdown_prompt: A template used for generating prompts related to breaking down tasks, retrieved from the environment.  
-· reflection_prompt: A variable that is initialized as None, intended for future use related to task reflection.
+· original_task: A string that holds the original task received by the Manager.  
+· sub_tasks: A list that stores the sub-tasks generated from the breakdown of the original task.  
+· breakdown_prompt: A template used for generating prompts related to task breakdown, loaded from a specified template file.  
+· reflection_prompt: A variable that can hold a prompt for reflection, currently initialized to None.
 
-**Code Description**: The Manager class extends the BaseAgent class, inheriting its functionalities and attributes while adding specific capabilities for task management. Upon initialization, the Manager class sets up its own attributes, including `original_task`, which is initialized as an empty string, and `sub_tasks`, which is initialized as an empty list. The `breakdown_prompt` is obtained from the environment's template system, specifically designed for breaking down tasks.
+**Code Description**: The Manager class extends the BaseAgent class, inheriting its functionalities while adding specific capabilities for task management. Upon initialization, the Manager class calls the constructor of the BaseAgent, ensuring that all foundational attributes and methods are available. It initializes its own attributes, including `original_task`, which is set to an empty string, and `sub_tasks`, which is initialized as an empty list. The `breakdown_prompt` is loaded from a template file named 'manager_break_down.txt' using the environment object from the BaseAgent class, allowing for dynamic prompt generation based on the original task.
 
-The primary method of interest in the Manager class is `receive_task`, which accepts a task as an argument and assigns it to the `original_task` attribute. This method is crucial for setting the context for subsequent operations. 
+The primary method of the Manager class is `breakdown_task`, which is responsible for decomposing the original task into smaller, manageable sub-tasks. This method first retrieves the necessary data for breakdown by calling `get_data_for_breakdown`, which constructs a dictionary containing the `original_task`. The method then utilizes the `chat` method inherited from BaseAgent, passing the data and the `breakdown_prompt` to generate a response that outlines the sub-tasks.
 
-Another significant method is `breakdown_task`, which is responsible for decomposing the original task into smaller, manageable sub-tasks. This method calls `get_data_for_breakdown` to prepare the necessary data, which includes the original task, and then utilizes the inherited `chat` method from the BaseAgent class. The `chat` method interacts with a language model to generate a response based on the breakdown prompt and the provided data.
+The `get_data_for_breakdown` method serves as a utility function that prepares the data structure required for the breakdown process. It returns a dictionary with the key 'task' mapped to the `original_task`, ensuring that the prompt can be rendered with the correct context.
 
-The `get_data_for_breakdown` method constructs a dictionary containing the `original_task`, which is then used in the `chat` method to facilitate the breakdown process. This relationship illustrates how the Manager class leverages the capabilities of the BaseAgent class to perform its task management functions effectively.
+In summary, the Manager class leverages the capabilities of the BaseAgent class to facilitate task management, specifically focusing on breaking down complex tasks into simpler components that can be handled more effectively.
 
-**Note**: It is important to ensure that the environment is properly set up with the necessary templates for the breakdown prompt. Additionally, the interaction with the language model through the `chat` method relies on the correct implementation of the `call_llm` function, which must be defined elsewhere in the codebase.
+**Note**: It is essential to ensure that the template file 'manager_break_down.txt' is correctly formatted and accessible within the specified prompt folder path. The interaction with the language model through the `chat` method relies on the proper implementation of the `call_llm` function, which must be defined in the BaseAgent class or elsewhere in the codebase.
 
 **Output Example**: A possible output from the `breakdown_task` method might look like this:
 ```
 {
-    "response": "To complete your task, consider the following steps: Define the scope, Research relevant information, Create an outline, Draft the content.",
+    "sub_tasks": [
+        "Define the main objectives of the task.",
+        "Identify the resources required.",
+        "Establish a timeline for completion."
+    ],
     "status": "success",
-    "message": "Task breakdown completed successfully."
+    "message": "Task has been successfully broken down."
 }
 ```
 ### FunctionDef __init__(self)
@@ -42,16 +46,6 @@ Following this, the function initializes several instance variables:
 Overall, this constructor sets up the necessary attributes for the Manager class, preparing it for further operations related to task management.
 
 **Note**: It is important to ensure that the parent class's constructor is called to maintain the integrity of the class hierarchy. Additionally, the template file 'manager_break_down.txt' should be present in the expected directory for the code to function correctly.
-***
-### FunctionDef receive_task(self, task)
-**receive_task**: The function of receive_task is to accept and store an original task.
-
-**parameters**: The parameters of this Function.
-· task: This parameter represents the original task that is being received and stored by the function.
-
-**Code Description**: The receive_task function is designed to accept a single parameter, which is expected to be the original task. When this function is called, it assigns the value of the task parameter to the instance variable self.original_task. This effectively stores the provided task within the instance of the class, allowing it to be accessed later as needed. The function does not perform any validation or processing on the task; it simply stores it for future use.
-
-**Note**: It is important to ensure that the task parameter passed to this function is of the expected type and format, as the function does not include any error handling or type checking. Users of this function should be aware that the stored task can be overwritten if receive_task is called multiple times with different tasks.
 ***
 ### FunctionDef breakdown_task(self)
 **breakdown_task**: The function of breakdown_task is to decompose a task into subtasks.

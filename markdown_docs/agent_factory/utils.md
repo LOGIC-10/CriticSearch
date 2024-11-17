@@ -10,35 +10,24 @@
 
 **Output Example**: If the file located at the specified file_path contains the text "Hello, this is a prompt template.", the function will return the string "Hello, this is a prompt template."
 ## FunctionDef call_llm(model, sys_prompt, usr_prompt, config)
-**call_llm**: The function of call_llm is to make an API request to a language model service, sending a system and user prompt, and returning the model's response.
+**call_llm**: The function of call_llm is to interact with a language model API by sending a system prompt and a user prompt, and returning the model's response.
 
-**parameters**: The parameters of this function.
-· model: The model name or identifier used for making the request to the language model service.
-· sys_prompt: A string that serves as the system message for the model, providing instructions or context for the conversation.
-· usr_prompt: A string that serves as the user's message or input for the model, to which the model should respond.
-· config: A dictionary containing configuration settings required for the request, including API keys, timeouts, retry settings, temperature, and model-specific settings.
+**parameters**: The parameters of this Function.
+· model: A string representing the identifier of the language model to be used for generating responses.
+· sys_prompt: A string that serves as the system prompt, providing context or instructions to the language model.
+· usr_prompt: A string that contains the user-specific prompt, which is dynamically generated based on user input.
+· config: A dictionary containing configuration settings, including API key, base URL, timeout, maximum retries, and temperature for the model.
 
-**Code Description**:  
-The `call_llm` function is responsible for interfacing with a language model API (presumably OpenAI's API). It does so by creating a client instance for the OpenAI service using the configuration values passed in the `config` parameter. The function then constructs a list of messages that includes the system message (`sys_prompt`) and the user message (`usr_prompt`). This list is sent as part of the request to the `chat.completions.create` method of the API client.
+**Code Description**: The call_llm function is designed to facilitate communication with a language model by making an API request. It begins by initializing an OpenAI client using the provided configuration settings. The API key and base URL are extracted from the config dictionary based on the specified model, ensuring that the correct credentials and endpoint are used for the API call.
 
-The function retrieves the response from the API and extracts the model's reply from the `choices` list in the response. Specifically, it fetches the content of the message from the first choice in the list, which is assumed to be the relevant response from the model.
+The function constructs a list of messages that includes both the system prompt and the user prompt. These messages are formatted as dictionaries, where each dictionary specifies the role (either "system" or "user") and the corresponding content. This structured format is essential for the language model to understand the context of the conversation.
 
-Key steps in the process:
-1. An instance of the OpenAI client is created using the provided configuration values, including the API key, base URL, timeout, and retry settings.
-2. A list of messages is constructed, where the system message provides context or instructions, and the user message contains the query or input.
-3. The request is sent to the API, specifying the model, the messages, and other parameters like temperature.
-4. The model's response is extracted from the API's response and returned as the result.
+Next, the function calls the chat completion method of the OpenAI client, passing in the model identifier, the constructed messages, and additional parameters such as temperature. The temperature setting influences the randomness of the model's responses, allowing for more creative or focused outputs depending on the desired outcome.
 
-The `call_llm` function is called within the `chat` method of the `BaseAgent` class in the `agent_factory/agent.py` module. In this context, it is used to send a dynamically rendered prompt to the language model based on the input data. The system and user prompts are provided as part of this interaction, and the function returns the model's response to be processed further or sent back to the user.
+Upon receiving the response from the API, the function extracts the content of the first message choice returned by the model. This content represents the model's reply to the user prompt and is returned as the output of the call_llm function.
 
-**Note**:  
-- The `config` parameter must include valid API keys and any necessary configuration settings like `timeout`, `max_retries`, and `temperature` for the API request to be successful.
-- The function assumes the model will return a response in the form of a list of choices, with the actual message located in `response.choices[0].message`.
-- While the `max_tokens` parameter is mentioned in the code as a potential setting, it is commented out, implying it is either optional or controlled elsewhere in the codebase.
+The call_llm function is invoked by the chat method of the BaseAgent class, which is responsible for generating user-specific prompts based on input data. The chat method renders a prompt template using the provided data and then calls call_llm with the necessary parameters. This relationship highlights the role of call_llm as a backend service that processes user interactions and generates responses from the language model.
 
-**Output Example**:  
-The return value of `call_llm` would typically be a string representing the content of the model's response. For example:
+**Note**: It is crucial to ensure that the configuration settings provided to the call_llm function are complete and valid to avoid errors during the API interaction. Additionally, the model specified must be supported by the OpenAI client to ensure successful communication.
 
-```
-"Sure, here's the information you requested: ... "
-```
+**Output Example**: A possible return value from the call_llm function could be a string such as "Here is the information you requested based on your input: ..."

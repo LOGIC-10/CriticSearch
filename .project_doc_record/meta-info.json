@@ -1,7 +1,12 @@
 {
-  "doc_version": "7e2ed37b6cb9166e064b248066b28b51135bf99b",
+  "doc_version": "c51d2398511477e509e10ed77f4994b3593fa753",
   "in_generation_process": false,
   "fake_file_reflection": {},
   "jump_files": [],
-  "deleted_items_from_older_meta": []
+  "deleted_items_from_older_meta": [
+    [
+      "agent_factory/manager.py/Manager/receive_task",
+      "_class_function"
+    ]
+  ]
 }
