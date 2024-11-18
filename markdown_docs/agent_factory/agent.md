@@ -1,30 +1,30 @@
 ## ClassDef BaseAgent
-**BaseAgent**: The function of BaseAgent is to serve as a foundational class for agents that interact with a language model, facilitating chat functionalities and task reception.
+**BaseAgent**: The function of BaseAgent is to serve as a foundational class for handling chat interactions and processing tasks using a specified language model.
 
 **attributes**: The attributes of this Class.
-· config: A configuration object that holds various settings and parameters for the agent, loaded from a configuration file.  
-· model: A string representing the default model to be used for language processing, initialized to "gpt-4o-mini" unless specified otherwise in the configuration.  
-· env: An Environment object that manages the loading of templates from the specified prompt folder path in the configuration.  
-· sys_prompt: A string that holds the system prompt, initialized as an empty string.  
-· repeat_turns: An integer that defines the number of turns to repeat in the chat, initialized to 10.
+· config: A configuration object that holds various settings for the agent, including model specifications and prompt folder paths.  
+· model: The name of the default language model to be used for chat interactions, initialized to "gpt-4o-mini".  
+· env: An instance of the Environment class, which is configured to load templates from a specified folder path.  
+· sys_prompt: A string that holds the system prompt for the chat interactions, initialized as an empty string.  
+· repeat_turns: An integer that defines the number of turns to repeat in the chat, initialized to 10.  
+· original_task: A variable to store the original task received by the agent.
 
-**Code Description**: The BaseAgent class is designed to provide essential functionalities for agents that require interaction with a language model. Upon initialization, it reads configuration settings, including the default model and the path for prompt templates. The class utilizes the Jinja2 templating engine to load prompts from the specified folder, allowing for dynamic prompt generation based on the provided data.
+**Code Description**: The BaseAgent class is designed to facilitate interactions with a language model through chat functionalities. Upon initialization, it reads the configuration settings, including the default model and the path for prompt templates. The class provides several methods to interact with the model and process tasks.
 
-The primary method of interest in the BaseAgent class is `chat`, which takes in a data dictionary and a prompt template. This method renders the prompt using the provided data, enabling the customization of the prompt based on the specific context of the conversation. It then calls the `call_llm` function, passing the rendered prompt along with the system prompt and model configuration to obtain a response from the language model. This interaction is crucial for generating contextually relevant replies in a chat setting.
+The `common_chat` method takes a user query as input and calls the language model using the specified system prompt and user prompt. This method serves as the primary interface for generating responses based on user input.
 
-Another significant method is `receive_task`, which allows the agent to accept and store an original task. This method is essential for setting the context for subsequent operations, particularly in scenarios where the agent is expected to perform tasks based on the received input.
+The `chat_with_template` method allows for dynamic prompt generation by rendering a template with provided data. It utilizes the Jinja2 templating engine to create a customized prompt before passing it to the `common_chat` method for processing.
 
-The BaseAgent class is inherited by the Manager class, which extends its functionalities to include task management capabilities. The Manager class utilizes the `receive_task` method to store the original task and employs the `chat` method to break down the task into sub-tasks. This relationship illustrates how the Manager class leverages the capabilities of the BaseAgent class to perform its task management functions effectively.
+The `receive_task` method is used to accept and store an original task, which can be further processed or utilized in chat interactions.
 
-**Note**: It is important to ensure that the configuration file is correctly set up with the necessary parameters, including the model and prompt folder path. Additionally, the interaction with the language model through the `chat` method relies on the correct implementation of the `call_llm` function, which must be defined elsewhere in the codebase.
+The `extract_and_validate_yaml` method is responsible for extracting YAML content from a model's response. It uses regular expressions to find content wrapped in ```yaml``` tags and attempts to parse it using the PyYAML library. If successful, it returns the YAML content in a standardized format; otherwise, it handles errors gracefully by returning None.
 
-**Output Example**: A possible output from the `chat` method might look like this:
-```
-{
-    "response": "Hello! How can I assist you today?",
-    "status": "success",
-    "message": "Chat initiated successfully."
-}
+**Note**: When using the BaseAgent class, ensure that the configuration file is correctly set up with the necessary parameters, including the prompt folder path and the default model. Additionally, proper error handling should be implemented when dealing with YAML content to avoid runtime exceptions.
+
+**Output Example**: A possible return value from the `common_chat` method could be a string response from the language model, such as: "Hello! How can I assist you today?" If the `extract_and_validate_yaml` method is called with a valid model response containing YAML, it might return a formatted YAML string like:
+```yaml
+key1: value1
+key2: value2
 ```
 ### FunctionDef __init__(self)
 **__init__**: The function of __init__ is to initialize an instance of the BaseAgent class by setting up its configuration and environment.
@@ -48,34 +48,79 @@ Overall, the __init__ method establishes the foundational settings and component
 
 **Note**: It is crucial to ensure that the YAML configuration file is accessible and correctly formatted. Any issues with file access or parsing may result in runtime errors, preventing the BaseAgent from initializing properly.
 ***
-### FunctionDef chat(self, data, prompt_template)
-**chat**: The function of chat is to facilitate a conversation by generating a user-specific prompt based on input data and interacting with a language model to obtain a response.
+### FunctionDef common_chat(self, query)
+**common_chat**: The function of common_chat is to facilitate communication with a language model by sending a user-defined query along with system prompts and configuration settings.
 
 **parameters**: The parameters of this Function.
-· data: A dictionary containing key-value pairs that are used to render the prompt template, adapting it to the specific context of the conversation.
-· prompt_template: An object that defines the structure of the prompt to be generated, which will be populated with the values from the data dictionary.
+· query: A string that represents the user input or question that will be sent to the language model.
 
-**Code Description**: The chat method is a member of the BaseAgent class and serves as a general-purpose communication function that adapts to various conversational contexts. It begins by rendering a prompt using the provided prompt_template and the data dictionary. The rendering process involves substituting placeholders in the prompt template with actual values from the data, resulting in a tailored prompt that reflects the user's input.
+**Code Description**: The common_chat function is designed to interact with a language model (LLM) by calling the function `call_llm`. It takes a single parameter, `query`, which is expected to be a string. This string is typically the user's input that needs to be processed by the language model. The function constructs a call to `call_llm`, passing it several arguments: `model`, `sys_prompt`, `usr_prompt`, and `config`. Here, `model` refers to the specific language model being utilized, `sys_prompt` is a predefined system prompt that sets the context for the conversation, `usr_prompt` is the user query (in this case, the `query` parameter), and `config` contains additional configuration settings that may influence the behavior of the language model.
 
-Once the prompt is rendered, the method calls the call_llm function, which is responsible for interacting with a language model API. This function requires several parameters: the model identifier, a system prompt that provides context, the rendered user prompt, and a configuration dictionary. The call_llm function constructs a structured request to the language model, sending both the system and user prompts to generate a coherent response.
+The common_chat function is called within the `chat_with_template` method of the BaseAgent class. In this context, `chat_with_template` prepares a prompt by rendering it with data provided in the `data` dictionary using a specified `prompt_template`. Once the prompt is rendered, it invokes `common_chat`, passing the rendered prompt as the query. The response from `common_chat` is then returned as the output of `chat_with_template`. This establishes a clear relationship where `chat_with_template` relies on `common_chat` to handle the actual communication with the language model after preparing the appropriate prompt.
 
-The response from the call_llm function is then returned by the chat method. This response represents the language model's reply to the user's prompt, effectively completing the interaction.
+**Note**: It is important to ensure that the `query` passed to common_chat is properly formatted and relevant to the context established by the system prompt to achieve meaningful responses from the language model.
 
-The chat method is invoked by other components within the project, such as the breakdown_task method in the Manager class. The breakdown_task method relies on the chat method to facilitate the decomposition of a larger task into subtasks by passing relevant data and a predefined breakdown prompt. This relationship highlights the chat method's role as a critical component in enabling communication with the language model, thereby supporting various functionalities within the project.
+**Output Example**: A possible return value from the common_chat function could be a string such as "Sure, I can help you with that! What specific information are you looking for?" This response would depend on the input query and the configuration of the language model.
+***
+### FunctionDef chat_with_template(self, data, prompt_template)
+**chat_with_template**: The function of chat_with_template is to facilitate a conversation by rendering a prompt template with provided data and then communicating with a language model.
 
-**Note**: It is essential to ensure that the data dictionary provided to the chat method is correctly structured and contains all necessary keys for rendering the prompt. Additionally, the prompt_template must be appropriately defined to ensure meaningful interactions with the language model.
+**parameters**: The parameters of this Function.
+· data: A dictionary containing key-value pairs that will be used to populate the prompt template.
+· prompt_template: An object that defines the structure of the prompt to be rendered, which will be filled with the values from the data dictionary.
 
-**Output Example**: A possible return value from the chat method could be a string such as "Based on your input, here are the steps to break down your task: 1. Identify key objectives. 2. Allocate resources. 3. Set deadlines."
+**Code Description**: The chat_with_template method is designed to generate a dynamic prompt for a conversation based on the input data. It takes two parameters: `data`, which is a dictionary containing the necessary information to fill in the prompt template, and `prompt_template`, which is an object that specifies how the prompt should be structured. 
+
+The method begins by rendering the prompt using the `render` method of the `prompt_template`, passing the unpacked `data` dictionary as keyword arguments. This results in a `rendered_prompt`, which is a string that represents the final prompt to be sent to the language model.
+
+Following the rendering process, the method calls `common_chat`, passing the `rendered_prompt` as the `query` parameter. The `common_chat` function is responsible for sending this query to a language model, allowing for interaction based on the generated prompt. The response from `common_chat` is then returned as the output of the `chat_with_template` method.
+
+This establishes a clear functional relationship where `chat_with_template` serves as a preparatory step that formats the input data into a suitable prompt, which is then processed by `common_chat` to obtain a response from the language model.
+
+**Note**: It is essential to ensure that the `data` provided is complete and correctly structured to match the expectations of the `prompt_template`. This will ensure that the rendered prompt is coherent and relevant, leading to meaningful interactions with the language model.
+
+**Output Example**: A possible return value from the chat_with_template function could be a string such as "Hello! How can I assist you today?" This response will depend on the specific data provided and the structure of the prompt template used.
 ***
 ### FunctionDef receive_task(self, task)
-**receive_task**: The function of receive_task is to accept and store an original task.
+**receive_task**: The function of receive_task is to accept and store the original task provided to the agent.
 
 **parameters**: The parameters of this Function.
-· task: This parameter represents the raw task that is being received and stored within the object.
+· task: This parameter represents the original task that is being received by the agent. It is expected to be of any data type that encapsulates the task details.
 
-**Code Description**: The receive_task function is designed to accept a task as input and assign it to the instance variable original_task. This function is a straightforward setter that allows the BaseAgent class to store the task it receives for further processing or management. The simplicity of this function ensures that any task passed to it is directly associated with the agent instance, facilitating task management within the broader context of the application.
+**Code Description**: The receive_task function is designed to accept a task as input and assign it to the instance variable original_task. This function serves as a method for the BaseAgent class, allowing it to receive tasks that it will process or manage later. When the function is called, it takes the provided task and directly assigns it to the instance variable self.original_task. This action effectively stores the task within the agent's context, making it accessible for further operations or processing within the agent's lifecycle.
 
-In the context of the project, this function can be called by other components, such as the manager module (agent_factory/manager.py). Although there is no specific documentation or raw code provided for the manager module, it can be inferred that the manager likely interacts with instances of BaseAgent to assign tasks. When the manager calls receive_task, it provides a task that the agent will then store for its operations. This relationship indicates that the manager plays a crucial role in task distribution, while the BaseAgent is responsible for maintaining the state of the tasks assigned to it.
+**Note**: It is important to ensure that the task being passed to this function is properly formatted and contains all necessary information required for the agent to perform its intended operations. Additionally, this function does not perform any validation or processing on the task; it simply stores it. Therefore, any necessary checks or transformations should be handled before invoking this method.
+***
+### FunctionDef extract_and_validate_yaml(self, model_response)
+**extract_and_validate_yaml**: The function of extract_and_validate_yaml is to extract YAML content from a given string and validate its syntax.
 
-**Note**: It is important to ensure that the task being passed to receive_task is in the expected format and contains all necessary information for the agent to process it effectively. Proper validation of the task before calling this function may be necessary to avoid errors in task handling later in the workflow.
+**parameters**: The parameters of this Function.
+· model_response: A string input that potentially contains YAML content wrapped in ```yaml``` markers.
+
+**Code Description**: The extract_and_validate_yaml function begins by importing the regular expression module (re) to facilitate pattern matching. It uses a regular expression to search for content that is enclosed between ```yaml``` markers in the provided model_response string. The pattern `r'```yaml\n([\s\S]*?)\n```'` is designed to capture everything between the opening and closing markers, including newlines and whitespace.
+
+If the search does not find a match, the function returns None, indicating that no valid YAML content was found. If a match is found, the captured content is stripped of leading and trailing whitespace. The function then attempts to parse this YAML content using the yaml.safe_load method from the PyYAML library. If the parsing is successful, it returns the YAML content formatted as a string using yaml.dump, with default_flow_style set to False for a more human-readable format.
+
+In the event of a parsing error, the function catches the yaml.YAMLError exception, prints an error message indicating that the YAML content is invalid, and returns None.
+
+**Note**: It is important to ensure that the input string contains valid YAML syntax wrapped in the specified markers. If the input does not conform to this structure, the function will return None without raising an error.
+
+**Output Example**: If the input model_response is:
+```
+Here is some configuration:
+```yaml
+key: value
+list:
+  - item1
+  - item2
+```
+```
+The function would return:
+```
+key:
+  value
+list:
+- item1
+- item2
+```
 ***

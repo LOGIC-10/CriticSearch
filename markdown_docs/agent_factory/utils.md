@@ -10,24 +10,22 @@
 
 **Output Example**: If the file located at the specified file_path contains the text "Hello, this is a prompt template.", the function will return the string "Hello, this is a prompt template."
 ## FunctionDef call_llm(model, sys_prompt, usr_prompt, config)
-**call_llm**: The function of call_llm is to interact with a language model API by sending a system prompt and a user prompt, and returning the model's response.
+**call_llm**: The function of call_llm is to interact with a language model API to generate a response based on provided system and user prompts.
 
 **parameters**: The parameters of this Function.
-· model: A string representing the identifier of the language model to be used for generating responses.
-· sys_prompt: A string that serves as the system prompt, providing context or instructions to the language model.
-· usr_prompt: A string that contains the user-specific prompt, which is dynamically generated based on user input.
-· config: A dictionary containing configuration settings, including API key, base URL, timeout, maximum retries, and temperature for the model.
+· model: A string representing the name of the language model to be used for generating the response.
+· sys_prompt: A string that serves as the system message, providing context or instructions to the model.
+· usr_prompt: A string that represents the user's input or question directed to the model.
+· config: A dictionary containing configuration settings, including API keys, base URLs, timeout settings, and other parameters necessary for the API call.
 
-**Code Description**: The call_llm function is designed to facilitate communication with a language model by making an API request. It begins by initializing an OpenAI client using the provided configuration settings. The API key and base URL are extracted from the config dictionary based on the specified model, ensuring that the correct credentials and endpoint are used for the API call.
+**Code Description**: The call_llm function initiates a connection to an OpenAI language model using the provided configuration settings. It retrieves the API key and base URL specific to the model from the config dictionary. The function sets up a client instance of the OpenAI API with specified timeout and retry settings.
 
-The function constructs a list of messages that includes both the system prompt and the user prompt. These messages are formatted as dictionaries, where each dictionary specifies the role (either "system" or "user") and the corresponding content. This structured format is essential for the language model to understand the context of the conversation.
+Next, it constructs a list of messages, where the first message is the system prompt and the second is the user prompt. These messages are formatted as dictionaries containing the role (either "system" or "user") and the corresponding content.
 
-Next, the function calls the chat completion method of the OpenAI client, passing in the model identifier, the constructed messages, and additional parameters such as temperature. The temperature setting influences the randomness of the model's responses, allowing for more creative or focused outputs depending on the desired outcome.
+The function then calls the chat completion endpoint of the OpenAI client, passing the model name and the constructed messages. It also includes a temperature setting from the config, which controls the randomness of the model's responses. The function is designed to handle a maximum token limit, although this is currently commented out in the code.
 
-Upon receiving the response from the API, the function extracts the content of the first message choice returned by the model. This content represents the model's reply to the user prompt and is returned as the output of the call_llm function.
+After receiving the response from the API, the function extracts the content of the first message in the response choices and returns it. This content represents the model's generated reply based on the inputs provided.
 
-The call_llm function is invoked by the chat method of the BaseAgent class, which is responsible for generating user-specific prompts based on input data. The chat method renders a prompt template using the provided data and then calls call_llm with the necessary parameters. This relationship highlights the role of call_llm as a backend service that processes user interactions and generates responses from the language model.
+**Note**: When using this function, ensure that the config dictionary is properly populated with the necessary keys and values, including the model-specific API key and base URL. Additionally, be aware of the potential for rate limits or errors from the API, which may require handling in a production environment.
 
-**Note**: It is crucial to ensure that the configuration settings provided to the call_llm function are complete and valid to avoid errors during the API interaction. Additionally, the model specified must be supported by the OpenAI client to ensure successful communication.
-
-**Output Example**: A possible return value from the call_llm function could be a string such as "Here is the information you requested based on your input: ..."
+**Output Example**: A possible return value from the function could be a string such as "The weather today is sunny with a high of 75 degrees." This represents the model's generated response based on the provided prompts.

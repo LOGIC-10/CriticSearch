@@ -1,20 +1,23 @@
 ## FunctionDef read_config(file_path)
-**read_config**: The function of read_config is to load configuration settings from a specified YAML file.
+**read_config**: The function of read_config is to read configuration data from a YAML file and return it as a Python dictionary.
 
 **parameters**: The parameters of this Function.
 · file_path: A string representing the path to the YAML configuration file. The default value is '../config/config.yaml'.
 
-**Code Description**: The read_config function is designed to read configuration data from a YAML file. It takes a single parameter, file_path, which specifies the location of the configuration file. If no path is provided, it defaults to '../config/config.yaml'. The function opens the specified file in read mode and uses the yaml.safe_load method to parse the contents of the file into a Python dictionary. This dictionary, which contains the configuration settings, is then returned to the caller.
+**Code Description**: The read_config function is designed to load configuration settings from a specified YAML file. It takes one optional parameter, file_path, which defaults to '../config/config.yaml' if not provided. The function opens the specified file in read mode ('r') and utilizes the yaml.safe_load method to parse the contents of the file. This method safely loads the YAML data into a Python dictionary, which is then returned by the function. The use of safe_load is important as it prevents the execution of arbitrary code that could be present in the YAML file, thereby enhancing security.
 
-In the context of the project, the read_config function is called within the __init__ method of the BaseAgent class located in agent_factory/agent.py. When an instance of BaseAgent is created, the read_config function is invoked to load the configuration settings. The resulting configuration dictionary is stored in the instance variable self.config. Subsequently, specific configuration values are accessed, such as the default model name and the path to the prompt folder, which are used to initialize other components of the agent.
-
-**Note**: It is important to ensure that the specified YAML file exists and is correctly formatted, as any issues with file access or parsing could lead to runtime errors.
+**Note**: It is essential to ensure that the specified YAML file exists at the given path; otherwise, a FileNotFoundError will be raised. Additionally, the function requires the PyYAML library to be installed in the environment to function correctly.
 
 **Output Example**: A possible appearance of the code's return value could be:
-```yaml
 {
-  'default_model': 'gpt-4o-mini',
-  'prompt_folder_path': '/path/to/prompts',
-  ...
+  'database': {
+    'host': 'localhost',
+    'port': 5432,
+    'user': 'admin',
+    'password': 'secret'
+  },
+  'logging': {
+    'level': 'debug',
+    'file': 'app.log'
+  }
 }
-```

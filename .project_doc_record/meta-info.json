@@ -1,11 +1,11 @@
 {
-  "doc_version": "c51d2398511477e509e10ed77f4994b3593fa753",
+  "doc_version": "5ecacba6011ea12ac3289a09d37574aef3560218",
   "in_generation_process": false,
   "fake_file_reflection": {},
   "jump_files": [],
   "deleted_items_from_older_meta": [
     [
-      "agent_factory/manager.py/Manager/receive_task",
+      "agent_factory/agent.py/BaseAgent/chat",
       "_class_function"
     ]
   ]

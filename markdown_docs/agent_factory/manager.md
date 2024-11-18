@@ -1,34 +1,25 @@
 ## ClassDef Manager
-**Manager**: The function of Manager is to manage and break down tasks into sub-tasks for further processing.
+**Manager**: The function of Manager is to facilitate the breakdown of tasks into sub-tasks for better management and execution.
 
 **attributes**: The attributes of this Class.
-· original_task: A string that holds the original task received by the Manager.  
-· sub_tasks: A list that stores the sub-tasks generated from the breakdown of the original task.  
-· breakdown_prompt: A template used for generating prompts related to task breakdown, loaded from a specified template file.  
-· reflection_prompt: A variable that can hold a prompt for reflection, currently initialized to None.
+· original_task: A string that holds the main task to be broken down.
+· sub_tasks: A list that stores the sub-tasks generated from the breakdown of the original task.
+· breakdown_prompt: A template used for generating prompts related to task breakdown, retrieved from the environment.
+· reflection_prompt: A variable that is intended to hold a prompt for reflection, currently initialized to None.
 
-**Code Description**: The Manager class extends the BaseAgent class, inheriting its functionalities while adding specific capabilities for task management. Upon initialization, the Manager class calls the constructor of the BaseAgent, ensuring that all foundational attributes and methods are available. It initializes its own attributes, including `original_task`, which is set to an empty string, and `sub_tasks`, which is initialized as an empty list. The `breakdown_prompt` is loaded from a template file named 'manager_break_down.txt' using the environment object from the BaseAgent class, allowing for dynamic prompt generation based on the original task.
+**Code Description**: The Manager class inherits from the BaseAgent class and is designed to manage tasks by breaking them down into smaller, manageable sub-tasks. Upon initialization, the class sets up the original task as an empty string and initializes an empty list for sub-tasks. It also retrieves a template for task breakdown prompts from the environment, which will be used in the breakdown process. The class contains two primary methods: `breakdown_task` and `get_data_for_breakdown`.
 
-The primary method of the Manager class is `breakdown_task`, which is responsible for decomposing the original task into smaller, manageable sub-tasks. This method first retrieves the necessary data for breakdown by calling `get_data_for_breakdown`, which constructs a dictionary containing the `original_task`. The method then utilizes the `chat` method inherited from BaseAgent, passing the data and the `breakdown_prompt` to generate a response that outlines the sub-tasks.
+The `breakdown_task` method is responsible for breaking down the original task into sub-tasks. It first calls the `get_data_for_breakdown` method to retrieve the necessary data, which includes the original task. This data is then passed to the `chat_with_template` method along with the breakdown prompt to generate the sub-tasks.
 
-The `get_data_for_breakdown` method serves as a utility function that prepares the data structure required for the breakdown process. It returns a dictionary with the key 'task' mapped to the `original_task`, ensuring that the prompt can be rendered with the correct context.
+The `get_data_for_breakdown` method constructs and returns a dictionary containing the original task. This method serves as a helper function to provide the required data format for the breakdown process.
 
-In summary, the Manager class leverages the capabilities of the BaseAgent class to facilitate task management, specifically focusing on breaking down complex tasks into simpler components that can be handled more effectively.
+**Note**: It is important to ensure that the original_task attribute is set before calling the breakdown_task method, as this will directly influence the output of the task breakdown process.
 
-**Note**: It is essential to ensure that the template file 'manager_break_down.txt' is correctly formatted and accessible within the specified prompt folder path. The interaction with the language model through the `chat` method relies on the proper implementation of the `call_llm` function, which must be defined in the BaseAgent class or elsewhere in the codebase.
-
-**Output Example**: A possible output from the `breakdown_task` method might look like this:
-```
-{
-    "sub_tasks": [
-        "Define the main objectives of the task.",
-        "Identify the resources required.",
-        "Establish a timeline for completion."
-    ],
-    "status": "success",
-    "message": "Task has been successfully broken down."
-}
-```
+**Output Example**: If the original_task is set to "Prepare a project report", the output of the breakdown_task method might resemble the following structure:
+- Sub-task 1: "Gather data and statistics"
+- Sub-task 2: "Draft the report outline"
+- Sub-task 3: "Write the introduction section"
+- Sub-task 4: "Compile the final document"
 ### FunctionDef __init__(self)
 **__init__**: The function of __init__ is to initialize an instance of the Manager class.
 
@@ -48,20 +39,22 @@ Overall, this constructor sets up the necessary attributes for the Manager class
 **Note**: It is important to ensure that the parent class's constructor is called to maintain the integrity of the class hierarchy. Additionally, the template file 'manager_break_down.txt' should be present in the expected directory for the code to function correctly.
 ***
 ### FunctionDef breakdown_task(self)
-**breakdown_task**: The function of breakdown_task is to decompose a task into subtasks.
+**breakdown_task**: The function of breakdown_task is to decompose a task into sub-tasks.
 
 **parameters**: The parameters of this Function.
 · None
 
-**Code Description**: The breakdown_task method is a member of the Manager class and is responsible for breaking down a larger task into smaller, manageable subtasks. This method first calls the get_data_for_breakdown method to retrieve the original task data, which is essential for the decomposition process. The data returned is structured as a dictionary, where the key 'task' holds the value of the original task that needs to be broken down.
+**Code Description**: The breakdown_task method is a member of the Manager class. Its primary purpose is to facilitate the decomposition of a larger task into smaller, manageable sub-tasks. This method achieves this by first invoking the get_data_for_breakdown method, which retrieves the original task data necessary for the breakdown process. The data returned from get_data_for_breakdown is then passed to the chat_with_template method along with a predefined prompt, referred to as self.breakdown_prompt.
 
-Once the data is obtained, the breakdown_task method proceeds to invoke the chat method from the BaseAgent class. This method is designed to interact with a language model by generating a prompt based on the input data. In this case, the breakdown_task method passes the retrieved data and a predefined breakdown prompt to the chat method. The chat method then renders the prompt using the provided data and communicates with the language model to obtain a response, which is expected to contain the subtasks derived from the original task.
+The get_data_for_breakdown method is crucial to the functionality of breakdown_task, as it ensures that the current state of the original task is accurately captured and made available for further processing. The output of get_data_for_breakdown is a dictionary containing the original task, which serves as the foundation for generating the sub-tasks.
 
-The relationship between breakdown_task and its callees is crucial for the overall functionality of task decomposition. The breakdown_task method relies on get_data_for_breakdown to ensure it has the correct context for the task at hand, and it utilizes the chat method to facilitate the interaction with the language model, effectively bridging the gap between the original task and its decomposition into subtasks.
+The chat_with_template method, which is called within breakdown_task, is responsible for interacting with a language model or template to produce the desired output based on the provided data and prompt. This indicates that breakdown_task not only retrieves the necessary data but also processes it to yield actionable sub-tasks.
 
-**Note**: It is important to ensure that the original task is properly initialized within the Manager class before invoking breakdown_task to avoid any runtime errors. Additionally, the breakdown prompt used in the chat method should be appropriately defined to elicit meaningful responses from the language model.
+Overall, breakdown_task plays a vital role in the task management workflow by ensuring that tasks can be effectively broken down into smaller components, thereby enhancing the manageability and clarity of the overall task structure.
 
-**Output Example**: A possible return value from the breakdown_task method could be a list of subtasks such as ["Research climate change effects", "Draft an outline for the report", "Write the introduction section"].
+**Note**: It is important to ensure that the instance variable self.original_task is properly initialized before invoking this method to avoid any runtime errors.
+
+**Output Example**: A possible return value from the breakdown_task method could be a structured response detailing the sub-tasks derived from the original task, such as: {'sub_tasks': ['Research climate change impacts', 'Draft report outline', 'Write introduction section']}.
 ***
 ### FunctionDef get_data_for_breakdown(self)
 **get_data_for_breakdown**: The function of get_data_for_breakdown is to retrieve the original task data for further processing.
