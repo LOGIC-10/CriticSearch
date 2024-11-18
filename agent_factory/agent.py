@@ -25,6 +25,7 @@
 # critic_agent_reply = critic_agent.generate_reply(messages=[{"content": "Tell me a joke.", "role": "user"}])
 # print(critic_agent_reply)
 
+import yaml
 from config import read_config
 import os
 
@@ -40,18 +41,40 @@ class BaseAgent:
         self.sys_prompt = ''
         self.repeat_turns = 10
 
+    def common_chat(self, query):
+        return call_llm(model=self.model, sys_prompt=self.sys_prompt, usr_prompt=query, config=self.config)
     
-    def chat(self, data, prompt_template):
+    def chat_with_template(self, data, prompt_template):
         """
         通用的聊天方法，根据传入的data字典适配不同的prompt。
         """
         rendered_prompt = prompt_template.render(**data)
         # print(rendered_prompt)
-        response_message = call_llm(model=self.model, sys_prompt=self.sys_prompt, usr_prompt=rendered_prompt, config=self.config)
+        response_message = self.common_chat(query=rendered_prompt)
         return response_message
     
+
     def receive_task(self, task):
         """
         接收原始任务。
         """
         self.original_task = task
+        
+    def extract_and_validate_yaml(self, model_response):
+        # 正则表达式匹配包裹在```yaml```之间的内容
+        import re
+        match = re.search(r'```yaml\n([\s\S]*?)\n```', model_response, re.DOTALL)
+        
+        if not match:
+            return None  # 如果没有找到匹配的内容，返回None
+        
+        model_response = match.group(1).strip()
+        
+        try:
+            # 尝试解析YAML内容
+            parsed_yaml = yaml.safe_load(model_response)
+            return yaml.dump(parsed_yaml, default_flow_style=False)
+
+        except yaml.YAMLError as exc:
+            print(f"Invalid YAML content: {exc}")
+            return None

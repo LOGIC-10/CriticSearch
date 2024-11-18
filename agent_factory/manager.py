@@ -21,7 +21,7 @@ class Manager(BaseAgent):
         将任务拆解成子任务。
         """
         data = self.get_data_for_breakdown()
-        return self.chat(data, self.breakdown_prompt)
+        return self.chat_with_template(data, self.breakdown_prompt)
 
     def get_data_for_breakdown(self):
         return {

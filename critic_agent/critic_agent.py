@@ -12,12 +12,6 @@ project_root = Path(__file__).resolve().parents[1]  # 获取项目根目录
 sys.path.append(str(project_root / 'agent_factory'))  # 添加到搜索路径中
 sys.path.append(str(project_root / 'critic_agent'))
 
-custom_module_path = '/Users/logic/Documents/CodeSpace/AgentFactory'
-if custom_module_path not in sys.path:
-    sys.path.append(custom_module_path)
-
-print(sys.path)
-
 from agent_factory.agent import BaseAgent
 
 
