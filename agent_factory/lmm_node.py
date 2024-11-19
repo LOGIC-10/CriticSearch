@@ -11,11 +11,11 @@ class LLMNode:
         self.name = name
         self.llm_model = llm_model
         self.prompt_template = prompt_template # The prompt template that will be used and optimized for
-        self.router = router  # Function that decides next node(s)
+        self.router = router  # Function that decides next node(s), if none then single pipeline (with only one outgoing edge)
         self.input_schema = input_schema # Used to create type defined workflows
         self.output_schema = output_schema # Used to create type defined workflows
-        self.optimized = False
-        self.frozen = False
+        self.optimized = False # initial optimization needs to be done
+        self.frozen = False # this subgraph has complete accuracy and can have its parameters frozen
 
     def execute(self, input_data):
         # Validate input data against input_schema if constrained
