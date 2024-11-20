@@ -7,6 +7,7 @@ from typing import Any, Callable, Dict, Optional
 import textgrad as tg
 
 from .utils import call_llm, read_prompt_template, MAX_OPTIMIZATION_STEPS
+from agent_factory.evaluator import evaluator
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
