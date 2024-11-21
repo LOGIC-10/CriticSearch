@@ -1,52 +1,66 @@
 ## ClassDef BaseAgent
-**BaseAgent**: The function of BaseAgent is to serve as a foundational class for handling chat interactions and processing tasks using a specified language model.
+**BaseAgent**: The function of BaseAgent is to serve as the foundational agent for performing tasks related to querying and processing information with a model, as well as managing related configurations and data structures.
 
-**attributes**: The attributes of this Class.
-· config: A configuration object that holds various settings for the agent, including model specifications and prompt folder paths.  
-· model: The name of the default language model to be used for chat interactions, initialized to "gpt-4o-mini".  
-· env: An instance of the Environment class, which is configured to load templates from a specified folder path.  
-· sys_prompt: A string that holds the system prompt for the chat interactions, initialized as an empty string.  
-· repeat_turns: An integer that defines the number of turns to repeat in the chat, initialized to 10.  
-· original_task: A variable to store the original task received by the agent.
+**attributes**:
+· `config`: A configuration object containing various settings loaded from a configuration file.  
+· `model`: A string specifying the default model to be used for interactions (defaults to "gpt-4o-mini").  
+· `env`: An Environment object initialized with a file system loader pointing to the prompt folder path defined in the configuration.  
+· `queryDB`: A set that stores queries. This set is used to hold each unique query issued by the agent.  
+· `citationDB`: A list of dictionaries, where each dictionary represents a query and its associated citation data (only queries praised by the critic are included).  
+· `sys_prompt`: A string holding the system-level prompt used for guiding interactions with the model.  
+· `repeat_turns`: An integer specifying the maximum number of turns for repeating a task or conversation (defaults to 10).  
+· `original_task`: A placeholder for the original task that will be processed by the agent.
 
-**Code Description**: The BaseAgent class is designed to facilitate interactions with a language model through chat functionalities. Upon initialization, it reads the configuration settings, including the default model and the path for prompt templates. The class provides several methods to interact with the model and process tasks.
+**Code Description**:  
+The `BaseAgent` class provides the essential functionality for interacting with an AI model and handling related tasks. It begins by initializing various attributes, such as loading configuration details, setting the default model to "gpt-4o-mini", and setting up a file-based environment for loading prompts. The agent also maintains a set `queryDB` to track all issued queries and a `citationDB` for storing search results with associated citations, ensuring that only specific search results are included (those deemed worthy by a critic).  
 
-The `common_chat` method takes a user query as input and calls the language model using the specified system prompt and user prompt. This method serves as the primary interface for generating responses based on user input.
+The `common_chat` method facilitates interaction with the model by taking a query and invoking a model with a predefined system prompt. The method `chat_with_template` is more flexible, allowing for dynamic generation of prompts from a provided template. It first renders the template using data passed to it and then passes the generated prompt to `common_chat`.  
 
-The `chat_with_template` method allows for dynamic prompt generation by rendering a template with provided data. It utilizes the Jinja2 templating engine to create a customized prompt before passing it to the `common_chat` method for processing.
+The `receive_task` method stores the task passed to the agent, ensuring the agent can process it later. The `extract_and_validate_yaml` method is a utility for extracting and validating YAML-formatted data from the response returned by the model. It searches for a YAML block in the response and attempts to parse it, returning the valid YAML content in a human-readable format if the extraction is successful. If no valid YAML is found or an error occurs during parsing, the method returns `None`.  
 
-The `receive_task` method is used to accept and store an original task, which can be further processed or utilized in chat interactions.
+**Note**:  
+- The agent requires a properly structured configuration file to initialize correctly. 
+- The `citationDB` is a critical component for maintaining the quality of search results.
+- The `repeat_turns` parameter limits the number of times an agent will reattempt a task.
+- `extract_and_validate_yaml` uses regular expressions to extract YAML content and relies on Python's `yaml` library for parsing.
 
-The `extract_and_validate_yaml` method is responsible for extracting YAML content from a model's response. It uses regular expressions to find content wrapped in ```yaml``` tags and attempts to parse it using the PyYAML library. If successful, it returns the YAML content in a standardized format; otherwise, it handles errors gracefully by returning None.
-
-**Note**: When using the BaseAgent class, ensure that the configuration file is correctly set up with the necessary parameters, including the prompt folder path and the default model. Additionally, proper error handling should be implemented when dealing with YAML content to avoid runtime exceptions.
-
-**Output Example**: A possible return value from the `common_chat` method could be a string response from the language model, such as: "Hello! How can I assist you today?" If the `extract_and_validate_yaml` method is called with a valid model response containing YAML, it might return a formatted YAML string like:
+**Output Example**:  
+For `common_chat`, a mock response might be:
+```json
+{
+  "response": "The challenges faced by Google in 2019 included increasing competition, regulatory pressures, and internal company restructuring."
+}
+```
+For `extract_and_validate_yaml`, a valid YAML block returned might look like:
 ```yaml
-key1: value1
-key2: value2
+model: gpt-4o-mini
+config:
+  timeout: 30
+  retries: 3
 ```
 ### FunctionDef __init__(self)
-**__init__**: The function of __init__ is to initialize an instance of the BaseAgent class by setting up its configuration and environment.
+**__init__**: The function of __init__ is to initialize an instance of the BaseAgent class with configuration settings and data structures for managing queries and citations.
 
 **parameters**: The parameters of this Function.
-· None
+· There are no parameters for this function.
 
-**Code Description**: The __init__ method is a constructor for the BaseAgent class. It is called when an instance of the class is created. The method performs several key operations:
+**Code Description**: The __init__ function is a constructor for the BaseAgent class. It is responsible for setting up the initial state of an instance when it is created. The function performs the following actions:
 
-1. It invokes the read_config function to load configuration settings from a YAML file. This function returns a dictionary containing various configuration parameters, which is stored in the instance variable self.config.
+1. It calls the `read_config()` function to load configuration settings, which are stored in the `self.config` attribute. This configuration is essential for the agent's operation, as it contains various settings that dictate how the agent behaves.
 
-2. The method retrieves the value associated with the key 'default_model' from the configuration dictionary. If this key is not present, it defaults to the string "gpt-4o-mini". This value is stored in the instance variable self.model, which likely represents the model that the agent will use for its operations.
+2. The `self.model` attribute is initialized with the value of the 'default_model' key from the configuration. If this key is not present, it defaults to "gpt-4o-mini". This model will likely be used for generating responses or processing queries.
 
-3. The method initializes an Environment object from the Jinja2 templating library. This object is configured with a loader that points to the directory specified by the 'prompt_folder_path' key in the configuration dictionary. This allows the agent to dynamically load prompt templates from the specified folder.
+3. The `self.env` attribute is initialized as an instance of the `Environment` class, which is configured with a `FileSystemLoader`. The loader is set to the path specified by the 'prompt_folder_path' key in the configuration. This environment is likely used for loading templates or prompts that the agent will utilize.
 
-4. The instance variable self.sys_prompt is initialized as an empty string, which may be used later to store system prompts or messages.
+4. The `self.queryDB` attribute is initialized as an empty set. This set is intended to store unique queries that the agent will process. Using a set ensures that each query is distinct and prevents duplicates.
 
-5. Finally, the method sets self.repeat_turns to 10, which could indicate the number of times the agent is allowed to repeat certain actions or interactions during its operation.
+5. The `self.citationDB` attribute is initialized with a list containing a single dictionary. This dictionary is structured to hold search questions as keys, with corresponding values that are themselves dictionaries. Each value dictionary contains a "document_id" key, which is a unique identifier for a document, along with placeholders for "url", "title", and "content". This structure is designed to store search results that have received positive feedback from critics.
 
-Overall, the __init__ method establishes the foundational settings and components necessary for the BaseAgent to function effectively. It relies on the read_config function to ensure that the agent is configured according to the specified settings in the YAML file, thus enabling flexibility and customization in its behavior.
+6. The `self.sys_prompt` attribute is initialized as an empty string. This prompt may be used to guide the agent's responses or behavior during interactions.
 
-**Note**: It is crucial to ensure that the YAML configuration file is accessible and correctly formatted. Any issues with file access or parsing may result in runtime errors, preventing the BaseAgent from initializing properly.
+7. The `self.repeat_turns` attribute is set to 10, indicating the number of times the agent may repeat a certain action or query during its operation.
+
+**Note**: It is important to ensure that the configuration file is correctly set up and accessible, as the agent relies heavily on the parameters defined within it. Additionally, the structure of `citationDB` should be maintained to ensure that the agent can effectively manage and reference search results.
 ***
 ### FunctionDef common_chat(self, query)
 **common_chat**: The function of common_chat is to facilitate communication with a language model by sending a user-defined query along with system prompts and configuration settings.
