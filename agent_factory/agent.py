@@ -26,11 +26,11 @@
 # print(critic_agent_reply)
 
 import yaml
-from config import read_config
+from agent_factory.config import read_config
 import os
 
 from jinja2 import Environment, FileSystemLoader
-from utils import call_llm
+from agent_factory.utils import call_llm
 
 
 class BaseAgent:
@@ -38,6 +38,18 @@ class BaseAgent:
         self.config = read_config()
         self.model = self.config.get('default_model', "gpt-4o-mini")
         self.env = Environment(loader=FileSystemLoader(self.config.get('prompt_folder_path')))
+        # 定一个通用格式,queryDB应该是一个set,里面每个元素是一个query
+        self.queryDB = set() # 对于citationDB,应该是一个字典，key是query，value是内容和来源
+        # 这个列表中的每个元素都是一个字典，代表一个搜索的问题以及对应的搜索结果
+        self.citationDB = [{ # citationDB中只会把受到critic表扬的搜索结果加入
+            "why do we say google was facing challenges in 2019?": {
+                "document_id":{ # 这个document_id是一个唯一的标识符，用于标识这个文档
+                    "url": "",
+                    "title": "",
+                    "content": ""
+                }
+            }
+        }]
         self.sys_prompt = ''
         self.repeat_turns = 10
 
