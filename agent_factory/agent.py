@@ -1,36 +1,13 @@
-# import os
-# from autogen import AssistantAgent, UserProxyAgent
-# from autogen import ConversableAgent
-# from config import read_config
-
-# config = read_config()
-# model = config.get('default_model',"gpt-4o-mini")
-# api_key = config.get("models").get(model).get("api_key")
-# base_url = config.get("models").get(model).get("base_url")
-
-# llm_config = { "config_list": [{ "model": model, "api_key": api_key }], "base_url": base_url}
-
-
-# # 定义一个critic agent
-# critic_agent = ConversableAgent(
-#     "CriticAgent",
-#     system_message="Your name is Cathy and you are a part of a duo of comedians.",
-#     llm_config=llm_config,
-#     human_input_mode="NEVER",  # Never ask for human input.
-# )
-
-# # 填充prompt模板内容   
-
-# # 使用 critic agent 生成回复
-# critic_agent_reply = critic_agent.generate_reply(messages=[{"content": "Tell me a joke.", "role": "user"}])
-# print(critic_agent_reply)
-
+import json
 import yaml
 from agent_factory.config import read_config
 import os
 
 from jinja2 import Environment, FileSystemLoader
 from agent_factory.utils import call_llm
+from agent_factory.search_adapter.aggregator import SearchAggregator
+import concurrent.futures
+
 
 
 class BaseAgent:
@@ -54,19 +31,53 @@ class BaseAgent:
         self.repeat_turns = 10
         self.history = []
 
-    def parallel_search(self, query_list):
-        """
-        并行搜索。
-        """
-        # 这里模拟并行搜索
-        for query in query_list:
-            # 模拟搜索结果
-            search_result = {
-                "url": "https://www.google.com",
-                "title": "Google facing challenges in 2019",
-                "content": "Google is facing challenges in 2019 because of..."
+    def search_query(self, query):
+        # 初始化 SearchAggregator
+        aggregator = SearchAggregator()
+        # 调用搜索方法
+        response = aggregator.search(query=query)
+        # 提取结果中的标题、URL 和内容
+        results = [
+            {
+                "title": res.get('title'),
+                "url": res.get('url'),
+                "content": res.get('content')
             }
-        pass
+            for res in response.get("results")
+        ]
+        # 返回查询、响应时间和结果
+        return {
+            "query": response.get('query'),
+            "response_time": response.get('response_time'),
+            "results": results # 有用的其实是results[List]中的title, url, content
+        }
+
+
+    def parallel_search(self,queries):
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            future_to_query = {executor.submit(self.search_query, query): query for query in queries}
+            results = []
+            for future in concurrent.futures.as_completed(future_to_query):
+                query = future_to_query[future]
+                try:
+                    result = future.result()
+                    results.append(result)
+                except Exception as exc:
+                    print(f"{query} generated an exception: {exc}")
+                    
+        return results
+
+
+    def format_parallel_search_to_string(self, data_list):
+        result = []
+        for item in data_list:
+            query = item.get("query")
+            results = item.get("results", [])
+            result.append(f"Query: {query}\nSearch Results:\n" + "-"*50)
+            for i, res in enumerate(results, 1):
+                result.append(f"[{i}]:\nTITLE: {res['title']}\nURL: {res['url']}\nCONTENT: {res['content']}\n" + "-"*50)
+            result.append("\n")
+        return "\n".join(result)
 
     def common_chat(self, query):
         llm_response = call_llm(model=self.model, sys_prompt=self.sys_prompt, usr_prompt=query, config=self.config)
@@ -77,19 +88,16 @@ class BaseAgent:
     def clear_history(self):
         self.history = []
 
-    def update_summary(self, query, previous_summary, search_results, critic_feedback):
-        """
-        更新摘要。
-        """
-        # 注意给prompt
-        # 这里模拟更新摘要
-        query = query  
-        previous_summary = previous_summary
-        search_results = search_results 
-        critic_feedback = critic_feedback
+    def update_answer(self, query, previous_answer, search_results, critic_feedback):
 
-        self.history.append({"role": "assistant", "content": "This is the updated summary."})
-        return "This is the updated summary."
+        data = {
+            "query": query,
+            "previous_answer": previous_answer,
+            "search_results": search_results,
+            "critic_feedback": critic_feedback
+        }
+        updated_answer = self.chat_with_template(data, self.env.get_template('agent_update_answer.txt'))
+        return updated_answer
     
     def chat_with_template(self, data, prompt_template):
         """
@@ -125,3 +133,5 @@ class BaseAgent:
         except yaml.YAMLError as exc:
             print(f"Invalid YAML content: {exc}")
             return None
+        
+    

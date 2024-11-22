@@ -32,22 +32,25 @@ for iteration in range(max_iteration):
         common_agent_answer = common_agent.common_chat(query=task) # common_chat里面可以用tool search
     else:
         # 根据上一次的搜索结果，上一次的回答，以及上一次的critic反馈，更新回答
-        common_agent_answer = common_agent.update_summary(query=task, previous_summary=common_agent_answer, search_results=search_results, critic_feedback=critic_agent_response)
+        common_agent_answer = common_agent.update_answer(query=task, previous_answer=common_agent_answer, search_results=formatted_search_results, critic_feedback=critic_agent_response)
     
     print(f"{'%' * 30}\nCOMMON_AGENT_ANSWER:\n\n{common_agent_answer}\n\n")
     
-    CriticAgent = CriticAgent()
-    CriticAgent.receive_task(task)
-    CriticAgent.receive_agent_answer(common_agent_answer)
+    critic_agent = CriticAgent()
+    critic_agent.receive_task(task)
+    critic_agent.receive_agent_answer(common_agent_answer)
     
-    critic_agent_response = CriticAgent.critic()
+    critic_agent_response = critic_agent.critic()
     print(f"{'%' * 30}\nCRITIC_AGENT_RESPONSE:\n\n{critic_agent_response}\n\n")
     
     plan_agent.receive_task(task)
     agent_next_search_plan = plan_agent.plan(common_agent_answer, critic_agent_response)
     
     new_query_list = [item["Query"] for item in yaml.safe_load(agent_next_search_plan).get('NewSearchQueries', [])]
-    print(f"{'%' * 30}\nSEARCH_PLAN_LIST:\n\n{new_query_list}\n\n")
     
     common_agent.queryDB.update(new_query_list)
     search_results = common_agent.parallel_search(new_query_list)
+    formatted_search_results = common_agent.format_parallel_search_to_string(search_results)
+    print(f"{'%' * 30}\nSEARCH_RESULTS:\n\n{formatted_search_results}\n\n")
+
+
