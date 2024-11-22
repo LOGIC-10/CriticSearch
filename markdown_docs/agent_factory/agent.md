@@ -2,33 +2,37 @@
 **BaseAgent**: The function of BaseAgent is to serve as a foundational class for managing interactions with a language model, handling queries, and maintaining a history of conversations.
 
 **attributes**: The attributes of this Class.
-· config: A configuration object that holds settings and parameters for the agent, loaded from a configuration file.
-· model: The model to be used for generating responses, defaulting to "gpt-4o-mini" if not specified in the configuration.
-· env: An Environment object that loads templates from a specified folder path for rendering prompts.
-· queryDB: A set that stores unique queries to be processed.
-· citationDB: A list of dictionaries that contains search queries and their corresponding results, specifically those that have received positive feedback.
-· sys_prompt: A string that holds the system prompt used for guiding the language model's responses.
-· repeat_turns: An integer that defines the maximum number of turns for repeated interactions.
-· history: A list that maintains the history of interactions, storing both user queries and model responses.
+· config: A configuration object that holds settings for the agent, including model type and prompt folder path.  
+· model: The model used for generating responses, defaulting to "gpt-4o-mini".  
+· env: An environment object for loading templates from the specified prompt folder.  
+· queryDB: A set that stores unique queries for processing.  
+· citationDB: A list of dictionaries that contains search questions and their corresponding results, specifically those praised by critics.  
+· sys_prompt: A system prompt that can be used to guide the language model's responses.  
+· repeat_turns: An integer that defines the number of times a query can be repeated in the conversation.  
+· history: A list that records the history of interactions, including user queries and model responses.  
 
-**Code Description**: The BaseAgent class is designed to facilitate interactions with a language model by managing configurations, handling user queries, and maintaining a history of conversations. Upon initialization, it reads configuration settings, including the model to be used and the path for prompt templates. The class maintains a query database (queryDB) for storing unique queries and a citation database (citationDB) for tracking search results that have been positively acknowledged. 
+**Code Description**: The BaseAgent class is designed to facilitate interactions with a language model by managing configurations, queries, and conversation history. Upon initialization, it reads the configuration settings, sets the default model, and prepares the environment for loading prompts. The class maintains a query database (queryDB) to store unique queries and a citation database (citationDB) to keep track of search results that have received positive feedback. The class provides several methods for functionality:
 
-The class provides several methods:
-- `parallel_search(query_list)`: This method simulates parallel searching for a list of queries, although the actual implementation is not provided.
-- `common_chat(query)`: This method sends a user query to the language model and appends both the user query and the model's response to the history.
-- `clear_history()`: This method clears the conversation history.
-- `chat_with_template(data, prompt_template)`: This method adapts a prompt template using provided data and sends the rendered prompt to the common chat method.
-- `receive_task(task)`: This method accepts a task for processing.
-- `extract_and_validate_yaml(model_response)`: This method extracts YAML content from a model response and validates it, returning the parsed YAML or None if invalid.
+- **parallel_search(query_list)**: This method simulates a parallel search for a list of queries. Although the implementation is currently a placeholder, it is intended to handle multiple queries simultaneously and gather results.
 
-The class is structured to support extensibility and can be integrated into larger systems that require natural language processing capabilities.
+- **common_chat(query)**: This method sends a user query to the language model and appends both the user query and the model's response to the history. It returns the model's response.
 
-**Note**: When using the BaseAgent class, ensure that the configuration file is correctly set up to avoid issues with loading models or templates. Additionally, be mindful of the structure of the citationDB to maintain consistency in storing search results.
+- **clear_history()**: This method clears the conversation history, resetting the history attribute to an empty list.
 
-**Output Example**: An example of a response from the `common_chat` method could be:
+- **update_summary(query, previous_summary, search_results, critic_feedback)**: This method updates a summary based on the provided query, previous summary, search results, and feedback from critics. It simulates the process of generating an updated summary and appends it to the history.
+
+- **chat_with_template(data, prompt_template)**: This method adapts a chat interaction based on a provided data dictionary and a prompt template. It renders the prompt using the data and calls the common_chat method to get a response.
+
+- **receive_task(task)**: This method accepts an original task, storing it in the original_task attribute for further processing.
+
+- **extract_and_validate_yaml(model_response)**: This method extracts YAML content from a model response using regular expressions. It attempts to parse the extracted content and returns it in a standardized YAML format. If parsing fails, it returns None.
+
+**Note**: It is important to ensure that the configuration settings are correctly defined before using the BaseAgent class. The parallel_search method is currently a placeholder and may require further implementation to handle actual search logic. Additionally, the extract_and_validate_yaml method relies on the presence of valid YAML content in the model response.
+
+**Output Example**: A possible return value from the common_chat method could be:
 {
   "role": "assistant",
-  "content": "Google faced challenges in 2019 due to various factors, including increased competition and regulatory scrutiny."
+  "content": "Google faced several challenges in 2019, including..."
 }
 ### FunctionDef __init__(self)
 **__init__**: The function of __init__ is to initialize an instance of the BaseAgent class, setting up its configuration and necessary attributes.
@@ -92,6 +96,23 @@ This design allows for a structured conversation flow, where chat_with_template 
 **Code Description**: The clear_history function is a method defined within the BaseAgent class. When invoked, it sets the instance variable `history` to an empty list. This effectively removes all previous entries stored in the `history`, allowing the agent to start fresh without any prior context or data. This function is particularly useful in scenarios where the agent needs to discard past interactions or data, ensuring that it operates without any influence from previous states. The simplicity of this function underscores its importance in maintaining the integrity of the agent's operational state.
 
 **Note**: It is important to use the clear_history function judiciously, as invoking it will permanently erase all historical data associated with the agent. This action cannot be undone, so it should be called only when it is certain that the historical data is no longer needed.
+***
+### FunctionDef update_summary(self, query, previous_summary, search_results, critic_feedback)
+**update_summary**: The function of update_summary is to update a summary based on the provided query, previous summary, search results, and critic feedback.
+
+**parameters**: The parameters of this Function.
+· query: A string representing the current query that needs to be addressed in the summary update.
+· previous_summary: A string containing the previous summary that is to be updated.
+· search_results: A collection of results obtained from a search operation that may inform the summary update.
+· critic_feedback: Feedback from a critic that may influence the content of the updated summary.
+
+**Code Description**: The update_summary function is designed to facilitate the process of updating a summary based on various inputs. It takes four parameters: query, previous_summary, search_results, and critic_feedback. The function begins by assigning the input parameters to local variables, which are not modified within the function. The primary purpose of this function is to simulate the process of updating a summary. 
+
+After processing the inputs, the function appends a new entry to the history attribute of the class instance, indicating that an updated summary has been generated. The content of this entry is a placeholder string: "This is the updated summary." Finally, the function returns this placeholder string as the output, representing the updated summary.
+
+**Note**: It is important to understand that the current implementation of this function does not perform any actual logic to modify the summary based on the inputs. Instead, it serves as a simulation, and the returned value is static. Developers should consider implementing logic to utilize the inputs effectively for a meaningful summary update.
+
+**Output Example**: The function will return the following string as the updated summary: "This is the updated summary."
 ***
 ### FunctionDef chat_with_template(self, data, prompt_template)
 **chat_with_template**: The function of chat_with_template is to facilitate a conversation by rendering a prompt template with provided data and then communicating with a language model.
