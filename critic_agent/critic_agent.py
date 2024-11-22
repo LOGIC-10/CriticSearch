@@ -27,7 +27,8 @@ class CriticAgent(BaseAgent):
         """
         data = self.get_data_for_critic()
         model_response = self.chat_with_template(data, self.critic_prompt)
-
+        # 这里模型在模拟user作出回应
+        self.history.append({"role": "critic_user", "content": model_response})
         try:
             formatted_yaml = self.extract_and_validate_yaml(model_response)
             return formatted_yaml

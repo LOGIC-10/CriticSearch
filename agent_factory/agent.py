@@ -52,9 +52,31 @@ class BaseAgent:
         }]
         self.sys_prompt = ''
         self.repeat_turns = 10
+        self.history = []
+
+    def parallel_search(self, query_list):
+        """
+        并行搜索。
+        """
+        # 这里模拟并行搜索
+        for query in query_list:
+            # 模拟搜索结果
+            search_result = {
+                "url": "https://www.google.com",
+                "title": "Google facing challenges in 2019",
+                "content": "Google is facing challenges in 2019 because of..."
+            }
+        pass
 
     def common_chat(self, query):
-        return call_llm(model=self.model, sys_prompt=self.sys_prompt, usr_prompt=query, config=self.config)
+        llm_response = call_llm(model=self.model, sys_prompt=self.sys_prompt, usr_prompt=query, config=self.config)
+        self.history.append({"role": "user", "content": query})
+        self.history.append({"role": "assistant", "content": llm_response})
+        return llm_response
+    
+    def clear_history(self):
+        self.history = []
+
     
     def chat_with_template(self, data, prompt_template):
         """
