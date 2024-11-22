@@ -1,38 +1,42 @@
 ## ClassDef BaseAgent
-**BaseAgent**: The function of BaseAgent is to serve as a foundational class for managing interactions with a language model, handling queries, and maintaining a history of conversations.
+**BaseAgent**: The function of BaseAgent is to serve as a foundational class for managing queries, searching for information, and interacting with a language model.
 
 **attributes**: The attributes of this Class.
-· config: A configuration object that holds settings for the agent, including model type and prompt folder path.  
+· config: A configuration object that holds settings for the agent, including the default model and prompt folder path.  
 · model: The model used for generating responses, defaulting to "gpt-4o-mini".  
-· env: An environment object for loading templates from the specified prompt folder.  
-· queryDB: A set that stores unique queries for processing.  
-· citationDB: A list of dictionaries that contains search questions and their corresponding results, specifically those praised by critics.  
-· sys_prompt: A system prompt that can be used to guide the language model's responses.  
-· repeat_turns: An integer that defines the number of times a query can be repeated in the conversation.  
-· history: A list that records the history of interactions, including user queries and model responses.  
+· env: An Environment object used for loading templates from the specified prompt folder.  
+· queryDB: A set that stores unique queries for searching.  
+· citationDB: A list of dictionaries that contains search queries and their corresponding results, specifically those praised by critics.  
+· sys_prompt: A system prompt used for guiding the language model's responses.  
+· repeat_turns: An integer that defines the number of times a query can be repeated, set to 10 by default.  
+· history: A list that maintains the history of interactions between the user and the assistant.
 
-**Code Description**: The BaseAgent class is designed to facilitate interactions with a language model by managing configurations, queries, and conversation history. Upon initialization, it reads the configuration settings, sets the default model, and prepares the environment for loading prompts. The class maintains a query database (queryDB) to store unique queries and a citation database (citationDB) to keep track of search results that have received positive feedback. The class provides several methods for functionality:
+**Code Description**: The BaseAgent class is designed to facilitate the process of querying information and interacting with a language model. Upon initialization, it reads configuration settings, sets up the model and environment, and initializes data structures for storing queries and citation results. The class provides several methods for searching queries, performing parallel searches, formatting search results, and managing chat interactions with the language model.
 
-- **parallel_search(query_list)**: This method simulates a parallel search for a list of queries. Although the implementation is currently a placeholder, it is intended to handle multiple queries simultaneously and gather results.
+The `search_query` method takes a query as input, utilizes a SearchAggregator to perform the search, and returns structured results including the query, response time, and relevant search results. The `parallel_search` method allows for concurrent execution of multiple queries, collecting results as they complete. The `format_parallel_search_to_string` method formats the results of parallel searches into a readable string format.
 
-- **common_chat(query)**: This method sends a user query to the language model and appends both the user query and the model's response to the history. It returns the model's response.
+The `common_chat` method interacts with the language model using a user-provided query and stores the conversation history. The `clear_history` method resets the conversation history. The `update_answer` method refines a previous answer based on new search results and feedback, while the `chat_with_template` method adapts the chat interaction based on a provided template.
 
-- **clear_history()**: This method clears the conversation history, resetting the history attribute to an empty list.
+The `receive_task` method accepts a task for processing, and the `extract_and_validate_yaml` method extracts YAML content from a model response, validating its structure and returning it in a formatted manner.
 
-- **update_summary(query, previous_summary, search_results, critic_feedback)**: This method updates a summary based on the provided query, previous summary, search results, and feedback from critics. It simulates the process of generating an updated summary and appends it to the history.
+**Note**: It is important to ensure that the configuration settings are correctly defined before instantiating the BaseAgent class. Additionally, the methods that interact with external systems, such as the language model and search aggregator, require proper handling of exceptions to maintain robustness.
 
-- **chat_with_template(data, prompt_template)**: This method adapts a chat interaction based on a provided data dictionary and a prompt template. It renders the prompt using the data and calls the common_chat method to get a response.
-
-- **receive_task(task)**: This method accepts an original task, storing it in the original_task attribute for further processing.
-
-- **extract_and_validate_yaml(model_response)**: This method extracts YAML content from a model response using regular expressions. It attempts to parse the extracted content and returns it in a standardized YAML format. If parsing fails, it returns None.
-
-**Note**: It is important to ensure that the configuration settings are correctly defined before using the BaseAgent class. The parallel_search method is currently a placeholder and may require further implementation to handle actual search logic. Additionally, the extract_and_validate_yaml method relies on the presence of valid YAML content in the model response.
-
-**Output Example**: A possible return value from the common_chat method could be:
+**Output Example**: A possible output from the `search_query` method could look like this:
 {
-  "role": "assistant",
-  "content": "Google faced several challenges in 2019, including..."
+  "query": "Why do we say Google was facing challenges in 2019?",
+  "response_time": "0.45 seconds",
+  "results": [
+    {
+      "title": "Google's Challenges in 2019",
+      "url": "https://example.com/google-challenges-2019",
+      "content": "In 2019, Google faced several challenges including..."
+    },
+    {
+      "title": "The Struggles of Google",
+      "url": "https://example.com/struggles-google",
+      "content": "Google's challenges in 2019 were multifaceted..."
+    }
+  ]
 }
 ### FunctionDef __init__(self)
 **__init__**: The function of __init__ is to initialize an instance of the BaseAgent class, setting up its configuration and necessary attributes.
@@ -60,15 +64,111 @@
 
 **Note**: It is important to ensure that the configuration file is correctly set up and accessible, as the agent's behavior heavily relies on the parameters defined within it. Additionally, the structure of the citationDB should be maintained to ensure proper retrieval and storage of search results.
 ***
-### FunctionDef parallel_search(self, query_list)
-**parallel_search**: The function of parallel_search is to perform a simulated parallel search for a list of queries.
+### FunctionDef search_query(self, query)
+**search_query**: The function of search_query is to perform a search operation based on a given query and return structured results.
 
 **parameters**: The parameters of this Function.
-· query_list: A list of queries that need to be searched in parallel.
+· query: A string representing the search term that needs to be queried.
 
-**Code Description**: The parallel_search function is designed to simulate a parallel search operation. It takes a list of queries as input through the parameter `query_list`. The function iterates over each query in the list, and for each query, it simulates a search result. The simulated search result is a dictionary containing three key-value pairs: "url", "title", and "content". The "url" points to a static link to Google, the "title" provides a brief headline related to Google, and the "content" gives a short description of the challenges faced by Google in 2019. However, it is important to note that the actual search operation is not implemented in this function, as it only simulates the results without performing any real search queries.
+**Code Description**: The search_query function is designed to facilitate the process of searching for information based on a specified query. Upon invocation, it initializes an instance of the SearchAggregator class, which is responsible for handling the search operation. The function then calls the search method of the aggregator, passing the query as an argument. This method returns a response that contains various details about the search results.
 
-**Note**: It is essential to understand that this function does not return any results or perform actual searches; it merely simulates the process. Therefore, it should be used for testing or demonstration purposes only. Additionally, the function currently lacks error handling and does not account for varying query formats or types.
+The function extracts relevant information from the response, specifically the title, URL, and content of each result. It constructs a list of dictionaries, where each dictionary corresponds to an individual search result. Each dictionary contains three keys: "title", "url", and "content", which hold the respective values retrieved from the response.
+
+Finally, the search_query function returns a structured dictionary that includes the original query, the response time from the search operation, and the list of results. This structured output allows for easy access to the search results and their associated metadata.
+
+The search_query function is called by the parallel_search function, which simulates a parallel search for multiple queries. In this context, parallel_search utilizes the search_query function to handle each individual query concurrently. This relationship enhances the efficiency of the search process, allowing multiple queries to be processed simultaneously and their results to be aggregated.
+
+**Note**: It is important to ensure that the query passed to the search_query function is properly formatted and relevant to the search context. Additionally, the function assumes that the SearchAggregator class is correctly implemented and capable of handling the search requests as expected.
+
+**Output Example**: A possible appearance of the code's return value could be as follows:
+{
+    "query": "example search",
+    "response_time": 120,
+    "results": [
+        {
+            "title": "Example Title 1",
+            "url": "http://example.com/1",
+            "content": "This is an example content for the first result."
+        },
+        {
+            "title": "Example Title 2",
+            "url": "http://example.com/2",
+            "content": "This is an example content for the second result."
+        }
+    ]
+}
+***
+### FunctionDef parallel_search(self, queries)
+**parallel_search**: The function of parallel_search is to perform concurrent searches for multiple queries and return their results.
+
+**parameters**: The parameters of this Function.
+· queries: A list of strings, where each string represents a search term that needs to be queried.
+
+**Code Description**: The parallel_search function is designed to enhance the efficiency of searching by executing multiple search queries concurrently. It utilizes the ThreadPoolExecutor from the concurrent.futures module to manage a pool of threads, allowing for simultaneous execution of the search_query function for each query in the provided list.
+
+Upon invocation, the function creates an instance of ThreadPoolExecutor, which is responsible for managing the threads. It then submits each query to the executor using the search_query method, creating a mapping of futures to their corresponding queries. This mapping allows the function to track which future corresponds to which query.
+
+As the futures complete, the function iterates over them using the as_completed method. For each completed future, it retrieves the associated query and attempts to obtain the result. If the search_query function executes successfully, the result is appended to the results list. In the event of an exception during the execution of a query, an error message is printed, indicating which query generated the exception and the nature of the error.
+
+Finally, the function returns a list of results, where each result corresponds to the output of the search_query function for each query. This design allows for efficient handling of multiple search requests, significantly reducing the total time required to process all queries compared to executing them sequentially.
+
+The parallel_search function directly relies on the search_query function to perform the actual search operation for each individual query. This relationship allows for a modular approach, where the parallel_search function orchestrates the concurrent execution while delegating the specific search logic to the search_query function.
+
+**Note**: It is important to ensure that the queries passed to the parallel_search function are properly formatted and relevant to the search context. Additionally, the function assumes that the search_query function is implemented correctly and can handle the search requests as expected.
+
+**Output Example**: A possible appearance of the code's return value could be as follows:
+[
+    {
+        "query": "example search 1",
+        "response_time": 100,
+        "results": [
+            {
+                "title": "Example Title 1",
+                "url": "http://example.com/1",
+                "content": "This is an example content for the first result."
+            }
+        ]
+    },
+    {
+        "query": "example search 2",
+        "response_time": 150,
+        "results": [
+            {
+                "title": "Example Title 2",
+                "url": "http://example.com/2",
+                "content": "This is an example content for the second result."
+            }
+        ]
+    }
+]
+***
+### FunctionDef format_parallel_search_to_string(self, data_list)
+**format_parallel_search_to_string**: The function of format_parallel_search_to_string is to format a list of search queries and their corresponding results into a structured string representation.
+
+**parameters**: The parameters of this Function.
+· data_list: A list of dictionaries, where each dictionary contains a search query and its associated results.
+
+**Code Description**: The format_parallel_search_to_string function takes a list of dictionaries as input, where each dictionary represents a search query and its results. The function initializes an empty list called `result` to store the formatted strings. It then iterates over each item in the `data_list`. For each item, it retrieves the "query" and "results" fields. The query is added to the result list, followed by a header for the search results. The function then iterates over the results, enumerating them to provide a numbered list. Each result is formatted to include the title, URL, and content, with separators for clarity. After processing all results for a query, an additional newline is appended to separate different queries. Finally, the function joins all elements in the `result` list into a single string, which is returned as the output.
+
+**Note**: It is important to ensure that each item in the data_list contains the expected keys ("query" and "results") to avoid KeyError exceptions. The results should be structured as dictionaries containing "title", "url", and "content" keys.
+
+**Output Example**: 
+```
+Query: How to learn Python?
+Search Results:
+--------------------------------------------------
+[1]:
+TITLE: Python for Beginners
+URL: https://example.com/python-beginners
+CONTENT: A comprehensive guide to start learning Python.
+--------------------------------------------------
+
+[2]:
+TITLE: Advanced Python Techniques
+URL: https://example.com/advanced-python
+CONTENT: Explore advanced concepts in Python programming.
+--------------------------------------------------
+```
 ***
 ### FunctionDef common_chat(self, query)
 **common_chat**: The function of common_chat is to facilitate interaction with a language model by sending a user query and storing the conversation history.
@@ -97,41 +197,47 @@ This design allows for a structured conversation flow, where chat_with_template 
 
 **Note**: It is important to use the clear_history function judiciously, as invoking it will permanently erase all historical data associated with the agent. This action cannot be undone, so it should be called only when it is certain that the historical data is no longer needed.
 ***
-### FunctionDef update_summary(self, query, previous_summary, search_results, critic_feedback)
-**update_summary**: The function of update_summary is to update a summary based on the provided query, previous summary, search results, and critic feedback.
+### FunctionDef update_answer(self, query, previous_answer, search_results, critic_feedback)
+**update_answer**: The function of update_answer is to generate an updated response based on user input, previous answers, search results, and feedback from a critic.
 
 **parameters**: The parameters of this Function.
-· query: A string representing the current query that needs to be addressed in the summary update.
-· previous_summary: A string containing the previous summary that is to be updated.
-· search_results: A collection of results obtained from a search operation that may inform the summary update.
-· critic_feedback: Feedback from a critic that may influence the content of the updated summary.
+· query: A string representing the user's current question or request for information.
+· previous_answer: A string containing the answer provided to the user prior to the current query.
+· search_results: A list or collection of results obtained from a search operation relevant to the query.
+· critic_feedback: A string that includes feedback or critiques provided by a critic regarding the previous answer.
 
-**Code Description**: The update_summary function is designed to facilitate the process of updating a summary based on various inputs. It takes four parameters: query, previous_summary, search_results, and critic_feedback. The function begins by assigning the input parameters to local variables, which are not modified within the function. The primary purpose of this function is to simulate the process of updating a summary. 
+**Code Description**: The update_answer method is designed to facilitate the process of refining and updating an answer based on new input and feedback. It takes four parameters: `query`, `previous_answer`, `search_results`, and `critic_feedback`, which collectively provide the context needed to generate a more accurate and relevant response.
 
-After processing the inputs, the function appends a new entry to the history attribute of the class instance, indicating that an updated summary has been generated. The content of this entry is a placeholder string: "This is the updated summary." Finally, the function returns this placeholder string as the output, representing the updated summary.
+Within the method, a dictionary named `data` is constructed, which organizes the input parameters into key-value pairs. This dictionary serves as the foundation for generating a prompt that will be used in a chat interaction. The method then calls the `chat_with_template` function, passing the `data` dictionary along with a specific template for updating answers, which is retrieved using `self.env.get_template('agent_update_answer.txt')`.
 
-**Note**: It is important to understand that the current implementation of this function does not perform any actual logic to modify the summary based on the inputs. Instead, it serves as a simulation, and the returned value is static. Developers should consider implementing logic to utilize the inputs effectively for a meaningful summary update.
+The `chat_with_template` function is responsible for rendering the prompt template with the provided data and subsequently querying a language model to obtain a response. This interaction is crucial as it transforms the structured input data into a conversational format that the language model can process. The response generated by the language model is then returned as the `updated_answer`.
 
-**Output Example**: The function will return the following string as the updated summary: "This is the updated summary."
+This design establishes a clear functional relationship where `update_answer` acts as a preparatory step that gathers and organizes input data, while `chat_with_template` processes this data to generate a coherent and contextually relevant response. The interaction ensures that the updated answer reflects the latest user query, previous context, search results, and feedback, thereby enhancing the overall quality of the response provided to the user.
+
+**Note**: It is important to ensure that the input parameters are accurately populated and relevant to the context of the conversation. This will guarantee that the generated prompt is meaningful and leads to a more effective interaction with the language model.
+
+**Output Example**: A possible return value from the update_answer function could be a string such as "Based on your previous feedback and the latest search results, here is the updated answer: [updated content]." This response will depend on the specific data provided and the context established in the conversation.
 ***
 ### FunctionDef chat_with_template(self, data, prompt_template)
-**chat_with_template**: The function of chat_with_template is to facilitate a conversation by rendering a prompt template with provided data and then communicating with a language model.
+**chat_with_template**: The function of chat_with_template is to facilitate a dynamic chat interaction by rendering a prompt template with provided data and then querying a language model.
 
 **parameters**: The parameters of this Function.
 · data: A dictionary containing key-value pairs that will be used to populate the prompt template.
-· prompt_template: An object that defines the structure of the prompt to be rendered, which will be filled with the values from the data dictionary.
+· prompt_template: A template object that defines the structure of the prompt to be rendered.
 
-**Code Description**: The chat_with_template method is designed to generate a dynamic prompt for a conversation based on the input data. It takes two parameters: `data`, which is a dictionary containing the necessary information to fill in the prompt template, and `prompt_template`, which is an object that specifies how the prompt should be structured. 
+**Code Description**: The chat_with_template method is designed to create a customized prompt for a chat interaction based on the input data. It takes two parameters: `data`, which is a dictionary containing relevant information to be included in the prompt, and `prompt_template`, which is a template that dictates how the final prompt will be structured.
 
-The method begins by rendering the prompt using the `render` method of the `prompt_template`, passing the unpacked `data` dictionary as keyword arguments. This results in a `rendered_prompt`, which is a string that represents the final prompt to be sent to the language model.
+The method begins by rendering the prompt using the provided `prompt_template` and the `data` dictionary. This is achieved through the `render` method, which substitutes placeholders in the template with corresponding values from the data dictionary, resulting in a `rendered_prompt`. 
 
-Following the rendering process, the method calls `common_chat`, passing the `rendered_prompt` as the `query` parameter. The `common_chat` function is responsible for sending this query to a language model, allowing for interaction based on the generated prompt. The response from `common_chat` is then returned as the output of the `chat_with_template` method.
+Once the prompt is rendered, the method calls the `common_chat` function, passing the `rendered_prompt` as the `query` parameter. The `common_chat` function is responsible for interacting with a language model, sending the user query, and managing the conversation history. It processes the query and returns a response from the language model, which is then returned by the chat_with_template method.
 
-This establishes a clear functional relationship where `chat_with_template` serves as a preparatory step that formats the input data into a suitable prompt, which is then processed by `common_chat` to obtain a response from the language model.
+The chat_with_template function is called by the `update_answer` method, which prepares the necessary data and template for updating an answer based on user input and feedback. In this context, `update_answer` constructs a data dictionary that includes the user's query, the previous answer, search results, and any critical feedback. It then invokes chat_with_template with this data and a specific template for updating answers, allowing for a structured and contextually relevant response to be generated.
 
-**Note**: It is essential to ensure that the `data` provided is complete and correctly structured to match the expectations of the `prompt_template`. This will ensure that the rendered prompt is coherent and relevant, leading to meaningful interactions with the language model.
+This design establishes a clear functional relationship where chat_with_template serves as a preparatory step for generating prompts, while common_chat processes these prompts to obtain responses from the language model. The interaction between these methods ensures that the conversation remains coherent and relevant to the user's needs.
 
-**Output Example**: A possible return value from the chat_with_template function could be a string such as "Hello! How can I assist you today?" This response will depend on the specific data provided and the structure of the prompt template used.
+**Note**: It is essential to ensure that the data dictionary passed to chat_with_template contains all necessary keys that the prompt template expects. This will guarantee that the rendered prompt is complete and meaningful, leading to a more effective interaction with the language model.
+
+**Output Example**: A possible return value from the chat_with_template function could be a string such as "Based on your previous feedback, here is the updated answer: [updated content]." This response will depend on the specific data provided and the context established in the conversation.
 ***
 ### FunctionDef receive_task(self, task)
 **receive_task**: The function of receive_task is to accept and store the original task provided to the agent.
@@ -147,31 +253,30 @@ This establishes a clear functional relationship where `chat_with_template` serv
 **extract_and_validate_yaml**: The function of extract_and_validate_yaml is to extract YAML content from a given string and validate its syntax.
 
 **parameters**: The parameters of this Function.
-· model_response: A string input that potentially contains YAML content wrapped in ```yaml``` markers.
+· model_response: A string containing the model response that may include YAML content wrapped in ```yaml``` tags.
 
-**Code Description**: The extract_and_validate_yaml function begins by importing the regular expression module (re) to facilitate pattern matching. It uses a regular expression to search for content that is enclosed between ```yaml``` markers in the provided model_response string. The pattern `r'```yaml\n([\s\S]*?)\n```'` is designed to capture everything between the opening and closing markers, including newlines and whitespace.
+**Code Description**: The extract_and_validate_yaml function begins by importing the regular expression module, `re`. It then uses a regular expression to search for content enclosed between ```yaml``` tags within the provided `model_response` string. The pattern `r'```yaml\n([\s\S]*?)\n```'` is used to match any characters (including newlines) that appear between the opening and closing YAML tags. If no match is found, the function returns `None`, indicating that there is no valid YAML content present.
 
-If the search does not find a match, the function returns None, indicating that no valid YAML content was found. If a match is found, the captured content is stripped of leading and trailing whitespace. The function then attempts to parse this YAML content using the yaml.safe_load method from the PyYAML library. If the parsing is successful, it returns the YAML content formatted as a string using yaml.dump, with default_flow_style set to False for a more human-readable format.
+If a match is found, the function retrieves the matched content, strips any leading or trailing whitespace, and attempts to parse it as YAML using `yaml.safe_load()`. This method is designed to safely parse YAML content, preventing the execution of arbitrary code. If the parsing is successful, the function returns the YAML content formatted as a string using `yaml.dump()`, which converts the parsed YAML back into a string representation with a default flow style of `False`.
 
-In the event of a parsing error, the function catches the yaml.YAMLError exception, prints an error message indicating that the YAML content is invalid, and returns None.
+In the event of a parsing error, the function catches the `yaml.YAMLError` exception, prints an error message indicating that the YAML content is invalid, and returns `None`.
 
-**Note**: It is important to ensure that the input string contains valid YAML syntax wrapped in the specified markers. If the input does not conform to this structure, the function will return None without raising an error.
+**Note**: It is important to ensure that the input string contains properly formatted YAML content within the specified tags. If the YAML is malformed or if the tags are missing, the function will not return a valid output.
 
-**Output Example**: If the input model_response is:
+**Output Example**: If the input `model_response` is:
 ```
 Here is some configuration:
 ```yaml
-key: value
-list:
+key1: value1
+key2:
   - item1
   - item2
 ```
 ```
 The function would return:
 ```
-key:
-  value
-list:
+key1: value1
+key2:
 - item1
 - item2
 ```
