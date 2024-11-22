@@ -1,8 +1,10 @@
 # agent_factory/search_adapter/tavily_client.py
-import httpx
 from typing import Literal
-from .exceptions import InvalidTavilyAPIKeyError, UsageLimitExceededError
+
+import httpx
+
 from .base_client import BaseSearchClient
+from .exceptions import InvalidTavilyAPIKeyError, UsageLimitExceededError
 from .models import SearchResponse
 
 

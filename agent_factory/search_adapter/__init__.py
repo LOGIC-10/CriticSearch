@@ -1,5 +1,5 @@
 from .aggregator import SearchAggregator
-from .exceptions import UsageLimitExceededError, InvalidTavilyAPIKeyError
+from .exceptions import InvalidTavilyAPIKeyError, UsageLimitExceededError
 
 __all__ = [
     "SearchAggregator",

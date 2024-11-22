@@ -1,6 +1,7 @@
 # agent_factory/search_adapter/models.py
+from typing import List, Optional
+
 from pydantic import BaseModel, Field
-from typing import Optional, List
 
 
 class SearchResult(BaseModel):
