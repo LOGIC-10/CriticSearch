@@ -23,28 +23,31 @@ common_agent = BaseAgent()
 plan_agent = SearchPlanAgent()
 # 假设一个search result
 
-common_agent_answer = common_agent.common_chat(query=task)
-print(f"\n\n{'%' * 30}\nCOMMON_AGENT_ANSWER:\n\n{common_agent_answer}\n\n")
-CriticAgent = CriticAgent()
-CriticAgent.receive_task(task)
-CriticAgent.receive_agent_answer(common_agent_answer)
+max_iteration = 10  # 最大迭代次数
 
-critic_agent_response = CriticAgent.critic()
-print(f"{'%' * 30}\nCRITIC_AGENT_RESPONSE:\n\n{critic_agent_response}\n\n")
-# 从critic_agent_response中解析出好的方面,为后面的citationDB做准备。但是现在先暂时跳过
-
-plan_agent.receive_task(task)
-agent_next_search_plan = plan_agent.plan(common_agent_answer, critic_agent_response)
-# print(f"agent_next_search_plan:\n\n{agent_next_search_plan}\n\n")
-
-new_query_list = [item["Query"] for item in yaml.safe_load(agent_next_search_plan).get('NewSearchQueries')]
-print(f"{'%' * 30}\nSEARCH_PLAN_LIST:\n\n{new_query_list}\n\n")
-# 把新的搜索问题加入到queryDB中
-common_agent.queryDB.update(new_query_list)
-
-common_agent.parallel_search(new_query_list)
-
-
-
-
-# 接下来要对response_message中的yaml内容进行解析
+for iteration in range(max_iteration):
+    print(f"\n{'=' * 20}\nIteration {iteration + 1}\n{'=' * 20}\n")
+    
+    if iteration == 0: # 第一次回答
+        common_agent_answer = common_agent.common_chat(query=task) # common_chat里面可以用tool search
+    else:
+        # 根据上一次的搜索结果，上一次的回答，以及上一次的critic反馈，更新回答
+        common_agent_answer = common_agent.update_summary(query=task, previous_summary=common_agent_answer, search_results=search_results, critic_feedback=critic_agent_response)
+    
+    print(f"{'%' * 30}\nCOMMON_AGENT_ANSWER:\n\n{common_agent_answer}\n\n")
+    
+    CriticAgent = CriticAgent()
+    CriticAgent.receive_task(task)
+    CriticAgent.receive_agent_answer(common_agent_answer)
+    
+    critic_agent_response = CriticAgent.critic()
+    print(f"{'%' * 30}\nCRITIC_AGENT_RESPONSE:\n\n{critic_agent_response}\n\n")
+    
+    plan_agent.receive_task(task)
+    agent_next_search_plan = plan_agent.plan(common_agent_answer, critic_agent_response)
+    
+    new_query_list = [item["Query"] for item in yaml.safe_load(agent_next_search_plan).get('NewSearchQueries', [])]
+    print(f"{'%' * 30}\nSEARCH_PLAN_LIST:\n\n{new_query_list}\n\n")
+    
+    common_agent.queryDB.update(new_query_list)
+    search_results = common_agent.parallel_search(new_query_list)

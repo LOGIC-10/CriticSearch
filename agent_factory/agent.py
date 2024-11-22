@@ -77,6 +77,19 @@ class BaseAgent:
     def clear_history(self):
         self.history = []
 
+    def update_summary(self, query, previous_summary, search_results, critic_feedback):
+        """
+        更新摘要。
+        """
+        # 注意给prompt
+        # 这里模拟更新摘要
+        query = query  
+        previous_summary = previous_summary
+        search_results = search_results 
+        critic_feedback = critic_feedback
+
+        self.history.append({"role": "assistant", "content": "This is the updated summary."})
+        return "This is the updated summary."
     
     def chat_with_template(self, data, prompt_template):
         """
