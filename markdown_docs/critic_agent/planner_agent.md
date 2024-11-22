@@ -1,23 +1,25 @@
 ## ClassDef SearchPlanAgent
-**SearchPlanAgent**: The function of SearchPlanAgent is to generate a structured plan based on user input and feedback.
+**SearchPlanAgent**: The function of SearchPlanAgent is to generate a planning response based on user input and feedback.
 
 **attributes**: The attributes of this Class.
-· original_task: A string that holds the initial task provided by the user.
+· original_task: A string that holds the original task or question posed by the user.
 · reflection_and_plan_prompt: A template used for generating the planning response, retrieved from the environment.
 
-**Code Description**: The SearchPlanAgent class inherits from the BaseAgent class and is designed to facilitate the planning process by generating a structured response based on user input. Upon initialization, it sets the original_task attribute to an empty string and retrieves a template for planning that includes reflection. The main functionality of this class is encapsulated in the plan method, which generates a plan by first gathering necessary data through the get_data_for_plan method. This data includes the user's question, the agent's previous answer, user feedback, and the search history. The method then interacts with a chat model using the reflection_and_plan_prompt template to obtain a response. The response is expected to be in YAML format, which is validated and formatted. If the response contains invalid YAML, an error message is printed, and the method returns None. The get_data_for_plan method serves as a utility to compile the relevant data into a dictionary format for use in the planning process.
+**Code Description**: The SearchPlanAgent class extends the BaseAgent class and is designed to facilitate the planning process by generating a structured response based on user input and feedback. Upon initialization, it sets the original_task attribute to an empty string and retrieves a template for planning responses from the environment. 
 
-**Note**: It is important to ensure that the YAML response from the chat model is correctly formatted to avoid errors during validation. Users should also be aware that the original_task must be set prior to calling the plan method for meaningful output.
+The primary method of this class is `plan`, which takes two parameters: `common_agent_answer` and `critic_feedback`. This method is responsible for generating a plan by first gathering the necessary data through the `get_data_for_plan` method. This method compiles the original task, the agent's answer, user feedback, and the search history into a dictionary format. 
 
-**Output Example**: A possible return value from the plan method could be:
+The `plan` method then uses this data to interact with the template through the `chat_with_template` method, which produces a model response. This response is appended to the history of the agent for tracking purposes. The method attempts to extract and validate the response as YAML format using the `extract_and_validate_yaml` method. If successful, it returns the formatted YAML. In case of an error during YAML extraction, it catches the exception and prints an error message, returning None instead.
+
+**Note**: It is important to ensure that the model response adheres to valid YAML syntax to avoid errors during extraction. Users should also be aware that the original_task must be set prior to calling the `plan` method for accurate planning.
+
+**Output Example**: A possible return value from the `plan` method could be a structured YAML string such as:
 ```yaml
 plan:
-  - step: "Define the objectives"
-    details: "Clarify what needs to be achieved."
-  - step: "Gather resources"
-    details: "Identify and collect necessary materials."
-  - step: "Execute the plan"
-    details: "Implement the steps outlined in the plan."
+  steps:
+    - step: "Analyze user feedback"
+    - step: "Generate response based on analysis"
+    - step: "Present the response to the user"
 ```
 ### FunctionDef __init__(self)
 **__init__**: The function of __init__ is to initialize an instance of the SearchPlanAgent class.
@@ -33,55 +35,50 @@ Additionally, the function sets up another instance variable `reflection_and_pla
 
 **Note**: It is important to ensure that the parent class is correctly defined and that the template file exists in the specified location to avoid runtime errors. Additionally, the purpose and usage of the `original_task` variable should be clearly defined in the broader context of the class to ensure proper functionality.
 ***
-### FunctionDef plan(self)
-**plan**: The function of plan is to generate a structured plan in YAML format based on the data retrieved and processed.
+### FunctionDef plan(self, common_agent_answer, critic_feedback)
+**plan**: The function of plan is to generate a structured plan based on the common agent's response and the critic's feedback.
 
 **parameters**: The parameters of this Function.
-· There are no parameters for this function.
+· common_agent_answer: This parameter represents the response generated by the common agent, which is relevant to the user's query.
+· critic_feedback: This parameter captures the feedback provided by the critic, which is essential for refining the planning process.
 
-**Code Description**: The plan function is responsible for generating a plan by following a specific sequence of operations. Initially, it calls the method `get_data_for_critic()` to retrieve the necessary data that will be used for planning. This data is then passed to the method `chat_with_template()`, along with a predefined prompt called `reflection_and_plan_prompt`, which likely guides the generation of the response based on the input data.
+**Code Description**: The plan function is responsible for orchestrating the planning process by utilizing data from the common agent's response and the critic's feedback. Initially, it calls the get_data_for_plan method to compile the necessary data into a structured format. This data includes the original user question, the agent's answer, the feedback from the critic, and the search history. The output from get_data_for_plan is then passed to the chat_with_template method, which likely processes this data to generate a coherent response or plan based on a predefined template.
 
-After obtaining the response from the model, the function attempts to extract and validate the YAML content using the method `extract_and_validate_yaml()`. This method is expected to parse the model's response and ensure that it conforms to the YAML format. If the extraction and validation are successful, the function returns the formatted YAML content.
+After obtaining the model response from chat_with_template, the plan function appends this response to the history, maintaining a record of the interactions. The function then attempts to extract and validate the response as YAML format using the extract_and_validate_yaml method. If the response is valid YAML, it is returned to the caller. However, if a YAMLError occurs during this process, an error message is printed, and the function returns None, indicating that the planning process could not be completed successfully due to invalid YAML content.
 
-In the event that there is an error during the YAML extraction or validation process, specifically a `yaml.YAMLError`, the function catches this exception and prints an error message indicating that the YAML content is invalid. In such cases, the function returns `None`, indicating that the planning process could not be completed successfully.
+This function is integral to the SearchPlanAgent class, as it consolidates various inputs into a coherent plan while ensuring that the output adheres to the expected format. The reliance on the get_data_for_plan method emphasizes the importance of structured data in the planning process, while the error handling for YAML validation ensures robustness in the function's operation.
 
-**Note**: It is important to ensure that the data returned from `get_data_for_critic()` is in the expected format for the subsequent processing steps. Additionally, proper error handling is implemented to manage potential issues with YAML formatting.
+**Note**: It is crucial to ensure that the parameters passed to the plan function are accurate and relevant, as they directly influence the quality of the generated plan. Proper error handling for YAML validation is also essential to prevent disruptions in the workflow.
 
-**Output Example**: A possible return value of the function could be a string representing a valid YAML structure, such as:
+**Output Example**: A possible return value of the function could be a YAML-formatted string representing the plan, such as:
 
 ```yaml
 plan:
-  - step: "Initialize the system"
-    duration: "5 minutes"
-  - step: "Gather data"
-    duration: "10 minutes"
-  - step: "Analyze data"
-    duration: "15 minutes"
-``` 
-
-If an error occurs during the YAML extraction, the function would return `None`.
+  steps:
+    - Identify key tasks
+    - Set deadlines
+    - Review progress regularly
+```
 ***
-### FunctionDef get_data_for_plan(self)
-**get_data_for_plan**: The function of get_data_for_plan is to compile and return essential data related to the user's interaction with the agent.
+### FunctionDef get_data_for_plan(self, common_agent_answer, critic_feedback)
+**get_data_for_plan**: The function of get_data_for_plan is to compile and return a structured dictionary containing relevant data for planning based on user input and feedback.
 
 **parameters**: The parameters of this Function.
-· There are no parameters for this function.
+· common_agent_answer: This parameter represents the response generated by the common agent, which is relevant to the user's query.
+· critic_feedback: This parameter captures the feedback provided by the critic, which is essential for refining the planning process.
 
-**Code Description**: The get_data_for_plan function is a method that retrieves and organizes key pieces of information from the instance of the class it belongs to. It returns a dictionary containing four specific fields: 
-- 'user_question': This field holds the original task or question posed by the user, which is stored in the instance variable self.original_task.
-- 'agent_answer': This field contains the response generated by the agent in relation to the user's question, accessed through the instance variable self.agent_answer.
-- 'user_feedback': This field captures any feedback provided by the user regarding the agent's response, retrieved from the instance variable self.user_feedback.
-- 'search_history': This field includes a record of the user's previous queries or interactions, which is stored in the instance variable self.search_history.
+**Code Description**: The get_data_for_plan function is designed to gather and organize data necessary for the planning process. It constructs a dictionary that includes four key pieces of information: the original user question (stored in self.original_task), the answer provided by the common agent (common_agent_answer), the feedback from the critic (critic_feedback), and the search history (self.queryDB). This structured data is crucial for the subsequent planning operations, as it consolidates all relevant inputs into a single format that can be easily processed.
 
-The function effectively consolidates these elements into a single dictionary, facilitating easy access to the relevant data for further processing or analysis.
+This function is called by the plan method within the SearchPlanAgent class. The plan method utilizes the output from get_data_for_plan to create a comprehensive plan. Specifically, it retrieves the necessary data by invoking get_data_for_plan with the common agent's answer and the critic's feedback. The resulting dictionary is then passed to another method, chat_with_template, which likely generates a response based on this data. The plan method relies on the accurate and structured output from get_data_for_plan to ensure that the planning process is informed by the most relevant and up-to-date information.
 
-**Note**: It is important to ensure that the instance variables (self.original_task, self.agent_answer, self.user_feedback, self.search_history) are properly initialized before calling this function to avoid returning None or causing errors.
+**Note**: It is important to ensure that the parameters passed to get_data_for_plan are correctly populated with the expected values, as this will directly impact the quality and relevance of the data returned. Proper handling of the inputs is essential for maintaining the integrity of the planning process.
 
-**Output Example**: A possible appearance of the code's return value could be:
+**Output Example**: A possible return value of the function could be a dictionary structured as follows:
+
 {
-    'user_question': 'What is the weather like today?',
-    'agent_answer': 'The weather today is sunny with a high of 75°F.',
-    'user_feedback': 'This answer is helpful, thank you!',
-    'search_history': ['What is the weather like today?', 'Tell me about tomorrow\'s forecast.']
+  'user_question': "What are the steps to improve my productivity?",
+  'agent_answer': "To improve productivity, consider the following steps: prioritize tasks, set specific goals, and minimize distractions.",
+  'user_feedback': "The answer is helpful but lacks specific examples.",
+  'search_history': ["How to manage time effectively?", "Tips for staying focused."]
 }
 ***

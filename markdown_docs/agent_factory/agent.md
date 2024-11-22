@@ -1,80 +1,97 @@
 ## ClassDef BaseAgent
-**BaseAgent**: The function of BaseAgent is to serve as the foundational agent for performing tasks related to querying and processing information with a model, as well as managing related configurations and data structures.
+**BaseAgent**: The function of BaseAgent is to serve as a foundational class for managing interactions with a language model, handling queries, and maintaining a history of conversations.
 
-**attributes**:
-· `config`: A configuration object containing various settings loaded from a configuration file.  
-· `model`: A string specifying the default model to be used for interactions (defaults to "gpt-4o-mini").  
-· `env`: An Environment object initialized with a file system loader pointing to the prompt folder path defined in the configuration.  
-· `queryDB`: A set that stores queries. This set is used to hold each unique query issued by the agent.  
-· `citationDB`: A list of dictionaries, where each dictionary represents a query and its associated citation data (only queries praised by the critic are included).  
-· `sys_prompt`: A string holding the system-level prompt used for guiding interactions with the model.  
-· `repeat_turns`: An integer specifying the maximum number of turns for repeating a task or conversation (defaults to 10).  
-· `original_task`: A placeholder for the original task that will be processed by the agent.
+**attributes**: The attributes of this Class.
+· config: A configuration object that holds settings and parameters for the agent, loaded from a configuration file.
+· model: The model to be used for generating responses, defaulting to "gpt-4o-mini" if not specified in the configuration.
+· env: An Environment object that loads templates from a specified folder path for rendering prompts.
+· queryDB: A set that stores unique queries to be processed.
+· citationDB: A list of dictionaries that contains search queries and their corresponding results, specifically those that have received positive feedback.
+· sys_prompt: A string that holds the system prompt used for guiding the language model's responses.
+· repeat_turns: An integer that defines the maximum number of turns for repeated interactions.
+· history: A list that maintains the history of interactions, storing both user queries and model responses.
 
-**Code Description**:  
-The `BaseAgent` class provides the essential functionality for interacting with an AI model and handling related tasks. It begins by initializing various attributes, such as loading configuration details, setting the default model to "gpt-4o-mini", and setting up a file-based environment for loading prompts. The agent also maintains a set `queryDB` to track all issued queries and a `citationDB` for storing search results with associated citations, ensuring that only specific search results are included (those deemed worthy by a critic).  
+**Code Description**: The BaseAgent class is designed to facilitate interactions with a language model by managing configurations, handling user queries, and maintaining a history of conversations. Upon initialization, it reads configuration settings, including the model to be used and the path for prompt templates. The class maintains a query database (queryDB) for storing unique queries and a citation database (citationDB) for tracking search results that have been positively acknowledged. 
 
-The `common_chat` method facilitates interaction with the model by taking a query and invoking a model with a predefined system prompt. The method `chat_with_template` is more flexible, allowing for dynamic generation of prompts from a provided template. It first renders the template using data passed to it and then passes the generated prompt to `common_chat`.  
+The class provides several methods:
+- `parallel_search(query_list)`: This method simulates parallel searching for a list of queries, although the actual implementation is not provided.
+- `common_chat(query)`: This method sends a user query to the language model and appends both the user query and the model's response to the history.
+- `clear_history()`: This method clears the conversation history.
+- `chat_with_template(data, prompt_template)`: This method adapts a prompt template using provided data and sends the rendered prompt to the common chat method.
+- `receive_task(task)`: This method accepts a task for processing.
+- `extract_and_validate_yaml(model_response)`: This method extracts YAML content from a model response and validates it, returning the parsed YAML or None if invalid.
 
-The `receive_task` method stores the task passed to the agent, ensuring the agent can process it later. The `extract_and_validate_yaml` method is a utility for extracting and validating YAML-formatted data from the response returned by the model. It searches for a YAML block in the response and attempts to parse it, returning the valid YAML content in a human-readable format if the extraction is successful. If no valid YAML is found or an error occurs during parsing, the method returns `None`.  
+The class is structured to support extensibility and can be integrated into larger systems that require natural language processing capabilities.
 
-**Note**:  
-- The agent requires a properly structured configuration file to initialize correctly. 
-- The `citationDB` is a critical component for maintaining the quality of search results.
-- The `repeat_turns` parameter limits the number of times an agent will reattempt a task.
-- `extract_and_validate_yaml` uses regular expressions to extract YAML content and relies on Python's `yaml` library for parsing.
+**Note**: When using the BaseAgent class, ensure that the configuration file is correctly set up to avoid issues with loading models or templates. Additionally, be mindful of the structure of the citationDB to maintain consistency in storing search results.
 
-**Output Example**:  
-For `common_chat`, a mock response might be:
-```json
+**Output Example**: An example of a response from the `common_chat` method could be:
 {
-  "response": "The challenges faced by Google in 2019 included increasing competition, regulatory pressures, and internal company restructuring."
+  "role": "assistant",
+  "content": "Google faced challenges in 2019 due to various factors, including increased competition and regulatory scrutiny."
 }
-```
-For `extract_and_validate_yaml`, a valid YAML block returned might look like:
-```yaml
-model: gpt-4o-mini
-config:
-  timeout: 30
-  retries: 3
-```
 ### FunctionDef __init__(self)
-**__init__**: The function of __init__ is to initialize an instance of the BaseAgent class with configuration settings and data structures for managing queries and citations.
+**__init__**: The function of __init__ is to initialize an instance of the BaseAgent class, setting up its configuration and necessary attributes.
 
 **parameters**: The parameters of this Function.
 · There are no parameters for this function.
 
-**Code Description**: The __init__ function is a constructor for the BaseAgent class. It is responsible for setting up the initial state of an instance when it is created. The function performs the following actions:
+**Code Description**: The __init__ function is a constructor for the BaseAgent class. It is responsible for initializing the instance variables that will be used throughout the class. 
 
-1. It calls the `read_config()` function to load configuration settings, which are stored in the `self.config` attribute. This configuration is essential for the agent's operation, as it contains various settings that dictate how the agent behaves.
+1. **self.config**: This variable is assigned the result of the `read_config()` function, which presumably reads configuration settings from a file or other source. This configuration is essential for the operation of the agent, as it dictates how the agent will behave.
 
-2. The `self.model` attribute is initialized with the value of the 'default_model' key from the configuration. If this key is not present, it defaults to "gpt-4o-mini". This model will likely be used for generating responses or processing queries.
+2. **self.model**: This variable retrieves the 'default_model' value from the configuration dictionary. If this key does not exist, it defaults to "gpt-4o-mini". This model will likely be used for generating responses or processing queries.
 
-3. The `self.env` attribute is initialized as an instance of the `Environment` class, which is configured with a `FileSystemLoader`. The loader is set to the path specified by the 'prompt_folder_path' key in the configuration. This environment is likely used for loading templates or prompts that the agent will utilize.
+3. **self.env**: This variable creates an instance of the Environment class, using FileSystemLoader to load templates from a directory specified by the 'prompt_folder_path' key in the configuration. This setup suggests that the agent may utilize templates for generating prompts or responses.
 
-4. The `self.queryDB` attribute is initialized as an empty set. This set is intended to store unique queries that the agent will process. Using a set ensures that each query is distinct and prevents duplicates.
+4. **self.queryDB**: This is initialized as an empty set. It is intended to store unique queries that the agent will handle. Using a set ensures that each query is distinct and prevents duplicates.
 
-5. The `self.citationDB` attribute is initialized with a list containing a single dictionary. This dictionary is structured to hold search questions as keys, with corresponding values that are themselves dictionaries. Each value dictionary contains a "document_id" key, which is a unique identifier for a document, along with placeholders for "url", "title", and "content". This structure is designed to store search results that have received positive feedback from critics.
+5. **self.citationDB**: This variable is initialized as a list containing a single dictionary. The dictionary is structured to hold queries as keys, with each key mapping to a document_id that contains metadata about the document, such as its URL, title, and content. The comment indicates that only search results praised by critics will be included in this database.
 
-6. The `self.sys_prompt` attribute is initialized as an empty string. This prompt may be used to guide the agent's responses or behavior during interactions.
+6. **self.sys_prompt**: This is initialized as an empty string. It likely serves as a system prompt that can be modified or set later in the class's methods.
 
-7. The `self.repeat_turns` attribute is set to 10, indicating the number of times the agent may repeat a certain action or query during its operation.
+7. **self.repeat_turns**: This variable is set to 10, which may represent the number of times the agent will repeat a certain action or query during its operation.
 
-**Note**: It is important to ensure that the configuration file is correctly set up and accessible, as the agent relies heavily on the parameters defined within it. Additionally, the structure of `citationDB` should be maintained to ensure that the agent can effectively manage and reference search results.
+8. **self.history**: This is initialized as an empty list. It is intended to keep track of the history of interactions or queries processed by the agent.
+
+**Note**: It is important to ensure that the configuration file is correctly set up and accessible, as the agent's behavior heavily relies on the parameters defined within it. Additionally, the structure of the citationDB should be maintained to ensure proper retrieval and storage of search results.
 ***
-### FunctionDef common_chat(self, query)
-**common_chat**: The function of common_chat is to facilitate communication with a language model by sending a user-defined query along with system prompts and configuration settings.
+### FunctionDef parallel_search(self, query_list)
+**parallel_search**: The function of parallel_search is to perform a simulated parallel search for a list of queries.
 
 **parameters**: The parameters of this Function.
-· query: A string that represents the user input or question that will be sent to the language model.
+· query_list: A list of queries that need to be searched in parallel.
 
-**Code Description**: The common_chat function is designed to interact with a language model (LLM) by calling the function `call_llm`. It takes a single parameter, `query`, which is expected to be a string. This string is typically the user's input that needs to be processed by the language model. The function constructs a call to `call_llm`, passing it several arguments: `model`, `sys_prompt`, `usr_prompt`, and `config`. Here, `model` refers to the specific language model being utilized, `sys_prompt` is a predefined system prompt that sets the context for the conversation, `usr_prompt` is the user query (in this case, the `query` parameter), and `config` contains additional configuration settings that may influence the behavior of the language model.
+**Code Description**: The parallel_search function is designed to simulate a parallel search operation. It takes a list of queries as input through the parameter `query_list`. The function iterates over each query in the list, and for each query, it simulates a search result. The simulated search result is a dictionary containing three key-value pairs: "url", "title", and "content". The "url" points to a static link to Google, the "title" provides a brief headline related to Google, and the "content" gives a short description of the challenges faced by Google in 2019. However, it is important to note that the actual search operation is not implemented in this function, as it only simulates the results without performing any real search queries.
 
-The common_chat function is called within the `chat_with_template` method of the BaseAgent class. In this context, `chat_with_template` prepares a prompt by rendering it with data provided in the `data` dictionary using a specified `prompt_template`. Once the prompt is rendered, it invokes `common_chat`, passing the rendered prompt as the query. The response from `common_chat` is then returned as the output of `chat_with_template`. This establishes a clear relationship where `chat_with_template` relies on `common_chat` to handle the actual communication with the language model after preparing the appropriate prompt.
+**Note**: It is essential to understand that this function does not return any results or perform actual searches; it merely simulates the process. Therefore, it should be used for testing or demonstration purposes only. Additionally, the function currently lacks error handling and does not account for varying query formats or types.
+***
+### FunctionDef common_chat(self, query)
+**common_chat**: The function of common_chat is to facilitate interaction with a language model by sending a user query and storing the conversation history.
 
-**Note**: It is important to ensure that the `query` passed to common_chat is properly formatted and relevant to the context established by the system prompt to achieve meaningful responses from the language model.
+**parameters**: The parameters of this Function.
+· query: A string representing the user's input or question that will be sent to the language model.
 
-**Output Example**: A possible return value from the common_chat function could be a string such as "Sure, I can help you with that! What specific information are you looking for?" This response would depend on the input query and the configuration of the language model.
+**Code Description**: The common_chat method is designed to handle user interactions with a language model. It takes a single parameter, `query`, which is the input from the user. The method begins by invoking the `call_llm` function, passing the model, system prompt, user prompt (the query), and configuration settings. This function is responsible for communicating with the language model and retrieving a response based on the provided inputs.
+
+Once the response from the language model is obtained, the method updates the conversation history by appending two entries: one for the user's query and another for the assistant's response. This history is stored in the `self.history` list, which allows for tracking the dialogue over time.
+
+The common_chat function is called by the chat_with_template method, which serves as a preparatory step for generating a dynamic prompt based on input data. In chat_with_template, the prompt is rendered using a template and the relevant data, resulting in a `rendered_prompt`. This rendered prompt is then passed to common_chat as the query parameter. The response from common_chat is returned as the output of chat_with_template, establishing a clear functional relationship between the two methods.
+
+This design allows for a structured conversation flow, where chat_with_template formats the input into a suitable prompt, and common_chat processes this prompt to obtain a response from the language model, while also maintaining a history of the interaction.
+
+**Note**: It is important to ensure that the query passed to common_chat is well-formed and relevant to the context of the conversation. This will enhance the quality of the response generated by the language model.
+
+**Output Example**: A possible return value from the common_chat function could be a string such as "I'm here to help! What do you need assistance with?" This response will depend on the specific query provided and the context established in the conversation history.
+***
+### FunctionDef clear_history(self)
+**clear_history**: The function of clear_history is to reset the history of the agent by clearing all stored entries.
+
+**parameters**: The clear_history function does not take any parameters.
+
+**Code Description**: The clear_history function is a method defined within the BaseAgent class. When invoked, it sets the instance variable `history` to an empty list. This effectively removes all previous entries stored in the `history`, allowing the agent to start fresh without any prior context or data. This function is particularly useful in scenarios where the agent needs to discard past interactions or data, ensuring that it operates without any influence from previous states. The simplicity of this function underscores its importance in maintaining the integrity of the agent's operational state.
+
+**Note**: It is important to use the clear_history function judiciously, as invoking it will permanently erase all historical data associated with the agent. This action cannot be undone, so it should be called only when it is certain that the historical data is no longer needed.
 ***
 ### FunctionDef chat_with_template(self, data, prompt_template)
 **chat_with_template**: The function of chat_with_template is to facilitate a conversation by rendering a prompt template with provided data and then communicating with a language model.
