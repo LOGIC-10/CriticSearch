@@ -1,12 +1,7 @@
 {
-  "doc_version": "04a3828a904966b1c652f038131f1cf414583a77",
+  "doc_version": "e626ece4d812c9c09e9168ecf794cc0cbbdf535e",
   "in_generation_process": false,
   "fake_file_reflection": {},
   "jump_files": [],
-  "deleted_items_from_older_meta": [
-    [
-      "agent_factory/agent.py/BaseAgent/update_summary",
-      "_class_function"
-    ]
-  ]
+  "deleted_items_from_older_meta": []
 }

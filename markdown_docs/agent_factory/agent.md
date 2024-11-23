@@ -1,42 +1,42 @@
 ## ClassDef BaseAgent
-**BaseAgent**: The function of BaseAgent is to serve as a foundational class for managing queries, searching for information, and interacting with a language model.
+**BaseAgent**: The function of BaseAgent is to serve as a foundational class for managing queries, performing searches, and interacting with a language model.
 
 **attributes**: The attributes of this Class.
-· config: A configuration object that holds settings for the agent, including the default model and prompt folder path.  
-· model: The model used for generating responses, defaulting to "gpt-4o-mini".  
-· env: An Environment object used for loading templates from the specified prompt folder.  
-· queryDB: A set that stores unique queries for searching.  
-· citationDB: A list of dictionaries that contains search queries and their corresponding results, specifically those praised by critics.  
-· sys_prompt: A system prompt used for guiding the language model's responses.  
-· repeat_turns: An integer that defines the number of times a query can be repeated, set to 10 by default.  
-· history: A list that maintains the history of interactions between the user and the assistant.
+· config: Configuration settings read from a configuration file.
+· model: The model used for language processing, defaulting to "gpt-4o-mini".
+· env: An instance of Environment for loading templates from the specified prompt folder.
+· queryDB: A set to store unique queries.
+· citationDB: A list of dictionaries that contains search queries and their corresponding results, specifically those praised by critics.
+· sys_prompt: A system prompt used for guiding the language model's responses.
+· repeat_turns: A parameter that defines the number of times a query can be repeated.
+· history: A list that keeps track of the conversation history between the user and the assistant.
 
-**Code Description**: The BaseAgent class is designed to facilitate the process of querying information and interacting with a language model. Upon initialization, it reads configuration settings, sets up the model and environment, and initializes data structures for storing queries and citation results. The class provides several methods for searching queries, performing parallel searches, formatting search results, and managing chat interactions with the language model.
+**Code Description**: The BaseAgent class is designed to facilitate the interaction between a user and a language model while managing search queries and results. Upon initialization, it reads configuration settings, sets up the model, and prepares the environment for template rendering. The class maintains a database of queries and citations, allowing it to store and retrieve relevant information efficiently.
 
-The `search_query` method takes a query as input, utilizes a SearchAggregator to perform the search, and returns structured results including the query, response time, and relevant search results. The `parallel_search` method allows for concurrent execution of multiple queries, collecting results as they complete. The `format_parallel_search_to_string` method formats the results of parallel searches into a readable string format.
+The `search_query` method takes a query string as input, utilizes the SearchAggregator to perform a search, and returns a structured response containing the query, response time, and search results. The `parallel_search` method allows for concurrent execution of multiple search queries, collecting results as they complete. The `format_parallel_search_to_string` method formats the results of parallel searches into a readable string format.
 
-The `common_chat` method interacts with the language model using a user-provided query and stores the conversation history. The `clear_history` method resets the conversation history. The `update_answer` method refines a previous answer based on new search results and feedback, while the `chat_with_template` method adapts the chat interaction based on a provided template.
+The `common_chat` method interacts with the language model using a user-provided query and stores the conversation history. The `clear_history` method resets the conversation history. The `update_answer` method refines previous answers based on new search results and feedback. The `model_confident` method checks the model's confidence in its response to a given query, while `initialize_search` prepares the model for a search task.
 
-The `receive_task` method accepts a task for processing, and the `extract_and_validate_yaml` method extracts YAML content from a model response, validating its structure and returning it in a formatted manner.
+The `chat_with_template` method renders a prompt template with provided data and initiates a chat with the language model. The `receive_task` method captures the original task for processing. Finally, the `extract_and_validate_yaml` method extracts YAML content from a model response, validating its structure and returning it in a safe format.
 
-**Note**: It is important to ensure that the configuration settings are correctly defined before instantiating the BaseAgent class. Additionally, the methods that interact with external systems, such as the language model and search aggregator, require proper handling of exceptions to maintain robustness.
+**Note**: It is essential to ensure that the configuration file is correctly set up and that the necessary templates are available in the specified prompt folder for the class to function properly. Additionally, error handling is implemented in the parallel search method to manage exceptions that may arise during query execution.
 
-**Output Example**: A possible output from the `search_query` method could look like this:
+**Output Example**: A possible return value from the `search_query` method could look like this:
 {
-  "query": "Why do we say Google was facing challenges in 2019?",
-  "response_time": "0.45 seconds",
-  "results": [
-    {
-      "title": "Google's Challenges in 2019",
-      "url": "https://example.com/google-challenges-2019",
-      "content": "In 2019, Google faced several challenges including..."
-    },
-    {
-      "title": "The Struggles of Google",
-      "url": "https://example.com/struggles-google",
-      "content": "Google's challenges in 2019 were multifaceted..."
-    }
-  ]
+    "query": "Why do we say Google was facing challenges in 2019?",
+    "response_time": "0.45 seconds",
+    "results": [
+        {
+            "title": "Google's Challenges in 2019",
+            "url": "https://example.com/google-challenges-2019",
+            "content": "In 2019, Google faced several challenges including regulatory scrutiny and competition."
+        },
+        {
+            "title": "The Year Google Struggled",
+            "url": "https://example.com/year-google-struggled",
+            "content": "Various factors contributed to Google's struggles in 2019, including..."
+        }
+    ]
 }
 ### FunctionDef __init__(self)
 **__init__**: The function of __init__ is to initialize an instance of the BaseAgent class, setting up its configuration and necessary attributes.
@@ -218,26 +218,56 @@ This design establishes a clear functional relationship where `update_answer` ac
 
 **Output Example**: A possible return value from the update_answer function could be a string such as "Based on your previous feedback and the latest search results, here is the updated answer: [updated content]." This response will depend on the specific data provided and the context established in the conversation.
 ***
+### FunctionDef model_confident(self, query)
+**model_confident**: The function of model_confident is to check whether the model is confident in responding to the current query.
+
+**parameters**: The parameters of this Function.
+· query: A string representing the user's question or inquiry that needs to be evaluated for model confidence.
+
+**Code Description**: The model_confident method is designed to assess the confidence level of the model in relation to a specific user query. It begins by constructing a data dictionary that includes the user's question under the key "user_question". This dictionary is then passed to the chat_with_template method, along with a template for generating a response, which is retrieved using the env.get_template method with the template name 'agent_confidence.txt'.
+
+The chat_with_template method is responsible for rendering the prompt template with the provided data. It utilizes the render method of the template to create a coherent query that the language model can understand. The rendered prompt is subsequently sent to the common_chat method, which interacts with the language model to obtain a response. The response generated by the language model is then returned by the model_confident method.
+
+This function is part of a broader architecture within the BaseAgent class, where it serves to facilitate interactions with the language model by determining the model's confidence in addressing specific queries. The model_confident method can be called in various contexts where understanding the model's confidence is crucial for decision-making or user interaction.
+
+**Note**: It is essential to ensure that the query parameter accurately reflects the user's intent to enable the model to provide a meaningful and relevant confidence assessment.
+
+**Output Example**: A possible return value from the model_confident function could be a string such as "The model is confident in answering your question: [response content]." The actual output will depend on the specific query and the corresponding template used in the interaction.
+***
+### FunctionDef initialize_search(self, query)
+**initialize_search**: The function of initialize_search is to initiate a search process based on a user-provided query.
+
+**parameters**: The parameters of this Function.
+· query: A string representing the user's question or search query that will be processed to generate a response.
+
+**Code Description**: The initialize_search method is designed to start a search operation by taking a user query as input. It constructs a data dictionary that includes the user's question under the key "user_question". This data dictionary is then passed to the chat_with_template method along with a specific prompt template, which is retrieved using the env.get_template method with the filename 'planner_agent_initial_search_plan.txt'.
+
+The chat_with_template method is responsible for rendering the prompt template with the provided data and querying a language model to obtain a response. It prepares the input by substituting placeholders in the template with actual values from the data dictionary, creating a coherent query that the language model can understand. The rendered prompt is then sent to the common_chat method, which handles the interaction with the language model and returns the generated response.
+
+The initialize_search method serves as a caller for chat_with_template, facilitating the interaction between the user’s query and the language model through a structured prompt. This modular approach allows for the reuse of the chat_with_template functionality across different methods within the BaseAgent class, ensuring consistency in how queries are processed and responses are generated.
+
+**Note**: It is important to ensure that the query parameter is well-structured and relevant to the search context, as this will significantly influence the quality and relevance of the response generated by the language model.
+
+**Output Example**: A possible return value from the initialize_search function could be a string such as "Based on your question, here is the initial search plan: [response content]." The actual output will depend on the specific query and the prompt template used in the interaction.
+***
 ### FunctionDef chat_with_template(self, data, prompt_template)
-**chat_with_template**: The function of chat_with_template is to facilitate a dynamic chat interaction by rendering a prompt template with provided data and then querying a language model.
+**chat_with_template**: The function of chat_with_template is to facilitate a dynamic chat interaction by rendering a prompt template with provided data and querying a language model.
 
 **parameters**: The parameters of this Function.
 · data: A dictionary containing key-value pairs that will be used to populate the prompt template.
 · prompt_template: A template object that defines the structure of the prompt to be rendered.
 
-**Code Description**: The chat_with_template method is designed to create a customized prompt for a chat interaction based on the input data. It takes two parameters: `data`, which is a dictionary containing relevant information to be included in the prompt, and `prompt_template`, which is a template that dictates how the final prompt will be structured.
+**Code Description**: The chat_with_template method is designed to create a conversational prompt based on the input data provided in the form of a dictionary. It utilizes a prompt template to format this data into a coherent query that can be understood by a language model. The method begins by rendering the prompt template with the data using the `render` method, which substitutes the placeholders in the template with actual values from the data dictionary. The resulting string, referred to as `rendered_prompt`, is then passed to the common_chat method as the query parameter.
 
-The method begins by rendering the prompt using the provided `prompt_template` and the `data` dictionary. This is achieved through the `render` method, which substitutes placeholders in the template with corresponding values from the data dictionary, resulting in a `rendered_prompt`. 
+The common_chat method is responsible for sending this rendered prompt to the language model and managing the conversation history. It takes the rendered prompt and communicates with the language model to obtain a response, which is then returned to the caller of chat_with_template. This establishes a clear functional relationship where chat_with_template prepares the input for the language model, while common_chat handles the interaction and response retrieval.
 
-Once the prompt is rendered, the method calls the `common_chat` function, passing the `rendered_prompt` as the `query` parameter. The `common_chat` function is responsible for interacting with a language model, sending the user query, and managing the conversation history. It processes the query and returns a response from the language model, which is then returned by the chat_with_template method.
+The chat_with_template function is called by other methods within the BaseAgent class, such as update_answer, model_confident, and initialize_search. Each of these methods prepares specific data relevant to their context and invokes chat_with_template to generate a response based on that data. For instance, in update_answer, the method constructs a data dictionary that includes the user's current query, previous answers, search results, and feedback, and then calls chat_with_template with this data and a corresponding template for updating answers. Similarly, model_confident and initialize_search also prepare their respective data and templates before invoking chat_with_template.
 
-The chat_with_template function is called by the `update_answer` method, which prepares the necessary data and template for updating an answer based on user input and feedback. In this context, `update_answer` constructs a data dictionary that includes the user's query, the previous answer, search results, and any critical feedback. It then invokes chat_with_template with this data and a specific template for updating answers, allowing for a structured and contextually relevant response to be generated.
+This design allows for a modular and reusable approach to generating prompts and interacting with the language model, ensuring that various components of the agent can leverage the same underlying functionality for chat interactions.
 
-This design establishes a clear functional relationship where chat_with_template serves as a preparatory step for generating prompts, while common_chat processes these prompts to obtain responses from the language model. The interaction between these methods ensures that the conversation remains coherent and relevant to the user's needs.
+**Note**: It is crucial to ensure that the data dictionary accurately reflects the necessary context for the prompt template to generate meaningful and relevant queries. Properly structured input will enhance the quality of the responses generated by the language model.
 
-**Note**: It is essential to ensure that the data dictionary passed to chat_with_template contains all necessary keys that the prompt template expects. This will guarantee that the rendered prompt is complete and meaningful, leading to a more effective interaction with the language model.
-
-**Output Example**: A possible return value from the chat_with_template function could be a string such as "Based on your previous feedback, here is the updated answer: [updated content]." This response will depend on the specific data provided and the context established in the conversation.
+**Output Example**: A possible return value from the chat_with_template function could be a string such as "Based on the information provided, here is the response to your query: [response content]." The actual output will depend on the specific data and prompt template used in the interaction.
 ***
 ### FunctionDef receive_task(self, task)
 **receive_task**: The function of receive_task is to accept and store the original task provided to the agent.
