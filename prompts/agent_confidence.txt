@@ -1,0 +1,61 @@
+You are an agent that answers user questions. Your task is to determine whether you have enough confidence to provide a sufficient answer based on the given question.
+If you think the question asked by the user is simple and your internal knowledge from the pre-training process is enough to fully answer the question, then please answer "True".
+If you think the question asked by the user is complex and requires a lot of external knowledge, which means you cannot directly answer it, then please answer "False".
+
+Your answer needs to be given in standard YAML format:
+
+### YAML format
+
+```yaml
+confidence: "True" or "False"
+```
+### Example 1
+query: "What is the largest planet in the solar system?"
+Answer:
+```yaml
+confidence: "True"
+```
+
+### Example 2
+query: "Explain Newton's three laws of motion."
+Answer:
+```yaml
+confidence: "True"
+```
+### Example 3
+query: "Please describe the latest developments in the field of artificial intelligence in 2023."
+Answer:
+```yaml
+confidence: "False"
+```
+### Example 4
+query: "Calculate the integral ∫(2x)dx."
+Answer:
+```yaml
+confidence: "True"
+```
+### Example 5
+query: "Analyze the impact of quantum computing on modern cryptography."
+Answer:
+```yaml
+confidence: "False"
+```
+### Example 6
+query: "What is the chemical formula of water?"
+Answer:
+```yaml
+confidence: "True"
+```
+### Example 7
+query: "Discuss the long-term impacts of climate change on global agriculture."
+Answer:
+```yaml
+confidence: "False"
+```
+
+### Formal Task Begin
+
+Please carefully observe and learn from the examples above. Based on the actual question provided by the user, make your judgment. The user’s question is as follows:
+{{user_question}}
+
+Think carefully and directly provide your Answer:

@@ -99,6 +99,26 @@ class BaseAgent:
         updated_answer = self.chat_with_template(data, self.env.get_template('agent_update_answer.txt'))
         return updated_answer
     
+    def model_confident(self, query):
+        """
+        检查模型是否对当前问题有信心。
+        """
+        data = {
+            "user_question": query
+        }
+        model_response = self.chat_with_template(data, self.env.get_template('agent_confidence.txt'))
+        return model_response
+    
+    def initialize_search(self, query):
+        """
+        初始化搜索。
+        """
+        data = {
+            "user_question": query
+        }
+        model_response = self.chat_with_template(data, self.env.get_template('planner_agent_initial_search_plan.txt'))
+        return model_response   
+    
     def chat_with_template(self, data, prompt_template):
         """
         通用的聊天方法，根据传入的data字典适配不同的prompt。

@@ -1,17 +1,7 @@
 You are a search assistant, and your task is to help humans conduct in-depth searches. Your user has given you a question:
 {{user_question}}
 
-Your previous answer was:
-{{Previous_Answer}}
-
-However, your answer was not in-depth enough, and your user was not satisfied with it. They provided some constructive criticism, which includes feedback on your search results and suggestions:
-
-{{user_feedback}}
-
-Please note that you have the following search history:
-{{search_history}}
-
-Now, based on the user's feedback, please reflect on how you can search more comprehensively and in-depth, and provide a more detailed and thorough answer to the user's question. Finally, come up with a new search query plan. Make sure your new search queries DO NOT OVERLAP with the previous search queries.
+You previously considered this question too complex and requiring a web search. Now, please design an appropriate search query to help you answer the user’s question.
 
 In addition, here are various search engine techniques along with their corresponding use cases:
 	1.	Using Quotation Marks for Exact Search ("")
@@ -45,18 +35,15 @@ Use the related: operator followed by a website to find sites similar to it.
 Use after: or before: followed by a year to find content posted after or before that year.
 	•	Example: learn react after:2021 will return pages about learning React published after 2021.
 
-Please ensure you are taking fully usage of these searching techniques to better assist your query design. Please output in standard YAML format.
+Please ensure you properly break down the user’s question into different levels of relevant queries to obtain more comprehensive and in-depth search results and also taking fully usage of these searching techniques to better assist your query design. Please output in standard YAML format.
 
 ### YAML format 
 
 ```yaml
-SelfReflection: |
-  <Your self-reflection based on user feedback>
-
-NewSearchQueries:
-  - Query: "<Your new search query 1>"
+SearchQueries:
+  - Query: "<Your search query 1>"
     Purpose: "<Purpose of search query 1 according to your reflection>"
-  - Query: "<Your new search query 2>"
+  - Query: "<Your search query 2>"
     Purpose: "<Purpose of search query 2 according to your reflection>"
   # Add more deep queries as needed
 ```
