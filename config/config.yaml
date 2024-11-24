@@ -30,3 +30,7 @@ max_retries: 5
 # paths
 prompt_folder_path: "/Users/logic/Documents/CodeSpace/AgentFactory/prompts"
 logs_folder_path: "/Users/logic/Documents/CodeSpace/AgentFactory/logs"
+
+# tools
+search_api_endpoint: "http://localhost:8000/"
+
