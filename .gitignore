@@ -190,3 +190,6 @@ poetry.toml
 
 # LSP config files
 pyrightconfig.json
+
+# Critic Search
+config.yaml

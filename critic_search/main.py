@@ -1,10 +1,11 @@
 import logging
 
 import yaml
-from base_agent import BaseAgent
 from colorama import Fore, Style, init
-from critic_agent import CriticAgent
-from search_plan_agent import SearchPlanAgent
+
+from .base_agent import BaseAgent
+from .critic_agent import CriticAgent
+from .search_plan_agent import SearchPlanAgent
 
 # Constants
 MAX_ITERATION = 50

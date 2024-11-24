@@ -11,3 +11,13 @@
 ### Creating a virtual environment
 
 `uv venv`
+
+## Run critic_search
+
+1. Rename `config.yaml.template` to `config.yaml`
+
+2. Run command.
+
+```python
+python -m critic_search
+```

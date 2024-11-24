@@ -1,0 +1,16 @@
+models:
+  gpt-4o-mini:
+    api_key: "place_your_api_key_here"
+    base_url: "place_your_base_url_here"
+    max_tokens: 4096
+
+# model configuration
+default_model: gpt-4o-mini
+temperature: 0.5
+top_p: 1.0
+frequency_penalty: 0.0
+timeout: 60
+max_retries: 5
+
+# tools
+search_api_endpoint: "http://localhost:8000/"

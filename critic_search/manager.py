@@ -4,10 +4,6 @@
 #   • Task decomposition: Breaking down the complex task into manageable sub-tasks or different levels.
 #   • Task assignment: Preparing the sub-tasks for the subsequent AgentGenerator to generate corresponding Agents.
 
-import os
-
-from config import read_config
-
 from critic_search.base_agent import BaseAgent
 
 

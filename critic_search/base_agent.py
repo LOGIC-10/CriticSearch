@@ -2,9 +2,9 @@ import re
 from typing import List
 
 import yaml
-from jinja2 import Environment, FileSystemLoader
+from jinja2 import Environment, FileSystemLoader, Template
 
-from critic_search.config.config import read_config
+from critic_search.config import read_config
 from critic_search.tools import SearchAggregator, ToolRegistry, WebScraper
 from critic_search.utils import call_llm
 
@@ -13,9 +13,7 @@ class BaseAgent:
     def __init__(self):
         self.config = read_config()
         self.model = self.config.get("default_model", "gpt-4o-mini")
-        self.env = Environment(
-            loader=FileSystemLoader(self.config.get("prompt_folder_path"))
-        )
+        self.env = Environment(loader=FileSystemLoader("critic_search/prompts"))
         # 定一个通用格式,queryDB应该是一个set,里面每个元素是一个query
         self.queryDB = (
             set()
@@ -175,7 +173,7 @@ class BaseAgent:
         )
         return model_response
 
-    def chat_with_template(self, data, prompt_template):
+    def chat_with_template(self, data, prompt_template: Template):
         """
         通用的聊天方法，根据传入的data字典适配不同的prompt。
         """
