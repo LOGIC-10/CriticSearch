@@ -4,16 +4,19 @@
 #   • Task decomposition: Breaking down the complex task into manageable sub-tasks or different levels.
 #   • Task assignment: Preparing the sub-tasks for the subsequent AgentGenerator to generate corresponding Agents.
 
-from config import read_config
 import os
-from agent import BaseAgent
+
+from config import read_config
+
+from critic_search.base_agent import BaseAgent
+
 
 class Manager(BaseAgent):
     def __init__(self):
         super().__init__()
-        self.original_task = ''
+        self.original_task = ""
         self.sub_tasks = []
-        self.breakdown_prompt = self.env.get_template('manager_break_down.txt')
+        self.breakdown_prompt = self.env.get_template("manager_break_down.txt")
         self.reflection_prompt = None
 
     def breakdown_task(self):
@@ -24,16 +27,13 @@ class Manager(BaseAgent):
         return self.chat_with_template(data, self.breakdown_prompt)
 
     def get_data_for_breakdown(self):
-        return {
-            'task': self.original_task
-        }
-
-manager = Manager()
-
-task = """Assuming scientists in the famous youtube video The Thinking Machine (Artificial Intelligence in the 1960s) were interviewed the same year, what is the name of the scientist predicting the sooner thinking machines or robots? Answer using the format First name Last name"""
-manager.receive_task(task)
-response_message = manager.breakdown_task()
-print(f"Decompose:\n\n{response_message}")
+        return {"task": self.original_task}
 
 
+if __name__ == "__main__":
+    manager = Manager()
 
+    task = """Assuming scientists in the famous youtube video The Thinking Machine (Artificial Intelligence in the 1960s) were interviewed the same year, what is the name of the scientist predicting the sooner thinking machines or robots? Answer using the format First name Last name"""
+    manager.receive_task(task)
+    response_message = manager.breakdown_task()
+    print(f"Decompose:\n\n{response_message}")

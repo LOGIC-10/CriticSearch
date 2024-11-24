@@ -1,15 +1,13 @@
-
 from openai import APIConnectionError, OpenAI
 
 
 def read_prompt_template(file_path):
-  with open(file_path, 'r') as file:
-    prompt = file.read()
-  return prompt
+    with open(file_path, "r") as file:
+        prompt = file.read()
+    return prompt
 
 
 def call_llm(model, sys_prompt, usr_prompt, config):
-
     client = OpenAI(
         api_key=config.get("models").get(model).get("api_key"),
         base_url=config.get("models").get(model).get("base_url"),

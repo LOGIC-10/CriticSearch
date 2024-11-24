@@ -1,25 +1,15 @@
-import json
-import re
-import sys
-import os
-
-import sys
-from pathlib import Path
-
 import yaml
 
-project_root = Path(__file__).resolve().parents[1]  # 获取项目根目录
-sys.path.append(str(project_root / 'agent_factory'))  # 添加到搜索路径中
-sys.path.append(str(project_root / 'critic_agent'))
-
-from agent_factory.agent import BaseAgent
+from critic_search.base_agent import BaseAgent
 
 
 class SearchPlanAgent(BaseAgent):
     def __init__(self):
         super().__init__()
-        self.original_task = ''
-        self.reflection_and_plan_prompt = self.env.get_template('planner_agent_with_reflection.txt')
+        self.original_task = ""
+        self.reflection_and_plan_prompt = self.env.get_template(
+            "planner_agent_with_reflection.txt"
+        )
 
     def plan(self, common_agent_answer, critic_feedback):
         """
@@ -36,11 +26,11 @@ class SearchPlanAgent(BaseAgent):
         except yaml.YAMLError as exc:
             print(f"Invalid YAML content: {exc}")
             return None
-        
+
     def get_data_for_plan(self, common_agent_answer, critic_feedback):
         return {
-            'user_question': self.original_task,
-            'agent_answer': common_agent_answer,
-            'user_feedback': critic_feedback,
-            'search_history': self.queryDB
+            "user_question": self.original_task,
+            "agent_answer": common_agent_answer,
+            "user_feedback": critic_feedback,
+            "search_history": self.queryDB,
         }
