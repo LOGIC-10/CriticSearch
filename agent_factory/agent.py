@@ -148,10 +148,10 @@ class BaseAgent:
         try:
             # 尝试解析YAML内容
             parsed_yaml = yaml.safe_load(model_response)
-            return yaml.dump(parsed_yaml, default_flow_style=False)
+            # 使用sort_keys=False来保持原有顺序，allow_unicode=True支持中文字符
+            return yaml.dump(parsed_yaml, default_flow_style=False, sort_keys=False, allow_unicode=True)
 
         except yaml.YAMLError as exc:
             print(f"Invalid YAML content: {exc}")
             return None
-        
     

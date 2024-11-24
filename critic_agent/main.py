@@ -18,8 +18,8 @@ from colorama import Fore, Style, init
 
 # Constants
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-MAX_ITERATION = 10
-TASK = """who is the president of the United States in 2024?"""
+MAX_ITERATION = 50
+TASK = """I was trying to remember how well the Cheater Beater performed in comparison to the Cheater when James tested it on his channel. I know that the Cheater still outperformed the Cheater Beater in terms of CFM. Could you please look that up for me, and report the CFM of both the Cheater and the Cheater Beater? I'm not sure if he made any changes to his testing, but this was back in season 4, so just report the value from that season. Please format your response like this: CFM number for Cheater, CFM number for Cheater beater"""
 
 # Setup
 sys.path.append(str(PROJECT_ROOT))
@@ -42,7 +42,6 @@ def setup_logger():
     return logger
 
 logger = setup_logger()
-
 def main():
     for iteration in range(MAX_ITERATION):
         # Iteration header with bold cyan
@@ -97,6 +96,12 @@ def main():
         critic_agent.receive_agent_answer(common_agent_answer)
         critic_agent_response = critic_agent.critic()
         logger.info(f"\n{Fore.BLUE}{'=' * 20}== CRITIC_AGENT_RESPONSE =={'=' * 20}{Style.RESET_ALL}\n{critic_agent_response}\n")
+        
+        if yaml.safe_load(critic_agent_response).get('Stop', {}).lower() == 'true':
+            logger.info(f"\n{Fore.RED}{'=' * 20}== TOTAL ITERATIONS: {iteration + 1} =={'=' * 20}{Style.RESET_ALL}\n")
+            logger.info(f"\n{Fore.BLACK}{'=' * 20}== ALL SEARCH QUERIES =={'=' * 20}{Style.RESET_ALL}\n{common_agent.queryDB}\n")
+            logger.info(f"\n{Fore.RED}{'=' * 20}== FINAL ANSWER =={'=' * 20}{Style.RESET_ALL}\n{common_agent_answer}\n")
+            break
 
         # Next search plan - green
         plan_agent.receive_task(TASK)
@@ -110,7 +115,13 @@ def main():
         common_agent.queryDB.update(new_queries)
         search_results = common_agent.parallel_search(new_queries)
         formatted_search_results = common_agent.format_parallel_search_to_string(search_results)
-        logger.info(f"\n{Fore.BLACK}{'=' * 20}== SEARCH_RESULTS =={'=' * 20}{Style.RESET_ALL}\n{formatted_search_results}\n")
+        logger.info(f"\n{Fore.GREEN}{'=' * 20}== SEARCH_RESULTS =={'=' * 20}{Style.RESET_ALL}\n{formatted_search_results}\n")
+
+        # Check if reached max iterations
+        if iteration == MAX_ITERATION - 1:
+            logger.info(f"\n{Fore.RED}{'=' * 20}== TOTAL ITERATIONS: {iteration + 1} =={'=' * 20}{Style.RESET_ALL}\n")
+            logger.info(f"\n{Fore.BLACK}{'=' * 20}== ALL SEARCH QUERIES =={'=' * 20}{Style.RESET_ALL}\n{common_agent.queryDB}\n")
+            logger.info(f"\n{Fore.RED}{'=' * 20}== FINAL ANSWER =={'=' * 20}{Style.RESET_ALL}\n{common_agent_answer}\n")
 
 if __name__ == "__main__":
     main()
