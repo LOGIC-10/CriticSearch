@@ -1,12 +1,7 @@
 {
-  "doc_version": "5ecacba6011ea12ac3289a09d37574aef3560218",
+  "doc_version": "e626ece4d812c9c09e9168ecf794cc0cbbdf535e",
   "in_generation_process": false,
   "fake_file_reflection": {},
   "jump_files": [],
-  "deleted_items_from_older_meta": [
-    [
-      "agent_factory/agent.py/BaseAgent/chat",
-      "_class_function"
-    ]
-  ]
+  "deleted_items_from_older_meta": []
 }

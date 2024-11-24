@@ -3,8 +3,10 @@ name: Use RepoAgent Action
 
 on:
   workflow_dispatch:
-  push:
-  
+  pull_request:
+    types:
+      - closed
+      
 permissions:
   contents: write  # This action requires write permissions for contents to push changes to the repository.
   
@@ -21,4 +23,3 @@ jobs:
         with:
           openai_base_url: "${{ secrets.OPENAI_BASE_URL }}"
           openai_api_key: "${{ secrets.OPENAI_API_KEY }}"
-          log_level: "DEBUG"

@@ -2,27 +2,27 @@
 **CriticAgent**: The function of CriticAgent is to generate critiques based on user questions and agent responses.
 
 **attributes**: The attributes of this Class.
-· original_task: A string that holds the user's original question or task.
-· critic_prompt: A template used for generating critiques, retrieved from the environment.
-· agent_answer: A string that stores the answer provided by the agent.
+· original_task: A string that holds the original user question or task to be critiqued.  
+· critic_prompt: A template used for generating critiques, retrieved from the environment.  
+· agent_answer: A string that stores the answer provided by the agent for critique.  
 
-**Code Description**: The CriticAgent class inherits from the BaseAgent class and is designed to facilitate the generation of critiques for agent responses to user questions. Upon initialization, it sets up the original task as an empty string and retrieves a template for critiques from the environment, specifically from a file named 'critic_agent.txt'. 
+**Code Description**: The CriticAgent class inherits from the BaseAgent class and is designed to facilitate the process of generating critiques for agent responses. Upon initialization, it sets up an empty string for the original task and retrieves a template for the critique from the environment. The main functionality of this class is encapsulated in the `critic` method, which generates a critique based on the original task and the agent's answer.
 
-The class contains several methods:
-- The `__init__` method initializes the instance of the CriticAgent, setting up the original task and loading the critique template.
-- The `critic` method is responsible for generating a critique. It first gathers the necessary data by calling the `get_data_for_critic` method, which collects the user's question and the agent's answer. It then utilizes the `chat_with_template` method to interact with the critique template and obtain a response from the model. The response is expected to be in YAML format, which is validated and formatted. If the response contains invalid YAML, an error message is printed, and the method returns None.
-- The `receive_agent_answer` method allows the CriticAgent to store the agent's answer for later critique.
-- The `get_data_for_critic` method constructs and returns a dictionary containing the original user question and the agent's answer, which is essential for generating the critique.
+The `critic` method first gathers the necessary data by calling `get_data_for_critic`, which compiles the original task and the agent's answer into a dictionary. This data is then passed to the `chat_with_template` method along with the critique prompt to simulate a conversation where the model acts as a user providing a response. The generated response is appended to the history with the role of "critic_user".
 
-**Note**: It is important to ensure that the agent's answer is properly received before invoking the `critic` method, as the critique generation relies on this data. Additionally, users should handle potential YAML errors gracefully when utilizing the `critic` method.
+After obtaining the model's response, the method attempts to extract and validate the response as YAML format using the `extract_and_validate_yaml` method. If the response is valid YAML, it is returned; otherwise, an error message is printed, and the method returns None.
 
-**Output Example**: A possible return value from the `critic` method could be a formatted YAML string such as:
+The `receive_agent_answer` method allows the class to accept an answer from the agent, storing it in the `agent_answer` attribute. The `get_data_for_critic` method constructs a dictionary containing the original task and the agent's answer, which is essential for generating the critique.
+
+**Note**: It is important to ensure that the agent's answer is properly formatted and relevant to the original task for the critique to be meaningful. Additionally, users should handle potential YAML parsing errors gracefully.
+
+**Output Example**: A possible return value from the `critic` method could be a structured YAML response such as:
 ```yaml
 critique:
-  - feedback: "The response was clear and concise."
-  - suggestions:
-      - "Consider providing more examples."
-      - "Ensure to address all parts of the user's question."
+  feedback: "The agent's response was clear and concise."
+  suggestions:
+    - "Consider providing more examples."
+    - "Clarify the main points for better understanding."
 ```
 ### FunctionDef __init__(self)
 **__init__**: The function of __init__ is to initialize an instance of the CriticAgent class.
@@ -35,25 +35,30 @@ critique:
 **Note**: It is important to ensure that the environment (`self.env`) is properly set up before this constructor is called, as it relies on the `get_template` method to function correctly. Additionally, the `original_task` variable should be assigned a meaningful value before it is used in any operations to avoid issues with uninitialized data.
 ***
 ### FunctionDef critic(self)
-**critic**: The function of critic is to generate a review based on user input and agent responses.
+**critic**: The function of critic is to generate a review based on user input and agent response.
 
 **parameters**: The parameters of this Function.
 · There are no parameters for this function.
 
-**Code Description**: The critic method is a member of the CriticAgent class, responsible for producing a critique based on the interaction between the user and the agent. It begins by invoking the get_data_for_critic method, which retrieves essential data in the form of a dictionary containing the user's question and the agent's answer. This data is then passed to the chat_with_template method along with a predefined prompt (self.critic_prompt) to generate a model response.
+**Code Description**: The critic method is a member of the CriticAgent class and is responsible for generating a critique based on the interaction between the user and the agent. It begins by calling the get_data_for_critic method, which retrieves the original user question and the agent's answer in a structured format. This data is essential for creating a meaningful critique.
 
-The expected output from chat_with_template is a string formatted in YAML. The critic method subsequently attempts to validate and format this YAML content using the extract_and_validate_yaml method. If the YAML content is valid, it is returned as the output of the critic method. However, if a YAMLError occurs during this validation process, an error message is printed to the console, and the method returns None.
+Once the data is obtained, the method utilizes the chat_with_template function, passing in the retrieved data along with a predefined prompt stored in self.critic_prompt. This function is expected to simulate a conversation where the model generates a response based on the provided input.
 
-The relationship between critic and its callees is crucial for its functionality. The get_data_for_critic method provides the necessary context for the critique by supplying the user question and agent answer. The chat_with_template method is responsible for generating the critique based on this context, while extract_and_validate_yaml ensures that the output is in a valid format. This structured flow ensures that the critique process is both systematic and reliable.
+The response from chat_with_template is then appended to the instance variable self.history, with the role labeled as "critic_user". This allows for tracking the conversation history, which may be useful for future reference or analysis.
 
-**Note**: It is important to ensure that the instance variables self.original_task and self.agent_answer are properly initialized before calling this function to avoid returning None or causing errors in the subsequent processing.
+Following this, the method attempts to extract and validate the response as YAML formatted content using the extract_and_validate_yaml function. If the response is valid YAML, it is returned by the critic method. However, if a yaml.YAMLError occurs during this process, an error message is printed to the console indicating that the YAML content is invalid, and the method returns None.
 
-**Output Example**: A possible return value from the critic method could be a well-structured YAML string, such as:
+The critic method thus plays a crucial role in the overall functionality of the CriticAgent class by facilitating the generation of critiques based on user-agent interactions, ensuring that the critiques are formatted correctly and maintaining a history of the interactions.
+
+**Note**: It is important to ensure that the instance variables self.original_task, self.agent_answer, and self.critic_prompt are properly initialized before calling this function to avoid returning None or causing errors in the subsequent processing.
+
+**Output Example**: A possible return value from the critic method could be a well-structured YAML representation of the critique, such as:
 ```yaml
 review:
-  user_question: "What is the capital of France?"
-  agent_answer: "The capital of France is Paris."
-  critique: "The answer is accurate and concise."
+  feedback: "The agent's response was accurate and concise."
+  suggestions:
+    - "Consider providing more examples."
+    - "Clarify the context of the question."
 ```
 ***
 ### FunctionDef receive_agent_answer(self, agent_answer)

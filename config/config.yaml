@@ -20,7 +20,7 @@ models:
 
 
 # model configuration
-default_model: qwen2.5:latest
+default_model: gpt-4o-mini
 temperature: 0.5
 top_p: 1.0
 frequency_penalty: 0.0
