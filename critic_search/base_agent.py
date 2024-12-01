@@ -1,23 +1,25 @@
-import re
-from typing import List
+import asyncio
+import json
+from typing import List, Optional
 
 import yaml
-from jinja2 import Environment, FileSystemLoader, Template
+from jinja2 import Environment, FileSystemLoader
+from loguru import logger
 
-from critic_search.config import read_config
+from critic_search.config import settings
+from critic_search.llm_service import ChatCompletionMessage, call_llm
 from critic_search.tools import SearchAggregator, ToolRegistry, WebScraper
-from critic_search.utils import call_llm
 
 
 class BaseAgent:
+    # Class-level attributes, shared across all instances
+    queryDB = set()  # A set to store queries
+    tool_registry = ToolRegistry()  # Registry for tools
+
     def __init__(self):
-        self.config = read_config()
-        self.model = self.config.get("default_model", "gpt-4o-mini")
         self.env = Environment(loader=FileSystemLoader("critic_search/prompts"))
-        # 定一个通用格式,queryDB应该是一个set,里面每个元素是一个query
-        self.queryDB = (
-            set()
-        )  # 对于citationDB,应该是一个字典，key是query，value是内容和来源
+
+        # 对于citationDB,应该是一个字典，key是query，value是内容和来源
         # 这个列表中的每个元素都是一个字典，代表一个搜索的问题以及对应的搜索结果
         self.citationDB = [
             {  # citationDB中只会把受到critic表扬的搜索结果加入
@@ -32,111 +34,26 @@ class BaseAgent:
         ]
         self.search_aggregator = SearchAggregator()
 
-        self.sys_prompt = ""
         self.repeat_turns = 10
         self.history = []
 
-    #     self.tool_registry = ToolRegistry()
-    #     self._register_default_tools()
-    #     self._setup_prompts()
+        BaseAgent.tool_registry.register(self.search_aggregator.search)
 
-    # def _register_default_tools(self):
-    #     self.search_aggregator = SearchAggregator()
-    #     self.web_scraper = WebScraper()
-    #     self.tool_registry.register(self.search_aggregator.search, self.web_scraper.scrape)
-
-    # def parse_tool_calls(self, response: str) -> List[ToolCall]:
-    #     """Parse tool calls from the response."""
-    #     try:
-    #         # Extract YAML between ```yaml and ``` markers
-    #         yaml_match = re.search(r"```yaml\n(.*?)```", response, re.DOTALL)
-    #         if not yaml_match:
-    #             return []
-
-    #         yaml_content = yaml_match.group(1)
-    #         parsed = yaml.safe_load(yaml_content)
-
-    #         if not parsed or "tool_calls" not in parsed:
-    #             return []
-
-    #         return [ToolCall(**call) for call in parsed["tool_calls"]]
-
-    #     except Exception as e:
-    #         print(f"Error parsing tool calls: {e}")
-    #         return []
-
-    # def execute_tool_calls(self, tool_calls: List[ToolCall]) -> List[ToolResponse]:
-    #     """Execute a sequence of tool calls."""
-    #     responses = []
-
-    #     for call in tool_calls:
-    #         tool = self.tool_registry.get_tool(call.tool)
-    #         if not tool:
-    #             responses.append(
-    #                 ToolResponse(result={}, error=f"Tool '{call.tool}' not found")
-    #             )
-    #             continue
-
-    #         try:
-    #             result = tool["function"](**call.parameters)
-    #             responses.append(ToolResponse(result=result))
-    #         except Exception as e:
-    #             responses.append(
-    #                 ToolResponse(
-    #                     result={}, error=f"Error executing {call.tool}: {str(e)}"
-    #                 )
-    #             )
-
-    #     return responses
-
-    #     def common_chat_with_tool_call(self, query: str) -> str:
-    #         """Enhanced chat method with tool calling capabilities."""
-    #         # First, get potential tool calls from the model
-    #         tool_response = call_llm(
-    #             model=self.model,
-    #             sys_prompt=self.sys_prompt,
-    #             usr_prompt=f"Query: {query}\n\nDetermine if any tools are needed to answer this query. If so, specify the tool calls in YAML format.",
-    #             config=self.config,
-    #         )
-
-    #         # Parse and execute tool calls
-    #         tool_calls = self.parse_tool_calls(tool_response)
-    #         print(tool_calls)
-    #         tool_results = []
-
-    #         if tool_calls:
-    #             tool_responses = self.execute_tool_calls(tool_calls)
-    #             tool_results = [
-    #                 f"Tool '{call.tool}' results (called because {call.reasoning}):\n{response.result if not response.error else f'Error: {response.error}'}"
-    #                 for call, response in zip(tool_calls, tool_responses)
-    #             ]
-    #             print(tool_results)
-
-    #         # Generate final response with tool results
-    #         final_prompt = f"""Query: {query}
-
-    # Tool results:
-    # {yaml.dump({'tool_results': tool_results}, default_flow_style=False) if tool_results else 'No tools were used.'}
-
-    # Please provide a comprehensive response based on the available information."""
-
-    #         return call_llm(
-    #             model=self.model,
-    #             sys_prompt=self.sys_prompt,
-    #             usr_prompt=final_prompt,
-    #             config=self.config,
-    #         )
-
-    def common_chat(self, query):
+    def common_chat(
+        self, usr_prompt, tools: Optional[List] = None, raw: Optional[bool] = False
+    ) -> ChatCompletionMessage | str:
         llm_response = call_llm(
-            model=self.model,
-            sys_prompt=self.sys_prompt,
-            usr_prompt=query,
-            config=self.config,
+            model=settings.default_model,
+            usr_prompt=usr_prompt,
+            config=settings,
+            tools=tools,
         )
-        self.history.append({"role": "user", "content": query})
+        self.history.append({"role": "user", "content": usr_prompt})
         self.history.append({"role": "assistant", "content": llm_response})
-        return llm_response
+        if raw:
+            logger.debug(f"llm_response:\n {llm_response}")
+            return llm_response
+        return llm_response.content  # type: ignore
 
     def clear_history(self):
         self.history = []
@@ -148,39 +65,101 @@ class BaseAgent:
             "search_results": search_results,
             "critic_feedback": critic_feedback,
         }
-        updated_answer = self.chat_with_template(
-            data, self.env.get_template("agent_update_answer.txt")
-        )
-        return updated_answer
+
+        agent_update_answer_prompt = self.env.get_template("agent_update_answer.txt")
+        rendered_prompt = agent_update_answer_prompt.render(**data)
+
+        agent_update_answer_response = self.common_chat(usr_prompt=rendered_prompt)
+
+        return agent_update_answer_response
 
     def model_confident(self, query):
         """
         检查模型是否对当前问题有信心。
         """
         data = {"user_question": query}
-        model_response = self.chat_with_template(
-            data, self.env.get_template("agent_confidence.txt")
-        )
-        return model_response
+        agent_confidence_prompt = self.env.get_template("agent_confidence.txt")
 
-    def initialize_search(self, query):
-        """
-        初始化搜索。
-        """
-        data = {"user_question": query}
-        model_response = self.chat_with_template(
-            data, self.env.get_template("planner_agent_initial_search_plan.txt")
-        )
-        return model_response
+        rendered_prompt = agent_confidence_prompt.render(**data)
+        agent_confidence_response = self.common_chat(usr_prompt=rendered_prompt)
 
-    def chat_with_template(self, data, prompt_template: Template):
+        return agent_confidence_response
+
+    def initialize_search(self, search_rendered_prompt: str):
         """
-        通用的聊天方法，根据传入的data字典适配不同的prompt。
+        Initiate a search based on the rendered prompt and return the results.
         """
-        rendered_prompt = prompt_template.render(**data)
-        # print(rendered_prompt)
-        response_message = self.common_chat(query=rendered_prompt)
-        return response_message
+
+        # Define the tool schema for search
+        search_tool_schema = [
+            BaseAgent.tool_registry.get_tool_schema(self.search_aggregator.search)
+        ]
+
+        # Interact with the model for initial search processing
+        search_with_tool_response = self.common_chat(
+            usr_prompt=search_rendered_prompt, tools=search_tool_schema, raw=True
+        )
+
+        # If no tool calls, return the response immediately
+        if search_with_tool_response.tool_calls is None:  # type: ignore
+            return search_with_tool_response
+
+        # Extract tool call IDs and their corresponding queries
+        tool_call_id_to_queries = {
+            tool_call.id: json.loads(tool_call.function.arguments).get("query", [])  # List[str]
+            for tool_call in search_with_tool_response.tool_calls  # type: ignore
+        }
+
+        # Collect all queries in a single list for batch search
+        all_queries = [query for queries in tool_call_id_to_queries.values() for query in queries]
+        logger.info(f"All queries extracted: {all_queries}")
+
+        # Execute the batch search and retrieve results
+        search_results = asyncio.run(self.search_aggregator.search(query=all_queries))  # Returns a dictionary
+
+        # Build the response map (tool_call_id -> query -> search_result)
+        tool_call_id_to_response = {
+            tool_call_id: {
+                query: search_results.get(query)  # Match queries with their search results
+                for query in queries
+            }
+            for tool_call_id, queries in tool_call_id_to_queries.items()
+        }
+
+        # Initialize a list to store the function call result messages
+        function_call_result_messages = []
+
+        # Iterate through the tool_call_id_to_response dictionary and build messages
+        for tool_call_id, queries_to_responses in tool_call_id_to_response.items():
+             # Concatenate all search results
+            search_result = "\n".join(queries_to_responses.values()) # type: ignore 
+
+            # Build the response message for each tool call
+            message = {
+                "role": "tool",
+                "content": json.dumps({
+                    "query": list(queries_to_responses.keys()),  # List of queries
+                    "search_result": search_result  # Concatenated search results
+                }),
+                "tool_call_id": tool_call_id,
+            }
+            function_call_result_messages.append(message)
+
+        # Construct the final prompt by combining the user input and the generated messages
+        final_prompt = [
+            {"role": "user", "content": search_rendered_prompt},
+            search_with_tool_response,
+        ] + function_call_result_messages
+        
+        logger.debug(f"Final prompt constructed: {final_prompt}")
+
+        # Get the final response from the model based on the constructed prompt
+        final_response = self.common_chat(usr_prompt=final_prompt)
+
+        # Update the query DB with the new queries
+        BaseAgent.queryDB.update(set(all_queries))  # type: ignore
+
+        return final_response, search_results
 
     def receive_task(self, task):
         """
@@ -218,3 +197,47 @@ if __name__ == "__main__":
         ]
     )
     print(result)
+
+"""
+curl https://toollearning.cn/v1/chat/completions \
+    -H "Authorization: Bearer $OPENAI_API_KEY" \
+    -H "Content-Type: application/json" \
+    -d '{
+        "model": "gpt-4o",
+        "messages": [
+            {
+                "role": "system",
+                "content": "You are a helpful support assistant. Use the supplied tools to assist the user."
+            },
+            {
+                "role": "user",
+                "content": "Hi, can you help me search latest sport news?"
+            }
+        ],
+        "tools": [
+            {
+                "type": "function",
+                "function": {
+                    "name": "search",
+                    "description": "Asynchronous search method supporting multiple concurrent queries and engine fallback.",
+                    "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "query": {
+                        "type": "array",
+                        "description": "A list of search queries.",
+                        "items": {
+                            "type": "string"
+                        }
+                        }
+                    },
+                    "required": [
+                        "query"
+                    ],
+                    "additionalProperties": false
+                    }
+                }
+            }
+        ]
+    }'
+"""

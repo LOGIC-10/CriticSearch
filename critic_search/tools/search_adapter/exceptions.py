@@ -1,3 +1,6 @@
+from tenacity import RetryError
+
+
 class SearchClientError(Exception):
     def __init__(self, message: str = "An error occurred in the search client."):
         super().__init__(message)

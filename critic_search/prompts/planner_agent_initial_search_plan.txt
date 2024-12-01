@@ -1,51 +1,34 @@
 You are a search assistant, and your task is to help humans conduct in-depth searches. Your user has given you a question:
 {{user_question}}
-
 You previously considered this question too complex and requiring a web search. Now, please design an appropriate search query to help you answer the user’s question.
 
 In addition, here are various search engine techniques along with their corresponding use cases:
-	1.	Using Quotation Marks for Exact Search ("")
-Enclose your search terms within double quotes to search for the exact phrase, reducing search engine guesswork. The results will display pages containing the exact phrase in the specified order.
-	•	Example: Searching for learn JavaScript array may return results containing those words in any order. However, searching for "learn JavaScript array" will return results that contain the exact phrase.
-	2.	Using Hyphens to Exclude Content (-)
-Use a hyphen before a word to exclude results containing that word. This is helpful when a term has multiple meanings or you want to filter out specific content.
-	•	Example: JavaScript -wikipedia will return JavaScript-related pages excluding those from Wikipedia.
-	3.	Using Asterisks as Wildcards (*)
-Use an asterisk as a placeholder for unknown or forgotten terms within a phrase.
-	•	Example: If you forget part of a command, like the second word in git revert [word] commit, you can search: git revert * commit. The asterisk will match any word in that position.
-	4.	Searching Within a Specific Number Range (..)
-Use two periods between numbers to search for results within a specific range, such as years or versions.
-	•	Example: JavaScript 2015..2020 will return results related to JavaScript from the years 2015 to 2020.
-	5.	Searching Within a Specific Website (site:)
+1. Using Quotation Marks for Exact Search ("")
+Enclose your search terms within double quotes to search for the exact phrase. The results will display pages containing the exact phrase in the specified order. If no or few results are found, related results may be shown.
+Example: Searching for "cats and dogs" will return results for the exact term "cats and dogs".
+2. Using Tilde for Semantically Similar Terms (~"")
+Use a tilde and double quotes to find results that are semantically similar to a given phrase. This includes variations in word order or synonyms.
+Example: Searching for ~"cats and dogs" may return results like "cats & dogs", "dogs and cats", and "cats and dogs".
+3. Using Hyphens to Exclude Content (-)
+Use a hyphen before a word to exclude results containing that word. This is helpful when you want to filter out specific content.
+Example: Searching for cats -dogs will return results about cats but with fewer references to dogs.
+4. Using Plus to Include More Results for a Term (+)
+Use a plus sign before a word to prioritize results containing that word.
+Example: Searching for cats +dogs will return results with more emphasis on "dogs".
+5. Searching for Specific File Types (filetype:)
+Use the filetype: operator to find files of a specific type. Supported file types include pdf, doc(x), xls(x), ppt(x), and html.
+Example: Searching for cats filetype:pdf will return PDFs about cats.
+6. Searching Within a Specific Website (site:)
 Use the site: operator followed by a domain to search for content within a particular website.
-	•	Example: site:w3schools.com JavaScript Array will search for pages about JavaScript arrays on w3schools.com.
-	6.	Searching for Specific File Types (filetype:)
-Use the filetype: operator to find files of a specific type, such as PDFs or Word documents.
-	•	Example: React ebook filetype:pdf will return PDF files related to React ebooks.
-	7.	Using OR to Find One of Multiple Keywords (OR)
-Use OR between words to search for pages that contain any of the specified keywords.
-	•	Example: React OR Vue will return pages that mention either React or Vue.
-	8.	Querying Definitions of Keywords (define:)
-Use define: before a word to find its definition.
-	•	Example: define:JavaScript will provide the definition of JavaScript.
-	9.	Finding Similar Websites (related:)
-Use the related: operator followed by a website to find sites similar to it.
-	•	Example: related:w3schools.com will list websites similar to w3schools.com.
-	10.	Searching for Content Posted After or Before a Specific Date (after: and before:)
-Use after: or before: followed by a year to find content posted after or before that year.
-	•	Example: learn react after:2021 will return pages about learning React published after 2021.
+Example: Searching for dogs site:example.com will display pages about dogs from example.com.
+7. Excluding a Specific Website (-site:)
+Use the -site: operator to exclude a specific domain from the results.
+Example: Searching for cats -site:example.com will return pages about cats but exclude those from example.com.
+8. Searching for Terms in Titles (intitle:)
+Use the intitle: operator to find pages where the title includes the specified word.
+Example: Searching for intitle:dogs will return pages with "dogs" in the title.
+9. Searching for Terms in URLs (inurl:)
+Use the inurl: operator to find pages where the URL includes the specified word.
+Example: Searching for inurl:cats will return pages where the URL includes the word "cats".
 
-Please ensure you properly break down the user’s question into different levels of relevant queries to obtain more comprehensive and in-depth search results and also taking fully usage of these searching techniques to better assist your query design. Please output in standard YAML format.
-
-### YAML format 
-
-```yaml
-SearchQueries:
-  - Query: "<Your search query 1>"
-    Purpose: "<Purpose of search query 1 according to your reflection>"
-  - Query: "<Your search query 2>"
-    Purpose: "<Purpose of search query 2 according to your reflection>"
-  # Add more deep queries as needed
-```
-
-
+Please ensure you properly break down the user’s question into different levels of relevant queries to obtain more comprehensive and in-depth search results and also taking fully usage of these searching techniques to better assist your query design.

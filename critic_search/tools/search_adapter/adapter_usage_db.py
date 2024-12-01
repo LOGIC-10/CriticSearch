@@ -1,39 +1,54 @@
-# critic_search/search_adapter/adapter_usage_db.py
-import calendar
 from datetime import datetime
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 from sqlmodel import SQLModel, create_engine
 
-# 定义隐藏数据目录（相对路径）
+# Define the hidden data directory (relative path)
 HIDDEN_DATA_DIR = Path("critic_search/.data")
-HIDDEN_DATA_DIR.mkdir(parents=True, exist_ok=True)  # 确保隐藏文件夹存在
+HIDDEN_DATA_DIR.mkdir(parents=True, exist_ok=True)  # Ensure the hidden folder exists
 
-# 定义数据库文件路径
+# Define the database file path
 DATABASE_PATH = HIDDEN_DATA_DIR / "adapter_usage.sqlite"
 DATABASE_URL = f"sqlite:///{DATABASE_PATH}"
 
-
 engine = create_engine(DATABASE_URL)
-# 用于标记是否已经初始化
+# Flag to mark if the database has been initialized
 _db_initialized = False
 
 
 def initialize_db():
     """
-    初始化数据库和表（只执行一次）
+    Initialize the database and tables (only executed once).
     """
     global _db_initialized
     if not _db_initialized:
-        SQLModel.metadata.create_all(engine)  # 创建所有表
+        SQLModel.metadata.create_all(engine)  # Create all tables
         _db_initialized = True
         print(f"Database initialized at {DATABASE_PATH}")
 
 
-def get_end_of_month() -> datetime:
+def get_second_day_naive() -> datetime:
     """
-    获取当前日期的当月最后一天
+    Get the second day of the current month (naive datetime without timezone).
+
+    Returns:
+        naive datetime (without timezone).
     """
-    now = datetime.now()
-    last_day = calendar.monthrange(now.year, now.month)[1]
-    return datetime(now.year, now.month, last_day, 23, 59, 59)
+    now = datetime.now(ZoneInfo("America/New_York"))
+    # Return a naive datetime representing the second day of the month at 00:00:00
+    return datetime(now.year, now.month, 2, 0, 0, 0)
+
+
+def get_current_time_of_new_york_naive() -> datetime:
+    """
+    Get the current time in New York and remove the timezone information.
+
+    Returns:
+        naive datetime (without timezone).
+    """
+    # Get the current time with timezone information
+    aware_time = datetime.now(ZoneInfo("America/New_York"))
+    # Remove the timezone information
+    naive_time = aware_time.replace(tzinfo=None)
+    return naive_time

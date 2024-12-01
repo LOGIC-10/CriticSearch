@@ -192,4 +192,7 @@ poetry.toml
 pyrightconfig.json
 
 # Critic Search
-config.yaml
+settings.yaml
+
+# Ignore dynaconf secret files
+.secrets.*

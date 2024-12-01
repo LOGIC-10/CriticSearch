@@ -1,4 +1,5 @@
-import yaml
+from colorama import Fore, Style, init
+from loguru import logger
 
 from critic_search.base_agent import BaseAgent
 
@@ -15,22 +16,19 @@ class SearchPlanAgent(BaseAgent):
         """
         生成计划。
         """
-        data = self.get_data_for_plan(common_agent_answer, critic_feedback)
-        model_response = self.chat_with_template(data, self.reflection_and_plan_prompt)
-        self.history.append({"role": "planner", "content": model_response})
-
-        try:
-            formatted_yaml = self.extract_and_validate_yaml(model_response)
-            return formatted_yaml
-
-        except yaml.YAMLError as exc:
-            print(f"Invalid YAML content: {exc}")
-            return None
-
-    def get_data_for_plan(self, common_agent_answer, critic_feedback):
-        return {
+        data = {
             "user_question": self.original_task,
-            "agent_answer": common_agent_answer,
+            "previous_answer": common_agent_answer,
             "user_feedback": critic_feedback,
-            "search_history": self.queryDB,
+            "search_history": BaseAgent.queryDB,
         }
+
+        reflection_and_plan_rendered_prompt = self.reflection_and_plan_prompt.render(
+            **data
+        )
+
+        search_plan_agent_answer, search_result = self.initialize_search(
+            search_rendered_prompt=reflection_and_plan_rendered_prompt
+        )
+
+        self.history.append({"role": "planner", "content": search_plan_agent_answer})

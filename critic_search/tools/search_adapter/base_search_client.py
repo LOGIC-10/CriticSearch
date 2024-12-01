@@ -4,5 +4,5 @@ from typing import Any
 
 class BaseSearchClient(ABC):
     @abstractmethod
-    def search(self, query: str, **kwargs: Any) -> Any:
+    async def search(self, query: str, **kwargs: Any) -> Any:
         pass

@@ -14,7 +14,10 @@ class CriticAgent(BaseAgent):
         生成评论。
         """
         data = self.get_data_for_critic()
-        model_response = self.chat_with_template(data, self.critic_prompt)
+
+        rendered_prompt = self.critic_prompt.render(**data)
+        model_response = self.common_chat(usr_prompt=rendered_prompt)
+
         # 这里模型在模拟user作出回应
         self.history.append({"role": "critic_user", "content": model_response})
         try:

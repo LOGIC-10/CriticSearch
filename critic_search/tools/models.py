@@ -1,28 +1,50 @@
 import inspect
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, get_args, get_origin
 
 from griffe import Docstring, DocstringSectionKind
-from pydantic import BaseModel, Field, create_model
+from pydantic import BaseModel, Field, field_serializer
 
 
-class ToolCall(BaseModel):
-    tool: str = Field(..., description="Name of the tool to be called")
-    parameters: Dict = Field(..., description="Parameters for the tool call")
-    reasoning: str = Field(..., description="Reasoning for using this tool")
+def get_list_type_annotation(param_type):
+    origin = get_origin(param_type)
+    if origin is list:
+        args = get_args(param_type)
+        if args:
+            return str(args[0].__name__)  # 返回 List 中元素的类型名称
+    return str(param_type.__name__)  # 如果不是 List，返回原始类型
 
 
-class ToolResponse(BaseModel):
-    result: Dict | List | str = Field(..., description="Result from the tool")
-    error: Optional[str] = Field(None, description="Error message if tool call failed")
+def serialize_type(value: str) -> str:
+    type_mapping = {
+        "str": "string",
+        "int": "integer",
+        "float": "number",
+        "bool": "boolean",
+        "list": "array",
+        "dict": "object",
+        "None": "null",
+    }
+    return type_mapping.get(value.lower(), "null")
+
+
+class Item(BaseModel):
+    type: str = Field(..., description="The type of the list item")
+
+    @field_serializer("type")
+    def serialize_type(self, value: str, _info) -> str:
+        return serialize_type(value)
 
 
 class ParameterProperty(BaseModel):
-    type: str = Field(
-        ..., description="The data type of the parameter (e.g., 'string')."
-    )
+    type: str = Field(..., description="The data type of the parameter.")
     description: Optional[str] = Field(
         None, description="A description of the parameter."
     )
+    items: Optional[Item] = None
+
+    @field_serializer("type")
+    def serialize_type(self, value: str, _info) -> str:
+        return serialize_type(value)
 
 
 class Parameters(BaseModel):
@@ -56,6 +78,7 @@ class Tool(BaseModel):
     @classmethod
     def create_schema_from_function(cls, target_function):
         """Create a Tool schema from a target function."""
+
         # 提取函数名称和文档字符串
         func_name = target_function.__name__
         func_doc = inspect.getdoc(target_function) or "No description provided."
@@ -77,8 +100,8 @@ class Tool(BaseModel):
 
         # 提取参数信息
         signature = inspect.signature(target_function)
-        fields = {}
         required = []
+        properties = {}
 
         for param_name, param in signature.parameters.items():
             param_type = param.annotation if param.annotation != inspect._empty else Any
@@ -91,26 +114,13 @@ class Tool(BaseModel):
                     param_description = param_info.description
                     break
 
-            # 定义字段
-            fields[param_name] = (
-                param_type,
-                Field(
-                    ... if param_default is ... else param_default,
-                    description=param_description,
-                ),
-            )
             if param_default is ...:
                 required.append(param_name)
 
-        # 动态创建模型
-        DynamicParameters = create_model("DynamicParameters", **fields)
-
-        # 构建最终 JSON Schema
-        properties = {}
-        for field_name, field_info in DynamicParameters.model_fields.items():
-            properties[field_name] = {
-                "type": field_info.annotation.__name__,
-                "description": field_info.description or f"The {field_name} parameter.",
+            properties[param_name] = {
+                "type": param_type.__name__,
+                "description": param_description or f"The {param_name} parameter.",
+                "items": {"type": get_list_type_annotation(param_type)},
             }
 
         # Build the final Function and Tool schema
