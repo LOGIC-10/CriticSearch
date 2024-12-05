@@ -8,13 +8,14 @@ from loguru import logger
 
 from critic_search.config import settings
 from critic_search.llm_service import ChatCompletionMessage, call_llm
-from critic_search.tools import SearchAggregator, ToolRegistry, WebScraper
+from critic_search.tools import SearchAggregator, ToolRegistry, AsyncWebScraper
 
 
 class BaseAgent:
     # Class-level attributes, shared across all instances
     queryDB = set()  # A set to store queries
     tool_registry = ToolRegistry()  # Registry for tools
+    user_question = ""
 
     def __init__(self):
         self.env = Environment(loader=FileSystemLoader("critic_search/prompts"))
@@ -33,11 +34,12 @@ class BaseAgent:
             }
         ]
         self.search_aggregator = SearchAggregator()
+        self.web_scraper = AsyncWebScraper()
 
         self.repeat_turns = 10
         self.history = []
 
-        BaseAgent.tool_registry.register(self.search_aggregator.search)
+        BaseAgent.tool_registry.register(self.search_aggregator.search, self.web_scraper.scrape)
 
     def common_chat(
         self, usr_prompt, tools: Optional[List] = None, raw: Optional[bool] = False
@@ -85,19 +87,10 @@ class BaseAgent:
 
         return agent_confidence_response
 
-    def initialize_search(self, search_rendered_prompt: str):
-        """
-        Initiate a search based on the rendered prompt and return the results.
-        """
+    def search_and_browse(self, rendered_prompt):
 
-        # Define the tool schema for search
-        search_tool_schema = [
-            BaseAgent.tool_registry.get_tool_schema(self.search_aggregator.search)
-        ]
-
-        # Interact with the model for initial search processing
         search_with_tool_response = self.common_chat(
-            usr_prompt=search_rendered_prompt, tools=search_tool_schema, raw=True
+            usr_prompt=rendered_prompt, tools=self.search_tool_schema_list, raw=True
         )
 
         # If no tool calls, return the response immediately
@@ -145,21 +138,82 @@ class BaseAgent:
             }
             function_call_result_messages.append(message)
 
-        # Construct the final prompt by combining the user input and the generated messages
-        final_prompt = [
-            {"role": "user", "content": search_rendered_prompt},
-            search_with_tool_response,
-        ] + function_call_result_messages
-        
-        logger.debug(f"Final prompt constructed: {final_prompt}")
+        # 根据初步的搜索结果进行筛选然后网页爬取
+        # Extract search results from tool messages
+        search_results = [json.loads(msg['content'])['search_result'] for msg in function_call_result_messages]
 
-        # Get the final response from the model based on the constructed prompt
-        final_response = self.common_chat(usr_prompt=final_prompt)
+        web_scraper_prompt = self.env.get_template("web_scraper.txt")
+        web_scraper_rendered_prompt = web_scraper_prompt.render(
+            user_question=self.user_question,
+            initial_search_results = search_results
+        )
+
+        # Interact with the model for web scraping
+        web_scraper_response = self.common_chat(usr_prompt=web_scraper_rendered_prompt, tools=self.web_scrape_tool, raw=True)
+
+        # Extract tool call IDs and their corresponding queries
+        tool_call_id_to_urls = {
+            tool_call.id: json.loads(tool_call.function.arguments).get("urls", [])  # List[str]
+            for tool_call in web_scraper_response.tool_calls  # type: ignore
+        }
+
+        # Collect all URLs in a single list for batch scraping
+        all_urls = [url for urls in tool_call_id_to_urls.values() for url in urls]
+        logger.info(f"All URLs extracted: {all_urls}")
+
+        # Execute the batch scraping and retrieve results
+        web_scraper_results = asyncio.run(self.web_scraper.scrape(urls=all_urls))  # Returns a dictionary
+
+        # from IPython import embed; embed()
+
+        web_result_markdown_text = self._format_web_scraper_results(web_scraper_results)
 
         # Update the query DB with the new queries
         BaseAgent.queryDB.update(set(all_queries))  # type: ignore
 
-        return final_response, search_results
+        return web_result_markdown_text
+
+    def _format_web_scraper_results(self, web_scraper_results):
+        """
+        Format web scraper results into markdown text.
+        
+        Args:
+            web_scraper_results: List of scraping results with title, url and content
+
+        Returns:
+            str: Formatted markdown text with results
+        """
+        result_blocks = []
+        for item in web_scraper_results:
+            title = item.title or "No Title"
+            content_lines = item.content
+            if content_lines is None:
+                content_lines = []
+            elif isinstance(content_lines, str):
+                content_lines = [content_lines]
+
+            block = f"## [{title}]({item.url})\n\n" + "\n".join(content_lines)
+            result_blocks.append(block)
+
+        return "\n\n---\n\n".join(result_blocks)
+    
+    def initialize_search(self, web_result_markdown_text):
+        """
+        Initiate a search based on the rendered prompt and return the results.
+        """
+
+        # Construct the answer prompt by combining the user input and the web_result_markdown_text
+        rendered_answer_prompt = self.env.get_template("RAG_based_answer.txt").render(
+            user_question=self.user_question,
+            web_result_markdown_text=web_result_markdown_text,
+        )
+
+        logger.debug(f"Final prompt constructed: {rendered_answer_prompt}")
+
+        # Get the final response from the model based on the constructed prompt
+        final_response = self.common_chat(usr_prompt=rendered_answer_prompt)
+
+        return final_response
 
     def receive_task(self, task):
         """
