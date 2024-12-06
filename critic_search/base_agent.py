@@ -86,7 +86,7 @@ class BaseAgent:
 
         return agent_confidence_response
 
-    def initialize_search(self, search_rendered_prompt: str, user_question: str):
+    def initialize_search(self, search_rendered_prompt: str, user_question=None):
         """
         Initiate a search based on the rendered prompt and return the results.
         """
@@ -159,8 +159,6 @@ class BaseAgent:
         # Interact with the model for web scraping
         web_scraper_response = self.common_chat(usr_prompt=web_scraper_rendered_prompt, tools=web_scrape_tool, raw=True)
 
-        from IPython import embed; embed()
-
         # Extract tool call IDs and their corresponding queries
         tool_call_id_to_urls = {
             tool_call.id: json.loads(tool_call.function.arguments).get("urls", [])  # List[str]
@@ -173,17 +171,18 @@ class BaseAgent:
 
         # Execute the batch scraping and retrieve results
         web_scraper_results = asyncio.run(self.web_scraper.scrape(urls=all_urls))  # Returns a dictionary
+        web_result_markdown_text = "\n\n---\n\n".join([f"## [{item.title}]({item.url})\n\n{ ' '.join(item.content) }" for item in web_scraper_results])
 
-        # Construct the final prompt by combining the user input and the generated messages
-        final_prompt = [
-            {"role": "user", "content": search_rendered_prompt},
-            search_with_tool_response,
-        ] + function_call_result_messages
-        
-        logger.debug(f"Final prompt constructed: {final_prompt}")
+        # Construct the answer prompt by combining the user input and the web_result_markdown_text
+        rendered_answer_prompt = self.env.get_template("RAG_based_answer.txt").render(
+            user_question=user_question,
+            web_result_markdown_text=web_result_markdown_text,
+        )
+
+        logger.debug(f"Final prompt constructed: {rendered_answer_prompt}")
 
         # Get the final response from the model based on the constructed prompt
-        final_response = self.common_chat(usr_prompt=final_prompt)
+        final_response = self.common_chat(usr_prompt=rendered_answer_prompt)
 
         # Update the query DB with the new queries
         BaseAgent.queryDB.update(set(all_queries))  # type: ignore

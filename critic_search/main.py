@@ -9,11 +9,7 @@ from .search_plan_agent import SearchPlanAgent
 # Constants
 MAX_ITERATION = 10
 TASK = """
-I was trying to remember how well the Cheater Beater performed in comparison to the Cheater when James tested it on his channel. 
-I know that the Cheater still outperformed the Cheater Beater in terms of CFM. 
-Could you please look that up for me, and report the CFM of both the Cheater and the Cheater Beater? 
-I'm not sure if he made any changes to his testing, but this was back in season 4, so just report the value from that season. 
-Please format your response like this: CFM number for Cheater, CFM number for Cheater beater
+Did the car bombing in 1993 resulted in 6 deaths had a higher number of death than the train wreck in 1989 resulted in 645 deaths?
 """
 
 
@@ -33,6 +29,9 @@ def main():
         )
 
         if iteration == 0:
+            # Initialize search_results as None
+            search_results = None
+            
             # Model confidence check - yellow
             agent_confident = common_agent.model_confident(TASK)
             agent_confident_yaml = common_agent.extract_and_validate_yaml(agent_confident)
@@ -49,8 +48,10 @@ def main():
                 )
 
             if agent_confident:
+                # When confident, only get the answer
                 common_agent_answer = common_agent.common_chat(usr_prompt=TASK)
             else:
+                # When not confident, get both answer and search results
                 data = {
                     "user_question": TASK,
                 }
