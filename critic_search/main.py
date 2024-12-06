@@ -9,7 +9,7 @@ from .search_plan_agent import SearchPlanAgent
 # Constants
 MAX_ITERATION = 10
 TASK = """
-Did the car bombing in 1993 resulted in 6 deaths had a higher number of death than the train wreck in 1989 resulted in 645 deaths?
+Did the sports season in 2002 which had 33 participants had a higher number of attendance than the UEFA Champions League final in 1999 which had 1500 spectators?
 """
 
 
@@ -17,11 +17,20 @@ Did the car bombing in 1993 resulted in 6 deaths had a higher number of death th
 common_agent = BaseAgent()
 plan_agent = SearchPlanAgent()
 
+# initialize the task
+common_agent.user_question = TASK
+
+# Define the tool schema for function calling
+common_agent.search_tool = [common_agent.tool_registry.get_tool_schema(common_agent.search_aggregator.search)]
+common_agent.web_scrape_tool = [common_agent.tool_registry.get_tool_schema(common_agent.web_scraper.scrape)]
+common_agent.search_tool_schema_list = common_agent.search_tool + common_agent.web_scrape_tool
+
 # Initialize colorama
 init()
 
 
 def main():
+    
     for iteration in range(MAX_ITERATION):
         # Iteration header with bold cyan
         logger.info(
@@ -60,15 +69,20 @@ def main():
                 )
                 initial_search_rendered_prompt = initial_search_prompt.render(**data)
 
-                common_agent_answer, search_results = common_agent.initialize_search(
-                    search_rendered_prompt=initial_search_rendered_prompt, user_question=TASK
+                initial_web_result_markdown_text = common_agent.search_and_browse(
+                    initial_search_rendered_prompt
+                )
+
+                common_agent_answer = common_agent.initialize_search(
+                    web_result_markdown_text=initial_web_result_markdown_text
                 )
 
         else:
+            # 前面根据critc的返回得到了新的网页搜索结果web_result_markdown_text
             common_agent_answer = common_agent.update_answer(
                 query=TASK,
                 previous_answer=common_agent_answer,
-                search_results=search_results,
+                search_results=web_result_markdown_text,
                 critic_feedback=critic_agent_response,
             )
 
@@ -98,9 +112,19 @@ def main():
             )
             break
 
-        # Next search plan - green
-        plan_agent.receive_task(TASK)
-        plan_agent.plan(common_agent_answer, critic_agent_response)
+        # 根据critic的建议再执行一次搜索和爬虫操作
+        # 先构建rendered_prompt
+        reflection_data = {
+            "user_question": TASK,
+            "previous_answer": common_agent_answer,
+            "user_feedback": critic_agent_response,
+            "search_history": common_agent.queryDB,
+        }
+        search_again_prompt = common_agent.env.get_template("planner_agent_with_reflection.txt").render(**reflection_data)
+        web_result_markdown_text = common_agent.search_and_browse(search_again_prompt)
+        logger.info(
+            f"\n{Fore.BLUE}{'=' * 20}== WEB_RESULT_MARKDOWN_TEXT =={'=' * 20}{Style.RESET_ALL}\n{web_result_markdown_text}\n"
+        )
 
         # Check if reached max iterations
         if iteration == MAX_ITERATION - 1:
