@@ -104,7 +104,7 @@ def main(TASK, MAX_ITERATION=10):
             logger.info(
                 f"\n{Fore.RED}{'=' * 20}== FINAL ANSWER =={'=' * 20}{Style.RESET_ALL}\n{common_agent_answer}\n"
             )
-            return f"\n{Fore.RED}{'=' * 20}== FINAL ANSWER =={'=' * 20}{Style.RESET_ALL}\n{common_agent_answer}\n"
+            return f"\n{common_agent_answer}\n"
 
         # 根据critic的建议再执行一次搜索和爬虫操作
         # 先构建rendered_prompt
@@ -131,7 +131,7 @@ def main(TASK, MAX_ITERATION=10):
             logger.info(
                 f"\n{Fore.RED}{'=' * 20}== FINAL ANSWER =={'=' * 20}{Style.RESET_ALL}\n{common_agent_answer}\n"
             )
-            return f"\n{Fore.RED}{'=' * 20}== FINAL ANSWER =={'=' * 20}{Style.RESET_ALL}\n{common_agent_answer}\n"
+            return f"\n{common_agent_answer}\n"
 
 
 if __name__ == "__main__":
