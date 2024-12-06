@@ -1,0 +1,2652 @@
+[
+    {
+        "id": 1,
+        "question": "Did the Winter Olympic Games in 1994 which had 1737 participants had a higher number of participants than the sports season in 2006 in Germany which had 32 participants?",
+        "answer": [
+            "yes"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1994-02-01T00:00:00",
+            "2006-07-09T00:00:00"
+        ],
+        "question_entity": [
+            "9663",
+            "37285"
+        ],
+        "answer_entity": [
+            "224013"
+        ],
+        "question_country_entity": [
+            "20",
+            "183"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 2,
+        "question": "Did the Eurovision Song Contest edition in 2006 which had 37 participants had a higher number of participants than the Eurovision Song Contest edition in 2004 which had 36 participants?",
+        "answer": [
+            "yes"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "2004-01-01T00:00:00",
+            "2006-05-18T00:00:00"
+        ],
+        "question_entity": [
+            "10152",
+            "10150"
+        ],
+        "answer_entity": [
+            "224013"
+        ],
+        "question_country_entity": [
+            "41",
+            "43"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 3,
+        "question": "Did the car bombing in 1993 resulted in 6 deaths had a lower number of injured people than the aviation accident in 2002 in Germany resulted in 71 deaths?",
+        "answer": [
+            "no"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1993-02-26T00:00:00",
+            "2002-07-01T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "163107"
+        ],
+        "answer_entity": [
+            "203363"
+        ],
+        "question_country_entity": [
+            "30",
+            "183"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 4,
+        "question": "Did car bombing in 1993 resulted in 6 deaths or earthquake in 1989 resulted in 63 deaths had a higher number of death?",
+        "answer": [
+            "earthquake in 1989 resulted in 63 deaths"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1989-10-17T00:00:00",
+            "1993-02-26T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "1053476"
+        ],
+        "answer_entity": [
+            "1053476"
+        ],
+        "question_country_entity": [
+            "30",
+            "30"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": [
+            "30"
+        ]
+    },
+    {
+        "id": 5,
+        "question": "Did the car bombing in 1993 resulted in 6 deaths had a higher number of death than the train wreck in 1989 resulted in 645 deaths?",
+        "answer": [
+            "no"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1989-06-04T00:00:00",
+            "1993-02-26T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "582997"
+        ],
+        "answer_entity": [
+            "203363"
+        ],
+        "question_country_entity": [
+            "30",
+            "15180"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 6,
+        "question": "Did the car bombing in 1993 resulted in 6 deaths had a lower number of injured people than the terrorist attack in 1999 resulted in 8 deaths?",
+        "answer": [
+            "no"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1993-02-26T00:00:00",
+            "1999-10-27T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "1975720"
+        ],
+        "answer_entity": [
+            "203363"
+        ],
+        "question_country_entity": [
+            "30",
+            "399"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 7,
+        "question": "Did car bombing in 1993 resulted in 6 deaths or aviation accident in 2001 resulted in 44 deaths had a higher number of death?",
+        "answer": [
+            "aviation accident in 2001 resulted in 44 deaths"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1993-02-26T00:00:00",
+            "2001-09-11T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "638603"
+        ],
+        "answer_entity": [
+            "638603"
+        ],
+        "question_country_entity": [
+            "30",
+            "30"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": [
+            "30"
+        ]
+    },
+    {
+        "id": 8,
+        "question": "Did the car bombing in 1993 resulted in 6 deaths had a higher number of death than the earthquake in 2001 which resulted in 20023 deaths?",
+        "answer": [
+            "no"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1993-02-26T00:00:00",
+            "2001-01-26T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "2441400"
+        ],
+        "answer_entity": [
+            "203363"
+        ],
+        "question_country_entity": [
+            "30",
+            "668"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 9,
+        "question": "Did the car bombing in 1993 resulted in 6 deaths had a lower number of injured people than the aviation accident in 1988 in United States of America resulted in 1 deaths?",
+        "answer": [
+            "no"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1988-04-28T00:00:00",
+            "1993-02-26T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "665566"
+        ],
+        "answer_entity": [
+            "203363"
+        ],
+        "question_country_entity": [
+            "30",
+            "30"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 10,
+        "question": "Did car bombing in 1993 resulted in 6 deaths or train wreck in 1999 which resulted in 31 deaths had a higher number of injured people?",
+        "answer": [
+            "car bombing in 1993 resulted in 6 deaths"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1993-02-26T00:00:00",
+            "1999-10-05T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "2728539"
+        ],
+        "answer_entity": [
+            "11240"
+        ],
+        "question_country_entity": [
+            "30",
+            "145"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": [
+            "30"
+        ]
+    },
+    {
+        "id": 11,
+        "question": "Did the car bombing in 1993 resulted in 6 deaths had a higher number of death than the Wikimedia list article in 2006 which resulted in 205 deaths?",
+        "answer": [
+            "no"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1993-02-26T00:00:00",
+            "2006-11-23T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "4631578"
+        ],
+        "answer_entity": [
+            "203363"
+        ],
+        "question_country_entity": [
+            "30"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 12,
+        "question": "Did the car bombing in 1993 resulted in 6 deaths had a lower number of death than the aviation accident in 1995 resulted in 159 deaths?",
+        "answer": [
+            "yes"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1993-02-26T00:00:00",
+            "1995-12-20T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "941612"
+        ],
+        "answer_entity": [
+            "224013"
+        ],
+        "question_country_entity": [
+            "30",
+            "739"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 13,
+        "question": "Did car bombing in 1993 resulted in 6 deaths or stampede in 2006 which resulted in 320 deaths had a higher number of injured people?",
+        "answer": [
+            "car bombing in 1993 resulted in 6 deaths"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1993-02-26T00:00:00",
+            "2006-01-12T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "2922493"
+        ],
+        "answer_entity": [
+            "11240"
+        ],
+        "question_country_entity": [
+            "30",
+            "851"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": [
+            "30"
+        ]
+    },
+    {
+        "id": 14,
+        "question": "Did the car bombing in 1993 resulted in 6 deaths had a higher number of death than the suicide car bombing in 2001 which resulted in 38 deaths?",
+        "answer": [
+            "no"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1993-02-26T00:00:00",
+            "2001-10-01T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "4598814"
+        ],
+        "answer_entity": [
+            "203363"
+        ],
+        "question_country_entity": [
+            "30",
+            "668"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 15,
+        "question": "Did the car bombing in 1993 resulted in 6 deaths had a lower number of death than the aviation accident in 1994 which resulted in 24 deaths?",
+        "answer": [
+            "yes"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1993-02-26T00:00:00",
+            "1994-03-23T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "5603101"
+        ],
+        "answer_entity": [
+            "224013"
+        ],
+        "question_country_entity": [
+            "30",
+            "30"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 16,
+        "question": "Did car bombing in 1993 resulted in 6 deaths or structural failure in 1988 which resulted in 32 deaths had a higher number of injured people?",
+        "answer": [
+            "structural failure in 1988 which resulted in 32 deaths"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1988-07-31T00:00:00",
+            "1993-02-26T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "7636593"
+        ],
+        "answer_entity": [
+            "7636593"
+        ],
+        "question_country_entity": [
+            "30",
+            "833"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": [
+            "833"
+        ]
+    },
+    {
+        "id": 17,
+        "question": "Did the car bombing in 1993 resulted in 6 deaths had a higher number of death than the phreatic eruption in 1991 which resulted in 847 deaths?",
+        "answer": [
+            "no"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1991-01-01T00:00:00",
+            "1993-02-26T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "31191031"
+        ],
+        "answer_entity": [
+            "203363"
+        ],
+        "question_country_entity": [
+            "30",
+            "928"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 18,
+        "question": "Did the car bombing in 1993 resulted in 6 deaths had a lower number of injured people than the aviation accident in 2001 resulted in 145 deaths?",
+        "answer": [
+            "no"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1993-02-26T00:00:00",
+            "2001-07-04T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "2372347"
+        ],
+        "answer_entity": [
+            "203363"
+        ],
+        "question_country_entity": [
+            "30",
+            "159"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 19,
+        "question": "Did sports season in 2002 which had 33 participants or edition of the UEFA European Championship in 1996 which had 16 participants had a higher number of games played?",
+        "answer": [
+            "sports season in 2002 which had 33 participants"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1996-06-01T00:00:00",
+            "2002-06-29T00:00:00"
+        ],
+        "question_entity": [
+            "47735",
+            "180563"
+        ],
+        "answer_entity": [
+            "47735"
+        ],
+        "question_country_entity": [
+            "884",
+            "145"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": [
+            "884"
+        ]
+    },
+    {
+        "id": 20,
+        "question": "Did the sports season in 2002 which had 33 participants had a higher number of points scored than the edition of the UEFA European Championship in 1988 which had 8 participants?",
+        "answer": [
+            "yes"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1988-06-01T00:00:00",
+            "2002-06-29T00:00:00"
+        ],
+        "question_entity": [
+            "47735",
+            "151867"
+        ],
+        "answer_entity": [
+            "224013"
+        ],
+        "question_country_entity": [
+            "884",
+            "713750"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 21,
+        "question": "Did the sports season in 2002 which had 33 participants had a lower number of participants than the edition of the UEFA European Championship in 1992 which had 8 participants?",
+        "answer": [
+            "no"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1992-06-01T00:00:00",
+            "2002-06-29T00:00:00"
+        ],
+        "question_entity": [
+            "47735",
+            "161810"
+        ],
+        "answer_entity": [
+            "203363"
+        ],
+        "question_country_entity": [
+            "884",
+            "34"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 22,
+        "question": "Did the sports season in 2002 which had 33 participants had a higher number of attendance than the UEFA Champions League final in 1999 which had 1500 spectators?",
+        "answer": [
+            "yes"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1999-05-26T00:00:00",
+            "2002-06-29T00:00:00"
+        ],
+        "question_entity": [
+            "47735",
+            "833096"
+        ],
+        "answer_entity": [
+            "224013"
+        ],
+        "question_country_entity": [
+            "884",
+            "29"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 23,
+        "question": "Did the war in 2006 resulted in 165 deaths had a lower number of injured people than the occurrence in 2001 resulted in 18 injured people?",
+        "answer": [
+            "no"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "2001-09-27T00:00:00",
+            "2006-08-14T00:00:00"
+        ],
+        "question_entity": [
+            "49104",
+            "228368"
+        ],
+        "answer_entity": [
+            "203363"
+        ],
+        "question_country_entity": [
+            "801"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 24,
+        "question": "Did the war in 2006 resulted in 165 deaths had a higher number of injured people than the mass murder in 1987 resulted in 21 deaths?",
+        "answer": [
+            "yes"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1987-06-19T00:00:00",
+            "2006-08-14T00:00:00"
+        ],
+        "question_entity": [
+            "49104",
+            "58412"
+        ],
+        "answer_entity": [
+            "224013"
+        ],
+        "question_country_entity": [
+            "801",
+            "29"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 25,
+        "question": "Did the Winter Olympic Games in 1994 which had 1737 participants had a lower number of participants than the sports season in 2006 in Germany which had 32 participants?",
+        "answer": [
+            "no"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1994-02-01T00:00:00",
+            "2006-07-09T00:00:00"
+        ],
+        "question_entity": [
+            "9663",
+            "37285"
+        ],
+        "answer_entity": [
+            "203363"
+        ],
+        "question_country_entity": [
+            "20",
+            "183"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 26,
+        "question": "Did the Eurovision Song Contest edition in 2006 which had 37 participants had a higher number of participants than the Winter Olympic Games in 1994 which had 1737 participants?",
+        "answer": [
+            "no"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1994-02-01T00:00:00",
+            "2006-05-18T00:00:00"
+        ],
+        "question_entity": [
+            "10152",
+            "9663"
+        ],
+        "answer_entity": [
+            "203363"
+        ],
+        "question_country_entity": [
+            "41",
+            "20"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 27,
+        "question": "Did the Eurovision Song Contest edition in 2006 which had 37 participants had a lower number of participants than the Eurovision Song Contest edition in 2004 which had 36 participants?",
+        "answer": [
+            "no"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "2004-01-01T00:00:00",
+            "2006-05-18T00:00:00"
+        ],
+        "question_entity": [
+            "10152",
+            "10150"
+        ],
+        "answer_entity": [
+            "203363"
+        ],
+        "question_country_entity": [
+            "41",
+            "43"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 28,
+        "question": "Did car bombing in 1993 resulted in 6 deaths or aviation accident in 2002 in Germany resulted in 71 deaths had a higher number of injured people?",
+        "answer": [
+            "car bombing in 1993 resulted in 6 deaths"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1993-02-26T00:00:00",
+            "2002-07-01T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "163107"
+        ],
+        "answer_entity": [
+            "11240"
+        ],
+        "question_country_entity": [
+            "30",
+            "183"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": [
+            "30"
+        ]
+    },
+    {
+        "id": 29,
+        "question": "Did the car bombing in 1993 resulted in 6 deaths had a higher number of injured people than the earthquake in 1989 resulted in 63 deaths?",
+        "answer": [
+            "no"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1989-10-17T00:00:00",
+            "1993-02-26T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "1053476"
+        ],
+        "answer_entity": [
+            "203363"
+        ],
+        "question_country_entity": [
+            "30",
+            "30"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 30,
+        "question": "Did the car bombing in 1993 resulted in 6 deaths had a lower number of death than the train wreck in 1989 resulted in 645 deaths?",
+        "answer": [
+            "yes"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1989-06-04T00:00:00",
+            "1993-02-26T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "582997"
+        ],
+        "answer_entity": [
+            "224013"
+        ],
+        "question_country_entity": [
+            "30",
+            "15180"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 31,
+        "question": "Did car bombing in 1993 resulted in 6 deaths or terrorist attack in 1999 resulted in 8 deaths had a higher number of injured people?",
+        "answer": [
+            "car bombing in 1993 resulted in 6 deaths"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1993-02-26T00:00:00",
+            "1999-10-27T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "1975720"
+        ],
+        "answer_entity": [
+            "11240"
+        ],
+        "question_country_entity": [
+            "30",
+            "399"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": [
+            "30"
+        ]
+    },
+    {
+        "id": 32,
+        "question": "Did the car bombing in 1993 resulted in 6 deaths had a higher number of injured people than the aviation accident in 2001 resulted in 44 deaths?",
+        "answer": [
+            "yes"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1993-02-26T00:00:00",
+            "2001-09-11T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "638603"
+        ],
+        "answer_entity": [
+            "224013"
+        ],
+        "question_country_entity": [
+            "30",
+            "30"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 33,
+        "question": "Did the car bombing in 1993 resulted in 6 deaths had a lower number of death than the earthquake in 2001 which resulted in 20023 deaths?",
+        "answer": [
+            "yes"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1993-02-26T00:00:00",
+            "2001-01-26T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "2441400"
+        ],
+        "answer_entity": [
+            "224013"
+        ],
+        "question_country_entity": [
+            "30",
+            "668"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 34,
+        "question": "Did car bombing in 1993 resulted in 6 deaths or aviation accident in 1988 in United States of America resulted in 1 deaths had a higher number of injured people?",
+        "answer": [
+            "car bombing in 1993 resulted in 6 deaths"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1988-04-28T00:00:00",
+            "1993-02-26T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "665566"
+        ],
+        "answer_entity": [
+            "11240"
+        ],
+        "question_country_entity": [
+            "30",
+            "30"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": [
+            "30"
+        ]
+    },
+    {
+        "id": 35,
+        "question": "Did the car bombing in 1993 resulted in 6 deaths had a higher number of death than the train wreck in 2000 in United Kingdom which resulted in 4 deaths?",
+        "answer": [
+            "yes"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1993-02-26T00:00:00",
+            "2000-10-17T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "2822729"
+        ],
+        "answer_entity": [
+            "224013"
+        ],
+        "question_country_entity": [
+            "30",
+            "145"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 36,
+        "question": "Did the car bombing in 1993 resulted in 6 deaths had a lower number of death than the Wikimedia list article in 2006 which resulted in 205 deaths?",
+        "answer": [
+            "yes"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1993-02-26T00:00:00",
+            "2006-11-23T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "4631578"
+        ],
+        "answer_entity": [
+            "224013"
+        ],
+        "question_country_entity": [
+            "30"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 37,
+        "question": "Did car bombing in 1993 resulted in 6 deaths or aviation accident in 1995 resulted in 159 deaths had a higher number of death?",
+        "answer": [
+            "aviation accident in 1995 resulted in 159 deaths"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1993-02-26T00:00:00",
+            "1995-12-20T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "941612"
+        ],
+        "answer_entity": [
+            "941612"
+        ],
+        "question_country_entity": [
+            "30",
+            "739"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": [
+            "739"
+        ]
+    },
+    {
+        "id": 38,
+        "question": "Did the car bombing in 1993 resulted in 6 deaths had a higher number of death than the massacre in 1992 which resulted in 45 deaths?",
+        "answer": [
+            "no"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1992-06-17T00:00:00",
+            "1993-02-26T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "3297426"
+        ],
+        "answer_entity": [
+            "203363"
+        ],
+        "question_country_entity": [
+            "30",
+            "258"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 39,
+        "question": "Did the car bombing in 1993 resulted in 6 deaths had a lower number of death than the suicide car bombing in 2001 which resulted in 38 deaths?",
+        "answer": [
+            "yes"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1993-02-26T00:00:00",
+            "2001-10-01T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "4598814"
+        ],
+        "answer_entity": [
+            "224013"
+        ],
+        "question_country_entity": [
+            "30",
+            "668"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 40,
+        "question": "Did car bombing in 1993 resulted in 6 deaths or aviation accident in 1994 which resulted in 24 deaths had a higher number of death?",
+        "answer": [
+            "aviation accident in 1994 which resulted in 24 deaths"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1993-02-26T00:00:00",
+            "1994-03-23T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "5603101"
+        ],
+        "answer_entity": [
+            "5603101"
+        ],
+        "question_country_entity": [
+            "30",
+            "30"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": [
+            "30"
+        ]
+    },
+    {
+        "id": 41,
+        "question": "Did the car bombing in 1993 resulted in 6 deaths had a higher number of death than the mass murder in 1987 which resulted in 19 deaths?",
+        "answer": [
+            "no"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1987-03-07T00:00:00",
+            "1993-02-26T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "14490866"
+        ],
+        "answer_entity": [
+            "203363"
+        ],
+        "question_country_entity": [
+            "30",
+            "865"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 42,
+        "question": "Did the car bombing in 1993 resulted in 6 deaths had a lower number of death than the phreatic eruption in 1991 which resulted in 847 deaths?",
+        "answer": [
+            "yes"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1991-01-01T00:00:00",
+            "1993-02-26T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "31191031"
+        ],
+        "answer_entity": [
+            "224013"
+        ],
+        "question_country_entity": [
+            "30",
+            "928"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 43,
+        "question": "Did car bombing in 1993 resulted in 6 deaths or aviation accident in 2001 resulted in 145 deaths had a higher number of injured people?",
+        "answer": [
+            "car bombing in 1993 resulted in 6 deaths"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1993-02-26T00:00:00",
+            "2001-07-04T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "2372347"
+        ],
+        "answer_entity": [
+            "11240"
+        ],
+        "question_country_entity": [
+            "30",
+            "159"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": [
+            "30"
+        ]
+    },
+    {
+        "id": 44,
+        "question": "Did the sports season in 2002 which had 33 participants had a higher number of points scored than the edition of the UEFA European Championship in 1996 which had 16 participants?",
+        "answer": [
+            "yes"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1996-06-01T00:00:00",
+            "2002-06-29T00:00:00"
+        ],
+        "question_entity": [
+            "47735",
+            "180563"
+        ],
+        "answer_entity": [
+            "224013"
+        ],
+        "question_country_entity": [
+            "884",
+            "145"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 45,
+        "question": "Did the sports season in 2002 which had 33 participants had a lower number of points scored than the edition of the UEFA European Championship in 1988 which had 8 participants?",
+        "answer": [
+            "no"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1988-06-01T00:00:00",
+            "2002-06-29T00:00:00"
+        ],
+        "question_entity": [
+            "47735",
+            "151867"
+        ],
+        "answer_entity": [
+            "203363"
+        ],
+        "question_country_entity": [
+            "884",
+            "713750"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 46,
+        "question": "Did sports season in 2002 which had 33 participants or edition of the UEFA European Championship in 1992 which had 8 participants had a higher number of participants?",
+        "answer": [
+            "sports season in 2002 which had 33 participants"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1992-06-01T00:00:00",
+            "2002-06-29T00:00:00"
+        ],
+        "question_entity": [
+            "47735",
+            "161810"
+        ],
+        "answer_entity": [
+            "47735"
+        ],
+        "question_country_entity": [
+            "884",
+            "34"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": [
+            "884"
+        ]
+    },
+    {
+        "id": 47,
+        "question": "Did the sports season in 2002 which had 33 participants had a lower number of attendance than the UEFA Champions League final in 1999 which had 1500 spectators?",
+        "answer": [
+            "no"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1999-05-26T00:00:00",
+            "2002-06-29T00:00:00"
+        ],
+        "question_entity": [
+            "47735",
+            "833096"
+        ],
+        "answer_entity": [
+            "203363"
+        ],
+        "question_country_entity": [
+            "884",
+            "29"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 48,
+        "question": "Did war in 2006 resulted in 165 deaths or occurrence in 2001 resulted in 18 injured people had a higher number of injured people?",
+        "answer": [
+            "war in 2006 resulted in 165 deaths"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "2001-09-27T00:00:00",
+            "2006-08-14T00:00:00"
+        ],
+        "question_entity": [
+            "49104",
+            "228368"
+        ],
+        "answer_entity": [
+            "49104"
+        ],
+        "question_country_entity": [
+            "801"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": [
+            "801"
+        ]
+    },
+    {
+        "id": 49,
+        "question": "Did the Winter Olympic Games in 1994 which had 1737 participants had a higher number of participants than the Eurovision Song Contest edition in 2006 which had 37 participants?",
+        "answer": [
+            "yes"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1994-02-01T00:00:00",
+            "2006-05-18T00:00:00"
+        ],
+        "question_entity": [
+            "9663",
+            "10152"
+        ],
+        "answer_entity": [
+            "224013"
+        ],
+        "question_country_entity": [
+            "20",
+            "41"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 50,
+        "question": "Did Winter Olympic Games in 1994 which had 1737 participants or sports season in 2006 in Germany which had 32 participants had a higher number of participants?",
+        "answer": [
+            "Winter Olympic Games in 1994 which had 1737 participants"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1994-02-01T00:00:00",
+            "2006-07-09T00:00:00"
+        ],
+        "question_entity": [
+            "9663",
+            "37285"
+        ],
+        "answer_entity": [
+            "9663"
+        ],
+        "question_country_entity": [
+            "20",
+            "183"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": [
+            "20"
+        ]
+    },
+    {
+        "id": 51,
+        "question": "Did the Eurovision Song Contest edition in 2006 which had 37 participants had a lower number of participants than the Winter Olympic Games in 1994 which had 1737 participants?",
+        "answer": [
+            "yes"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1994-02-01T00:00:00",
+            "2006-05-18T00:00:00"
+        ],
+        "question_entity": [
+            "10152",
+            "9663"
+        ],
+        "answer_entity": [
+            "224013"
+        ],
+        "question_country_entity": [
+            "41",
+            "20"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 52,
+        "question": "Did Eurovision Song Contest edition in 2006 which had 37 participants or Eurovision Song Contest edition in 2004 which had 36 participants had a higher number of participants?",
+        "answer": [
+            "Eurovision Song Contest edition in 2006 which had 37 participants"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "2004-01-01T00:00:00",
+            "2006-05-18T00:00:00"
+        ],
+        "question_entity": [
+            "10152",
+            "10150"
+        ],
+        "answer_entity": [
+            "10152"
+        ],
+        "question_country_entity": [
+            "41",
+            "43"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": [
+            "41"
+        ]
+    },
+    {
+        "id": 53,
+        "question": "Did the car bombing in 1993 resulted in 6 deaths had a higher number of injured people than the occurrence in 2001 resulted in 18 injured people?",
+        "answer": [
+            "yes"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1993-02-26T00:00:00",
+            "2001-09-27T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "228368"
+        ],
+        "answer_entity": [
+            "224013"
+        ],
+        "question_country_entity": [
+            "30"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 54,
+        "question": "Did the car bombing in 1993 resulted in 6 deaths had a lower number of injured people than the earthquake in 1989 resulted in 63 deaths?",
+        "answer": [
+            "yes"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1989-10-17T00:00:00",
+            "1993-02-26T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "1053476"
+        ],
+        "answer_entity": [
+            "224013"
+        ],
+        "question_country_entity": [
+            "30",
+            "30"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 55,
+        "question": "Did car bombing in 1993 resulted in 6 deaths or train wreck in 1989 resulted in 645 deaths had a higher number of death?",
+        "answer": [
+            "train wreck in 1989 resulted in 645 deaths"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1989-06-04T00:00:00",
+            "1993-02-26T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "582997"
+        ],
+        "answer_entity": [
+            "582997"
+        ],
+        "question_country_entity": [
+            "30",
+            "15180"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": [
+            "15180"
+        ]
+    },
+    {
+        "id": 56,
+        "question": "Did the car bombing in 1993 resulted in 6 deaths had a higher number of death than the airstrike in 1999 resulted in 3 deaths?",
+        "answer": [
+            "yes"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1993-02-26T00:00:00",
+            "1999-05-07T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "2418042"
+        ],
+        "answer_entity": [
+            "224013"
+        ],
+        "question_country_entity": [
+            "30",
+            "838261"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 57,
+        "question": "Did the car bombing in 1993 resulted in 6 deaths had a lower number of injured people than the aviation accident in 2001 resulted in 44 deaths?",
+        "answer": [
+            "no"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1993-02-26T00:00:00",
+            "2001-09-11T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "638603"
+        ],
+        "answer_entity": [
+            "203363"
+        ],
+        "question_country_entity": [
+            "30",
+            "30"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 58,
+        "question": "Did car bombing in 1993 resulted in 6 deaths or earthquake in 2001 which resulted in 20023 deaths had a higher number of death?",
+        "answer": [
+            "earthquake in 2001 which resulted in 20023 deaths"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1993-02-26T00:00:00",
+            "2001-01-26T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "2441400"
+        ],
+        "answer_entity": [
+            "2441400"
+        ],
+        "question_country_entity": [
+            "30",
+            "668"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": [
+            "668"
+        ]
+    },
+    {
+        "id": 59,
+        "question": "Did the car bombing in 1993 resulted in 6 deaths had a higher number of death than the international incident in 2007 resulted in 0 deaths?",
+        "answer": [
+            "yes"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1993-02-26T00:00:00",
+            "2007-03-23T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "719899"
+        ],
+        "answer_entity": [
+            "224013"
+        ],
+        "question_country_entity": [
+            "30"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 60,
+        "question": "Did the car bombing in 1993 resulted in 6 deaths had a lower number of death than the train wreck in 2000 in United Kingdom which resulted in 4 deaths?",
+        "answer": [
+            "no"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1993-02-26T00:00:00",
+            "2000-10-17T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "2822729"
+        ],
+        "answer_entity": [
+            "203363"
+        ],
+        "question_country_entity": [
+            "30",
+            "145"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 61,
+        "question": "Did car bombing in 1993 resulted in 6 deaths or Wikimedia list article in 2006 which resulted in 205 deaths had a higher number of death?",
+        "answer": [
+            "Wikimedia list article in 2006 which resulted in 205 deaths"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1993-02-26T00:00:00",
+            "2006-11-23T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "4631578"
+        ],
+        "answer_entity": [
+            "4631578"
+        ],
+        "question_country_entity": [
+            "30"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 62,
+        "question": "Did the car bombing in 1993 resulted in 6 deaths had a higher number of injured people than the aviation accident in 1995 resulted in 159 deaths?",
+        "answer": [
+            "yes"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1993-02-26T00:00:00",
+            "1995-12-20T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "941612"
+        ],
+        "answer_entity": [
+            "224013"
+        ],
+        "question_country_entity": [
+            "30",
+            "739"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 63,
+        "question": "Did the car bombing in 1993 resulted in 6 deaths had a lower number of death than the massacre in 1992 which resulted in 45 deaths?",
+        "answer": [
+            "yes"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1992-06-17T00:00:00",
+            "1993-02-26T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "3297426"
+        ],
+        "answer_entity": [
+            "224013"
+        ],
+        "question_country_entity": [
+            "30",
+            "258"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 64,
+        "question": "Did car bombing in 1993 resulted in 6 deaths or suicide car bombing in 2001 which resulted in 38 deaths had a higher number of death?",
+        "answer": [
+            "suicide car bombing in 2001 which resulted in 38 deaths"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1993-02-26T00:00:00",
+            "2001-10-01T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "4598814"
+        ],
+        "answer_entity": [
+            "4598814"
+        ],
+        "question_country_entity": [
+            "30",
+            "668"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": [
+            "668"
+        ]
+    },
+    {
+        "id": 65,
+        "question": "Did the car bombing in 1993 resulted in 6 deaths had a higher number of death than the conflagration in 1991 which resulted in 25 deaths?",
+        "answer": [
+            "no"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1991-09-03T00:00:00",
+            "1993-02-26T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "5645476"
+        ],
+        "answer_entity": [
+            "203363"
+        ],
+        "question_country_entity": [
+            "30",
+            "30"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 66,
+        "question": "Did the car bombing in 1993 resulted in 6 deaths had a lower number of death than the mass murder in 1987 which resulted in 19 deaths?",
+        "answer": [
+            "yes"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1987-03-07T00:00:00",
+            "1993-02-26T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "14490866"
+        ],
+        "answer_entity": [
+            "224013"
+        ],
+        "question_country_entity": [
+            "30",
+            "865"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 67,
+        "question": "Did car bombing in 1993 resulted in 6 deaths or phreatic eruption in 1991 which resulted in 847 deaths had a higher number of death?",
+        "answer": [
+            "phreatic eruption in 1991 which resulted in 847 deaths"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1991-01-01T00:00:00",
+            "1993-02-26T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "31191031"
+        ],
+        "answer_entity": [
+            "31191031"
+        ],
+        "question_country_entity": [
+            "30",
+            "928"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": [
+            "928"
+        ]
+    },
+    {
+        "id": 68,
+        "question": "Did the car bombing in 1993 resulted in 6 deaths had a higher number of death than the aviation accident in 1996 which resulted in 141 deaths?",
+        "answer": [
+            "no"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1993-02-26T00:00:00",
+            "1996-08-29T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "2662518"
+        ],
+        "answer_entity": [
+            "203363"
+        ],
+        "question_country_entity": [
+            "30",
+            "20"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 69,
+        "question": "Did the sports season in 2002 which had 33 participants had a lower number of points scored than the edition of the UEFA European Championship in 1996 which had 16 participants?",
+        "answer": [
+            "no"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1996-06-01T00:00:00",
+            "2002-06-29T00:00:00"
+        ],
+        "question_entity": [
+            "47735",
+            "180563"
+        ],
+        "answer_entity": [
+            "203363"
+        ],
+        "question_country_entity": [
+            "884",
+            "145"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 70,
+        "question": "Did sports season in 2002 which had 33 participants or edition of the UEFA European Championship in 1988 which had 8 participants had a higher number of points scored?",
+        "answer": [
+            "sports season in 2002 which had 33 participants"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1988-06-01T00:00:00",
+            "2002-06-29T00:00:00"
+        ],
+        "question_entity": [
+            "47735",
+            "151867"
+        ],
+        "answer_entity": [
+            "47735"
+        ],
+        "question_country_entity": [
+            "884",
+            "713750"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": [
+            "884"
+        ]
+    },
+    {
+        "id": 71,
+        "question": "Did the sports season in 2002 which had 33 participants had a higher number of attendance than the edition of the UEFA European Championship in 1992 which had 8 participants?",
+        "answer": [
+            "yes"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1992-06-01T00:00:00",
+            "2002-06-29T00:00:00"
+        ],
+        "question_entity": [
+            "47735",
+            "161810"
+        ],
+        "answer_entity": [
+            "224013"
+        ],
+        "question_country_entity": [
+            "884",
+            "34"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 72,
+        "question": "Did sports season in 2002 which had 33 participants or UEFA Champions League final in 1999 which had 1500 spectators had a higher number of attendance?",
+        "answer": [
+            "sports season in 2002 which had 33 participants"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1999-05-26T00:00:00",
+            "2002-06-29T00:00:00"
+        ],
+        "question_entity": [
+            "47735",
+            "833096"
+        ],
+        "answer_entity": [
+            "47735"
+        ],
+        "question_country_entity": [
+            "884",
+            "29"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": [
+            "884"
+        ]
+    },
+    {
+        "id": 73,
+        "question": "Did the Winter Olympic Games in 1994 which had 1737 participants had a lower number of participants than the Eurovision Song Contest edition in 2006 which had 37 participants?",
+        "answer": [
+            "no"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1994-02-01T00:00:00",
+            "2006-05-18T00:00:00"
+        ],
+        "question_entity": [
+            "9663",
+            "10152"
+        ],
+        "answer_entity": [
+            "203363"
+        ],
+        "question_country_entity": [
+            "20",
+            "41"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 74,
+        "question": "Did the Winter Olympic Games in 1994 which had 1737 participants had a higher number of participants than the Eurovision Song Contest edition in 2004 which had 36 participants?",
+        "answer": [
+            "yes"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1994-02-01T00:00:00",
+            "2004-01-01T00:00:00"
+        ],
+        "question_entity": [
+            "9663",
+            "10150"
+        ],
+        "answer_entity": [
+            "224013"
+        ],
+        "question_country_entity": [
+            "20",
+            "43"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 75,
+        "question": "Did Eurovision Song Contest edition in 2006 which had 37 participants or Winter Olympic Games in 1994 which had 1737 participants had a higher number of participants?",
+        "answer": [
+            "Winter Olympic Games in 1994 which had 1737 participants"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1994-02-01T00:00:00",
+            "2006-05-18T00:00:00"
+        ],
+        "question_entity": [
+            "10152",
+            "9663"
+        ],
+        "answer_entity": [
+            "9663"
+        ],
+        "question_country_entity": [
+            "41",
+            "20"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": [
+            "20"
+        ]
+    },
+    {
+        "id": 76,
+        "question": "Did the Eurovision Song Contest edition in 2006 which had 37 participants had a higher number of participants than the edition of the UEFA European Championship in 2000 which had 16 participants?",
+        "answer": [
+            "yes"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "2000-01-01T00:00:00",
+            "2006-05-18T00:00:00"
+        ],
+        "question_entity": [
+            "10152",
+            "131239"
+        ],
+        "answer_entity": [
+            "224013"
+        ],
+        "question_country_entity": [
+            "41",
+            "55"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 77,
+        "question": "Did the car bombing in 1993 resulted in 6 deaths had a lower number of injured people than the occurrence in 2001 resulted in 18 injured people?",
+        "answer": [
+            "no"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1993-02-26T00:00:00",
+            "2001-09-27T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "228368"
+        ],
+        "answer_entity": [
+            "203363"
+        ],
+        "question_country_entity": [
+            "30"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 78,
+        "question": "Did car bombing in 1993 resulted in 6 deaths or earthquake in 1989 resulted in 63 deaths had a higher number of injured people?",
+        "answer": [
+            "earthquake in 1989 resulted in 63 deaths"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1989-10-17T00:00:00",
+            "1993-02-26T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "1053476"
+        ],
+        "answer_entity": [
+            "1053476"
+        ],
+        "question_country_entity": [
+            "30",
+            "30"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": [
+            "30"
+        ]
+    },
+    {
+        "id": 79,
+        "question": "Did the car bombing in 1993 resulted in 6 deaths had a higher number of death than the aviation accident in 1994 resulted in 264 deaths?",
+        "answer": [
+            "no"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1993-02-26T00:00:00",
+            "1994-04-26T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "699055"
+        ],
+        "answer_entity": [
+            "203363"
+        ],
+        "question_country_entity": [
+            "30",
+            "17"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 80,
+        "question": "Did the car bombing in 1993 resulted in 6 deaths had a lower number of death than the airstrike in 1999 resulted in 3 deaths?",
+        "answer": [
+            "no"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1993-02-26T00:00:00",
+            "1999-05-07T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "2418042"
+        ],
+        "answer_entity": [
+            "203363"
+        ],
+        "question_country_entity": [
+            "30",
+            "838261"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 81,
+        "question": "Did car bombing in 1993 resulted in 6 deaths or aviation accident in 2001 resulted in 44 deaths had a higher number of injured people?",
+        "answer": [
+            "car bombing in 1993 resulted in 6 deaths"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1993-02-26T00:00:00",
+            "2001-09-11T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "638603"
+        ],
+        "answer_entity": [
+            "11240"
+        ],
+        "question_country_entity": [
+            "30",
+            "30"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": [
+            "30"
+        ]
+    },
+    {
+        "id": 82,
+        "question": "Did the car bombing in 1993 resulted in 6 deaths had a higher number of injured people than the earthquake in 2001 which resulted in 20023 deaths?",
+        "answer": [
+            "no"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1993-02-26T00:00:00",
+            "2001-01-26T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "2441400"
+        ],
+        "answer_entity": [
+            "203363"
+        ],
+        "question_country_entity": [
+            "30",
+            "668"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 83,
+        "question": "Did the car bombing in 1993 resulted in 6 deaths had a lower number of death than the international incident in 2007 resulted in 0 deaths?",
+        "answer": [
+            "no"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1993-02-26T00:00:00",
+            "2007-03-23T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "719899"
+        ],
+        "answer_entity": [
+            "203363"
+        ],
+        "question_country_entity": [
+            "30"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 84,
+        "question": "Did car bombing in 1993 resulted in 6 deaths or train wreck in 2000 in United Kingdom which resulted in 4 deaths had a higher number of death?",
+        "answer": [
+            "car bombing in 1993 resulted in 6 deaths"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1993-02-26T00:00:00",
+            "2000-10-17T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "2822729"
+        ],
+        "answer_entity": [
+            "11240"
+        ],
+        "question_country_entity": [
+            "30",
+            "145"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": [
+            "30"
+        ]
+    },
+    {
+        "id": 85,
+        "question": "Did the car bombing in 1993 resulted in 6 deaths had a higher number of injured people than the Wikimedia list article in 2006 which resulted in 205 deaths?",
+        "answer": [
+            "yes"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1993-02-26T00:00:00",
+            "2006-11-23T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "4631578"
+        ],
+        "answer_entity": [
+            "224013"
+        ],
+        "question_country_entity": [
+            "30"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 86,
+        "question": "Did the car bombing in 1993 resulted in 6 deaths had a lower number of injured people than the aviation accident in 1995 resulted in 159 deaths?",
+        "answer": [
+            "no"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1993-02-26T00:00:00",
+            "1995-12-20T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "941612"
+        ],
+        "answer_entity": [
+            "203363"
+        ],
+        "question_country_entity": [
+            "30",
+            "739"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 87,
+        "question": "Did car bombing in 1993 resulted in 6 deaths or massacre in 1992 which resulted in 45 deaths had a higher number of death?",
+        "answer": [
+            "massacre in 1992 which resulted in 45 deaths"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1992-06-17T00:00:00",
+            "1993-02-26T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "3297426"
+        ],
+        "answer_entity": [
+            "3297426"
+        ],
+        "question_country_entity": [
+            "30",
+            "258"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": [
+            "258"
+        ]
+    },
+    {
+        "id": 88,
+        "question": "Did the car bombing in 1993 resulted in 6 deaths had a higher number of death than the suicide bombing in 2004 which resulted in 34 deaths?",
+        "answer": [
+            "no"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1993-02-26T00:00:00",
+            "2004-10-07T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "4603285"
+        ],
+        "answer_entity": [
+            "203363"
+        ],
+        "question_country_entity": [
+            "30",
+            "79"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 89,
+        "question": "Did the car bombing in 1993 resulted in 6 deaths had a lower number of death than the conflagration in 1991 which resulted in 25 deaths?",
+        "answer": [
+            "yes"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1991-09-03T00:00:00",
+            "1993-02-26T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "5645476"
+        ],
+        "answer_entity": [
+            "224013"
+        ],
+        "question_country_entity": [
+            "30",
+            "30"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 90,
+        "question": "Did car bombing in 1993 resulted in 6 deaths or mass murder in 1987 which resulted in 19 deaths had a higher number of death?",
+        "answer": [
+            "mass murder in 1987 which resulted in 19 deaths"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1987-03-07T00:00:00",
+            "1993-02-26T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "14490866"
+        ],
+        "answer_entity": [
+            "14490866"
+        ],
+        "question_country_entity": [
+            "30",
+            "865"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": [
+            "865"
+        ]
+    },
+    {
+        "id": 91,
+        "question": "Did the car bombing in 1993 resulted in 6 deaths had a higher number of death than the avalanche in 2002 which resulted in 125 deaths?",
+        "answer": [
+            "no"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1993-02-26T00:00:00",
+            "2002-09-20T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "48739343"
+        ],
+        "answer_entity": [
+            "203363"
+        ],
+        "question_country_entity": [
+            "30",
+            "159"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 92,
+        "question": "Did the car bombing in 1993 resulted in 6 deaths had a lower number of death than the aviation accident in 1996 which resulted in 141 deaths?",
+        "answer": [
+            "yes"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1993-02-26T00:00:00",
+            "1996-08-29T00:00:00"
+        ],
+        "question_entity": [
+            "11240",
+            "2662518"
+        ],
+        "answer_entity": [
+            "224013"
+        ],
+        "question_country_entity": [
+            "30",
+            "20"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 93,
+        "question": "Did sports season in 2002 which had 33 participants or edition of the UEFA European Championship in 1996 which had 16 participants had a higher number of points scored?",
+        "answer": [
+            "sports season in 2002 which had 33 participants"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1996-06-01T00:00:00",
+            "2002-06-29T00:00:00"
+        ],
+        "question_entity": [
+            "47735",
+            "180563"
+        ],
+        "answer_entity": [
+            "47735"
+        ],
+        "question_country_entity": [
+            "884",
+            "145"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": [
+            "884"
+        ]
+    },
+    {
+        "id": 94,
+        "question": "Did the sports season in 2002 which had 33 participants had a higher number of participants than the sports season in 1997 in Saudi Arabia which had 8 participants?",
+        "answer": [
+            "yes"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1997-12-01T00:00:00",
+            "2002-06-29T00:00:00"
+        ],
+        "question_entity": [
+            "47735",
+            "166551"
+        ],
+        "answer_entity": [
+            "224013"
+        ],
+        "question_country_entity": [
+            "884",
+            "851"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 95,
+        "question": "Did the sports season in 2002 which had 33 participants had a lower number of attendance than the edition of the UEFA European Championship in 1992 which had 8 participants?",
+        "answer": [
+            "no"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1992-06-01T00:00:00",
+            "2002-06-29T00:00:00"
+        ],
+        "question_entity": [
+            "47735",
+            "161810"
+        ],
+        "answer_entity": [
+            "203363"
+        ],
+        "question_country_entity": [
+            "884",
+            "34"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 96,
+        "question": "Did the sports season in 2002 which had 33 participants had a higher number of attendance than the UEFA Champions League final in 2000 which had 80000 spectators?",
+        "answer": [
+            "yes"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "2000-05-24T00:00:00",
+            "2002-06-29T00:00:00"
+        ],
+        "question_entity": [
+            "47735",
+            "927188"
+        ],
+        "answer_entity": [
+            "224013"
+        ],
+        "question_country_entity": [
+            "884",
+            "142"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 97,
+        "question": "Did the war in 2006 resulted in 165 deaths had a higher number of death than the mass murder in 2004 resulted in 193 deaths?",
+        "answer": [
+            "yes"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "2004-03-11T00:00:00",
+            "2006-08-14T00:00:00"
+        ],
+        "question_entity": [
+            "49104",
+            "213531"
+        ],
+        "answer_entity": [
+            "224013"
+        ],
+        "question_country_entity": [
+            "801",
+            "29"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 98,
+        "question": "Did Winter Olympic Games in 1994 which had 1737 participants or Eurovision Song Contest edition in 2006 which had 37 participants had a higher number of participants?",
+        "answer": [
+            "Winter Olympic Games in 1994 which had 1737 participants"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1994-02-01T00:00:00",
+            "2006-05-18T00:00:00"
+        ],
+        "question_entity": [
+            "9663",
+            "10152"
+        ],
+        "answer_entity": [
+            "9663"
+        ],
+        "question_country_entity": [
+            "20",
+            "41"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": [
+            "20"
+        ]
+    },
+    {
+        "id": 99,
+        "question": "Did the Winter Olympic Games in 1994 which had 1737 participants had a lower number of participants than the Eurovision Song Contest edition in 2004 which had 36 participants?",
+        "answer": [
+            "no"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "1994-02-01T00:00:00",
+            "2004-01-01T00:00:00"
+        ],
+        "question_entity": [
+            "9663",
+            "10150"
+        ],
+        "answer_entity": [
+            "203363"
+        ],
+        "question_country_entity": [
+            "20",
+            "43"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    },
+    {
+        "id": 100,
+        "question": "Did the Eurovision Song Contest edition in 2006 which had 37 participants had a higher number of participants than the sports season in 2002 which had 33 participants?",
+        "answer": [
+            "yes"
+        ],
+        "type": "2a",
+        "rating": 1,
+        "timeframe": [
+            "2002-01-01T00:00:00",
+            "2006-05-18T00:00:00"
+        ],
+        "question_entity": [
+            "10152",
+            "47735"
+        ],
+        "answer_entity": [
+            "224013"
+        ],
+        "question_country_entity": [
+            "41",
+            "884"
+        ],
+        "is_unnamed": 1,
+        "answer_country_entity": null
+    }
+]

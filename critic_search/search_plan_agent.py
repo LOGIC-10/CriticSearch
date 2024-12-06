@@ -1,14 +1,14 @@
 from colorama import Fore, Style, init
 from loguru import logger
 
-from critic_search.base_agent import BaseAgent
+from .base_agent import BaseAgent
 
 
 class SearchPlanAgent(BaseAgent):
     def __init__(self):
         super().__init__()
         self.original_task = ""
-        self.reflection_and_plan_prompt = self.env.get_template(
+        self.reflection_and_plan_prompt = self.load_template(
             "planner_agent_with_reflection.txt"
         )
 
@@ -23,9 +23,7 @@ class SearchPlanAgent(BaseAgent):
             "search_history": BaseAgent.queryDB,
         }
 
-        reflection_and_plan_rendered_prompt = self.reflection_and_plan_prompt.render(
-            **data
-        )
+        reflection_and_plan_rendered_prompt = self.render_template(self.reflection_and_plan_prompt, data)
 
         search_plan_agent_answer, search_result = self.initialize_search(
             search_rendered_prompt=reflection_and_plan_rendered_prompt

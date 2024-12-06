@@ -45,7 +45,7 @@ class DuckDuckGoClient(BaseSearchClient):
         self,
         query: str,
         days: int = 7,
-        max_results: int = 10,
+        max_results: int = 5,
         region: Literal["us-en", "cn-zh"] = "us-en",
     ) -> SearchResponse:
         timelimit = self._convert_days_to_timelimit(days)

@@ -4,7 +4,7 @@
 #   • Task decomposition: Breaking down the complex task into manageable sub-tasks or different levels.
 #   • Task assignment: Preparing the sub-tasks for the subsequent AgentGenerator to generate corresponding Agents.
 
-from critic_search.base_agent import BaseAgent
+from .base_agent import BaseAgent
 
 
 class Manager(BaseAgent):
@@ -12,7 +12,7 @@ class Manager(BaseAgent):
         super().__init__()
         self.original_task = ""
         self.sub_tasks = []
-        self.breakdown_prompt = self.env.get_template("manager_break_down.txt")
+        self.breakdown_prompt = self.load_template("manager_break_down.txt")
         self.reflection_prompt = None
 
     def breakdown_task(self):

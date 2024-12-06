@@ -9,12 +9,12 @@ from .duckduckgo_client import DuckDuckGoClient
 from .exceptions import RetryError, UsageLimitExceededError
 from .models import SearchResponse, SearchResponseList
 from .tavily_client import TavilyClient
-
+from .bing_client import BingClient
 
 class SearchAggregator:
     def __init__(self):
         # Initialize supported search engines
-        self.clients = {"tavily": TavilyClient(), "duckduckgo": DuckDuckGoClient()}
+        self.clients = {"tavily": TavilyClient(), "duckduckgo": DuckDuckGoClient(), "bing": BingClient(),}
         self.available_clients = set(self.clients.keys())
 
         # Define a regex pattern for identifying search operators

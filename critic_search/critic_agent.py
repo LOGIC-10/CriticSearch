@@ -1,13 +1,13 @@
 import yaml
 
-from critic_search.base_agent import BaseAgent
+from .base_agent import BaseAgent
 
 
 class CriticAgent(BaseAgent):
     def __init__(self):
         super().__init__()
         self.original_task = ""
-        self.critic_prompt = self.env.get_template("critic_agent.txt")
+        self.critic_prompt = self.load_template("critic_agent.txt")
 
     def critic(self):
         """
@@ -15,7 +15,7 @@ class CriticAgent(BaseAgent):
         """
         data = self.get_data_for_critic()
 
-        rendered_prompt = self.critic_prompt.render(**data)
+        rendered_prompt = self.render_template(self.critic_prompt,data)
         model_response = self.common_chat(usr_prompt=rendered_prompt)
 
         # 这里模型在模拟user作出回应
