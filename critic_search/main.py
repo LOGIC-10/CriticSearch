@@ -6,31 +6,25 @@ from .base_agent import BaseAgent
 from .critic_agent import CriticAgent
 from .search_plan_agent import SearchPlanAgent
 
-# Constants
-MAX_ITERATION = 10
-TASK = """
-Did the sports season in 2002 which had 33 participants had a higher number of attendance than the UEFA Champions League final in 1999 which had 1500 spectators?
-"""
 
 
-# Initialize agents
-common_agent = BaseAgent()
-plan_agent = SearchPlanAgent()
-
-# initialize the task
-common_agent.user_question = TASK
-
-# Define the tool schema for function calling
-common_agent.search_tool = [common_agent.tool_registry.get_tool_schema(common_agent.search_aggregator.search)]
-common_agent.web_scrape_tool = [common_agent.tool_registry.get_tool_schema(common_agent.web_scraper.scrape)]
-common_agent.search_tool_schema_list = common_agent.search_tool + common_agent.web_scrape_tool
-
-# Initialize colorama
-init()
-
-
-def main():
+def main(TASK, MAX_ITERATION=10):
     
+    # Initialize agents
+    common_agent = BaseAgent()
+    plan_agent = SearchPlanAgent()
+
+    # initialize the task
+    common_agent.user_question = TASK
+
+    # Define the tool schema for function calling
+    common_agent.search_tool = [common_agent.tool_registry.get_tool_schema(common_agent.search_aggregator.search)]
+    common_agent.web_scrape_tool = [common_agent.tool_registry.get_tool_schema(common_agent.web_scraper.scrape)]
+    common_agent.search_tool_schema_list = common_agent.search_tool + common_agent.web_scrape_tool
+
+    # Initialize colorama
+    init()
+
     for iteration in range(MAX_ITERATION):
         # Iteration header with bold cyan
         logger.info(

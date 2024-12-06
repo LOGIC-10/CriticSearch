@@ -51,7 +51,7 @@ class DuckDuckGoClient(BaseSearchClient):
         timelimit = self._convert_days_to_timelimit(days)
 
         logger.debug(
-            f"Attempting to use 'duckduckgo-search-client' for query '{query}'."
+            f"Using 'duckduckgo-search-client' for query '{query}'."
         )
 
         raw_results = await AsyncDDGS(timeout=10).atext(
