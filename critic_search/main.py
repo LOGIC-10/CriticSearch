@@ -58,10 +58,10 @@ def main(TASK, MAX_ITERATION=10):
                 data = {
                     "user_question": TASK,
                 }
-                initial_search_prompt = common_agent.env.get_template(
+                initial_search_prompt = common_agent.load_template(
                     "planner_agent_initial_search_plan.txt"
                 )
-                initial_search_rendered_prompt = initial_search_prompt.render(**data)
+                initial_search_rendered_prompt = common_agent.render_template(initial_search_prompt, data)
 
                 initial_web_result_markdown_text = common_agent.search_and_browse(
                     initial_search_rendered_prompt
@@ -104,7 +104,7 @@ def main(TASK, MAX_ITERATION=10):
             logger.info(
                 f"\n{Fore.RED}{'=' * 20}== FINAL ANSWER =={'=' * 20}{Style.RESET_ALL}\n{common_agent_answer}\n"
             )
-            break
+            return f"\n{Fore.RED}{'=' * 20}== FINAL ANSWER =={'=' * 20}{Style.RESET_ALL}\n{common_agent_answer}\n"
 
         # 根据critic的建议再执行一次搜索和爬虫操作
         # 先构建rendered_prompt
@@ -114,7 +114,7 @@ def main(TASK, MAX_ITERATION=10):
             "user_feedback": critic_agent_response,
             "search_history": common_agent.queryDB,
         }
-        search_again_prompt = common_agent.env.get_template("planner_agent_with_reflection.txt").render(**reflection_data)
+        search_again_prompt = common_agent.render_template(common_agent.load_template("planner_agent_with_reflection.txt"), reflection_data)
         web_result_markdown_text = common_agent.search_and_browse(search_again_prompt)
         logger.info(
             f"\n{Fore.BLUE}{'=' * 20}== WEB_RESULT_MARKDOWN_TEXT =={'=' * 20}{Style.RESET_ALL}\n{web_result_markdown_text}\n"
@@ -131,6 +131,7 @@ def main(TASK, MAX_ITERATION=10):
             logger.info(
                 f"\n{Fore.RED}{'=' * 20}== FINAL ANSWER =={'=' * 20}{Style.RESET_ALL}\n{common_agent_answer}\n"
             )
+            return f"\n{Fore.RED}{'=' * 20}== FINAL ANSWER =={'=' * 20}{Style.RESET_ALL}\n{common_agent_answer}\n"
 
 
 if __name__ == "__main__":
