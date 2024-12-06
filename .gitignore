@@ -197,3 +197,4 @@ settings.yaml
 # Ignore dynaconf secret files
 .secrets.*
 config.yaml
+.DS_Store
