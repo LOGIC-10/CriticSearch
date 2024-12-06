@@ -8,7 +8,7 @@ from loguru import logger
 
 from critic_search.config import settings
 from critic_search.llm_service import ChatCompletionMessage, call_llm
-from critic_search.tools import SearchAggregator, ToolRegistry, WebScraper
+from critic_search.tools import SearchAggregator, ToolRegistry, AsyncWebScraper
 
 
 class BaseAgent:
@@ -33,11 +33,12 @@ class BaseAgent:
             }
         ]
         self.search_aggregator = SearchAggregator()
+        self.web_scraper = AsyncWebScraper()
 
         self.repeat_turns = 10
         self.history = []
 
-        BaseAgent.tool_registry.register(self.search_aggregator.search)
+        BaseAgent.tool_registry.register(self.search_aggregator.search, self.web_scraper.scrape)
 
     def common_chat(
         self, usr_prompt, tools: Optional[List] = None, raw: Optional[bool] = False
@@ -85,19 +86,19 @@ class BaseAgent:
 
         return agent_confidence_response
 
-    def initialize_search(self, search_rendered_prompt: str):
+    def initialize_search(self, search_rendered_prompt: str, user_question: str):
         """
         Initiate a search based on the rendered prompt and return the results.
         """
 
         # Define the tool schema for search
-        search_tool_schema = [
-            BaseAgent.tool_registry.get_tool_schema(self.search_aggregator.search)
-        ]
+        search_tool = [BaseAgent.tool_registry.get_tool_schema(self.search_aggregator.search)]
+        web_scrape_tool = [BaseAgent.tool_registry.get_tool_schema(self.web_scraper.scrape)]
+        search_tool_schema_list = search_tool + web_scrape_tool
 
         # Interact with the model for initial search processing
         search_with_tool_response = self.common_chat(
-            usr_prompt=search_rendered_prompt, tools=search_tool_schema, raw=True
+            usr_prompt=search_rendered_prompt, tools=search_tool_schema_list, raw=True
         )
 
         # If no tool calls, return the response immediately
@@ -144,6 +145,34 @@ class BaseAgent:
                 "tool_call_id": tool_call_id,
             }
             function_call_result_messages.append(message)
+
+        # 根据初步的搜索结果进行筛选然后网页爬取
+        # Extract search results from tool messages
+        search_results = [json.loads(msg['content'])['search_result'] for msg in function_call_result_messages]
+
+        web_scraper_prompt = self.env.get_template("web_scraper.txt")
+        web_scraper_rendered_prompt = web_scraper_prompt.render(
+            user_question=user_question,
+            initial_search_results = search_results
+        )
+
+        # Interact with the model for web scraping
+        web_scraper_response = self.common_chat(usr_prompt=web_scraper_rendered_prompt, tools=web_scrape_tool, raw=True)
+
+        from IPython import embed; embed()
+
+        # Extract tool call IDs and their corresponding queries
+        tool_call_id_to_urls = {
+            tool_call.id: json.loads(tool_call.function.arguments).get("urls", [])  # List[str]
+            for tool_call in web_scraper_response.tool_calls  # type: ignore
+        }
+
+        # Collect all URLs in a single list for batch scraping
+        all_urls = [url for urls in tool_call_id_to_urls.values() for url in urls]
+        logger.info(f"All URLs extracted: {all_urls}")
+
+        # Execute the batch scraping and retrieve results
+        web_scraper_results = asyncio.run(self.web_scraper.scrape(urls=all_urls))  # Returns a dictionary
 
         # Construct the final prompt by combining the user input and the generated messages
         final_prompt = [

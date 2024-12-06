@@ -60,7 +60,7 @@ def main():
                 initial_search_rendered_prompt = initial_search_prompt.render(**data)
 
                 common_agent_answer, search_results = common_agent.initialize_search(
-                    search_rendered_prompt=initial_search_rendered_prompt
+                    search_rendered_prompt=initial_search_rendered_prompt, user_question=TASK
                 )
 
         else:
