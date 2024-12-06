@@ -1,4 +1,6 @@
 from .main import main
 
 if __name__ == "__main__":
-    main()
+    MAX_ITERATION = 10
+    Task = """how did apollo creed die?"""
+    main(Task)

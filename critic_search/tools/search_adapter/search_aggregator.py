@@ -86,6 +86,8 @@ class SearchAggregator:
         if isinstance(query, str):
             query = [query]
 
+        query = query[:10]  # Limit the number of queries to k
+
         # Choose the engine dynamically based on whether the query contains search operators
         async def dynamic_engine_task(q: str):
             """
