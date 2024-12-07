@@ -66,7 +66,7 @@ class TavilyClient(BaseSearchClient):
         search_depth: Literal["basic", "advanced"] = "basic",
         topic: Literal["general", "news"] = "general",
         days: int = 7,
-        max_results: int = 10,
+        max_results: int = 5,
     ) -> SearchResponse:
         """
         异步搜索方法
