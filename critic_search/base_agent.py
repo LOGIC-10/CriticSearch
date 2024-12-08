@@ -1,16 +1,17 @@
 import asyncio
 import json
-from typing import List, Optional
+import os
+from typing import List, Optional, overload
 
 import yaml
+
 # from jinja2 import Environment, FileSystemLoader
 from jinja2 import Template
 from loguru import logger
-import os
 
 from .config import settings
 from .llm_service import ChatCompletionMessage, call_llm
-from .tools import SearchAggregator, ToolRegistry, AsyncWebScraper
+from .tools import AsyncWebScraper, SearchAggregator, ToolRegistry
 
 
 class BaseAgent:
@@ -20,7 +21,9 @@ class BaseAgent:
     user_question = ""
 
     def __init__(self):
-        base_dir = os.path.dirname(os.path.abspath(__file__))  # Directory of the current script
+        base_dir = os.path.dirname(
+            os.path.abspath(__file__)
+        )  # Directory of the current script
         self.prompts_dir = os.path.join(base_dir, "prompts")
         # self.env = Environment(loader=FileSystemLoader(self.prompts_dir))
 
@@ -43,8 +46,6 @@ class BaseAgent:
         self.repeat_turns = 10
         self.history = []
 
-        BaseAgent.tool_registry.register(self.search_aggregator.search, self.web_scraper.scrape)
-
     def load_template(self, filename):
         """
         Loads a template file from the prompts directory.
@@ -53,13 +54,15 @@ class BaseAgent:
         :return: The content of the file as a string.
         """
         filepath = os.path.join(self.prompts_dir, filename)
-        
+
         # Ensure the file exists
         if not os.path.exists(filepath):
-            raise FileNotFoundError(f"Template file '{filename}' not found in {self.prompts_dir}")
-        
+            raise FileNotFoundError(
+                f"Template file '{filename}' not found in {self.prompts_dir}"
+            )
+
         # Read and return the content of the file
-        with open(filepath, 'r', encoding='utf-8') as file:
+        with open(filepath, "r", encoding="utf-8") as file:
             return file.read()
 
     def render_template(self, template_str, data):
@@ -72,9 +75,21 @@ class BaseAgent:
         """
         template = Template(template_str)
         return template.render(**data)
+
+    @overload
     def common_chat(
-        self, usr_prompt, tools: Optional[List] = None, raw: Optional[bool] = False
-    ) -> ChatCompletionMessage | str:
+        self, usr_prompt: List, tools: None = None
+    ) -> ChatCompletionMessage: ...
+
+    @overload
+    def common_chat(self, usr_prompt: str, tools: List) -> ChatCompletionMessage: ...
+
+    @overload
+    def common_chat(self, usr_prompt: str, tools: None = None) -> str: ...
+
+    def common_chat(
+        self, usr_prompt: str | List, tools: Optional[List] = None
+    ) -> ChatCompletionMessage | str | None:
         llm_response = call_llm(
             model=settings.default_model,
             usr_prompt=usr_prompt,
@@ -83,10 +98,10 @@ class BaseAgent:
         )
         self.history.append({"role": "user", "content": usr_prompt})
         self.history.append({"role": "assistant", "content": llm_response})
-        if raw:
+        if tools is not None:
             logger.debug(f"llm_response:\n {llm_response}")
             return llm_response
-        return llm_response.content  # type: ignore
+        return llm_response.content
 
     def clear_history(self):
         self.history = []
@@ -118,33 +133,42 @@ class BaseAgent:
 
         return agent_confidence_response
 
-    def search_and_browse(self, rendered_prompt):
-
+    def search_and_browse(self, rendered_prompt) -> str | None:
         search_with_tool_response = self.common_chat(
-            usr_prompt=rendered_prompt, tools=self.search_tool_schema_list, raw=True
+            usr_prompt=rendered_prompt,
+            tools=BaseAgent.tool_registry.get_or_create_tool_schema(
+                self.search_aggregator.search
+            ),
         )
 
         # If no tool calls, return the response immediately
-        if search_with_tool_response.tool_calls is None:  # type: ignore
-            return search_with_tool_response
+        if search_with_tool_response.tool_calls is None:
+            return search_with_tool_response.content
 
         # Extract tool call IDs and their corresponding queries
         tool_call_id_to_queries = {
-            tool_call.id: json.loads(tool_call.function.arguments).get("query", [])  # List[str]
-            for tool_call in search_with_tool_response.tool_calls  # type: ignore
+            tool_call.id: json.loads(tool_call.function.arguments).get("query", [])
+            for tool_call in search_with_tool_response.tool_calls
         }
 
         # Collect all queries in a single list for batch search
-        all_queries = [query for queries in tool_call_id_to_queries.values() for query in queries]
+        all_queries = [
+            query for queries in tool_call_id_to_queries.values() for query in queries
+        ]
+
         logger.info(f"All queries extracted: {all_queries}")
 
         # Execute the batch search and retrieve results
-        search_results = asyncio.run(self.search_aggregator.search(query=all_queries))  # Returns a dictionary
+        search_results = asyncio.run(
+            self.search_aggregator.search(query=all_queries)
+        )  # Returns a dictionary
 
         # Build the response map (tool_call_id -> query -> search_result)
         tool_call_id_to_response = {
             tool_call_id: {
-                query: search_results.get(query)  # Match queries with their search results
+                query: search_results.get(
+                    query
+                )  # Match queries with their search results
                 for query in queries
             }
             for tool_call_id, queries in tool_call_id_to_queries.items()
@@ -155,36 +179,55 @@ class BaseAgent:
 
         # Iterate through the tool_call_id_to_response dictionary and build messages
         for tool_call_id, queries_to_responses in tool_call_id_to_response.items():
-             # Concatenate all search results
-            search_result = "\n".join(value for value in queries_to_responses.values() if value is not None)
+            # Concatenate all search results
+            search_result = "\n".join(
+                value for value in queries_to_responses.values() if value is not None
+            )
 
             # Build the response message for each tool call
             message = {
                 "role": "tool",
-                "content": json.dumps({
-                    "query": list(queries_to_responses.keys()),  # List of queries
-                    "search_result": search_result  # Concatenated search results
-                }),
+                "content": json.dumps(
+                    {
+                        "query": list(queries_to_responses.keys()),  # List of queries
+                        "search_result": search_result,  # Concatenated search results
+                    }
+                ),
                 "tool_call_id": tool_call_id,
             }
             function_call_result_messages.append(message)
 
         # 根据初步的搜索结果进行筛选然后网页爬取
         # Extract search results from tool messages
-        search_results = [json.loads(msg['content'])['search_result'] for msg in function_call_result_messages]
+        search_results = [
+            json.loads(msg["content"])["search_result"]
+            for msg in function_call_result_messages
+        ]
 
         web_scraper_prompt = self.load_template("web_scraper.txt")
-        web_scraper_rendered_prompt = self.render_template(web_scraper_prompt, {
-            "user_question" : self.user_question,
-            "initial_search_results" : search_results
-        })
+        web_scraper_rendered_prompt = self.render_template(
+            web_scraper_prompt,
+            {
+                "user_question": self.user_question,
+                "initial_search_results": search_results,
+            },
+        )
 
         # Interact with the model for web scraping
-        web_scraper_response = self.common_chat(usr_prompt=web_scraper_rendered_prompt, tools=self.web_scrape_tool, raw=True)
+        web_scraper_response = self.common_chat(
+            usr_prompt=web_scraper_rendered_prompt,
+            tools=BaseAgent.tool_registry.get_or_create_tool_schema(
+                self.web_scraper.scrape
+            ),
+        )
+
+        # If no tool calls, return the response immediately
+        if web_scraper_response.tool_calls is None:
+            return web_scraper_response.content
 
         # Extract tool call IDs and their corresponding queries
         tool_call_id_to_urls = {
-            tool_call.id: json.loads(tool_call.function.arguments).get("urls", [])  # List[str]
+            tool_call.id: json.loads(tool_call.function.arguments).get("urls", [])
             for tool_call in web_scraper_response.tool_calls  # type: ignore
         }
 
@@ -193,9 +236,9 @@ class BaseAgent:
         logger.info(f"All URLs extracted: {all_urls}")
 
         # Execute the batch scraping and retrieve results
-        web_scraper_results = asyncio.run(self.web_scraper.scrape(urls=all_urls))  # Returns a dictionary
-
-        # from IPython import embed; embed()
+        web_scraper_results = asyncio.run(
+            self.web_scraper.scrape(urls=all_urls)
+        )  # Returns a dictionary
 
         web_result_markdown_text = self._format_web_scraper_results(web_scraper_results)
 
@@ -204,10 +247,10 @@ class BaseAgent:
 
         return web_result_markdown_text
 
-    def _format_web_scraper_results(self, web_scraper_results):
+    def _format_web_scraper_results(self, web_scraper_results) -> str:
         """
         Format web scraper results into markdown text.
-        
+
         Args:
             web_scraper_results: List of scraping results with title, url and content
 
@@ -227,25 +270,6 @@ class BaseAgent:
             result_blocks.append(block)
 
         return "\n\n---\n\n".join(result_blocks)
-    
-    def initialize_search(self, web_result_markdown_text):
-        """
-        Initiate a search based on the rendered prompt and return the results.
-        """
-
-        # Construct the answer prompt by combining the user input and the web_result_markdown_text
-        
-        rendered_answer_prompt = self.render_template(self.load_template("RAG_based_answer.txt"), {
-            "user_question":self.user_question,
-            "web_result_markdown_text":web_result_markdown_text,
-        })
-
-        logger.debug(f"Final prompt constructed: {rendered_answer_prompt}")
-
-        # Get the final response from the model based on the constructed prompt
-        final_response = self.common_chat(usr_prompt=rendered_answer_prompt)
-
-        return final_response
 
     def receive_task(self, task):
         """
@@ -272,58 +296,3 @@ class BaseAgent:
         except yaml.YAMLError as exc:
             print(f"Invalid YAML content: {exc}")
             return None
-
-
-if __name__ == "__main__":
-    agent = BaseAgent()
-    result = agent.search_aggregator.search(
-        [
-            "why do we say google was facing challenges in 2019?",
-            "what are the challenges google faced in 2019?",
-        ]
-    )
-    print(result)
-
-"""
-curl https://toollearning.cn/v1/chat/completions \
-    -H "Authorization: Bearer $OPENAI_API_KEY" \
-    -H "Content-Type: application/json" \
-    -d '{
-        "model": "gpt-4o",
-        "messages": [
-            {
-                "role": "system",
-                "content": "You are a helpful support assistant. Use the supplied tools to assist the user."
-            },
-            {
-                "role": "user",
-                "content": "Hi, can you help me search latest sport news?"
-            }
-        ],
-        "tools": [
-            {
-                "type": "function",
-                "function": {
-                    "name": "search",
-                    "description": "Asynchronous search method supporting multiple concurrent queries and engine fallback.",
-                    "parameters": {
-                    "type": "object",
-                    "properties": {
-                        "query": {
-                        "type": "array",
-                        "description": "A list of search queries.",
-                        "items": {
-                            "type": "string"
-                        }
-                        }
-                    },
-                    "required": [
-                        "query"
-                    ],
-                    "additionalProperties": false
-                    }
-                }
-            }
-        ]
-    }'
-"""

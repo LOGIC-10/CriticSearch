@@ -12,9 +12,20 @@
 
 `uv venv`
 
+## Obtain Search Engine API Keys (Optional)
+
+### [Tavily](https://app.tavily.com/)
+- **Features**: Handles searching, scraping, filtering, and extracting relevant information.  
+- **Free Tier**: 1,000 free requests per month.  
+
+### [Bing](https://www.microsoft.com/en-us/bing/apis/bing-web-search-api)
+- **Features**: Enables high-quality search results with advanced filtering.  
+- **Free Tier**: 1,000 free requests per month, 3 transactions per second.  
+
+
 ## Run critic_search
 
-1. Rename `config.yaml.template` to `config.yaml`
+1. Rename `settings.yaml.template` to `settings.template`.
 
 2. Run command.
 

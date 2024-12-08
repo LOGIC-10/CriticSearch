@@ -5,22 +5,40 @@ from typing import Dict, List
 
 from loguru import logger
 
-from .duckduckgo_client import DuckDuckGoClient
-from .exceptions import RetryError, UsageLimitExceededError
-from .models import SearchResponse, SearchResponseList
-from .tavily_client import TavilyClient
+from critic_search.config import settings
+
 from .bing_client import BingClient
+from .duckduckgo_client import DuckDuckGoClient
+from .exceptions import InvalidAPIKeyError, RetryError
+from .models import SearchResponse, SearchResponseList
+from .search_client_usage_db import initialize_db
+from .tavily_client import TavilyClient
+
 
 class SearchAggregator:
     def __init__(self):
-        # Initialize supported search engines
-        self.clients = {"tavily": TavilyClient(), "duckduckgo": DuckDuckGoClient(), "bing": BingClient(),}
+        self.clients: Dict[str, DuckDuckGoClient | TavilyClient | BingClient] = {
+            "duckduckgo": DuckDuckGoClient()
+        }
+
+        # 如果 Tavily 的 API key 存在，初始化客户端
+        tavily_api_key = settings.search_engine.tavily.api_key
+        if tavily_api_key:
+            self.clients["tavily"] = TavilyClient(tavily_api_key)
+
+        # 如果 Bing 的 API key 存在，初始化客户端
+        bing_api_key = settings.search_engine.bing.api_key
+        if bing_api_key:
+            self.clients["bing"] = BingClient(bing_api_key)
+
         self.available_clients = set(self.clients.keys())
 
         # Define a regex pattern for identifying search operators
         self.search_operators_pattern = re.compile(
             r'(".*?"|\bsite:|filetype:|intitle:|inurl:|\b[-+~]\b)'
         )
+
+        initialize_db()
 
     def mark_engine_unavailable(self, engine: str):
         """
@@ -52,15 +70,14 @@ class SearchAggregator:
                 try:
                     # Call the asynchronous search method for the specified engine
                     return await self.clients[engine].search(query)
-                except UsageLimitExceededError:
-                    # Mark the current engine as unavailable due to usage limits
-                    logger.warning(
-                        f"Engine {engine} is unavailable due to usage limits."
-                    )
-                    self.mark_engine_unavailable(engine)
                 except RetryError:
                     logger.warning(
                         f"Engine '{engine}' for query: {query} failed after multiple retries. Marking as unavailable."
+                    )
+                    self.mark_engine_unavailable(engine)
+                except InvalidAPIKeyError:
+                    logger.warning(
+                        f"Engine '{engine}' for query: {query} failed because of wrong api key. Marking as unavailable."
                     )
                     self.mark_engine_unavailable(engine)
                 except Exception:
@@ -85,8 +102,6 @@ class SearchAggregator:
         # If query is a single string, convert it into a list with one element
         if isinstance(query, str):
             query = [query]
-
-        query = query[:10]  # Limit the number of queries to k
 
         # Choose the engine dynamically based on whether the query contains search operators
         async def dynamic_engine_task(q: str):

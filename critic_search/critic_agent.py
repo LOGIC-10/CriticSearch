@@ -15,7 +15,7 @@ class CriticAgent(BaseAgent):
         """
         data = self.get_data_for_critic()
 
-        rendered_prompt = self.render_template(self.critic_prompt,data)
+        rendered_prompt = self.render_template(self.critic_prompt, data)
         model_response = self.common_chat(usr_prompt=rendered_prompt)
 
         # 这里模型在模拟user作出回应

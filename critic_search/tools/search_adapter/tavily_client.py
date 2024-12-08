@@ -4,16 +4,22 @@ from typing import Literal
 import httpx
 from loguru import logger
 from sqlmodel import Session, select
+from tenacity import (
+    retry,
+    retry_if_exception_type,
+    stop_after_attempt,
+    wait_exponential,
+    wait_random,
+)
 
-from .adapter_usage_db import (
+from .base_search_client import BaseSearchClient
+from .exceptions import InvalidAPIKeyError, RatelimitException, UsageLimitExceededError
+from .models import SearchClientUsage, SearchResponse
+from .search_client_usage_db import (
     engine,
     get_current_time_of_new_york_naive,
     get_second_day_naive,
-    initialize_db,
 )
-from .base_search_client import BaseSearchClient
-from .exceptions import InvalidAPIKeyError, UsageLimitExceededError
-from .models import SearchResponse, TavilyUsage
 
 
 class TavilyClient(BaseSearchClient):
@@ -21,13 +27,12 @@ class TavilyClient(BaseSearchClient):
     Tavily API client class.
     """
 
-    def __init__(self):
+    def __init__(self, api_key: str):
         self.base_url = "https://api.tavily.com"
-        self._api_key = "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"
+        self._api_key = api_key
         self.headers = {
             "Content-Type": "application/json",
         }
-        initialize_db()
 
     def _increment_usage_count(self):
         """
@@ -35,12 +40,14 @@ class TavilyClient(BaseSearchClient):
         """
         with Session(engine) as session:
             usage_record = session.exec(
-                select(TavilyUsage).where(TavilyUsage.client_name == "TavilyClient")
+                select(SearchClientUsage).where(
+                    SearchClientUsage.client_name == "TavilyClient"
+                )
             ).first()
 
             if not usage_record:
                 # 如果记录不存在，则创建新记录
-                usage_record = TavilyUsage(
+                usage_record = SearchClientUsage(
                     client_name="TavilyClient",
                     usage_count=0,
                 )
@@ -60,19 +67,23 @@ class TavilyClient(BaseSearchClient):
             usage_record.usage_count += 1
             session.commit()
 
+    @retry(
+        stop=stop_after_attempt(5),  # 重试最多5次
+        wait=wait_exponential(multiplier=1, min=4, max=30)
+        + wait_random(min=1, max=5),  # 指数退避 + 随机抖动
+        retry=retry_if_exception_type(RatelimitException),
+    )
     async def search(
         self,
         query: str,
         search_depth: Literal["basic", "advanced"] = "basic",
         topic: Literal["general", "news"] = "general",
         days: int = 7,
-        max_results: int = 5,
+        max_results: int = 10,
     ) -> SearchResponse:
         """
         异步搜索方法
         """
-        # 检查和更新使用次数
-        self._increment_usage_count()
 
         logger.debug(f"Attempting to use engine 'Tavily' for query '{query}'. ")
 
@@ -87,6 +98,9 @@ class TavilyClient(BaseSearchClient):
         }
 
         async with httpx.AsyncClient(timeout=30) as client:
+            # 检查和更新使用次数
+            self._increment_usage_count()
+
             response = await client.post(
                 self.base_url + "/search", json=data, headers=self.headers
             )
@@ -94,11 +108,17 @@ class TavilyClient(BaseSearchClient):
         if response.status_code == 200:
             return SearchResponse.model_validate(response.json())
         elif response.status_code == 429:
-            raise UsageLimitExceededError()
+            try:
+                detail = response.json().get("detail", {}).get("error")
+                if detail:
+                    raise UsageLimitExceededError(detail)
+            except Exception:
+                pass
+
+            raise RatelimitException()
         elif response.status_code == 401:
             raise InvalidAPIKeyError()
         else:
-            # 返回一个带错误信息的 SearchResponse，避免返回 None
             return SearchResponse(
                 query=query,
                 error_message=f"Unexpected status code: {response.status_code}. Response: {response.text}",

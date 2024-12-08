@@ -6,12 +6,18 @@ from pydantic import BaseModel, Field, field_serializer
 
 
 def get_list_type_annotation(param_type):
-    origin = get_origin(param_type)
-    if origin is list:
+    """
+    获取列表中元素的类型，用于构造 JSON Schema 的 items 字段。
+    支持 List[str]、List[int] 等类型。
+    """
+    # 检查是否为泛型 List 类型
+    if get_origin(param_type) is list or get_origin(param_type) is list:
+        # 获取列表的元素类型
         args = get_args(param_type)
-        if args:
-            return str(args[0].__name__)  # 返回 List 中元素的类型名称
-    return str(param_type.__name__)  # 如果不是 List，返回原始类型
+        if args and isinstance(args[0], type):
+            return {"type": args[0].__name__}
+    # 默认返回字符串类型（未明确指定类型时）
+    return {"type": "string"}
 
 
 def serialize_type(value: str) -> str:
@@ -120,8 +126,10 @@ class Tool(BaseModel):
             properties[param_name] = {
                 "type": param_type.__name__,
                 "description": param_description or f"The {param_name} parameter.",
-                "items": {"type": get_list_type_annotation(param_type)},
             }
+
+            if get_origin(param_type) is list:
+                properties[param_name]["items"] = get_list_type_annotation(param_type)
 
         # Build the final Function and Tool schema
         function_schema = Function(
@@ -134,7 +142,9 @@ class Tool(BaseModel):
                 additionalProperties=False,
             ),
         )
-        return cls(type="function", function=function_schema).model_dump()
+        return cls(type="function", function=function_schema).model_dump(
+            exclude_none=True
+        )
 
 
 if __name__ == "__main__":

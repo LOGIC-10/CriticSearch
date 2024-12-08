@@ -2,6 +2,7 @@ from datetime import datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
+from loguru import logger
 from sqlmodel import SQLModel, create_engine
 
 # Define the hidden data directory (relative path)
@@ -9,7 +10,7 @@ HIDDEN_DATA_DIR = Path("critic_search/.data")
 HIDDEN_DATA_DIR.mkdir(parents=True, exist_ok=True)  # Ensure the hidden folder exists
 
 # Define the database file path
-DATABASE_PATH = HIDDEN_DATA_DIR / "adapter_usage.sqlite"
+DATABASE_PATH = HIDDEN_DATA_DIR / "search_client_usage.sqlite"
 DATABASE_URL = f"sqlite:///{DATABASE_PATH}"
 
 engine = create_engine(DATABASE_URL)
@@ -25,7 +26,7 @@ def initialize_db():
     if not _db_initialized:
         SQLModel.metadata.create_all(engine)  # Create all tables
         _db_initialized = True
-        print(f"Database initialized at {DATABASE_PATH}")
+        logger.info(f"Database initialized at {DATABASE_PATH}")
 
 
 def get_second_day_naive() -> datetime:
@@ -36,7 +37,7 @@ def get_second_day_naive() -> datetime:
         naive datetime (without timezone).
     """
     now = datetime.now(ZoneInfo("America/New_York"))
-    # Return a naive datetime representing the second day of the month at 00:00:00
+    # Create a naive datetime object
     return datetime(now.year, now.month, 2, 0, 0, 0)
 
 

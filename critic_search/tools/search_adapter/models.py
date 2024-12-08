@@ -1,13 +1,11 @@
-# agent_factory/search_adapter/models.py
+# critic_search/tools/search_adapter/models.py
 from datetime import datetime
 from typing import Dict, List, Optional
 
-from colorama import Fore, Style, init
-from loguru import logger
 from pydantic import BaseModel, Field, model_serializer
 from sqlmodel import Field, SQLModel
 
-from .adapter_usage_db import get_second_day_naive
+from .search_client_usage_db import get_second_day_naive
 
 
 class SearchResult(BaseModel):
@@ -55,23 +53,15 @@ class SearchResponseList(BaseModel):
                     )
             result[response.query] = formatted_response
 
-            logger.info(
-                f"\n{Fore.GREEN}{'=' * 20}== SEARCH_RESULTS =={'=' * 20}{Style.RESET_ALL}\n{formatted_response}\n"
-            )
-
         return result
 
 
-class TavilyUsage(SQLModel, table=True):
-    """
-    数据库模型，用于记录 TavilyClient 的使用次数
-    """
-
+class SearchClientUsage(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
-    client_name: str = Field(default="TavilyClient", index=True)
+    client_name: str = Field(default=None, index=True)
     usage_count: int = Field(default=0)
     max_usage: int = Field(default=1000)
-    reset_time: datetime = Field(default_factory=lambda: get_second_day_naive())
+    reset_time: datetime = Field(default_factory=get_second_day_naive)
 
 
 if __name__ == "__main__":

@@ -25,12 +25,12 @@ class AsyncWebScraper:
         self, urls: List[str], elements: Optional[List[str]] = None
     ) -> List[ScrapedData]:
         """
-        Scrape content from a list of webpages asynchronously using httpx.
+        Scrapes content from a list of webpages asynchronously.
 
         Args:
-            urls: List of URLs to scrape.
-            elements: List of HTML elements to specifically target (e.g., ['p', 'h1', 'h2']).
-                     If None, extracts main content automatically.
+            urls (List[str]): A list of URLs to scrape.
+            elements (Optional[List[str]]): A list of HTML elements to target (e.g., ['p', 'h1', 'h2']).
+                If None, the main content is extracted automatically.
         """
 
         async def fetch_url(url: str) -> ScrapedData:

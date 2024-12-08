@@ -1,51 +1,45 @@
-import yaml
-from colorama import Fore, Style, init
-from loguru import logger
 import time
+
+import yaml
 
 from .base_agent import BaseAgent
 from .critic_agent import CriticAgent
-from .search_plan_agent import SearchPlanAgent
+from .log import colorize_message, logger
+
 
 def truncate_to_character_limit(text, max_chars=100000):
-    if hasattr(text, 'content'):
+    if hasattr(text, "content"):
         text = text.content  # Extract the content attribute
-    
+
     # Ensure `text` is a string before truncating
     if isinstance(text, str) and len(text) > max_chars:
         return text[:max_chars]
     return text
 
-def main(TASK, MAX_ITERATION=10):
-    
+
+def main(TASK, MAX_ITERATION=1):
     # Initialize agents
     common_agent = BaseAgent()
-    plan_agent = SearchPlanAgent()
 
     # initialize the task
     common_agent.user_question = TASK
 
-    # Define the tool schema for function calling
-    common_agent.search_tool = [common_agent.tool_registry.get_tool_schema(common_agent.search_aggregator.search)]
-    common_agent.web_scrape_tool = [common_agent.tool_registry.get_tool_schema(common_agent.web_scraper.scrape)]
-    common_agent.search_tool_schema_list = common_agent.search_tool + common_agent.web_scrape_tool
-
-    # Initialize colorama
-    init()
-
     for iteration in range(MAX_ITERATION):
-        # Iteration header with bold cyan
-        logger.info(
-            f"\n{Fore.CYAN}{Style.BRIGHT}{'=' * 20}== Iteration {iteration + 1} =={'=' * 20}{Style.RESET_ALL}\n"
+        logger.success(
+            colorize_message(
+                message_title=f"ITERATION {iteration + 1}", color="cyan", style="bold"
+            )
         )
 
         if iteration == 0:
             # Initialize search_results as None
             search_results = None
-            
+
             # Model confidence check - yellow
             agent_confident = common_agent.model_confident(TASK)
-            agent_confident_yaml = common_agent.extract_and_validate_yaml(agent_confident)
+            agent_confident_yaml = common_agent.extract_and_validate_yaml(
+                agent_confident
+            )
 
             if agent_confident_yaml is None:
                 logger.warning(
@@ -69,14 +63,24 @@ def main(TASK, MAX_ITERATION=10):
                 initial_search_prompt = common_agent.load_template(
                     "planner_agent_initial_search_plan.txt"
                 )
-                initial_search_rendered_prompt = common_agent.render_template(initial_search_prompt, data)
+                initial_search_rendered_prompt = common_agent.render_template(
+                    initial_search_prompt, data
+                )
 
                 initial_web_result_markdown_text = common_agent.search_and_browse(
                     initial_search_rendered_prompt
                 )
 
-                common_agent_answer = common_agent.initialize_search(
-                    web_result_markdown_text=initial_web_result_markdown_text
+                rag_based_answer_prompt = common_agent.render_template(
+                    common_agent.load_template("rag_based_answer.txt"),
+                    {
+                        "user_question": common_agent.user_question,
+                        "web_result_markdown_text": initial_web_result_markdown_text,
+                    },
+                )
+
+                common_agent_answer = common_agent.common_chat(
+                    usr_prompt=rag_based_answer_prompt,
                 )
 
         else:
@@ -87,12 +91,14 @@ def main(TASK, MAX_ITERATION=10):
                 search_results=truncate_to_character_limit(web_result_markdown_text),
                 critic_feedback=critic_agent_response,
             )
-            time.sleep(0.5) # hitting rate limits for gpt mini
-            
+            time.sleep(0.5)  # hitting rate limits for gpt mini
 
-        # Agent answer - magenta
-        logger.info(
-            f"\n{Fore.MAGENTA}{'=' * 20}== COMMON_AGENT_ANSWER =={'=' * 20}{Style.RESET_ALL}\n{common_agent_answer}\n"
+        logger.success(
+            colorize_message(
+                message_title="COMMON AGENT ANSWER",
+                color="magenta",
+                message_content=common_agent_answer,
+            )
         )
 
         # Critic evaluation - blue
@@ -100,20 +106,37 @@ def main(TASK, MAX_ITERATION=10):
         critic_agent.receive_task(TASK)
         critic_agent.receive_agent_answer(common_agent_answer)
         critic_agent_response = critic_agent.critic()
-        logger.info(
-            f"\n{Fore.BLUE}{'=' * 20}== CRITIC_AGENT_RESPONSE =={'=' * 20}{Style.RESET_ALL}\n{critic_agent_response}\n"
+
+        logger.success(
+            colorize_message(
+                message_title="CRITIC_AGENT_RESPONSE",
+                color="blue",
+                message_content=common_agent_answer,
+            )
         )
 
         if yaml.safe_load(critic_agent_response).get("Stop", {}).lower() == "true":
-            logger.info(
-                f"\n{Fore.RED}{'=' * 20}== TOTAL ITERATIONS: {iteration + 1} =={'=' * 20}{Style.RESET_ALL}\n"
+            logger.success(
+                colorize_message(
+                    message_title=f"TOTAL ITERATIONS: {iteration + 1}", color="red"
+                )
             )
-            logger.info(
-                f"\n{Fore.BLACK}{'=' * 20}== ALL SEARCH QUERIES =={'=' * 20}{Style.RESET_ALL}\n{common_agent.queryDB}\n"
+
+            logger.success(
+                colorize_message(
+                    message_title="ALL SEARCH QUERIES",
+                    color="black",
+                    message_content=", ".join(map(str, common_agent.queryDB)),
+                )
             )
-            logger.info(
-                f"\n{Fore.RED}{'=' * 20}== FINAL ANSWER =={'=' * 20}{Style.RESET_ALL}\n{common_agent_answer}\n"
+            logger.success(
+                colorize_message(
+                    message_title="FINAL ANSWER",
+                    color="red",
+                    message_content=common_agent_answer,
+                )
             )
+
             return f"\n{common_agent_answer}\n"
 
         # 根据critic的建议再执行一次搜索和爬虫操作
@@ -124,39 +147,70 @@ def main(TASK, MAX_ITERATION=10):
             "user_feedback": critic_agent_response,
             "search_history": common_agent.queryDB,
         }
-        search_again_prompt = common_agent.render_template(common_agent.load_template("planner_agent_with_reflection.txt"), reflection_data)
+        search_again_prompt = common_agent.render_template(
+            common_agent.load_template("planner_agent_with_reflection.txt"),
+            reflection_data,
+        )
         try:
-            web_result_markdown_text = common_agent.search_and_browse(search_again_prompt)
+            web_result_markdown_text = common_agent.search_and_browse(
+                search_again_prompt
+            )
         except:
-            logger.info(
-                f"\n{Fore.RED}{'=' * 20}== TOTAL ITERATIONS: {iteration + 1} =={'=' * 20}{Style.RESET_ALL}\n"
+            logger.success(
+                colorize_message(
+                    message_title=f"TOTAL ITERATIONS: {iteration + 1}", color="red"
+                )
             )
-            logger.info(
-                f"\n{Fore.BLACK}{'=' * 20}== ALL SEARCH QUERIES =={'=' * 20}{Style.RESET_ALL}\n{common_agent.queryDB}\n"
+
+            logger.success(
+                colorize_message(
+                    message_title="ALL SEARCH QUERIES",
+                    color="black",
+                    message_content=", ".join(map(str, common_agent.queryDB)),
+                )
             )
-            logger.info(
-                f"\n{Fore.RED}{'=' * 20}== FINAL ANSWER =={'=' * 20}{Style.RESET_ALL}\n{common_agent_answer}\n"
+
+            logger.success(
+                colorize_message(
+                    message_title="FINAL ANSWER",
+                    color="red",
+                    message_content=common_agent_answer,
+                )
             )
+
             # we run out of searches for now, so we force the agent to give a final answer:
             return f"\n{common_agent_answer}\n"
 
-        logger.info(
-            f"\n{Fore.BLUE}{'=' * 20}== WEB_RESULT_MARKDOWN_TEXT =={'=' * 20}{Style.RESET_ALL}\n{web_result_markdown_text}\n"
+        logger.success(
+            colorize_message(
+                message_title="WEB RESULT MARKDOWN TEXT",
+                color="blue",
+                message_content=web_result_markdown_text,
+            )
         )
 
         # Check if reached max iterations
         if iteration == MAX_ITERATION - 1:
-            logger.info(
-                f"\n{Fore.RED}{'=' * 20}== TOTAL ITERATIONS: {iteration + 1} =={'=' * 20}{Style.RESET_ALL}\n"
+            logger.success(
+                colorize_message(
+                    message_title=f"TOTAL ITERATIONS: {iteration + 1}", color="red"
+                )
             )
-            logger.info(
-                f"\n{Fore.BLACK}{'=' * 20}== ALL SEARCH QUERIES =={'=' * 20}{Style.RESET_ALL}\n{common_agent.queryDB}\n"
+
+            logger.success(
+                colorize_message(
+                    message_title="ALL SEARCH QUERIES",
+                    color="black",
+                    message_content=", ".join(map(str, common_agent.queryDB)),
+                )
             )
-            logger.info(
-                f"\n{Fore.RED}{'=' * 20}== FINAL ANSWER =={'=' * 20}{Style.RESET_ALL}\n{common_agent_answer}\n"
+
+            logger.success(
+                colorize_message(
+                    message_title="FINAL ANSWER",
+                    color="red",
+                    message_content=common_agent_answer,
+                )
             )
+
             return f"\n{common_agent_answer}\n"
-
-
-if __name__ == "__main__":
-    main()

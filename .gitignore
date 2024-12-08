@@ -198,4 +198,4 @@ settings.yaml
 .secrets.*
 config.yaml
 .DS_Store
-eval/critic_search/.data/adapter_usage.sqlite
+*.sqlite

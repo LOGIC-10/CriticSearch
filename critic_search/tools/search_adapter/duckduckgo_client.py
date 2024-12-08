@@ -45,14 +45,12 @@ class DuckDuckGoClient(BaseSearchClient):
         self,
         query: str,
         days: int = 7,
-        max_results: int = 5,
+        max_results: int = 10,
         region: Literal["us-en", "cn-zh"] = "us-en",
     ) -> SearchResponse:
         timelimit = self._convert_days_to_timelimit(days)
 
-        logger.debug(
-            f"Using 'duckduckgo-search-client' for query '{query}'."
-        )
+        logger.debug(f"Using 'duckduckgo-search-client' for query '{query}'.")
 
         raw_results = await AsyncDDGS(timeout=10).atext(
             query,

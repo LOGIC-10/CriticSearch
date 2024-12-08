@@ -1,4 +1,4 @@
-from typing import Iterable
+from typing import Iterable, List
 
 from openai import APIConnectionError, OpenAI
 from openai.types.chat.chat_completion_message import ChatCompletionMessage
@@ -49,7 +49,10 @@ class ModelManager:
 
 
 def call_llm(
-    model, usr_prompt: str | Iterable[ChatCompletionMessageParam], config, tools
+    model,
+    usr_prompt: str | Iterable[ChatCompletionMessageParam],
+    config,
+    tools: List | None,
 ) -> ChatCompletionMessage:
     try:
         model_manager = ModelManager(config)
@@ -67,7 +70,7 @@ def call_llm(
             messages=messages,
             temperature=model_config.get("temperature", 0.7),
             max_tokens=model_config.get("max_tokens", 8192),
-            tools=tools,
+            tools=tools,  # type: ignore
         )
 
         response_message = response.choices[0].message
