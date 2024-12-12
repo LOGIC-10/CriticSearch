@@ -21,16 +21,12 @@ class AsyncWebScraper:
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
         }
 
-    async def scrape(
-        self, urls: List[str], elements: Optional[List[str]] = None
-    ) -> List[ScrapedData]:
+    async def scrape(self, urls: List[str]) -> List[ScrapedData]:
         """
         Scrapes content from a list of webpages asynchronously.
 
         Args:
             urls (List[str]): A list of URLs to scrape.
-            elements (Optional[List[str]]): A list of HTML elements to target (e.g., ['p', 'h1', 'h2']).
-                If None, the main content is extracted automatically.
         """
 
         async def fetch_url(url: str) -> ScrapedData:
@@ -52,27 +48,15 @@ class AsyncWebScraper:
                         script.decompose()
 
                     # Extract content based on specified elements or automatic content detection
-                    if elements:
-                        content = [
-                            elem.get_text(strip=True)
-                            for tag in elements
-                            for elem in soup.find_all(tag)
-                        ]
+                    main_content = (
+                        soup.find("main")
+                        or soup.find("article")
+                        or soup.find("div", class_=re.compile(r"content|main|article"))
+                    )
+                    if main_content:
+                        content = main_content.get_text(strip=True).splitlines()
                     else:
-                        # Automatic main content detection
-                        main_content = (
-                            soup.find("main")
-                            or soup.find("article")
-                            or soup.find(
-                                "div", class_=re.compile(r"content|main|article")
-                            )
-                        )
-                        if main_content:
-                            content = main_content.get_text(strip=True).splitlines()
-                        else:
-                            content = [
-                                p.get_text(strip=True) for p in soup.find_all("p")
-                            ]
+                        content = [p.get_text(strip=True) for p in soup.find_all("p")]
 
                     # Clean up the content and return
                     content = [re.sub(r"\s+", " ", c).strip() for c in content]

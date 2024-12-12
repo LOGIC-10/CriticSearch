@@ -50,6 +50,7 @@ class TavilyClient(BaseSearchClient):
                 usage_record = SearchClientUsage(
                     client_name="TavilyClient",
                     usage_count=0,
+                    reset_time=get_second_day_naive(),
                 )
                 session.add(usage_record)
 
@@ -111,9 +112,14 @@ class TavilyClient(BaseSearchClient):
             try:
                 detail = response.json().get("detail", {}).get("error")
                 if detail:
-                    raise UsageLimitExceededError(detail)
-            except Exception:
-                pass
+                    raise UsageLimitExceededError(detail)  # 抛出后直接传播，不被捕获
+            except UsageLimitExceededError:
+                raise  # 直接传播 UsageLimitExceededError，避免被后续捕获
+            except Exception as e:
+                # 捕获其他异常并记录日志
+                logger.error(f"Failed to process 429 response: {e}")
+                logger.error(f"Response content: {response.text}")
+                raise RatelimitException()  # 抛出通用限流异常
 
             raise RatelimitException()
         elif response.status_code == 401:

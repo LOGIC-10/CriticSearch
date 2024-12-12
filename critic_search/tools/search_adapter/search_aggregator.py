@@ -3,13 +3,12 @@ import re
 from asyncio import gather
 from typing import Dict, List
 
-from loguru import logger
-
 from critic_search.config import settings
+from critic_search.log import logger
 
 from .bing_client import BingClient
 from .duckduckgo_client import DuckDuckGoClient
-from .exceptions import InvalidAPIKeyError, RetryError
+from .exceptions import InvalidAPIKeyError, RetryError, UsageLimitExceededError
 from .models import SearchResponse, SearchResponseList
 from .search_client_usage_db import initialize_db
 from .tavily_client import TavilyClient
@@ -17,9 +16,7 @@ from .tavily_client import TavilyClient
 
 class SearchAggregator:
     def __init__(self):
-        self.clients: Dict[str, DuckDuckGoClient | TavilyClient | BingClient] = {
-            "duckduckgo": DuckDuckGoClient()
-        }
+        self.clients: Dict[str, DuckDuckGoClient | TavilyClient | BingClient] = {"duckduckgo": DuckDuckGoClient()}
 
         # 如果 Tavily 的 API key 存在，初始化客户端
         tavily_api_key = settings.search_engine.tavily.api_key
@@ -69,15 +66,22 @@ class SearchAggregator:
             if engine in self.available_clients:
                 try:
                     # Call the asynchronous search method for the specified engine
-                    return await self.clients[engine].search(query)
+                    result = await self.clients[engine].search(query)
+                    logger.info(f"{result.model_dump()}")
+                    return result
                 except RetryError:
                     logger.warning(
                         f"Engine '{engine}' for query: {query} failed after multiple retries. Marking as unavailable."
                     )
                     self.mark_engine_unavailable(engine)
                 except InvalidAPIKeyError:
-                    logger.warning(
+                    logger.error(
                         f"Engine '{engine}' for query: {query} failed because of wrong api key. Marking as unavailable."
+                    )
+                    self.mark_engine_unavailable(engine)
+                except UsageLimitExceededError:
+                    logger.warning(
+                        f"Engine '{engine}' for query: {query} failed because of usage limit exceeded. Marking as unavailable."
                     )
                     self.mark_engine_unavailable(engine)
                 except Exception:
@@ -94,7 +98,8 @@ class SearchAggregator:
 
     async def search(self, query: List[str]) -> Dict[str, str]:
         """
-        Asynchronous search method supporting multiple concurrent queries and engine fallback.
+        Performs a search using the provided query. 
+        Supports various search techniques using special syntax.
 
         Args:
             query (List[str]): A list of search queries.

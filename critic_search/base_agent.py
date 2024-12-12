@@ -99,7 +99,8 @@ class BaseAgent:
         self.history.append({"role": "user", "content": usr_prompt})
         self.history.append({"role": "assistant", "content": llm_response})
         if tools is not None:
-            logger.debug(f"llm_response:\n {llm_response}")
+            # logger.debug(f"usr_prompt:\n {usr_prompt}")
+            # logger.debug(f"llm_response:\n {llm_response}")
             return llm_response
         return llm_response.content
 

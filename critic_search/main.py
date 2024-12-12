@@ -25,7 +25,7 @@ def main(TASK, MAX_ITERATION=1):
     common_agent.user_question = TASK
 
     for iteration in range(MAX_ITERATION):
-        logger.success(
+        logger.info(
             colorize_message(
                 message_title=f"ITERATION {iteration + 1}", color="cyan", style="bold"
             )
@@ -93,7 +93,7 @@ def main(TASK, MAX_ITERATION=1):
             )
             time.sleep(0.5)  # hitting rate limits for gpt mini
 
-        logger.success(
+        logger.info(
             colorize_message(
                 message_title="COMMON AGENT ANSWER",
                 color="magenta",
@@ -107,7 +107,7 @@ def main(TASK, MAX_ITERATION=1):
         critic_agent.receive_agent_answer(common_agent_answer)
         critic_agent_response = critic_agent.critic()
 
-        logger.success(
+        logger.info(
             colorize_message(
                 message_title="CRITIC_AGENT_RESPONSE",
                 color="blue",
@@ -116,20 +116,20 @@ def main(TASK, MAX_ITERATION=1):
         )
 
         if yaml.safe_load(critic_agent_response).get("Stop", {}).lower() == "true":
-            logger.success(
+            logger.info(
                 colorize_message(
                     message_title=f"TOTAL ITERATIONS: {iteration + 1}", color="red"
                 )
             )
 
-            logger.success(
+            logger.info(
                 colorize_message(
                     message_title="ALL SEARCH QUERIES",
                     color="black",
                     message_content=", ".join(map(str, common_agent.queryDB)),
                 )
             )
-            logger.success(
+            logger.info(
                 colorize_message(
                     message_title="FINAL ANSWER",
                     color="red",
@@ -156,13 +156,13 @@ def main(TASK, MAX_ITERATION=1):
                 search_again_prompt
             )
         except:
-            logger.success(
+            logger.info(
                 colorize_message(
                     message_title=f"TOTAL ITERATIONS: {iteration + 1}", color="red"
                 )
             )
 
-            logger.success(
+            logger.info(
                 colorize_message(
                     message_title="ALL SEARCH QUERIES",
                     color="black",
@@ -170,7 +170,7 @@ def main(TASK, MAX_ITERATION=1):
                 )
             )
 
-            logger.success(
+            logger.info(
                 colorize_message(
                     message_title="FINAL ANSWER",
                     color="red",
@@ -181,7 +181,7 @@ def main(TASK, MAX_ITERATION=1):
             # we run out of searches for now, so we force the agent to give a final answer:
             return f"\n{common_agent_answer}\n"
 
-        logger.success(
+        logger.info(
             colorize_message(
                 message_title="WEB RESULT MARKDOWN TEXT",
                 color="blue",
@@ -191,13 +191,13 @@ def main(TASK, MAX_ITERATION=1):
 
         # Check if reached max iterations
         if iteration == MAX_ITERATION - 1:
-            logger.success(
+            logger.info(
                 colorize_message(
                     message_title=f"TOTAL ITERATIONS: {iteration + 1}", color="red"
                 )
             )
 
-            logger.success(
+            logger.info(
                 colorize_message(
                     message_title="ALL SEARCH QUERIES",
                     color="black",
@@ -205,7 +205,7 @@ def main(TASK, MAX_ITERATION=1):
                 )
             )
 
-            logger.success(
+            logger.info(
                 colorize_message(
                     message_title="FINAL ANSWER",
                     color="red",
