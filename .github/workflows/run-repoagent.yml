@@ -12,6 +12,7 @@ permissions:
   
 jobs:
   use-repoagent:
+    if: github.event.pull_request.merged == true  # Run only if the pull request is merged
     runs-on: ubuntu-latest
 
     steps:
