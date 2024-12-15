@@ -16,7 +16,9 @@ from .tavily_client import TavilyClient
 
 class SearchAggregator:
     def __init__(self):
-        self.clients: Dict[str, DuckDuckGoClient | TavilyClient | BingClient] = {"duckduckgo": DuckDuckGoClient()}
+        self.clients: Dict[str, DuckDuckGoClient | TavilyClient | BingClient] = {
+            "duckduckgo": DuckDuckGoClient()
+        }
 
         # 如果 Tavily 的 API key 存在，初始化客户端
         tavily_api_key = settings.search_engine.tavily.api_key
@@ -98,7 +100,7 @@ class SearchAggregator:
 
     async def search(self, query: List[str]) -> Dict[str, str]:
         """
-        Performs a search using the provided query. 
+        Performs a search using the provided query.
         Supports various search techniques using special syntax.
 
         Args:

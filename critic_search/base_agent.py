@@ -11,6 +11,7 @@ from loguru import logger
 
 from .config import settings
 from .llm_service import ChatCompletionMessage, call_llm
+from .models import ConversationManager
 from .tools import AsyncWebScraper, SearchAggregator, ToolRegistry
 
 
@@ -19,6 +20,7 @@ class BaseAgent:
     queryDB = set()  # A set to store queries
     tool_registry = ToolRegistry()  # Registry for tools
     user_question = ""
+    conversation_manager = ConversationManager()
 
     def __init__(self):
         base_dir = os.path.dirname(
@@ -44,7 +46,6 @@ class BaseAgent:
         self.web_scraper = AsyncWebScraper()
 
         self.repeat_turns = 10
-        self.history = []
 
     def load_template(self, filename):
         """
@@ -96,16 +97,15 @@ class BaseAgent:
             config=settings,
             tools=tools,
         )
-        self.history.append({"role": "user", "content": usr_prompt})
-        self.history.append({"role": "assistant", "content": llm_response})
+        # TODO: Do we need to add this message to history?
+        # self.history.append({"role": "user", "content": usr_prompt})
+        # self.history.append({"role": "assistant", "content": llm_response})
+
         if tools is not None:
             # logger.debug(f"usr_prompt:\n {usr_prompt}")
             # logger.debug(f"llm_response:\n {llm_response}")
             return llm_response
         return llm_response.content
-
-    def clear_history(self):
-        self.history = []
 
     def update_answer(self, query, previous_answer, search_results, critic_feedback):
         data = {
@@ -145,6 +145,11 @@ class BaseAgent:
         # If no tool calls, return the response immediately
         if search_with_tool_response.tool_calls is None:
             return search_with_tool_response.content
+
+        BaseAgent.conversation_manager.add_tool_call_to_history(
+            tool_calls=search_with_tool_response.tool_calls,
+            content=search_with_tool_response.content,
+        )
 
         # Extract tool call IDs and their corresponding queries
         tool_call_id_to_queries = {
@@ -196,6 +201,11 @@ class BaseAgent:
                 ),
                 "tool_call_id": tool_call_id,
             }
+
+            BaseAgent.conversation_manager.add_tool_call_result_to_history(
+                message={**message, "name": "search"}
+            )
+
             function_call_result_messages.append(message)
 
         # 根据初步的搜索结果进行筛选然后网页爬取
@@ -226,16 +236,22 @@ class BaseAgent:
         if web_scraper_response.tool_calls is None:
             return web_scraper_response.content
 
+        BaseAgent.conversation_manager.add_tool_call_to_history(
+            tool_calls=web_scraper_response.tool_calls,
+            content=search_with_tool_response.content,
+        )
+
         # Extract tool call IDs and their corresponding queries
         tool_call_id_to_urls = {
             tool_call.id: json.loads(tool_call.function.arguments).get("urls", [])
-            for tool_call in web_scraper_response.tool_calls  # type: ignore
+            for tool_call in web_scraper_response.tool_calls
         }
 
         # Collect all URLs in a single list for batch scraping
         all_urls = [url for urls in tool_call_id_to_urls.values() for url in urls]
         logger.info(f"All URLs extracted: {all_urls}")
 
+        # TODO: Add scrape tool result to history which involes changing scrape function return format equal to search function
         # Execute the batch scraping and retrieve results
         web_scraper_results = asyncio.run(
             self.web_scraper.scrape(urls=all_urls)
