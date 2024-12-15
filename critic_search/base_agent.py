@@ -192,7 +192,7 @@ class BaseAgent:
 
             # Build the response message for each tool call
             message = {
-                "role": "tool",
+                "role": "tools",
                 "content": json.dumps(
                     {
                         "query": list(queries_to_responses.keys()),  # List of queries
