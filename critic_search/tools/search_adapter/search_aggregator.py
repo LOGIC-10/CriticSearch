@@ -1,26 +1,43 @@
 # critic_search/search_adapter/aggregator.py
 import re
 from asyncio import gather
-from typing import List
+from typing import Dict, List
 
-from loguru import logger
+from critic_search.config import settings
+from critic_search.log import logger
 
+from .bing_client import BingClient
 from .duckduckgo_client import DuckDuckGoClient
-from .exceptions import UsageLimitExceededError
+from .exceptions import InvalidAPIKeyError, RetryError, UsageLimitExceededError
 from .models import SearchResponse, SearchResponseList
+from .search_client_usage_db import initialize_db
 from .tavily_client import TavilyClient
 
 
 class SearchAggregator:
     def __init__(self):
-        # Initialize supported search engines
-        self.clients = {"tavily": TavilyClient(), "duckduckgo": DuckDuckGoClient()}
+        self.clients: Dict[str, DuckDuckGoClient | TavilyClient | BingClient] = {
+            "duckduckgo": DuckDuckGoClient()
+        }
+
+        # 如果 Tavily 的 API key 存在，初始化客户端
+        tavily_api_key = settings.search_engine.tavily.api_key
+        if tavily_api_key:
+            self.clients["tavily"] = TavilyClient(tavily_api_key)
+
+        # 如果 Bing 的 API key 存在，初始化客户端
+        bing_api_key = settings.search_engine.bing.api_key
+        if bing_api_key:
+            self.clients["bing"] = BingClient(bing_api_key)
+
         self.available_clients = set(self.clients.keys())
 
         # Define a regex pattern for identifying search operators
         self.search_operators_pattern = re.compile(
             r'(".*?"|\bsite:|filetype:|intitle:|inurl:|\b[-+~]\b)'
         )
+
+        initialize_db()
 
     def mark_engine_unavailable(self, engine: str):
         """
@@ -47,55 +64,73 @@ class SearchAggregator:
     async def _search_single_query(
         self, query: str, engines: List[str]
     ) -> SearchResponse:
-        """
-        Perform a search for a single query, trying the specified engines in order.
-
-        Args:
-            query (str): The search query.
-            engines (List[str]): A list of search engines to try.
-
-        Returns:
-            SearchResponse: The search result.
-
-        Raises:
-            ValueError: If all specified engines are unavailable.
-        """
         for engine in engines:
             if engine in self.available_clients:
                 try:
                     # Call the asynchronous search method for the specified engine
-                    return await self.clients[engine].search(query)
-                except UsageLimitExceededError:
-                    # Mark the current engine as unavailable due to usage limits
-                    self.mark_engine_unavailable(engine)
+                    result = await self.clients[engine].search(query)
+                    logger.info(f"{result.model_dump()}")
+                    return result
+                except RetryError:
                     logger.warning(
-                        f"Engine {engine} is unavailable due to usage limits."
+                        f"Engine '{engine}' for query: {query} failed after multiple retries. Marking as unavailable."
                     )
-        raise ValueError("All specified engines are unavailable.")
+                    self.mark_engine_unavailable(engine)
+                except InvalidAPIKeyError:
+                    logger.error(
+                        f"Engine '{engine}' for query: {query} failed because of wrong api key. Marking as unavailable."
+                    )
+                    self.mark_engine_unavailable(engine)
+                except UsageLimitExceededError:
+                    logger.warning(
+                        f"Engine '{engine}' for query: {query} failed because of usage limit exceeded. Marking as unavailable."
+                    )
+                    self.mark_engine_unavailable(engine)
+                except Exception:
+                    logger.exception(
+                        f"Engine '{engine}' encountered error. Marking as unavailable."
+                    )
+                    self.mark_engine_unavailable(engine)
 
-    @logger.catch
-    async def search(self, query: List[str], engines: List[str] | None = None) -> str:
+        logger.error("All specified search engines are unavailable.")
+        return SearchResponse(
+            query=query,
+            error_message="Search failed: No available search engines for this query.",
+        )
+
+    async def search(self, query: List[str]) -> Dict[str, str]:
         """
-        Asynchronous search method supporting multiple concurrent queries and engine fallback.
+        Performs a search using the provided query.
+        Supports various search techniques using special syntax.
 
         Args:
             query (List[str]): A list of search queries.
-            engines (List[str], optional): An optional list of search engines to use (from available clients).
-
-        Returns:
-            str: A serialized representation of the search results.
         """
-        engines = engines or list(self.available_clients)
+        # If query is a single string, convert it into a list with one element
+        if isinstance(query, str):
+            query = [query]
 
         # Choose the engine dynamically based on whether the query contains search operators
-        query_engines = [
-            ["duckduckgo"] if self.contains_search_operators(q) else engines
-            for q in query
-        ]
+        async def dynamic_engine_task(q: str):
+            """
+            动态选择引擎并执行任务。
+            Args:
+                q (str): 当前查询。
+                delay (float): 延迟时间。
+            """
+            # 动态选择有效的引擎
+            engines = (
+                ["duckduckgo"]
+                if self.contains_search_operators(q)
+                else list(self.available_clients)
+            )
+
+            if not engines:
+                raise ValueError(f"No available engines for query: {q}")
+            return await self._search_single_query(q, engines)
 
         # Perform concurrent searches for multiple queries
-        tasks = [
-            self._search_single_query(q, eng) for q, eng in zip(query, query_engines)
-        ]
+        # 为每个任务动态添加延迟，但保持并发
+        tasks = [dynamic_engine_task(q) for i, q in enumerate(query)]
         responses = await gather(*tasks)
-        return SearchResponseList(responses=responses).model_dump()  # type: ignore
+        return SearchResponseList(responses=responses).model_dump()

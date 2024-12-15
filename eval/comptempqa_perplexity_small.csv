@@ -1,0 +1,943 @@
+id,question,ground_truth_answer,model_answer,binary_success,rating,timeframe,type
+1,Did the Winter Olympic Games in 1994 which had 1737 participants had a higher number of participants than the sports season in 2006 in Germany which had 32 participants?,['yes'],"To answer your question, we need to compare the number of participants in the 1994 Winter Olympic Games with the number of participants in a specific sports season or event in 2006, if such a comparison is relevant.
+
+### 1994 Winter Olympic Games
+- The 1994 Winter Olympic Games, held in Lillehammer, Norway, had 1,737 athletes participating from 67 nations[4][5].
+
+### 2006 Sports Season or Event
+- The question mentions a ""sports season in 2006 in Germany"" but does not specify the particular event or competition. However, the context suggests it might be referring to the 2006 Winter Olympics, which were held in Torino, Italy, not Germany.
+- The 2006 Winter Olympics had a total of 2,508 athletes from 80 nations, but this is not the specific comparison you asked for[2].
+
+Given the information, the 1994 Winter Olympic Games had 1,737 participants, which is significantly higher than the 32 participants mentioned for the unspecified 2006 sports season in Germany. Therefore, the 1994 Winter Olympic Games had a much higher number of participants than the mentioned 32 participants in the 2006 context.",1,1,"[datetime.datetime(1994, 2, 1, 0, 0), datetime.datetime(2006, 7, 9, 0, 0)]",
+2,Did the Eurovision Song Contest edition in 2006 which had 37 participants had a higher number of participants than the Eurovision Song Contest edition in 2004 which had 36 participants?,['yes'],"Yes, the Eurovision Song Contest 2006 had a higher number of participants compared to the Eurovision Song Contest 2004.
+
+In 2006, there were 37 participating countries[1][5].
+
+In 2004, there were 36 participating countries[2].
+
+Therefore, the 2006 edition had one more participating country than the 2004 edition.",1,1,"[datetime.datetime(2004, 1, 1, 0, 0), datetime.datetime(2006, 5, 18, 0, 0)]",
+3,Did the car bombing in 1993 resulted in 6 deaths had a lower number of injured people than the aviation accident in 2002 in Germany resulted in 71 deaths?,['no'],"To determine whether the car bombing in 1993 had a lower number of injured people compared to the aviation accident in 2002 in Germany, we need to examine the injury statistics from both incidents.
+
+### 1993 World Trade Center Bombing
+- The bombing on February 26, 1993, resulted in 6 deaths and more than 1,000 people injured, including 88 firefighters, 35 police officers, and an emergency medical services worker[1][5].
+
+### 2002 Aviation Accident in Germany
+- The aviation accident on July 1, 2002, involved a mid-air collision between a Russian passenger airliner and a cargo plane, resulting in 71 deaths. However, the sources do not provide a specific number of injured people, as the accident was fatal for all on board both planes. There were no survivors, and thus, no injured individuals from the crash itself[2].
+
+Given this information, the 1993 World Trade Center bombing had more than 1,000 injured people, while the 2002 aviation accident in Germany had no survivors and therefore no injured individuals.
+
+Therefore, the car bombing in 1993 had a significantly higher number of injured people compared to the aviation accident in 2002 in Germany.",1,1,"[datetime.datetime(1993, 2, 26, 0, 0), datetime.datetime(2002, 7, 1, 0, 0)]",
+4,Did car bombing in 1993 resulted in 6 deaths or earthquake in 1989 resulted in 63 deaths had a higher number of death?,['earthquake in 1989 resulted in 63 deaths'],"The earthquake in 1989 resulted in a higher number of deaths compared to the car bombing in 1993.
+
+- The 1993 World Trade Center bombing resulted in 6 deaths[1][5].
+- The 1989 Loma Prieta earthquake resulted in 63 deaths[2].
+
+Therefore, the earthquake in 1989 had a significantly higher number of deaths.",1,1,"[datetime.datetime(1989, 10, 17, 0, 0), datetime.datetime(1993, 2, 26, 0, 0)]",
+5,Did the car bombing in 1993 resulted in 6 deaths had a higher number of death than the train wreck in 1989 resulted in 645 deaths?,['no'],"No, the car bombing in 1993 did not result in a higher number of deaths than the train wreck in 1989.
+
+The 1993 World Trade Center bombing resulted in 6 deaths and over 1,000 injuries[1][5].
+
+In contrast, the Ufa train disaster in 1989 resulted in 575 confirmed deaths, with some estimates as high as 780, and over 800 injuries[2].
+
+Therefore, the train wreck in 1989 had a significantly higher number of deaths compared to the car bombing in 1993.",1,1,"[datetime.datetime(1989, 6, 4, 0, 0), datetime.datetime(1993, 2, 26, 0, 0)]",
+6,Did the car bombing in 1993 resulted in 6 deaths had a lower number of injured people than the terrorist attack in 1999 resulted in 8 deaths?,['no'],"To compare the number of injured people in the two terrorist attacks, we need to look at the specific details of each event.
+
+### 1993 World Trade Center Bombing
+- On February 26, 1993, a truck bomb exploded in the basement-level parking garage under the World Trade Center complex.
+- This attack resulted in 6 deaths and more than 1,000 people were injured[1][5].
+
+### 1999 Armenian Parliament Shooting
+- On October 27, 1999, a terrorist attack occurred at the Armenian National Assembly in Yerevan.
+- This attack resulted in 8 deaths and at least 30 people were injured[2].
+
+Based on these details, the 1993 World Trade Center bombing, which resulted in 6 deaths, had a significantly higher number of injured people (over 1,000) compared to the 1999 Armenian parliament shooting, which resulted in 8 deaths and at least 30 injured people. Therefore, the 1993 bombing had a much higher number of injured individuals than the 1999 attack.",1,1,"[datetime.datetime(1993, 2, 26, 0, 0), datetime.datetime(1999, 10, 27, 0, 0)]",
+7,Did car bombing in 1993 resulted in 6 deaths or aviation accident in 2001 resulted in 44 deaths had a higher number of death?,['aviation accident in 2001 resulted in 44 deaths'],"To compare the number of deaths from the two incidents, here are the details:
+
+## 1993 World Trade Center Bombing
+- On February 26, 1993, a car bombing at the World Trade Center resulted in the deaths of 6 people[1][5].
+
+## 2001 Aviation Accident (American Airlines Flight 587)
+- On November 12, 2001, American Airlines Flight 587 crashed, resulting in the deaths of 265 people (260 on the plane and 5 on the ground)[2].
+
+Given these numbers, the aviation accident in 2001 (American Airlines Flight 587) resulted in significantly more deaths (265) compared to the 6 deaths from the 1993 World Trade Center bombing. Therefore, the aviation accident in 2001 had a much higher number of deaths.",0,1,"[datetime.datetime(1993, 2, 26, 0, 0), datetime.datetime(2001, 9, 11, 0, 0)]",
+8,Did the car bombing in 1993 resulted in 6 deaths had a higher number of death than the earthquake in 2001 which resulted in 20023 deaths?,['no'],"No, the car bombing in 1993 did not result in a higher number of deaths compared to the earthquake in 2001.
+
+The 1993 World Trade Center bombing resulted in 6 deaths, as well as over 1,000 injuries[1][5].
+
+In contrast, the 2001 Gujarat earthquake in India resulted in a significantly higher number of deaths, with estimates ranging from 13,805 to 20,023 deaths[2][4].
+
+Therefore, the earthquake in 2001 had a much higher death toll than the 1993 World Trade Center bombing.",1,1,"[datetime.datetime(1993, 2, 26, 0, 0), datetime.datetime(2001, 1, 26, 0, 0)]",
+9,Did the car bombing in 1993 resulted in 6 deaths had a lower number of injured people than the aviation accident in 1988 in United States of America resulted in 1 deaths?,['no'],"To compare the number of injured people in the 1993 World Trade Center bombing and the 1988 aviation accident, we need to look at the specific details of each event.
+
+### 1993 World Trade Center Bombing
+- This terrorist attack resulted in 6 deaths and over 1,042 people injured[1][5].
+
+### 1988 Aviation Accident (Delta Air Lines Flight 1141)
+- This accident, which occurred on August 21, 1988, resulted in 12 deaths among the passengers and 2 deaths among the flight attendants. In terms of injuries, there were 22 passengers, 2 crew members, and the captain and first officer who were seriously injured. Additionally, the flight engineer and 29 other passengers suffered minor injuries[2].
+
+Given these details, the 1993 World Trade Center bombing, which resulted in 6 deaths, had a significantly higher number of injured people (over 1,042) compared to the 1988 aviation accident, which had a total of around 53 people injured (including both serious and minor injuries).
+
+Therefore, the car bombing in 1993 did not have a lower number of injured people; it had a substantially higher number of injured individuals.",1,1,"[datetime.datetime(1988, 4, 28, 0, 0), datetime.datetime(1993, 2, 26, 0, 0)]",
+10,Did car bombing in 1993 resulted in 6 deaths or train wreck in 1999 which resulted in 31 deaths had a higher number of injured people?,['car bombing in 1993 resulted in 6 deaths'],"To compare the number of injured people between the 1993 World Trade Center bombing and the 1999 Ladbroke Grove rail disaster, here are the relevant details:
+
+## 1993 World Trade Center Bombing
+- The bombing resulted in over 1,000 people injured, including 88 firefighters, 35 police officers, and an emergency medical services worker[1][5].
+
+## 1999 Ladbroke Grove Rail Disaster
+- The train collision resulted in more than 220 people injured[2].
+
+Based on these figures, the 1993 World Trade Center bombing had a significantly higher number of injured people, with over 1,000 injured, compared to the more than 220 injured in the 1999 Ladbroke Grove rail disaster.",0,1,"[datetime.datetime(1993, 2, 26, 0, 0), datetime.datetime(1999, 10, 5, 0, 0)]",
+11,Did the car bombing in 1993 resulted in 6 deaths had a higher number of death than the Wikimedia list article in 2006 which resulted in 205 deaths?,['no'],"No, the car bombing in 1993, which resulted in 6 deaths, did not have a higher number of deaths than the event described in the Wikimedia list article in 2006, which resulted in 205 deaths. The 1993 World Trade Center bombing had significantly fewer fatalities compared to the 2006 event[4][5].",1,1,"[datetime.datetime(1993, 2, 26, 0, 0), datetime.datetime(2006, 11, 23, 0, 0)]",
+12,Did the car bombing in 1993 resulted in 6 deaths had a lower number of death than the aviation accident in 1995 resulted in 159 deaths?,['yes'],"Yes, the car bombing in 1993, which resulted in 6 deaths, had a significantly lower number of deaths compared to the aviation accident in 1995, which resulted in 159 deaths.
+
+The 1993 World Trade Center bombing killed 6 people and injured over 1,000[1][5], while the American Airlines Flight 965 crash on December 20, 1995, resulted in 159 fatalities and 4 serious injuries[2][4].",1,1,"[datetime.datetime(1993, 2, 26, 0, 0), datetime.datetime(1995, 12, 20, 0, 0)]",
+13,Did car bombing in 1993 resulted in 6 deaths or stampede in 2006 which resulted in 320 deaths had a higher number of injured people?,['car bombing in 1993 resulted in 6 deaths'],"To compare the number of injured people between the 1993 World Trade Center bombing and the 2006 Hajj stampede, here are the relevant details:
+
+## 1993 World Trade Center Bombing
+- The bombing resulted in 6 deaths and over 1,000 people were injured[1][4][5].
+
+## 2006 Hajj Stampede
+- The stampede resulted in 363 deaths and hundreds of people were injured, though the exact number of injuries is not specified in the provided sources. However, it is mentioned that ""hundreds more"" were injured, which is significantly less than the over 1,000 injuries in the 1993 bombing[2].
+
+Given the information, the 1993 World Trade Center bombing had a higher number of injured people, with over 1,000 injuries, compared to the hundreds of injuries in the 2006 Hajj stampede.",0,1,"[datetime.datetime(1993, 2, 26, 0, 0), datetime.datetime(2006, 1, 12, 0, 0)]",
+14,Did the car bombing in 1993 resulted in 6 deaths had a higher number of death than the suicide car bombing in 2001 which resulted in 38 deaths?,['no'],"The comparison in your question appears to be misleading, as it mixes two distinct events.
+
+The 1993 World Trade Center bombing, which involved a van loaded with explosives, resulted in 6 deaths and over 1,000 injuries[1][5].
+
+On the other hand, the reference to a ""suicide car bombing in 2001"" is not accurate in this context. The significant terrorist attack in 2001 was the 9/11 attacks, where hijacked planes were used, not car bombings. The 9/11 attacks resulted in nearly 3,000 deaths, not 38[3].
+
+Therefore, the 1993 World Trade Center bombing had significantly fewer deaths compared to the 9/11 attacks in 2001. There was no major suicide car bombing on 9/11 that resulted in 38 deaths.",0,1,"[datetime.datetime(1993, 2, 26, 0, 0), datetime.datetime(2001, 10, 1, 0, 0)]",
+15,Did the car bombing in 1993 resulted in 6 deaths had a lower number of death than the aviation accident in 1994 which resulted in 24 deaths?,['yes'],"No, the comparison in your question contains an error regarding the number of deaths in the aviation accident of 1994.
+
+The 1993 World Trade Center bombing resulted in 6 deaths[1][5].
+
+In contrast, the aviation accident you are referring to, USAir Flight 427, which occurred on September 8, 1994, resulted in the deaths of all 132 people on board, not 24[2].
+
+Therefore, the 1993 World Trade Center bombing had a significantly lower number of deaths compared to the 1994 aviation accident involving USAir Flight 427.",0,1,"[datetime.datetime(1993, 2, 26, 0, 0), datetime.datetime(1994, 3, 23, 0, 0)]",
+16,Did car bombing in 1993 resulted in 6 deaths or structural failure in 1988 which resulted in 32 deaths had a higher number of injured people?,['structural failure in 1988 which resulted in 32 deaths'],"To address your question, we need to compare the number of injured people resulting from the 1993 World Trade Center bombing and an unspecified structural failure in 1988, though it seems you might be confusing the date or event.
+
+### 1993 World Trade Center Bombing
+The bombing on February 26, 1993, at the World Trade Center resulted in:
+- 6 deaths
+- More than 1,000 people injured, including 88 firefighters, 35 police officers, and an emergency medical services worker[1][5].
+
+### Structural Failure in 1988 or Similar Event
+Since there is no specific mention of a structural failure in 1988 in the provided sources, it's difficult to directly compare. However, if we consider a significant disaster around that time, the Hillsborough disaster in 1989 might be relevant for context, although it is not a structural failure but a crowd crush:
+
+- The Hillsborough disaster on April 15, 1989, resulted in:
+  - 97 deaths
+  - 766 non-fatal injuries[2].
+
+If we assume you are asking about a different event, without specific details on a structural failure in 1988, it is challenging to provide an accurate comparison.
+
+### Conclusion
+Given the available information, the 1993 World Trade Center bombing resulted in more than 1,000 injured people. Without specific details on a structural failure in 1988, we cannot accurately compare the two events. However, if we consider the Hillsborough disaster as a point of reference, it had 766 non-fatal injuries, which is fewer than the over 1,000 injuries from the 1993 bombing.",0,1,"[datetime.datetime(1988, 7, 31, 0, 0), datetime.datetime(1993, 2, 26, 0, 0)]",
+17,Did the car bombing in 1993 resulted in 6 deaths had a higher number of death than the phreatic eruption in 1991 which resulted in 847 deaths?,['no'],"No, the car bombing at the World Trade Center in 1993 did not result in a higher number of deaths compared to the phreatic eruption of Mount Pinatubo in 1991.
+
+The World Trade Center bombing on February 26, 1993, resulted in 6 deaths and over 1,000 injuries[1][4].
+
+In contrast, the eruption of Mount Pinatubo on June 15, 1991, resulted in 847 deaths, with additional casualties from subsequent landslides and lahars[3][5]. Therefore, the death toll from the Mount Pinatubo eruption was significantly higher than that of the World Trade Center bombing.",1,1,"[datetime.datetime(1991, 1, 1, 0, 0), datetime.datetime(1993, 2, 26, 0, 0)]",
+18,Did the car bombing in 1993 resulted in 6 deaths had a lower number of injured people than the aviation accident in 2001 resulted in 145 deaths?,['no'],"To compare the number of injured people in the 1993 World Trade Center bombing with the aviation accident of Vladivostok Air Flight 352 in 2001, here are the relevant details:
+
+- The 1993 World Trade Center bombing resulted in 6 deaths and over 1,042 people injured[1][5].
+- The Vladivostok Air Flight 352 accident in 2001 resulted in 145 deaths, but there were no survivors, meaning no one was injured but not killed in this incident[2].
+
+Therefore, the 1993 World Trade Center bombing had a significantly higher number of injured people (over 1,042) compared to the Vladivostok Air Flight 352 accident, which had no survivors and thus no injured individuals.",1,1,"[datetime.datetime(1993, 2, 26, 0, 0), datetime.datetime(2001, 7, 4, 0, 0)]",
+19,Did sports season in 2002 which had 33 participants or edition of the UEFA European Championship in 1996 which had 16 participants had a higher number of games played?,['sports season in 2002 which had 33 participants'],"To determine which event had a higher number of games played, let's analyze the two events in question:
+
+### 2002 Oakland Athletics Season and MLB Structure
+The 2002 Oakland Athletics season, like any other MLB season, involves 30 teams playing 162 games each in the regular season. However, the question seems to be comparing this to a specific tournament structure rather than the entire MLB season. Since the Athletics' season is part of a larger league with 30 teams, it's not directly comparable to a tournament format.
+
+### 1996 UEFA European Championship
+The 1996 UEFA European Championship, also known as Euro 1996, featured 16 teams divided into four groups of four teams each. Here is the breakdown of the games played:
+- Group stage: Each group had 6 games (since each team played the other three teams in their group once), resulting in a total of \(4 \times 6 = 24\) games.
+- Quarter-finals: 4 games (the top two teams from each group played each other).
+- Semi-finals: 2 games.
+- Final: 1 game.
+
+Adding these up:
+- Group stage: 24 games
+- Quarter-finals: 4 games
+- Semi-finals: 2 games
+- Final: 1 game
+- Total games: \(24 + 4 + 2 + 1 = 31\) games.
+
+### Comparison
+Since the question is about comparing the number of games played in these two different formats, here’s the key point:
+- The 1996 UEFA European Championship had a total of 31 games.
+- For the 2002 MLB season, if we consider just the Athletics' games, they played 162 games. However, if we're comparing the entire tournament structure, the MLB season involves many more games across all teams, but this is not a direct comparison to a tournament.
+
+Given the context, the 1996 UEFA European Championship with its structured tournament format had 31 games, whereas any single team in the 2002 MLB season played 162 games, but this is not a comparable metric in this context.
+
+Therefore, the **1996 UEFA European Championship** with its 31 games is the event being directly compared here, and it had a significantly lower number of games compared to the total games played by any single MLB team in the 2002 season. However, if you consider the entire MLB season with all teams, it would far exceed the number of games in the UEFA tournament.",0,1,"[datetime.datetime(1996, 6, 1, 0, 0), datetime.datetime(2002, 6, 29, 0, 0)]",
+20,Did the sports season in 2002 which had 33 participants had a higher number of points scored than the edition of the UEFA European Championship in 1988 which had 8 participants?,['yes'],"To determine whether the 2002 NFL season with 32 teams (not 33, but close enough for this comparison) had a higher number of points scored than the UEFA European Championship in 1988, we need to look at the total points scored in each event.
+
+### 2002 NFL Season
+The Kansas City Chiefs scored the most points in the 2002 NFL season with 467 points. However, to compare the total points scored across the entire season, we need to consider the aggregate points scored by all teams. Here is a snapshot of the top teams, but the total points for all 32 teams would be significantly higher:
+- The top teams scored points ranging from 467 (Chiefs) to 307 (Redskins) and everything in between[1][5].
+
+Given that there were 32 teams and each team played 16 games, the total number of games is 256 (32 teams * 16 games). The average points per game (PPG) for the top teams was around 20-25 points per game. Assuming an average of around 22-23 points per game across all teams, the total points scored in the season would be approximately:
+\[ 256 \text{ games} \times 22.5 \text{ points per game} = 5760 \text{ points} \]
+
+This is a rough estimate, but it gives an idea of the scale.
+
+### UEFA European Championship 1988
+The UEFA European Championship in 1988 involved 8 teams playing a total of 15 matches (each team played 3 group stage matches, and then the semifinals and final added 4 more matches). Here are some key points:
+- The tournament had a total of 15 matches.
+- The average number of goals (points) per match in major football tournaments is typically around 2-3 goals per match.
+
+Assuming an average of 2.5 goals per match:
+\[ 15 \text{ matches} \times 2.5 \text{ goals per match} = 37.5 \text{ goals} \]
+
+### Comparison
+- The 2002 NFL season had approximately 5760 points scored.
+- The UEFA European Championship 1988 had approximately 37.5 goals scored.
+
+Clearly, the 2002 NFL season with its 32 teams and high-scoring nature had a significantly higher number of points scored compared to the UEFA European Championship in 1988[1][5]. Therefore, the answer is **yes**, the sports season in 2002 had a higher number of points scored than the edition of the UEFA European Championship in 1988.",1,1,"[datetime.datetime(1988, 6, 1, 0, 0), datetime.datetime(2002, 6, 29, 0, 0)]",
+21,Did the sports season in 2002 which had 33 participants had a lower number of participants than the edition of the UEFA European Championship in 1992 which had 8 participants?,['no'],"To address your question, we need to clarify the context of the sports seasons and tournaments mentioned.
+
+## 2002 NFL Season
+The 2002 NFL season involved 32 teams, not 33. This season saw the addition of the Houston Texans, bringing the total number of teams to 32, which has remained static since then[1].
+
+## 1992 UEFA European Championship
+The 1992 UEFA European Championship, or Euro 1992, had 8 teams participating in the final tournament, but 34 teams participated in the qualifying rounds[5].
+
+Given this information:
+
+- The 2002 NFL season had 32 teams.
+- The 1992 UEFA European Championship had 8 teams in the final tournament but 34 teams in the qualifying rounds.
+
+Therefore, the 2002 NFL season with 32 teams did not have a lower number of participants than the final tournament of the 1992 UEFA European Championship, which had 8 teams. However, if we consider the qualifying rounds of Euro 1992, then the NFL season had fewer participants. But in the context of the final tournament itself, the NFL season had more participants.",0,1,"[datetime.datetime(1992, 6, 1, 0, 0), datetime.datetime(2002, 6, 29, 0, 0)]",
+22,Did the sports season in 2002 which had 33 participants had a higher number of attendance than the UEFA Champions League final in 1999 which had 1500 spectators?,['yes'],"The sports season in 2002 with 33 participants had a significantly higher number of attendance compared to the UEFA Champions League final in 1999, which had 90,245 spectators, not 1500.
+
+- The UEFA Champions League final in 1999 between Manchester United and Bayern Munich had an attendance of 90,245 at the Camp Nou in Barcelona[2].
+- In contrast, the sports season in 2002, even if we consider a single match or the entire season, would likely have a much higher total attendance given the number of participants and matches involved. For example, the UEFA Champions League season in 2002-03 itself had an aggregate attendance of 6,426,477 over 157 matches[2].
+
+Therefore, the sports season in 2002 with 33 participants would indeed have had a higher number of attendance than the single UEFA Champions League final in 1999.",0,1,"[datetime.datetime(1999, 5, 26, 0, 0), datetime.datetime(2002, 6, 29, 0, 0)]",
+23,Did the war in 2006 resulted in 165 deaths had a lower number of injured people than the occurrence in 2001 resulted in 18 injured people?,['no'],"The question appears to be comparing the casualties of the 2006 Lebanon War with an unspecified event in 2001, but it seems there might be some confusion or missing context in the question.
+
+### 2006 Lebanon War
+- The 2006 Lebanon War resulted in significant casualties:
+  - Between 1,000 and 1,200 people were reported dead, with the majority being Lebanese civilians[1][4][5].
+  - There were approximately 4,410 injured in Lebanon, and on the Israeli side, 1,244 IDF soldiers were wounded, along with 418 civilians treated in hospitals, and 875 treated for shock[1][4].
+
+### 2001 Event
+- The question mentions an event in 2001 but does not specify what event. However, the most significant event in 2001 related to conflict is the start of the War in Afghanistan following the September 11 attacks.
+  - The initial phase of the War in Afghanistan in 2001 did not have a single event with 18 injured people. Instead, the war as a whole resulted in a much higher number of casualties over its duration[2][3].
+
+Given the information:
+- The 2006 Lebanon War had a much higher number of both deaths and injuries compared to any single event in 2001.
+- The comparison in the question seems to be based on incorrect or incomplete data, as the numbers provided (165 deaths and 18 injured) do not match the known casualty figures for either the 2006 Lebanon War or the War in Afghanistan.
+
+In summary, the 2006 Lebanon War had a significantly higher number of both deaths and injuries than any isolated event in 2001, especially when considering the broader context of the conflicts involved.",0,1,"[datetime.datetime(2001, 9, 27, 0, 0), datetime.datetime(2006, 8, 14, 0, 0)]",
+24,Did the war in 2006 resulted in 165 deaths had a higher number of injured people than the mass murder in 1987 resulted in 21 deaths?,['yes'],"To compare the casualties of the 2006 Lebanon War and the Hungerford massacre of 1987, we need to look at the number of deaths and injuries in each event.
+
+### 2006 Lebanon War
+- The war resulted in 165 total Israeli deaths (121 IDF soldiers and 44 civilians)[1][4][5].
+- In terms of injuries, there were 2,067 Israelis wounded, including both military and civilian casualties[4].
+
+### Hungerford Massacre of 1987
+- This event resulted in 17 deaths (including the perpetrator) and at least 15 people injured[2].
+
+### Comparison
+- The 2006 Lebanon War had significantly more deaths (165) compared to the Hungerford massacre (17).
+- The number of injured people in the 2006 Lebanon War (2,067) is also substantially higher than the number of injured in the Hungerford massacre (at least 15).
+
+Therefore, the 2006 Lebanon War had both a higher number of deaths and a higher number of injured people compared to the Hungerford massacre of 1987.",1,1,"[datetime.datetime(1987, 6, 19, 0, 0), datetime.datetime(2006, 8, 14, 0, 0)]",
+25,Did the Winter Olympic Games in 1994 which had 1737 participants had a lower number of participants than the sports season in 2006 in Germany which had 32 participants?,['no'],"No, the Winter Olympic Games in 1994 had a significantly higher number of participants compared to the figure you mentioned for the 2006 sports season in Germany.
+
+The 1994 Winter Olympics in Lillehammer had 1,737 athletes participating from 67 National Olympic Committees[3][4].
+
+In contrast, the figure of 32 participants you mentioned for the 2006 sports season in Germany is much lower and does not relate to the overall participation in the Winter Olympics. The 2006 Winter Olympics in Torino, Italy, for example, had 2,508 athletes participating from 80 countries[3].",1,1,"[datetime.datetime(1994, 2, 1, 0, 0), datetime.datetime(2006, 7, 9, 0, 0)]",
+26,Did the Eurovision Song Contest edition in 2006 which had 37 participants had a higher number of participants than the Winter Olympic Games in 1994 which had 1737 participants?,['no'],"To compare the number of participants between the Eurovision Song Contest 2006 and the Winter Olympic Games in 1994, we need to look at the specific numbers provided for each event.
+
+For the Eurovision Song Contest 2006:
+- There were 37 participating countries[5].
+
+For the Winter Olympic Games in 1994:
+- The games were attended by approximately 2,600 athletes representing 67 countries, not 1737 participants as mentioned in your query. However, the number of athletes (2,600) is what we should focus on here[4].
+
+In terms of the number of participants, the Winter Olympic Games in 1994 had significantly more participants (2,600 athletes) compared to the Eurovision Song Contest 2006, which had 37 participating countries (each country typically sending one performer or group of performers).
+
+Therefore, the Winter Olympic Games in 1994 had a much higher number of participants than the Eurovision Song Contest in 2006.",1,1,"[datetime.datetime(1994, 2, 1, 0, 0), datetime.datetime(2006, 5, 18, 0, 0)]",
+27,Did the Eurovision Song Contest edition in 2006 which had 37 participants had a lower number of participants than the Eurovision Song Contest edition in 2004 which had 36 participants?,['no'],"No, the Eurovision Song Contest 2006 did not have a lower number of participants compared to the Eurovision Song Contest 2004.
+
+The Eurovision Song Contest 2006 had 37 participating countries[1][4][5], while the Eurovision Song Contest 2004 had 36 participating countries[2].
+
+Therefore, the 2006 edition had one more participant than the 2004 edition.",1,1,"[datetime.datetime(2004, 1, 1, 0, 0), datetime.datetime(2006, 5, 18, 0, 0)]",
+28,Did car bombing in 1993 resulted in 6 deaths or aviation accident in 2002 in Germany resulted in 71 deaths had a higher number of injured people?,['car bombing in 1993 resulted in 6 deaths'],"To determine which event resulted in a higher number of injured people, we need to compare the injury tolls from the 1993 World Trade Center bombing and the 2002 aviation accident in Germany.
+
+### 1993 World Trade Center Bombing
+- The bombing on February 26, 1993, resulted in 6 deaths and more than 1,000 people injured[1][5].
+
+### 2002 Aviation Accident in Germany
+- The midair collision on July 1, 2002, resulted in 71 deaths, but there were no survivors or injured people among those on the planes. However, the accident did not result in any injuries on the ground either[2].
+
+Given this information, the 1993 World Trade Center bombing had a significantly higher number of injured people (over 1,000) compared to the 2002 aviation accident in Germany, where there were no injuries among the survivors since all aboard the planes were presumed dead. Therefore, the car bombing in 1993 resulted in a higher number of injured people.",0,1,"[datetime.datetime(1993, 2, 26, 0, 0), datetime.datetime(2002, 7, 1, 0, 0)]",
+29,Did the car bombing in 1993 resulted in 6 deaths had a higher number of injured people than the earthquake in 1989 resulted in 63 deaths?,['no'],"The car bombing at the World Trade Center in 1993 and the Loma Prieta earthquake in 1989 had significantly different outcomes in terms of the number of people injured.
+
+The 1993 World Trade Center bombing resulted in 6 deaths and more than 1,000 people injured[1][5].
+
+In contrast, the Loma Prieta earthquake in 1989 resulted in 63 deaths and 3,757 people injured[2].
+
+Therefore, the earthquake in 1989 had a substantially higher number of injured people compared to the car bombing in 1993. The earthquake injured approximately 3,757 people, while the bombing injured more than 1,000 people.",1,1,"[datetime.datetime(1989, 10, 17, 0, 0), datetime.datetime(1993, 2, 26, 0, 0)]",
+30,Did the car bombing in 1993 resulted in 6 deaths had a lower number of death than the train wreck in 1989 resulted in 645 deaths?,['yes'],"Yes, the car bombing at the World Trade Center in 1993 resulted in significantly fewer deaths compared to the train wreck in 1989.
+
+The 1993 World Trade Center bombing resulted in 6 deaths[1][5].
+
+In contrast, the Ufa train disaster in 1989 resulted in 575 confirmed deaths, with some unofficial estimates as high as 780 deaths[2].
+
+Therefore, the number of deaths in the 1993 car bombing was substantially lower than the number of deaths in the 1989 train wreck.",1,1,"[datetime.datetime(1989, 6, 4, 0, 0), datetime.datetime(1993, 2, 26, 0, 0)]",
+31,Did car bombing in 1993 resulted in 6 deaths or terrorist attack in 1999 resulted in 8 deaths had a higher number of injured people?,['car bombing in 1993 resulted in 6 deaths'],"To compare the number of injured people between the 1993 World Trade Center bombing and the 1999 Russian apartment bombings, we need to look at the specific details of each event.
+
+### 1993 World Trade Center Bombing
+- On February 26, 1993, a van bomb detonated in the underground parking garage of the World Trade Center, resulting in 6 deaths and over 1,000 people injured[1][4][5].
+
+### 1999 Russian Apartment Bombings
+- The bombings occurred from September 4 to 16, 1999, targeting residential apartment buildings in Russia. Here are the details for two of the key incidents:
+  - In the Moscow bombing on September 9, 1999, 106 people were killed and 249 others were injured[2].
+  - In the Moscow bombing on September 13, 1999, 119 people were killed and 200 others were injured[2].
+
+When comparing the number of injured people:
+- The 1993 World Trade Center bombing resulted in over 1,000 people injured.
+- The combined injuries from the two significant Moscow bombings in 1999 total 449 people (249 + 200).
+
+Clearly, the **1993 World Trade Center bombing** resulted in a significantly higher number of injured people compared to the individual or combined incidents of the 1999 Russian apartment bombings.",1,1,"[datetime.datetime(1993, 2, 26, 0, 0), datetime.datetime(1999, 10, 27, 0, 0)]",
+32,Did the car bombing in 1993 resulted in 6 deaths had a higher number of injured people than the aviation accident in 2001 resulted in 44 deaths?,['yes'],"To compare the number of injured people in the 1993 World Trade Center bombing and the 2001 aviation accidents, we need to look at the specific data from each event.
+
+### 1993 World Trade Center Bombing
+- On February 26, 1993, the bombing resulted in 6 deaths and more than 1,000 people were injured[1][5].
+
+### 2001 Aviation Accidents (September 11 attacks)
+- The question seems to refer to a specific aviation accident, but it is unclear which one. However, considering the context of the World Trade Center, we can look at the attacks on the Twin Towers.
+  - The attacks on the World Trade Center resulted in nearly 3,000 deaths, but the number of injured people is estimated to be in the thousands as well. Specifically, for the Twin Towers, thousands of people were injured, with estimates varying widely[3][4].
+
+### Comparison
+- The 1993 bombing resulted in more than 1,000 injured people.
+- The 2001 attacks on the World Trade Center resulted in thousands of injured people, which is significantly higher than the number injured in the 1993 bombing.
+
+Therefore, the 2001 aviation accidents (specifically the attacks on the World Trade Center) resulted in a much higher number of injured people compared to the 1993 car bombing.",0,1,"[datetime.datetime(1993, 2, 26, 0, 0), datetime.datetime(2001, 9, 11, 0, 0)]",
+33,Did the car bombing in 1993 resulted in 6 deaths had a lower number of death than the earthquake in 2001 which resulted in 20023 deaths?,['yes'],"To compare the number of deaths from the 1993 World Trade Center bombing and the 2001 Gujarat earthquake, here are the relevant details:
+
+- The 1993 World Trade Center bombing resulted in 6 deaths[1][5].
+- The 2001 Gujarat earthquake, which occurred on January 26, 2001, resulted in approximately 20,023 deaths[2][4].
+
+Clearly, the number of deaths from the 2001 Gujarat earthquake (20,023) is significantly higher than the number of deaths from the 1993 World Trade Center bombing (6). Therefore, the car bombing in 1993 had a much lower number of deaths compared to the earthquake in 2001.",1,1,"[datetime.datetime(1993, 2, 26, 0, 0), datetime.datetime(2001, 1, 26, 0, 0)]",
+34,Did car bombing in 1993 resulted in 6 deaths or aviation accident in 1988 in United States of America resulted in 1 deaths had a higher number of injured people?,['car bombing in 1993 resulted in 6 deaths'],"To compare the number of injured people between the 1993 World Trade Center bombing and the 1988 aviation accident, here are the relevant details:
+
+## 1993 World Trade Center Bombing
+- The bombing resulted in 6 deaths and more than 1,000 people were injured, including 88 firefighters, 35 police officers, and an emergency medical services worker[1][5].
+
+## 1988 Aviation Accident (Delta Air Lines Flight 1141)
+- The accident resulted in 12 deaths among the passengers and 2 deaths among the flight attendants.
+- There were 22 passengers, 2 crew members, and the captain and first officer who were seriously injured.
+- Additionally, the flight engineer and 29 other passengers suffered minor injuries[2].
+
+Given these details:
+- The 1993 World Trade Center bombing resulted in over 1,000 injured people.
+- The 1988 aviation accident resulted in a total of around 53 people injured (22 seriously injured, 2 crew members seriously injured, and 29 with minor injuries).
+
+Therefore, the 1993 World Trade Center bombing had a significantly higher number of injured people compared to the 1988 aviation accident.",1,1,"[datetime.datetime(1988, 4, 28, 0, 0), datetime.datetime(1993, 2, 26, 0, 0)]",
+35,Did the car bombing in 1993 resulted in 6 deaths had a higher number of death than the train wreck in 2000 in United Kingdom which resulted in 4 deaths?,['yes'],"Yes, the car bombing in 1993 resulted in a higher number of deaths compared to the train wreck in 2000 in the United Kingdom.
+
+The 1993 World Trade Center bombing resulted in 6 deaths and over 1,000 injuries[1][5].
+
+In contrast, the Hatfield rail crash in the UK on October 17, 2000, resulted in 4 deaths and more than 70 injuries[2][4]. Therefore, the 1993 car bombing had a higher number of fatalities than the 2000 train wreck.",1,1,"[datetime.datetime(1993, 2, 26, 0, 0), datetime.datetime(2000, 10, 17, 0, 0)]",
+36,Did the car bombing in 1993 resulted in 6 deaths had a lower number of death than the Wikimedia list article in 2006 which resulted in 205 deaths?,['yes'],"The 1993 World Trade Center bombing resulted in 6 deaths, as documented in several sources[1][5].
+
+In contrast, the data from the Wikipedia article on terrorism in India for the year 2006 does not specify a single incident that resulted in 205 deaths. Instead, it provides a yearly aggregate of incidents and casualties. For 2006, the article reports 167 incidents, 722 deaths, and 2,138 injuries, but it does not attribute 205 deaths to a single event[3].
+
+Therefore, the 1993 World Trade Center bombing, with 6 deaths, had a significantly lower number of fatalities compared to the overall death toll in India from terrorist incidents in 2006, which was 722 deaths. However, it is important to note that the 2006 figure is an aggregate and not from a single incident.",0,1,"[datetime.datetime(1993, 2, 26, 0, 0), datetime.datetime(2006, 11, 23, 0, 0)]",
+37,Did car bombing in 1993 resulted in 6 deaths or aviation accident in 1995 resulted in 159 deaths had a higher number of death?,['aviation accident in 1995 resulted in 159 deaths'],"The aviation accident in 1995 resulted in a significantly higher number of deaths compared to the car bombing in 1993.
+
+- The 1993 World Trade Center bombing resulted in 6 deaths and over 1,000 injuries[1][5].
+- The aviation accident, specifically American Airlines Flight 965, which crashed on December 20, 1995, resulted in 159 deaths and 4 serious injuries[2][4].
+
+Therefore, the aviation accident in 1995 had a much higher number of deaths than the car bombing in 1993.",1,1,"[datetime.datetime(1993, 2, 26, 0, 0), datetime.datetime(1995, 12, 20, 0, 0)]",
+38,Did the car bombing in 1993 resulted in 6 deaths had a higher number of death than the massacre in 1992 which resulted in 45 deaths?,['no'],"No, the car bombing at the World Trade Center in 1993, which resulted in 6 deaths, did not have a higher number of deaths compared to the Boipatong massacre in 1992. The Boipatong massacre, which occurred on June 17, 1992, in South Africa, resulted in 45 deaths, significantly more than the 6 deaths from the 1993 World Trade Center bombing[1][5][2].",1,1,"[datetime.datetime(1992, 6, 17, 0, 0), datetime.datetime(1993, 2, 26, 0, 0)]",
+39,Did the car bombing in 1993 resulted in 6 deaths had a lower number of death than the suicide car bombing in 2001 which resulted in 38 deaths?,['yes'],"The comparison in your question appears to be misleading, as it mixes two distinct events with different characteristics and outcomes.
+
+The 1993 World Trade Center bombing, which occurred on February 26, 1993, involved a truck bomb (not a car bomb) that exploded in the basement-level parking garage under the World Trade Center. This attack resulted in 6 deaths and over 1,000 injuries[1][5].
+
+On the other hand, the reference to a ""suicide car bombing in 2001"" is not accurate. The attacks on September 11, 2001, were a series of coordinated terrorist attacks involving the hijacking of commercial aircraft, not car bombings. These attacks resulted in the deaths of 2,977 people, excluding the hijackers[3][4].
+
+Therefore, the 1993 World Trade Center bombing had a significantly lower number of deaths compared to the September 11, 2001, attacks. There was no notable ""suicide car bombing"" on September 11, 2001.",0,1,"[datetime.datetime(1993, 2, 26, 0, 0), datetime.datetime(2001, 10, 1, 0, 0)]",
+40,Did car bombing in 1993 resulted in 6 deaths or aviation accident in 1994 which resulted in 24 deaths had a higher number of death?,['aviation accident in 1994 which resulted in 24 deaths'],"To compare the number of deaths between the two events, here are the details:
+
+1. **1993 World Trade Center Bombing**: On February 26, 1993, a truck bomb (not a car bomb, but a van loaded with explosives) exploded in the basement-level parking garage under the World Trade Center. This attack resulted in 6 deaths and over 1,000 injuries[1][5].
+
+2. **1994 USAir Flight 427 Crash**: On September 8, 1994, USAir Flight 427 crashed in Hopewell Township, Pennsylvania. This aviation accident resulted in the deaths of all 132 people on board[2].
+
+Comparing the two, the aviation accident in 1994 (USAir Flight 427) resulted in significantly more deaths (132) than the 1993 World Trade Center bombing (6 deaths). Therefore, the aviation accident in 1994 had a much higher number of deaths.",0,1,"[datetime.datetime(1993, 2, 26, 0, 0), datetime.datetime(1994, 3, 23, 0, 0)]",
+41,Did the car bombing in 1993 resulted in 6 deaths had a higher number of death than the mass murder in 1987 which resulted in 19 deaths?,['no'],"No, the car bombing in 1993 did not result in a higher number of deaths than the mass murder in 1987.
+
+The 1993 World Trade Center bombing, which involved a truck bomb (not a car bomb), resulted in 6 deaths and over 1,000 injuries[1][5].
+
+In contrast, the Hungerford massacre, a mass shooting that occurred in 1987, resulted in 17 deaths, including the perpetrator, and at least 15 injuries[2].
+
+Therefore, the mass murder in 1987 had a significantly higher number of deaths compared to the 1993 World Trade Center bombing.",1,1,"[datetime.datetime(1987, 3, 7, 0, 0), datetime.datetime(1993, 2, 26, 0, 0)]",
+42,Did the car bombing in 1993 resulted in 6 deaths had a lower number of death than the phreatic eruption in 1991 which resulted in 847 deaths?,['yes'],"Yes, the car bombing at the World Trade Center in 1993 resulted in significantly fewer deaths compared to the phreatic eruption of Mount Pinatubo in 1991.
+
+The 1993 World Trade Center bombing on February 26, 1993, resulted in 6 deaths and over 1,000 injuries[1][4].
+
+In contrast, the eruption of Mount Pinatubo on June 15, 1991, resulted in 847 deaths, with many more affected by the subsequent landslides, lahars, and other secondary effects of the eruption[3][5]. Therefore, the number of deaths from the Mount Pinatubo eruption was substantially higher than those from the 1993 World Trade Center bombing.",1,1,"[datetime.datetime(1991, 1, 1, 0, 0), datetime.datetime(1993, 2, 26, 0, 0)]",
+43,Did car bombing in 1993 resulted in 6 deaths or aviation accident in 2001 resulted in 145 deaths had a higher number of injured people?,['car bombing in 1993 resulted in 6 deaths'],"To determine which event resulted in a higher number of injured people, let's analyze the information provided for both incidents.
+
+### 1993 World Trade Center Bombing
+- The bombing on February 26, 1993, resulted in 6 deaths and more than 1,000 people injured, including 88 firefighters, 35 police officers, and an emergency medical services worker[1][5].
+
+### 2001 Aviation Accident (American Airlines Flight 1420)
+- The crash of American Airlines Flight 1420 on June 1, 1999 (not in 2001, but this is the relevant aviation accident mentioned), resulted in 11 deaths (9 immediate and 2 later in the hospital). In terms of injuries, the crash caused serious injuries to 41 passengers, minor injuries to 64 passengers, and no injuries to 24 passengers. Therefore, the total number of injured people was 105 (41 serious + 64 minor)[2].
+
+### Comparison
+- The 1993 World Trade Center bombing resulted in more than 1,000 people injured.
+- The aviation accident (American Airlines Flight 1420) resulted in 105 people injured.
+
+Clearly, the 1993 World Trade Center bombing had a significantly higher number of injured people compared to the aviation accident.",1,1,"[datetime.datetime(1993, 2, 26, 0, 0), datetime.datetime(2001, 7, 4, 0, 0)]",
+44,Did the sports season in 2002 which had 33 participants had a higher number of points scored than the edition of the UEFA European Championship in 1996 which had 16 participants?,['yes'],"To determine if the 2002 NFL season with 32 teams (not 33, but close enough for this comparison) had a higher number of points scored than the 1996 UEFA European Championship, we need to compare the total points scored in both events.
+
+### 2002 NFL Season
+The Kansas City Chiefs scored the most points in the 2002 NFL season with 467 points. However, to get the total points scored across all teams, we need to sum the points from all teams. Here is a snippet of the top and bottom teams, but the total points can be calculated by summing the points from each team:
+- The Kansas City Chiefs scored 467 points, and other teams scored varying amounts, but the total for all 32 teams was significantly higher than any single team's score. For example, the top 5 teams alone scored over 1,900 points (467 + 419 + 414 + 386 + 367)[1][5].
+
+Given that there were 32 teams and each played 16 games, the total points scored across the entire season would be substantially higher than the points scored by any single team or a small group of teams.
+
+### 1996 UEFA European Championship
+In the 1996 UEFA European Championship, a total of 64 goals were scored across 31 matches, which translates to 64 points if we consider each goal as one point[2].
+
+### Comparison
+- The 2002 NFL season had a total of several thousand points scored across all teams.
+- The 1996 UEFA European Championship had 64 goals, or points, scored.
+
+It is clear that the 2002 NFL season, with its significantly higher number of participants and games, had a much higher total number of points scored compared to the 1996 UEFA European Championship. Therefore, **yes**, the sports season in 2002 had a higher number of points scored than the edition of the UEFA European Championship in 1996.",1,1,"[datetime.datetime(1996, 6, 1, 0, 0), datetime.datetime(2002, 6, 29, 0, 0)]",
+45,Did the sports season in 2002 which had 33 participants had a lower number of points scored than the edition of the UEFA European Championship in 1988 which had 8 participants?,['no'],"To address your question, we need to compare the total points scored in the 2002 NFL season with the total goals scored in the UEFA European Championship of 1988.
+
+### 2002 NFL Season
+In the 2002 NFL season, which had 32 teams (not 33, but close), the team that scored the most points was the Kansas City Chiefs with 467 points. However, to get the total points scored across all teams, we need to sum the points from all teams. Here is a snapshot of the top teams, but the total points for all 32 teams would be significantly higher:
+
+- The Kansas City Chiefs scored 467 points.
+- Other teams scored varying amounts, with several teams scoring over 390 points each[1][5].
+
+Given the data, the total points scored across all 32 teams in the 2002 NFL season would be in the thousands.
+
+### UEFA European Championship 1988
+The UEFA European Championship in 1988 had 8 participating teams. Here are some key statistics:
+
+- The tournament consisted of a group stage and then the knockout phase.
+- The total number of goals scored in the entire tournament was 34 goals in 15 matches[2].
+
+### Comparison
+- **2002 NFL Season**: The total points scored by all teams were in the thousands, with the Kansas City Chiefs alone scoring 467 points.
+- **UEFA European Championship 1988**: The total goals scored were 34.
+
+It is clear that the 2002 NFL season, with its 32 participants, had a significantly higher number of points scored compared to the 34 goals scored in the UEFA European Championship of 1988 with its 8 participants. Therefore, the sports season in 2002 had a much higher number of points scored than the edition of the UEFA European Championship in 1988.",0,1,"[datetime.datetime(1988, 6, 1, 0, 0), datetime.datetime(2002, 6, 29, 0, 0)]",
+46,Did sports season in 2002 which had 33 participants or edition of the UEFA European Championship in 1992 which had 8 participants had a higher number of participants?,['sports season in 2002 which had 33 participants'],"To determine which event had a higher number of participants, let's analyze the information provided:
+
+## 2002 NFL Season
+- The 2002 NFL season involved 32 teams, as it was the first season with the addition of the Houston Texans, bringing the total number of teams to 32[1].
+
+## 1992 UEFA European Championship
+- The 1992 UEFA European Championship, also known as Euro 1992, involved 8 teams[3][4].
+
+Comparing these numbers, the **2002 NFL season** had 32 participants, which is significantly higher than the **8 participants** in the 1992 UEFA European Championship. Therefore, the 2002 NFL season had a higher number of participants.",0,1,"[datetime.datetime(1992, 6, 1, 0, 0), datetime.datetime(2002, 6, 29, 0, 0)]",
+47,Did the sports season in 2002 which had 33 participants had a lower number of attendance than the UEFA Champions League final in 1999 which had 1500 spectators?,['no'],"To address your question, we need to compare the attendance figures from two different events:
+
+## Attendance at the 2001-2002 NCAA Women's Basketball Season
+- The Big 12 Conference, which is part of the NCAA, saw a significant increase in attendance during the 2001-2002 season. For example, Kansas State drew an average of 8,158 fans per game, and the conference as a whole set a record with 1,002,251 fans attending 188 games, averaging 5,331 fans per game[1].
+
+## Attendance at the 1999 UEFA Champions League Final
+- The 1999 UEFA Champions League Final between Manchester United and Bayern Munich was held at the Nou Camp Stadium in Barcelona, and it had an attendance of 90,045 spectators[2].
+
+Given these figures:
+
+- The average attendance per game in the 2001-2002 NCAA women's basketball season in the Big 12 Conference was significantly lower than the single-game attendance of the 1999 UEFA Champions League Final.
+- The total attendance for the entire NCAA season mentioned is much higher, but the question seems to focus on a comparison of single-game or event attendance.
+
+Therefore, the attendance at the 1999 UEFA Champions League Final (90,045 spectators) was substantially higher than any single game attendance in the 2001-2002 NCAA women's basketball season.
+
+Additionally, the claim that the UEFA Champions League final had ""1500 spectators"" is incorrect; it actually had 90,045 spectators.",0,1,"[datetime.datetime(1999, 5, 26, 0, 0), datetime.datetime(2002, 6, 29, 0, 0)]",
+48,Did war in 2006 resulted in 165 deaths or occurrence in 2001 resulted in 18 injured people had a higher number of injured people?,['war in 2006 resulted in 165 deaths'],"To address your question, we need to compare the number of injured people resulting from two different events: the 2006 Lebanon War and an unspecified event in 2001.
+
+### 2006 Lebanon War
+- According to the sources, the 2006 Lebanon War resulted in significant casualties. Specifically, Human Rights Watch reported that the conflict led to at least 1,109 Lebanese deaths and 4,399 injured individuals[5].
+
+### 2001 Event
+- The question mentions an event in 2001 resulting in 18 injured people. However, the provided sources do not specify any particular event in 2001 with such a low number of injured individuals. The main events discussed in the context of 2001 are related to the War on Terror, specifically the invasion of Afghanistan, but these sources do not provide a specific incident with only 18 injured people[4].
+
+### Comparison
+- The 2006 Lebanon War resulted in 4,399 injured individuals.
+- The unspecified event in 2001 is reported to have resulted in 18 injured people.
+
+Clearly, the 2006 Lebanon War had a significantly higher number of injured people compared to the event in 2001 mentioned in your question.",0,1,"[datetime.datetime(2001, 9, 27, 0, 0), datetime.datetime(2006, 8, 14, 0, 0)]",
+49,Did the Winter Olympic Games in 1994 which had 1737 participants had a higher number of participants than the Eurovision Song Contest edition in 2006 which had 37 participants?,['yes'],"Yes, the Winter Olympic Games in 1994 had a significantly higher number of participants compared to the Eurovision Song Contest edition in 2006.
+
+The 1994 Winter Olympic Games in Lillehammer had 1,737 athletes participating[5].
+
+In contrast, the Eurovision Song Contest edition in 2006 had 37 participants, representing different countries[4]. Therefore, the Winter Olympic Games in 1994 had a much higher number of participants than the Eurovision Song Contest in 2006.",1,1,"[datetime.datetime(1994, 2, 1, 0, 0), datetime.datetime(2006, 5, 18, 0, 0)]",
+50,Did Winter Olympic Games in 1994 which had 1737 participants or sports season in 2006 in Germany which had 32 participants had a higher number of participants?,['Winter Olympic Games in 1994 which had 1737 participants'],"The Winter Olympic Games held in Lillehammer in 1994 had a significantly higher number of participants compared to any specific sports season or event in 2006 in Germany that you might be referring to.
+
+The 1994 Winter Olympics in Lillehammer featured 1,737 athletes from 67 nations participating in 61 events across 6 sports[4][5].
+
+In contrast, there is no mention of a specific sports season or event in 2006 in Germany with 32 participants in the provided sources. The 2006 Winter Olympics, which were held in Torino, Italy, and not in Germany, had a much larger participation, but this is not what you are comparing.
+
+Therefore, the 1994 Winter Olympic Games had a much higher number of participants than any event with 32 participants.",1,1,"[datetime.datetime(1994, 2, 1, 0, 0), datetime.datetime(2006, 7, 9, 0, 0)]",
+51,Did the Eurovision Song Contest edition in 2006 which had 37 participants had a lower number of participants than the Winter Olympic Games in 1994 which had 1737 participants?,['yes'],"To compare the number of participants between the Eurovision Song Contest 2006 and the Winter Olympic Games in 1994, we need to clarify the context of the term ""participants.""
+
+### Eurovision Song Contest 2006
+The Eurovision Song Contest in 2006 had 37 participating countries, each represented by a single performer or group[1][4].
+
+### Winter Olympic Games 1994
+The 1994 Winter Olympics involved a record 67 nations, but the term ""participants"" in the Olympic context typically refers to individual athletes. According to the information, there were not 1737 participants (countries), but rather 67 participating nations. The total number of athletes is not specified in the provided sources, but it is clear that the number of countries (67) is significantly lower than the misstated 1737.
+
+In summary, the Eurovision Song Contest 2006 had 37 participating countries, while the Winter Olympic Games in 1994 had 67 participating nations. Therefore, the Eurovision Song Contest 2006 had a lower number of participating countries compared to the number of participating nations in the Winter Olympic Games in 1994. However, the comparison is between countries in Eurovision and nations in the Olympics, and the actual number of individual athletes in the Olympics would be much higher than the number of countries in Eurovision.",0,1,"[datetime.datetime(1994, 2, 1, 0, 0), datetime.datetime(2006, 5, 18, 0, 0)]",
+52,Did Eurovision Song Contest edition in 2006 which had 37 participants or Eurovision Song Contest edition in 2004 which had 36 participants had a higher number of participants?,['Eurovision Song Contest edition in 2006 which had 37 participants'],"The Eurovision Song Contest edition in 2006 had a higher number of participants compared to the 2004 edition.
+
+- In 2006, there were 37 participating countries[1][4][5].
+- In 2004, there were 36 participating countries[2].",1,1,"[datetime.datetime(2004, 1, 1, 0, 0), datetime.datetime(2006, 5, 18, 0, 0)]",
+53,Did the car bombing in 1993 resulted in 6 deaths had a higher number of injured people than the occurrence in 2001 resulted in 18 injured people?,['yes'],"To compare the number of injured people in the 1993 World Trade Center bombing and an unspecified event in 2001 that resulted in 18 injured people, we need to look at the available data for each event.
+
+### 1993 World Trade Center Bombing
+- The bombing on February 26, 1993, resulted in six deaths and more than 1,000 people injured[1][5].
+
+### Unspecified Event in 2001
+- The query mentions an event in 2001 with 18 injured people, but it does not specify the event. However, given the context, it is important to note that the major terrorist attack in 2001 was the September 11 attacks, which resulted in a significantly higher number of injuries and deaths than 18. Since the query does not provide details of a specific event with exactly 18 injured, it is reasonable to assume this might be a misunderstanding or a reference to a much smaller incident.
+
+### Comparison
+- The 1993 World Trade Center bombing had more than 1,000 people injured, which is significantly higher than the 18 injured people mentioned for the unspecified 2001 event.
+
+Therefore, the 1993 World Trade Center bombing had a much higher number of injured people compared to the event in 2001 that resulted in 18 injured people.",1,1,"[datetime.datetime(1993, 2, 26, 0, 0), datetime.datetime(2001, 9, 27, 0, 0)]",
+54,Did the car bombing in 1993 resulted in 6 deaths had a lower number of injured people than the earthquake in 1989 resulted in 63 deaths?,['yes'],"No, the car bombing in 1993 did not have a lower number of injured people compared to the earthquake in 1989.
+
+The 1993 World Trade Center bombing resulted in 6 deaths and over 1,042 injuries[1][5].
+
+In contrast, the 1989 Loma Prieta earthquake resulted in 63 deaths and 3,757 injuries[2].
+
+Therefore, the earthquake in 1989 had a significantly higher number of injuries than the car bombing in 1993.",0,1,"[datetime.datetime(1989, 10, 17, 0, 0), datetime.datetime(1993, 2, 26, 0, 0)]",
+55,Did car bombing in 1993 resulted in 6 deaths or train wreck in 1989 resulted in 645 deaths had a higher number of death?,['train wreck in 1989 resulted in 645 deaths'],"The train wreck in 1989 resulted in a significantly higher number of deaths compared to the car bombing in 1993.
+
+- The 1993 World Trade Center bombing resulted in 6 deaths[1][4].
+- The Ufa train disaster in 1989 resulted in 575 deaths, according to official figures, although unofficial estimates suggest it could be as high as 780 deaths[2].
+
+Therefore, the train wreck in 1989 had a much higher number of deaths than the car bombing in 1993.",0,1,"[datetime.datetime(1989, 6, 4, 0, 0), datetime.datetime(1993, 2, 26, 0, 0)]",
+56,Did the car bombing in 1993 resulted in 6 deaths had a higher number of death than the airstrike in 1999 resulted in 3 deaths?,['yes'],"To compare the number of deaths resulting from the two events, here are the relevant details:
+
+## 1993 World Trade Center Bombing
+- On February 26, 1993, a truck bomb exploded in the basement-level parking garage under the World Trade Center complex in New York City.
+- This attack resulted in 6 deaths and more than 1,000 injuries[1][4].
+
+## 1999 NATO Bombing of Yugoslavia - Specific Incident
+- The specific incident you might be referring to is the bombing of the Chinese embassy in Belgrade on May 7, 1999.
+- This incident resulted in the deaths of 3 Chinese citizens[2].
+
+## Comparison
+- The 1993 World Trade Center bombing resulted in 6 deaths.
+- The specific incident of the NATO bombing in 1999 that resulted in 3 deaths (the bombing of the Chinese embassy) had a lower number of deaths compared to the 1993 World Trade Center bombing.
+
+Therefore, yes, the 1993 World Trade Center bombing had a higher number of deaths (6) compared to the specific incident of the NATO bombing in 1999 that resulted in 3 deaths.",1,1,"[datetime.datetime(1993, 2, 26, 0, 0), datetime.datetime(1999, 5, 7, 0, 0)]",
+57,Did the car bombing in 1993 resulted in 6 deaths had a lower number of injured people than the aviation accident in 2001 resulted in 44 deaths?,['no'],"To compare the number of injured people between the 1993 World Trade Center bombing and the aviation accidents of September 11, 2001, we need to examine the details of each event.
+
+### 1993 World Trade Center Bombing
+- On February 26, 1993, a truck bomb exploded in the basement-level parking garage under the World Trade Center complex.
+- This attack resulted in 6 deaths and over 1,000 injuries[1][5].
+
+### September 11, 2001 Aviation Accidents
+- The attacks involved four commercial aircraft hijacked by terrorists, with two crashing into the World Trade Center, one into the Pentagon, and one into a field in Pennsylvania.
+- The total number of deaths from these attacks was nearly 3,000, but focusing on the specific question, we need to look at the overall injury count.
+  - The attacks on the World Trade Center resulted in thousands of injuries, with estimates ranging from 6,000 to 25,000 people affected by the injuries and subsequent collapses of the towers[2][4].
+
+Given these numbers:
+- The 1993 World Trade Center bombing resulted in over 1,000 injuries.
+- The September 11, 2001, aviation accidents resulted in a significantly higher number of injuries, estimated to be between 6,000 to 25,000.
+
+Therefore, the car bombing in 1993 did not have a lower number of injured people compared to the aviation accidents of 2001; instead, the 2001 attacks resulted in a substantially higher number of injuries.",1,1,"[datetime.datetime(1993, 2, 26, 0, 0), datetime.datetime(2001, 9, 11, 0, 0)]",
+58,Did car bombing in 1993 resulted in 6 deaths or earthquake in 2001 which resulted in 20023 deaths had a higher number of death?,['earthquake in 2001 which resulted in 20023 deaths'],"To compare the number of deaths from the two events mentioned, here are the details:
+
+## 1993 World Trade Center Bombing
+- On February 26, 1993, a terrorist bombing at the World Trade Center resulted in 6 deaths[1][5].
+
+## Earthquakes in 2001
+- The query seems to refer to a general comparison with earthquakes in 2001, but it specifically mentions a figure of 20,023 deaths. This figure corresponds to the earthquake that occurred in Gujarat, India on January 26, 2001[2].
+
+### Comparison
+- The 1993 World Trade Center bombing resulted in 6 deaths.
+- The earthquake in Gujarat, India in 2001 resulted in 20,023 deaths.
+
+Clearly, the earthquake in Gujarat, India in 2001 had a significantly higher number of deaths compared to the 1993 World Trade Center bombing.",1,1,"[datetime.datetime(1993, 2, 26, 0, 0), datetime.datetime(2001, 1, 26, 0, 0)]",
+59,Did the car bombing in 1993 resulted in 6 deaths had a higher number of death than the international incident in 2007 resulted in 0 deaths?,['yes'],"To address your question, we need to compare the number of deaths resulting from the 1993 World Trade Center bombing with an unspecified international incident in 2007 that resulted in 0 deaths.
+
+### 1993 World Trade Center Bombing
+The bombing on February 26, 1993, at the World Trade Center resulted in 6 deaths and over 1,000 injuries[1][5].
+
+### International Incident in 2007
+Since you mentioned an international incident in 2007 with 0 deaths, it is clear that this incident did not result in any fatalities.
+
+### Comparison
+Given that the 1993 World Trade Center bombing resulted in 6 deaths, it had a significantly higher number of deaths compared to the international incident in 2007, which had 0 deaths. Therefore, the answer to your question is yes, the 1993 car bombing resulted in a higher number of deaths than the international incident in 2007.",1,1,"[datetime.datetime(1993, 2, 26, 0, 0), datetime.datetime(2007, 3, 23, 0, 0)]",
+60,Did the car bombing in 1993 resulted in 6 deaths had a lower number of death than the train wreck in 2000 in United Kingdom which resulted in 4 deaths?,['no'],"To compare the number of deaths resulting from the 1993 World Trade Center bombing and the 2000 Hatfield train crash, here are the key points:
+
+- The 1993 World Trade Center bombing resulted in 6 deaths and over 1,000 injuries[1][5].
+- The 2000 Hatfield train crash resulted in 4 deaths and more than 70 injuries[2].
+
+Based on this information, the 1993 World Trade Center bombing had a higher number of deaths (6) compared to the 2000 Hatfield train crash (4). Therefore, the statement that the car bombing in 1993 had a lower number of deaths than the train wreck in 2000 is incorrect. The World Trade Center bombing had more fatalities.",1,1,"[datetime.datetime(1993, 2, 26, 0, 0), datetime.datetime(2000, 10, 17, 0, 0)]",
+61,Did car bombing in 1993 resulted in 6 deaths or Wikimedia list article in 2006 which resulted in 205 deaths had a higher number of death?,['Wikimedia list article in 2006 which resulted in 205 deaths'],"The car bombing at the World Trade Center in 1993 resulted in 6 deaths, whereas the Wikimedia list article you are referring to, likely the 2006 Mumbai train bombings, resulted in 205 deaths.
+
+Therefore, the 2006 incident had a significantly higher number of deaths compared to the 1993 World Trade Center bombing[3][5].",1,1,"[datetime.datetime(1993, 2, 26, 0, 0), datetime.datetime(2006, 11, 23, 0, 0)]",
+62,Did the car bombing in 1993 resulted in 6 deaths had a higher number of injured people than the aviation accident in 1995 resulted in 159 deaths?,['yes'],"The car bombing at the World Trade Center in 1993 and the aviation accident of American Airlines Flight 965 in 1995 had significantly different outcomes in terms of injuries.
+
+The 1993 World Trade Center bombing resulted in 6 deaths and more than 1,000 people injured, including 88 firefighters, 35 police officers, and an emergency medical services worker[1][5].
+
+In contrast, the aviation accident of American Airlines Flight 965 on December 20, 1995, resulted in 159 deaths and only 4 people seriously injured[2].
+
+Therefore, the car bombing in 1993 had a higher number of injured people compared to the aviation accident in 1995.",1,1,"[datetime.datetime(1993, 2, 26, 0, 0), datetime.datetime(1995, 12, 20, 0, 0)]",
+63,Did the car bombing in 1993 resulted in 6 deaths had a lower number of death than the massacre in 1992 which resulted in 45 deaths?,['yes'],"Yes, the car bombing in 1993, which resulted in 6 deaths, had a significantly lower number of deaths compared to the massacre in 1992, which resulted in 45 deaths. The 1993 World Trade Center bombing in New York City claimed 6 lives and injured over 1,000 people[1][5], while the Novoseoci massacre in Bosnia and Herzegovina in 1992 resulted in the deaths of 45 Bosniak civilians[2].",1,1,"[datetime.datetime(1992, 6, 17, 0, 0), datetime.datetime(1993, 2, 26, 0, 0)]",
+64,Did car bombing in 1993 resulted in 6 deaths or suicide car bombing in 2001 which resulted in 38 deaths had a higher number of death?,['suicide car bombing in 2001 which resulted in 38 deaths'],"To address your question, we need to clarify the events in question.
+
+### 1993 World Trade Center Bombing
+On February 26, 1993, a truck bomb (not a car bomb, but a van loaded with explosives) exploded in the basement-level parking garage under the World Trade Center complex. This attack resulted in the deaths of six people and injured over 1,000[1][5].
+
+### 2001 September 11 Attacks
+The September 11 attacks in 2001 involved hijacked airplanes crashing into various targets, including the World Trade Center, the Pentagon, and a field in Pennsylvania. These attacks did not involve car or suicide car bombings. The total death toll from the 9/11 attacks was 2,977 people, excluding the 19 hijackers[3][4].
+
+There is no record of a ""suicide car bombing"" on September 11, 2001, that resulted in 38 deaths. The attacks on that day were carried out using hijacked airplanes.
+
+### Comparison
+Given the information, the 1993 World Trade Center bombing resulted in 6 deaths, while the 2001 September 11 attacks resulted in a significantly higher number of deaths (2,977). There is no evidence to support the claim of a ""suicide car bombing"" in 2001 that resulted in 38 deaths. Therefore, the 2001 attacks had a much higher number of deaths compared to the 1993 bombing.",0,1,"[datetime.datetime(1993, 2, 26, 0, 0), datetime.datetime(2001, 10, 1, 0, 0)]",
+65,Did the car bombing in 1993 resulted in 6 deaths had a higher number of death than the conflagration in 1991 which resulted in 25 deaths?,['no'],"The comparison you are making involves two different events:
+
+1. **The 1993 World Trade Center bombing**: This event occurred on February 26, 1993, and resulted in 6 deaths and over 1,000 injuries[1][5].
+
+2. **The Triangle shirtwaist factory fire**: This event, however, did not occur in 1991 but rather on March 25, 1911. It resulted in the deaths of 146 people (129 women and 17 men)[2].
+
+Given the correct dates and death tolls, the 1993 World Trade Center bombing had a significantly lower number of deaths (6) compared to the Triangle shirtwaist factory fire (146 deaths). Therefore, the statement that the car bombing in 1993 had a higher number of deaths than the conflagration in 1911 is incorrect.",0,1,"[datetime.datetime(1991, 9, 3, 0, 0), datetime.datetime(1993, 2, 26, 0, 0)]",
+66,Did the car bombing in 1993 resulted in 6 deaths had a lower number of death than the mass murder in 1987 which resulted in 19 deaths?,['yes'],"Yes, the car bombing at the World Trade Center in 1993 resulted in a lower number of deaths compared to the mass murder in Hungerford in 1987.
+
+The 1993 World Trade Center bombing on February 26, 1993, resulted in 6 deaths and over 1,000 injuries[1][5].
+
+In contrast, the Hungerford massacre on August 19, 1987, resulted in 17 deaths, including the perpetrator, and more than 15 injuries[2].
+
+Therefore, the number of deaths in the 1993 World Trade Center bombing was significantly lower than the number of deaths in the 1987 Hungerford massacre.",1,1,"[datetime.datetime(1987, 3, 7, 0, 0), datetime.datetime(1993, 2, 26, 0, 0)]",
+67,Did car bombing in 1993 resulted in 6 deaths or phreatic eruption in 1991 which resulted in 847 deaths had a higher number of death?,['phreatic eruption in 1991 which resulted in 847 deaths'],"The phreatic eruption of Mount Pinatubo in 1991 resulted in a significantly higher number of deaths compared to the 1993 World Trade Center bombing.
+
+The Mount Pinatubo eruption in 1991 caused 847 deaths, as well as additional casualties from subsequent landslides and lahars[3][5].
+
+In contrast, the 1993 World Trade Center bombing resulted in 6 deaths[1][4].
+
+Therefore, the 1991 Mount Pinatubo eruption had a much higher number of deaths.",1,1,"[datetime.datetime(1991, 1, 1, 0, 0), datetime.datetime(1993, 2, 26, 0, 0)]",
+68,Did the car bombing in 1993 resulted in 6 deaths had a higher number of death than the aviation accident in 1996 which resulted in 141 deaths?,['no'],"No, the car bombing at the World Trade Center in 1993, which resulted in 6 deaths, did not have a higher number of deaths compared to the aviation accident in 1996 that you are referring to.
+
+The 1993 World Trade Center bombing resulted in 6 fatalities and over 1,000 injuries[1][5].
+
+In contrast, the aviation accident you are likely referring to, such as the TWA Flight 800 accident on July 17, 1996, resulted in 230 deaths[3][4]. This is significantly higher than the 6 deaths from the 1993 World Trade Center bombing.",0,1,"[datetime.datetime(1993, 2, 26, 0, 0), datetime.datetime(1996, 8, 29, 0, 0)]",
+69,Did the sports season in 2002 which had 33 participants had a lower number of points scored than the edition of the UEFA European Championship in 1996 which had 16 participants?,['no'],"To determine whether the sports season in 2002 with 33 participants (referring to the NFL season) had a lower number of points scored than the UEFA European Championship in 1996, we need to compare the total points scored in each event.
+
+### NFL Season 2002
+- The Kansas City Chiefs scored the most points in the 2002 NFL season with 467 points. However, to compare the total points scored across the entire season, we need to look at the aggregate points scored by all teams. While the specific total aggregate is not provided in the sources, we can infer from the points per game (PPG) and the number of games played. With 32 teams (not 33, as the sources likely include a mistake in the number of participants) playing 16 games each, the total number of games is 256. The average points per game for the top-scoring teams was around 22-24 points per game. Assuming an average of 23 points per game, the total points scored would be approximately \(256 \times 23 = 5888\) points for the entire season[1][5].
+
+### UEFA European Championship 1996
+- This tournament featured 16 teams and a total of 31 matches. The total number of goals scored was 64, which translates to an average of 2.06 goals per match. Since each goal in football is equivalent to one point in scoring terms, the total points (goals) scored in the tournament were 64[2].
+
+### Comparison
+- The NFL season in 2002 had approximately 5888 points scored across all games.
+- The UEFA European Championship in 1996 had 64 goals (points) scored.
+
+Given these numbers, it is clear that the NFL season in 2002 had a significantly higher number of points scored compared to the UEFA European Championship in 1996. Therefore, the sports season in 2002 did not have a lower number of points scored than the edition of the UEFA European Championship in 1996. Instead, it had a much higher number of points scored.",1,1,"[datetime.datetime(1996, 6, 1, 0, 0), datetime.datetime(2002, 6, 29, 0, 0)]",
+70,Did sports season in 2002 which had 33 participants or edition of the UEFA European Championship in 1988 which had 8 participants had a higher number of points scored?,['sports season in 2002 which had 33 participants'],"To compare the number of points scored in the 2002 NFL season and the 1988 UEFA European Championship, we need to look at the total points scored in each event.
+
+### 2002 NFL Season
+In the 2002 NFL season, which had 32 teams (not 33, but close), the team that scored the most points was the Kansas City Chiefs with 467 points. Here is a snapshot of the top teams:
+- Kansas City Chiefs: 467 points
+- Other teams scored significantly less, but the total points scored across all teams can be calculated. For example, the top 10 teams alone scored a total of:
+  - Chiefs: 467
+  - Raiders: 450
+  - Saints: 432
+  - Eagles: 415
+  - Packers: 398
+  - Broncos: 392
+  - Steelers: 390
+  - Vikings: 390
+  - Patriots: 381
+  - Bills: 379
+  - Total for these 10 teams: 3,994 points
+
+Given that there were 32 teams and each team played 16 games, the total points scored across the entire league would be significantly higher than this partial sum. The average points per game for the top teams suggests a high total league score.
+
+### 1988 UEFA European Championship
+The 1988 UEFA European Championship had 8 participating teams. Here, points refer to the points system used in football (3 points for a win, 1 for a draw, 0 for a loss), not the number of goals scored.
+
+- Total matches played: 15 (each team played 3 group stage matches, plus 4 knockout matches)
+- Total goals scored in the tournament: 34 goals[2].
+
+Since the question seems to be asking about the total number of points scored (which could be interpreted as goals in football), the 1988 UEFA European Championship saw a total of 34 goals.
+
+### Comparison
+- **2002 NFL Season**: The total points scored were in the thousands, with just the top 10 teams scoring nearly 4,000 points.
+- **1988 UEFA European Championship**: The total goals scored were 34.
+
+Clearly, the 2002 NFL season had a significantly higher number of points scored compared to the number of goals scored in the 1988 UEFA European Championship.",0,1,"[datetime.datetime(1988, 6, 1, 0, 0), datetime.datetime(2002, 6, 29, 0, 0)]",
+71,Did the sports season in 2002 which had 33 participants had a higher number of attendance than the edition of the UEFA European Championship in 1992 which had 8 participants?,['yes'],"To compare the attendance figures between the sports season in 2002 and the UEFA European Championship in 1992, we need to look at the specific attendance data for each event.
+
+### UEFA European Championship 1992
+- This tournament had 8 participating teams and was held in Sweden.
+- The total attendance for the tournament was 430,111, with an average attendance of 28,674 per match[2].
+
+### Sports Season in 2002 (Big 12 Conference Women's Basketball)
+- This season involved 33 games for some teams within the Big 12 Conference.
+- The total attendance for the Big 12 Conference in the 2001-2002 season was over 1 million fans, with a total of 1,002,251 fans attending 188 games across the conference. This averages to 5,331 fans per game[1].
+
+### Comparison
+- The UEFA Euro 1992 had a total attendance of 430,111 fans.
+- The Big 12 Conference women's basketball season in 2001-2002 had a total attendance of 1,002,251 fans.
+
+Clearly, the sports season in 2002, specifically the Big 12 Conference women's basketball, had a significantly higher total attendance than the UEFA European Championship in 1992. The Big 12 Conference drew over 1 million fans, while the UEFA Euro 1992 drew just over 430,000 fans.",1,1,"[datetime.datetime(1992, 6, 1, 0, 0), datetime.datetime(2002, 6, 29, 0, 0)]",
+72,Did sports season in 2002 which had 33 participants or UEFA Champions League final in 1999 which had 1500 spectators had a higher number of attendance?,['sports season in 2002 which had 33 participants'],"To determine which event had a higher number of attendance, let's analyze the provided information:
+
+## Sports Season in 2002
+The information from the Big 12 Conference attendance figures for the 2001-2002 season mentions various teams and their attendance, but it does not specify a single event with 33 participants. However, it does provide overall attendance figures for the conference. For example, Iowa State had 231,562 fans attend 33 games, but this is not a single event[1].
+
+## UEFA Champions League Final in 1999
+The 1999 UEFA Champions League final between Manchester United and Bayern Munich was held at Camp Nou in Barcelona. The attendance for this specific match was 90,245 spectators[5].
+
+Given these figures, the UEFA Champions League final in 1999, with an attendance of 90,245 spectators, had a significantly higher number of attendance compared to any single event or game in the 2001-2002 sports season mentioned in the sources. The sources do not provide a specific event in the 2001-2002 season with an attendance figure as high as 90,245.",0,1,"[datetime.datetime(1999, 5, 26, 0, 0), datetime.datetime(2002, 6, 29, 0, 0)]",
+73,Did the Winter Olympic Games in 1994 which had 1737 participants had a lower number of participants than the Eurovision Song Contest edition in 2006 which had 37 participants?,['no'],"To compare the number of participants between the 1994 Winter Olympic Games and the Eurovision Song Contest 2006, we need to look at the context of each event.
+
+The 1994 Winter Olympic Games, held in Lillehammer, Norway, had a total of 1,737 athletes participating from 67 National Olympic Committees[4].
+
+In contrast, the Eurovision Song Contest 2006, held in Athens, Greece, had 37 participating countries, each represented by a single artist or group performing a song. This means there were 37 entries or performances, not 37 individual participants in the same sense as athletes in the Olympics[5].
+
+Therefore, the 1994 Winter Olympic Games had a significantly higher number of participants (1,737 athletes) compared to the Eurovision Song Contest 2006 (37 country entries).",1,1,"[datetime.datetime(1994, 2, 1, 0, 0), datetime.datetime(2006, 5, 18, 0, 0)]",
+74,Did the Winter Olympic Games in 1994 which had 1737 participants had a higher number of participants than the Eurovision Song Contest edition in 2004 which had 36 participants?,['yes'],"Yes, the Winter Olympic Games in 1994 had a significantly higher number of participants compared to the Eurovision Song Contest edition in 2004.
+
+The 1994 Winter Olympic Games in Lillehammer had 1,737 participants from 67 National Olympic Committees[5].
+
+In contrast, the Eurovision Song Contest 2004, held in Lillehammer, had 18 participating countries, each represented by a single artist or group, totaling 18 participants[3][4]. Therefore, the Winter Olympic Games in 1994 had a much higher number of participants than the Eurovision Song Contest edition in 2004.",0,1,"[datetime.datetime(1994, 2, 1, 0, 0), datetime.datetime(2004, 1, 1, 0, 0)]",
+75,Did Eurovision Song Contest edition in 2006 which had 37 participants or Winter Olympic Games in 1994 which had 1737 participants had a higher number of participants?,['Winter Olympic Games in 1994 which had 1737 participants'],"The Winter Olympic Games in 1994 had a significantly higher number of participants compared to the Eurovision Song Contest in 2006.
+
+The Winter Olympic Games in 1994 had 1737 participants[4|.
+In contrast, the Eurovision Song Contest in 2006 had 37 participants[1][5].
+
+Therefore, the Winter Olympic Games in 1994 had a higher number of participants.",1,1,"[datetime.datetime(1994, 2, 1, 0, 0), datetime.datetime(2006, 5, 18, 0, 0)]",
+76,Did the Eurovision Song Contest edition in 2006 which had 37 participants had a higher number of participants than the edition of the UEFA European Championship in 2000 which had 16 participants?,['yes'],"Yes, the Eurovision Song Contest 2006 had a significantly higher number of participants compared to the UEFA European Championship in 2000.
+
+The Eurovision Song Contest 2006 had 37 participating countries[1][4].
+
+In contrast, the UEFA European Championship in 2000, also known as Euro 2000, featured 16 participating teams[2][5].
+
+Therefore, the Eurovision Song Contest 2006 had more than twice the number of participants as the UEFA European Championship in 2000.",1,1,"[datetime.datetime(2000, 1, 1, 0, 0), datetime.datetime(2006, 5, 18, 0, 0)]",
+77,Did the car bombing in 1993 resulted in 6 deaths had a lower number of injured people than the occurrence in 2001 resulted in 18 injured people?,['no'],"The 1993 World Trade Center bombing, which resulted in 6 deaths, had a significantly higher number of injured people compared to the scenario you mentioned for 2001.
+
+In the 1993 bombing, more than 1,000 people were injured[1][5].
+
+In contrast, the mention of 18 injured people in 2001 does not align with any of the major attacks described in the sources, particularly those related to the World Trade Center or other significant terrorist attacks. The September 11, 2001, attacks, for example, resulted in thousands of injuries, ranging from 6,000 to 25,000 or more[4].
+
+Therefore, the 1993 bombing had a much higher number of injured people than the hypothetical 18 injured in the 2001 scenario you mentioned.",1,1,"[datetime.datetime(1993, 2, 26, 0, 0), datetime.datetime(2001, 9, 27, 0, 0)]",
+78,Did car bombing in 1993 resulted in 6 deaths or earthquake in 1989 resulted in 63 deaths had a higher number of injured people?,['earthquake in 1989 resulted in 63 deaths'],"To determine which event resulted in a higher number of injured people, we need to compare the injury statistics from the 1993 World Trade Center bombing and the 1989 Loma Prieta earthquake.
+
+### 1993 World Trade Center Bombing
+- The bombing resulted in more than 1,000 people injured, including 88 firefighters, 35 police officers, and an emergency medical services worker[1][5].
+
+### 1989 Loma Prieta Earthquake
+- The earthquake injured 3,757 people throughout northern California[2].
+
+Given these statistics, the 1989 Loma Prieta earthquake resulted in a significantly higher number of injured people (3,757) compared to the 1993 World Trade Center bombing (more than 1,000)[1][2].",1,1,"[datetime.datetime(1989, 10, 17, 0, 0), datetime.datetime(1993, 2, 26, 0, 0)]",
+79,Did the car bombing in 1993 resulted in 6 deaths had a higher number of death than the aviation accident in 1994 resulted in 264 deaths?,['no'],"No, the car bombing at the World Trade Center in 1993, which resulted in 6 deaths, did not have a higher number of deaths compared to the aviation accident in 1994. The aviation accident involving China Airlines Flight 140 on April 26, 1994, resulted in 264 deaths, which is significantly higher than the 6 deaths from the 1993 World Trade Center bombing[1][4][5].",1,1,"[datetime.datetime(1993, 2, 26, 0, 0), datetime.datetime(1994, 4, 26, 0, 0)]",
+80,Did the car bombing in 1993 resulted in 6 deaths had a lower number of death than the airstrike in 1999 resulted in 3 deaths?,['no'],"To compare the number of deaths resulting from the two events, we need to look at the specific details of each incident.
+
+### 1993 World Trade Center Bombing
+- On February 26, 1993, a terrorist bombing at the World Trade Center resulted in the deaths of six people[1][5].
+
+### 1999 NATO Bombing of Yugoslavia
+- The specific incident you might be referring to is the bombing of the Chinese embassy in Belgrade on May 7, 1999, which resulted in the deaths of three Chinese journalists[2].
+
+However, if we consider the broader context of the entire NATO air campaign against Yugoslavia from March 24 to June 10, 1999, the number of civilian deaths was significantly higher. Estimates range from around 400 to 600 civilian deaths during the entire campaign[3][4].
+
+Therefore, the 1993 World Trade Center bombing, which resulted in 6 deaths, had a lower number of deaths compared to the overall civilian death toll of the 1999 NATO air campaign, but it had a higher number of deaths than the specific incident of the Chinese embassy bombing, which resulted in 3 deaths.",1,1,"[datetime.datetime(1993, 2, 26, 0, 0), datetime.datetime(1999, 5, 7, 0, 0)]",
+81,Did car bombing in 1993 resulted in 6 deaths or aviation accident in 2001 resulted in 44 deaths had a higher number of injured people?,['car bombing in 1993 resulted in 6 deaths'],"To compare the number of injured people resulting from the 1993 car bombing and the 2001 aviation accidents, we need to examine the details of each event.
+
+### 1993 World Trade Center Bombing
+- On February 26, 1993, a bomb detonated in the underground parking garage of the World Trade Center, resulting in the deaths of six people.
+- More than 1,000 people were injured in this attack, including 88 firefighters, 35 police officers, and an emergency medical services worker[1][5].
+
+### 2001 Aviation Accidents (Specifically, United Airlines Flight 93)
+- United Airlines Flight 93, one of the planes hijacked on September 11, 2001, crashed into a field in Pennsylvania, resulting in the deaths of all 44 people on board.
+- However, since this plane crashed in a remote area, the number of people injured on the ground was minimal. The primary injuries and fatalities from the 9/11 attacks were associated with the crashes into the World Trade Center and the Pentagon, not with Flight 93 specifically[3][4].
+
+### Comparison
+- The 1993 World Trade Center bombing resulted in over 1,000 injured people.
+- The crash of United Airlines Flight 93 in 2001 had a negligible number of injuries on the ground due to its remote crash site.
+
+Therefore, the 1993 car bombing resulted in a significantly higher number of injured people compared to the aviation accident involving United Airlines Flight 93 in 2001.",1,1,"[datetime.datetime(1993, 2, 26, 0, 0), datetime.datetime(2001, 9, 11, 0, 0)]",
+82,Did the car bombing in 1993 resulted in 6 deaths had a higher number of injured people than the earthquake in 2001 which resulted in 20023 deaths?,['no'],"To compare the number of injured people in the 1993 World Trade Center bombing and the 2001 Bhuj earthquake, here are the relevant details:
+
+## 1993 World Trade Center Bombing:
+- The bombing resulted in 6 deaths and more than 1,000 people were injured[1][5].
+
+## 2001 Bhuj Earthquake:
+- The earthquake resulted in between 13,805 to 20,023 deaths and injured approximately 167,000 people[2][4].
+
+Clearly, the 2001 Bhuj earthquake had a significantly higher number of injured people (approximately 167,000) compared to the 1993 World Trade Center bombing (more than 1,000 injured). Therefore, the earthquake in 2001 had a much higher number of injured people than the car bombing in 1993.",1,1,"[datetime.datetime(1993, 2, 26, 0, 0), datetime.datetime(2001, 1, 26, 0, 0)]",
+83,Did the car bombing in 1993 resulted in 6 deaths had a lower number of death than the international incident in 2007 resulted in 0 deaths?,['no'],"To address your question, we need to clarify the events being compared.
+
+The 1993 World Trade Center bombing, which occurred on February 26, 1993, resulted in 6 deaths and over 1,000 injuries[1][5].
+
+However, you mention an ""international incident in 2007 resulted in 0 deaths."" There is no specific international incident in 2007 widely known for resulting in zero deaths that is directly comparable to the 1993 World Trade Center bombing. The question seems to be based on a hypothetical or unspecified event.
+
+Given the information available, the 1993 World Trade Center bombing did result in 6 deaths, and since there is no specified international incident in 2007 with zero deaths to compare it to, it is not possible to make a direct comparison. If you have a specific incident in mind for 2007, please provide more details so a more accurate comparison can be made.",0,1,"[datetime.datetime(1993, 2, 26, 0, 0), datetime.datetime(2007, 3, 23, 0, 0)]",
+84,Did car bombing in 1993 resulted in 6 deaths or train wreck in 2000 in United Kingdom which resulted in 4 deaths had a higher number of death?,['car bombing in 1993 resulted in 6 deaths'],"The car bombing at the World Trade Center in 1993 resulted in 6 deaths, while the train wreck in Hatfield, United Kingdom in 2000 resulted in 4 deaths. Therefore, the car bombing in 1993 had a higher number of deaths compared to the train wreck in 2000[1][5][4].",1,1,"[datetime.datetime(1993, 2, 26, 0, 0), datetime.datetime(2000, 10, 17, 0, 0)]",
+85,Did the car bombing in 1993 resulted in 6 deaths had a higher number of injured people than the Wikimedia list article in 2006 which resulted in 205 deaths?,['yes'],"The 1993 World Trade Center bombing, which resulted in 6 deaths, had a significantly higher number of injured people compared to the context of the Wikimedia list article in 2006 that you mentioned.
+
+- The 1993 World Trade Center bombing injured over 1,000 people, including 88 firefighters, 35 police officers, and an emergency medical services worker[1][3][5].
+- The Wikimedia list article in 2006 you are referring to does not provide specific details on the number of injured people, but it is clear that the 1993 bombing had a much higher number of injuries compared to many other incidents listed in such articles.
+
+Therefore, the 1993 car bombing at the World Trade Center indeed had a higher number of injured people than what would be implied by the death toll alone in the 2006 article.",1,1,"[datetime.datetime(1993, 2, 26, 0, 0), datetime.datetime(2006, 11, 23, 0, 0)]",
+86,Did the car bombing in 1993 resulted in 6 deaths had a lower number of injured people than the aviation accident in 1995 resulted in 159 deaths?,['no'],"To compare the number of injured people between the 1993 World Trade Center bombing and the 1995 American Airlines Flight 965 accident, here are the relevant details:
+
+## 1993 World Trade Center Bombing
+- The bombing resulted in 6 deaths and more than 1,000 people were injured[1][5].
+
+## 1995 American Airlines Flight 965 Accident
+- The accident resulted in 159 deaths and 4 people were seriously injured[2].
+
+Given these numbers, the 1993 World Trade Center bombing had a significantly higher number of injured people (over 1,000) compared to the 1995 American Airlines Flight 965 accident, which had only 4 people seriously injured. Therefore, the car bombing in 1993 did not have a lower number of injured people; it had a much higher number of injured individuals.",1,1,"[datetime.datetime(1993, 2, 26, 0, 0), datetime.datetime(1995, 12, 20, 0, 0)]",
+87,Did car bombing in 1993 resulted in 6 deaths or massacre in 1992 which resulted in 45 deaths had a higher number of death?,['massacre in 1992 which resulted in 45 deaths'],"To compare the number of deaths between the two events, here are the details:
+
+## World Trade Center Bombing in 1993
+- On February 26, 1993, a truck bomb exploded in the basement-level parking garage under the World Trade Center complex in New York City.
+- This attack resulted in 6 deaths and over 1,000 injuries[1][4][5].
+
+## Novoseoci Massacre in 1992
+- On September 22, 1992, the Army of Republika Srpska carried out a massacre in Novoseoci, Bosnia and Herzegovina.
+- This massacre resulted in the deaths of 45 Bosniak civilians[2].
+
+Based on these details, the Novoseoci massacre in 1992, which resulted in 45 deaths, had a significantly higher number of deaths compared to the 6 deaths in the 1993 World Trade Center bombing.",1,1,"[datetime.datetime(1992, 6, 17, 0, 0), datetime.datetime(1993, 2, 26, 0, 0)]",
+88,Did the car bombing in 1993 resulted in 6 deaths had a higher number of death than the suicide bombing in 2004 which resulted in 34 deaths?,['no'],"No, the car bombing in 1993 did not result in a higher number of deaths compared to the suicide bombings in 2004.
+
+The 1993 World Trade Center bombing, which was a car bombing, resulted in 6 deaths and over 1,000 injuries[1][4].
+
+In contrast, the 2004 Sinai bombings, which included car and truck bombings, resulted in 34 deaths and 171 injuries[2].
+
+Therefore, the 2004 Sinai bombings had a significantly higher number of deaths than the 1993 World Trade Center bombing.",1,1,"[datetime.datetime(1993, 2, 26, 0, 0), datetime.datetime(2004, 10, 7, 0, 0)]",
+89,Did the car bombing in 1993 resulted in 6 deaths had a lower number of death than the conflagration in 1991 which resulted in 25 deaths?,['yes'],"No, the comparison you are making is incorrect based on the provided information.
+
+The 1993 World Trade Center bombing resulted in 6 deaths and over 1,000 injuries[1][5].
+
+In contrast, the Triangle shirtwaist factory fire, which occurred in 1911 (not 1991), resulted in 146 deaths (129 women and 17 men)[2].
+
+Therefore, the 1993 World Trade Center bombing had a significantly lower number of deaths compared to the Triangle shirtwaist factory fire. There is no record of a conflagration in 1991 that resulted in 25 deaths in the provided sources.",0,1,"[datetime.datetime(1991, 9, 3, 0, 0), datetime.datetime(1993, 2, 26, 0, 0)]",
+90,Did car bombing in 1993 resulted in 6 deaths or mass murder in 1987 which resulted in 19 deaths had a higher number of death?,['mass murder in 1987 which resulted in 19 deaths'],"To compare the number of deaths from the two events mentioned, here are the details:
+
+## World Trade Center Bombing of 1993
+On February 26, 1993, a truck bomb (often referred to as a car bomb in some contexts, though it was actually a van) exploded in the basement-level parking garage under the World Trade Center complex. This attack resulted in 6 deaths and over 1,000 injuries[1][5].
+
+## Hungerford Massacre of 1987
+On August 19, 1987, Michael Ryan carried out a spree shooting in Hungerford, UK, which is sometimes referred to in the context of mass murder. This incident resulted in 17 deaths, including the perpetrator, and at least 15 injuries[2][4].
+
+Comparing the two events:
+- The World Trade Center bombing of 1993 resulted in 6 deaths.
+- The Hungerford massacre of 1987 resulted in 17 deaths.
+
+Therefore, the Hungerford massacre of 1987 had a significantly higher number of deaths compared to the World Trade Center bombing of 1993.",0,1,"[datetime.datetime(1987, 3, 7, 0, 0), datetime.datetime(1993, 2, 26, 0, 0)]",
+91,Did the car bombing in 1993 resulted in 6 deaths had a higher number of death than the avalanche in 2002 which resulted in 125 deaths?,['no'],"No, the car bombing at the World Trade Center in 1993, which resulted in 6 deaths, did not have a higher number of deaths than the avalanche in 2002. The avalanche in 2002, specifically the Kolka-Karmadon rock ice slide in Russia, resulted in 125 deaths, which is significantly more than the 6 deaths from the 1993 World Trade Center bombing[1][5].
+
+To summarize:
+- 1993 World Trade Center bombing: 6 deaths
+- 2002 Kolka-Karmadon rock ice slide: 125 deaths[2]",1,1,"[datetime.datetime(1993, 2, 26, 0, 0), datetime.datetime(2002, 9, 20, 0, 0)]",
+92,Did the car bombing in 1993 resulted in 6 deaths had a lower number of death than the aviation accident in 1996 which resulted in 141 deaths?,['yes'],"To compare the number of deaths from the 1993 World Trade Center bombing and the aviation accident you're referring to, here are the details:
+
+- The 1993 World Trade Center bombing resulted in 6 deaths and over 1,000 injuries[1][5].
+
+For the aviation accident in 1996, you are likely referring to the TWA Flight 800 accident. Here are the details:
+
+- TWA Flight 800, which occurred on July 17, 1996, resulted in the deaths of all 230 people on board[3].
+
+Since 230 (the number of deaths in the TWA Flight 800 accident) is significantly greater than 6 (the number of deaths in the 1993 World Trade Center bombing), the car bombing in 1993 indeed had a lower number of deaths compared to the aviation accident in 1996.",0,1,"[datetime.datetime(1993, 2, 26, 0, 0), datetime.datetime(1996, 8, 29, 0, 0)]",
+93,Did sports season in 2002 which had 33 participants or edition of the UEFA European Championship in 1996 which had 16 participants had a higher number of points scored?,['sports season in 2002 which had 33 participants'],"To determine which event had a higher number of points scored, we need to analyze the data from both the 2002 NFL season and the 1996 UEFA European Championship.
+
+### 2002 NFL Season
+In the 2002 NFL season, the team that scored the most points was the Kansas City Chiefs, with a total of 467 points. However, to get the total points scored across all teams, we need to sum the points from all 32 teams (not 33, as there were 32 teams in the NFL in 2002). Here is a summary of the top teams, but the total points scored by all teams would be the sum of points from each of the 32 teams:
+
+- Kansas City Chiefs: 467 points
+- Other teams scored varying amounts, with the lowest being 307 points by the Redskins[1][4].
+
+Given the data, the total points scored in the 2002 NFL season can be estimated by summing the points from all teams. Here is a rough estimate based on the provided data:
+- The top 10 teams scored a total of around 3,911 points (467 + 398 + 392 + 390 + 390 + 381 + 379 + 378 + 367 + 367).
+- The total points scored by all 32 teams would be significantly higher, likely exceeding 8,000 points when considering the average points per game and the number of games played.
+
+### 1996 UEFA European Championship
+In the 1996 UEFA European Championship, there were 31 matches played, and a total of 64 goals were scored. Since each goal in football is equivalent to one point in scoring terms, we can say:
+
+- Total goals scored: 64 goals[2].
+
+### Comparison
+- **2002 NFL Season**: The total points scored by all teams would be in the range of several thousand points, significantly higher than the goals scored in the UEFA Euro 1996.
+- **1996 UEFA European Championship**: The total goals scored were 64.
+
+Clearly, the 2002 NFL season, with its numerous high-scoring games across 32 teams, had a much higher number of points scored compared to the 64 goals scored in the 1996 UEFA European Championship.",1,1,"[datetime.datetime(1996, 6, 1, 0, 0), datetime.datetime(2002, 6, 29, 0, 0)]",
+94,Did the sports season in 2002 which had 33 participants had a higher number of participants than the sports season in 1997 in Saudi Arabia which had 8 participants?,['yes'],"To determine if the sports season in 2002 had a higher number of participants than the sports season in 1997 in Saudi Arabia, we need to examine the specific contexts of the sports seasons mentioned.
+
+### 1997-98 Saudi Premier League
+For the 1997-98 season, the Saudi Premier League involved 12 teams, not 8. This is evident from the Wikipedia article on the 1997-98 Saudi Premier League, which lists the participating teams and their performance statistics[2].
+
+### 2002 Asian Games and Saudi Premier League
+For the 2002 Asian Games, Saudi Arabia participated with a team of athletes, but the number of participants is not specified in the provided sources. However, this event is not directly comparable to a domestic sports league like the Saudi Premier League.
+
+The 2002-03 Saudi Premier League, which is the relevant domestic league for that year, also involved 12 teams, similar to the 1997-98 season[5].
+
+### Conclusion
+Given that both the 1997-98 and 2002-03 Saudi Premier League seasons involved 12 teams each, neither season had 33 participants or 8 participants as mentioned in your query. Therefore, the number of participants in both seasons was the same, which is 12 teams.",0,1,"[datetime.datetime(1997, 12, 1, 0, 0), datetime.datetime(2002, 6, 29, 0, 0)]",
+95,Did the sports season in 2002 which had 33 participants had a lower number of attendance than the edition of the UEFA European Championship in 1992 which had 8 participants?,['no'],"To determine whether the sports season in 2002 with 33 participants had a lower number of attendance than the UEFA European Championship in 1992 with 8 participants, we need to compare the attendance figures for both events.
+
+For the UEFA European Championship in 1992, the total attendance was 430,111 spectators over 15 matches, with an average attendance of 28,674 per match[2].
+
+For the sports season in 2002 with 33 participants, the data from the ComplexTempQA dataset indicates that the total attendance was significantly higher. The dataset mentions that the sports season in 2002 had an attendance of 833,096 spectators, which is far greater than the attendance of the UEFA European Championship in 1992[1].
+
+Therefore, the sports season in 2002 with 33 participants did **not** have a lower number of attendance than the UEFA European Championship in 1992 with 8 participants. Instead, it had a substantially higher attendance.",1,1,"[datetime.datetime(1992, 6, 1, 0, 0), datetime.datetime(2002, 6, 29, 0, 0)]",
+96,Did the sports season in 2002 which had 33 participants had a higher number of attendance than the UEFA Champions League final in 2000 which had 80000 spectators?,['yes'],"To compare the attendance figures, we need to look at the total and average attendance for the sports season in question and the specific UEFA Champions League final.
+
+### Sports Season 2001-2002 with 33 Participants
+The data provided is from the Big 12 Conference women's basketball season for 2001-2002. According to the source, Iowa State, which had 33 games, drew a total of 231,562 fans, resulting in an average attendance of 7,020 fans per game[1].
+
+### UEFA Champions League Final 2000
+The 2000 UEFA Champions League final between Real Madrid and Valencia had an attendance of 50,000 spectators, not 80,000. The final was held at the Stade de France in Paris[5].
+
+### Comparison
+- The total attendance for Iowa State's 33 games in the 2001-2002 season was 231,562 fans.
+- The attendance for the 2000 UEFA Champions League final was 50,000 fans.
+
+Clearly, the total attendance for Iowa State's 33 games (231,562 fans) was significantly higher than the attendance at the 2000 UEFA Champions League final (50,000 fans). Therefore, the sports season in question had a higher number of attendance than the UEFA Champions League final in 2000.",1,1,"[datetime.datetime(2000, 5, 24, 0, 0), datetime.datetime(2002, 6, 29, 0, 0)]",
+97,Did the war in 2006 resulted in 165 deaths had a higher number of death than the mass murder in 2004 resulted in 193 deaths?,['yes'],"To compare the casualties from the 2006 Lebanon War and a specific mass murder incident in 2004, we need to look at the numbers provided for each event.
+
+### 2006 Lebanon War
+The 2006 Lebanon War resulted in significant casualties:
+- Between 1,000 and 1,200 people were reported dead in Lebanon, including both civilians and combatants[1][5].
+
+### Mass Murder in 2004
+There is no specific mass murder incident in 2004 mentioned in the provided sources that resulted in exactly 193 deaths. However, one of the notable mass shootings in recent history that occurred around that time is the Virginia Tech shooting, but it happened in 2007, not 2004. Another significant incident was the Binghamton shooting, but it also occurred later, in 2009.
+
+Given the information available, if we consider a hypothetical mass murder incident resulting in 193 deaths in 2004, this number would be significantly lower than the casualties reported in the 2006 Lebanon War, which ranged from 1,000 to 1,200 deaths.
+
+Therefore, the 2006 Lebanon War had a much higher number of deaths compared to any mass murder incident resulting in 193 deaths.",0,1,"[datetime.datetime(2004, 3, 11, 0, 0), datetime.datetime(2006, 8, 14, 0, 0)]",
+98,Did Winter Olympic Games in 1994 which had 1737 participants or Eurovision Song Contest edition in 2006 which had 37 participants had a higher number of participants?,['Winter Olympic Games in 1994 which had 1737 participants'],"The Winter Olympic Games in 1994 had a significantly higher number of participants compared to the Eurovision Song Contest edition in 2006.
+
+The 1994 Winter Olympic Games in Lillehammer had 1,737 athletes participating[5].
+
+In contrast, the Eurovision Song Contest edition in 2006 had 37 participants, which represents the number of countries or acts performing in the contest[4].
+
+Therefore, the Winter Olympic Games in 1994 had a higher number of participants than the Eurovision Song Contest edition in 2006.",1,1,"[datetime.datetime(1994, 2, 1, 0, 0), datetime.datetime(2006, 5, 18, 0, 0)]",
+99,Did the Winter Olympic Games in 1994 which had 1737 participants had a lower number of participants than the Eurovision Song Contest edition in 2004 which had 36 participants?,['no'],"No, the Winter Olympic Games in 1994 did not have a lower number of participants than the Eurovision Song Contest edition in 2004.
+
+The 1994 Winter Olympic Games had 1737 participants[5].
+
+In contrast, the Eurovision Song Contest edition in 2004 had 18 participants, as listed in the participants section[2].
+
+Therefore, the 1994 Winter Olympic Games had a significantly higher number of participants compared to the Eurovision Song Contest edition in 2004.",0,1,"[datetime.datetime(1994, 2, 1, 0, 0), datetime.datetime(2004, 1, 1, 0, 0)]",
+100,Did the Eurovision Song Contest edition in 2006 which had 37 participants had a higher number of participants than the sports season in 2002 which had 33 participants?,['yes'],"To address your question, we need to clarify the context of the ""sports season in 2002"" you are referring to, as the term is somewhat vague.
+
+If you are comparing the number of participants in the Eurovision Song Contest 2006 to a specific sporting event or season in 2002, here are the relevant details:
+
+- The Eurovision Song Contest 2006 had 37 participating countries[1][5].
+
+For the 2002 Winter Olympic Games in Salt Lake City, the number of participating countries was 78, but if you are referring to the number of athletes or teams in a specific sport, that would be different. However, the overall number of countries participating in the Olympics far exceeds the number of countries in the Eurovision Song Contest 2006.
+
+If you are asking about a specific sport or event within the 2002 Winter Olympics, the number of participants can vary widely depending on the sport. For example, in biathlon, there were numerous athletes from different countries, but the exact number of participants in each event would be different.
+
+Given the information available, it is clear that the Eurovision Song Contest 2006 had 37 participating countries, which is significantly fewer than the number of countries or athletes participating in the 2002 Winter Olympic Games as a whole. However, without a specific sport or event from the 2002 Olympics to compare directly, it's challenging to make a precise comparison within a particular context.",0,1,"[datetime.datetime(2002, 1, 1, 0, 0), datetime.datetime(2006, 5, 18, 0, 0)]",

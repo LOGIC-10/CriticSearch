@@ -1,7 +1,11 @@
-import yaml
+# critic_search/config.py
+from dynaconf import Dynaconf
 
+settings = Dynaconf(
+    settings_files=["settings.yaml", ".secrets.yaml"],
+    envvar_prefix=False,
+    ignore_unknown_envvars=True,
+)
 
-def read_config(file_path="config.yaml"):
-    with open(file_path, "r") as file:
-        config = yaml.safe_load(file)
-    return config
+# from dynaconf import inspect_settings
+# print(inspect_settings(settings))

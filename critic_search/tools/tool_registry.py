@@ -1,67 +1,55 @@
-from typing import Callable, Dict
+from typing import Callable, Dict, List
+
+from loguru import logger
 
 from .models import Tool
 
 
 class ToolRegistry:
     """
-    A simplified registry to manage tools.
+    A registry for managing tools using their function names as keys.
 
-    This registry stores tool schemas by their names, allowing registration,
-    retrieval, removal, and listing of tools.
+    This class provides functionality to retrieve or create schemas for tools
+    based on provided functions, storing them for reuse and easy access.
     """
 
     def __init__(self):
+        """
+        Initialize an empty registry for storing tool schemas.
+
+        Attributes:
+            _tools (Dict[str, dict]): A dictionary mapping function names
+                                      to their respective schemas.
+        """
         self._tools: Dict[str, dict] = {}
 
-    def register(self, *target_functions: Callable):
+    def get_or_create_tool_schema(self, *target_functions: Callable) -> List[Dict]:
         """
-        Register one or more functions as tools.
+        Retrieve or create tool schemas for the given functions.
+
+        If a function's schema is not already registered, it will be created
+        using `Tool.create_schema_from_function` and added to the registry.
 
         Args:
-            *target_functions (Callable): One or more functions to register.
-
-        Raises:
-            ValueError: If any function is already registered.
-        """
-        for target_function in target_functions:
-            tool_schema = Tool.create_schema_from_function(target_function)
-            tool_name = tool_schema["function"]["name"]
-
-            if tool_name in self._tools:
-                raise ValueError(f"Tool '{tool_name}' is already registered.")
-
-            self._tools[tool_name] = tool_schema
-            print(f"Registered tool: {tool_name}")
-
-    def get_tool_schema(self, tool_name: str) -> dict:
-        """
-        Retrieve a registered tool schema by name.
-        """
-        if tool_name not in self._tools:
-            raise KeyError(f"Tool '{tool_name}' is not registered.")
-        return self._tools[tool_name]
-
-    def unregister(self, tool_name: str):
-        """
-        Unregister a tool by name.
-
-        Args:
-            tool_name (str): The name of the tool.
-
-        Raises:
-            KeyError: If the tool is not registered.
-        """
-        if tool_name not in self._tools:
-            raise KeyError(f"Tool '{tool_name}' is not registered.")
-        del self._tools[tool_name]
-        print(f"Unregistered tool: {tool_name}")
-
-    def list_tools(self) -> Dict[str, dict]:
-        """
-        List all registered tools.
+            *target_functions (Callable): One or more functions for which
+                                          schemas are to be retrieved or created.
 
         Returns:
-            Dict[str, dict]: A dictionary of all registered tools.
+            List[Dict]: A list of schemas corresponding to the provided functions.
         """
-        return self._tools
+        schemas = []
+        for target_function in target_functions:
+            func_name = target_function.__name__
+
+            # Create schema if not already registered
+            if func_name not in self._tools:
+                self._tools[func_name] = Tool.create_schema_from_function(
+                    target_function
+                )
+                logger.debug(
+                    f"Created tool schema for: {func_name}, schema: {self._tools[func_name]}"
+                )
+
+            schemas.append(self._tools[func_name])
+
+        return schemas

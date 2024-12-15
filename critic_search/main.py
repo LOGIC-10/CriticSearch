@@ -1,103 +1,104 @@
-import logging
+import time
 
 import yaml
-from colorama import Fore, Style, init
 
 from .base_agent import BaseAgent
 from .critic_agent import CriticAgent
-from .search_plan_agent import SearchPlanAgent
-
-# Constants
-MAX_ITERATION = 50
-TASK = """I was trying to remember how well the Cheater Beater performed in comparison to the Cheater when James tested it on his channel. I know that the Cheater still outperformed the Cheater Beater in terms of CFM. Could you please look that up for me, and report the CFM of both the Cheater and the Cheater Beater? I'm not sure if he made any changes to his testing, but this was back in season 4, so just report the value from that season. Please format your response like this: CFM number for Cheater, CFM number for Cheater beater"""
+from .log import colorize_message, logger
 
 
-# Initialize agents
-common_agent = BaseAgent()
-plan_agent = SearchPlanAgent()
+def truncate_to_character_limit(text, max_chars=100000):
+    if hasattr(text, "content"):
+        text = text.content  # Extract the content attribute
 
-# Initialize colorama
-init()
-
-
-# Configure logger
-def setup_logger():
-    logger = logging.getLogger("AgentLogger")
-    logger.setLevel(logging.INFO)
-
-    # Console handler
-    ch = logging.StreamHandler()
-    ch.setLevel(logging.INFO)
-    logger.addHandler(ch)
-    return logger
+    # Ensure `text` is a string before truncating
+    if isinstance(text, str) and len(text) > max_chars:
+        return text[:max_chars]
+    return text
 
 
-logger = setup_logger()
+def main(TASK, MAX_ITERATION=1):
+    # Initialize agents
+    common_agent = BaseAgent()
 
+    # initialize the task
+    common_agent.user_question = TASK
 
-def main():
     for iteration in range(MAX_ITERATION):
-        # Iteration header with bold cyan
         logger.info(
-            f"\n{Fore.CYAN}{Style.BRIGHT}{'=' * 20}== Iteration {iteration + 1} =={'=' * 20}{Style.RESET_ALL}\n"
+            colorize_message(
+                message_title=f"ITERATION {iteration + 1}", color="cyan", style="bold"
+            )
         )
 
         if iteration == 0:
+            # Initialize search_results as None
+            search_results = None
+
             # Model confidence check - yellow
             agent_confident = common_agent.model_confident(TASK)
-            agent_confident = (
-                yaml.safe_load(common_agent.extract_and_validate_yaml(agent_confident))
-                .get("confidence", "true")
-                .lower()
-                == "true"
+            agent_confident_yaml = common_agent.extract_and_validate_yaml(
+                agent_confident
             )
-            logger.info(
-                f"\n{Fore.YELLOW}{'=' * 20}== MODEL_CONFIDENT =={'=' * 20}{Style.RESET_ALL}\n{agent_confident}\n"
-            )
+
+            if agent_confident_yaml is None:
+                logger.warning(
+                    "Failed to extract valid YAML content. Defaulting to 'false'."
+                )
+                agent_confident = False
+            else:
+                agent_confident_dict = yaml.safe_load(agent_confident_yaml)
+                agent_confident = (
+                    agent_confident_dict.get("confidence", "true").lower() == "true"
+                )
 
             if agent_confident:
-                common_agent_answer = common_agent.common_chat(query=TASK)
+                # When confident, only get the answer
+                common_agent_answer = common_agent.common_chat(usr_prompt=TASK)
             else:
-                # Search plan - green
-                search_plan = common_agent.initialize_search(TASK)
-                search_plan = common_agent.extract_and_validate_yaml(search_plan)
-                logger.info(
-                    f"\n{Fore.GREEN}{'=' * 20}== AGENT_SEARCH_PLAN =={'=' * 20}{Style.RESET_ALL}\n{search_plan}\n"
+                # When not confident, get both answer and search results
+                data = {
+                    "user_question": TASK,
+                }
+                initial_search_prompt = common_agent.load_template(
+                    "planner_agent_initial_search_plan.txt"
+                )
+                initial_search_rendered_prompt = common_agent.render_template(
+                    initial_search_prompt, data
                 )
 
-                initial_search_queries = [
-                    item["Query"]
-                    for item in yaml.safe_load(search_plan).get("SearchQueries", [])
-                ]
-                logger.info(
-                    f"\n{Fore.GREEN}{'=' * 20}== INITIAL_SEARCH_PLAN =={'=' * 20}{Style.RESET_ALL}\n{initial_search_queries}\n"
+                initial_web_result_markdown_text = common_agent.search_and_browse(
+                    initial_search_rendered_prompt
                 )
 
-                common_agent.queryDB.update(initial_search_queries)
-                search_results = common_agent.search_aggregator.search(
-                    initial_search_queries
-                )
-                logger.info(
-                    f"\n{Fore.GREEN}{'=' * 20}== INITIAL_SEARCH_RESULTS =={'=' * 20}{Style.RESET_ALL}\n{search_results}\n"
+                rag_based_answer_prompt = common_agent.render_template(
+                    common_agent.load_template("rag_based_answer.txt"),
+                    {
+                        "user_question": common_agent.user_question,
+                        "web_result_markdown_text": initial_web_result_markdown_text,
+                    },
                 )
 
-                search_prompt = (
-                    f"Answer user question based on the following search results. \n\n"
-                    f"Here is the user question: {TASK}\n\n"
-                    f"And here are the search results:\n\n{search_results}"
+                common_agent_answer = common_agent.common_chat(
+                    usr_prompt=rag_based_answer_prompt,
                 )
-                common_agent_answer = common_agent.common_chat(query=search_prompt)
+
         else:
+            # 前面根据critc的返回得到了新的网页搜索结果web_result_markdown_text
             common_agent_answer = common_agent.update_answer(
                 query=TASK,
                 previous_answer=common_agent_answer,
-                search_results=search_results,
+                search_results=truncate_to_character_limit(web_result_markdown_text),
                 critic_feedback=critic_agent_response,
             )
+            time.sleep(0.5)  # hitting rate limits for gpt mini
 
-        # Agent answer - magenta
         logger.info(
-            f"\n{Fore.MAGENTA}{'=' * 20}== COMMON_AGENT_ANSWER =={'=' * 20}{Style.RESET_ALL}\n{common_agent_answer}\n"
+            colorize_message(
+                message_title="COMMON AGENT ANSWER",
+                color="magenta",
+                message_content=common_agent_answer,
+            )
         )
 
         # Critic evaluation - blue
@@ -105,52 +106,111 @@ def main():
         critic_agent.receive_task(TASK)
         critic_agent.receive_agent_answer(common_agent_answer)
         critic_agent_response = critic_agent.critic()
+
         logger.info(
-            f"\n{Fore.BLUE}{'=' * 20}== CRITIC_AGENT_RESPONSE =={'=' * 20}{Style.RESET_ALL}\n{critic_agent_response}\n"
+            colorize_message(
+                message_title="CRITIC_AGENT_RESPONSE",
+                color="blue",
+                message_content=common_agent_answer,
+            )
         )
 
         if yaml.safe_load(critic_agent_response).get("Stop", {}).lower() == "true":
             logger.info(
-                f"\n{Fore.RED}{'=' * 20}== TOTAL ITERATIONS: {iteration + 1} =={'=' * 20}{Style.RESET_ALL}\n"
+                colorize_message(
+                    message_title=f"TOTAL ITERATIONS: {iteration + 1}", color="red"
+                )
             )
-            logger.info(
-                f"\n{Fore.BLACK}{'=' * 20}== ALL SEARCH QUERIES =={'=' * 20}{Style.RESET_ALL}\n{common_agent.queryDB}\n"
-            )
-            logger.info(
-                f"\n{Fore.RED}{'=' * 20}== FINAL ANSWER =={'=' * 20}{Style.RESET_ALL}\n{common_agent_answer}\n"
-            )
-            break
 
-        # Next search plan - green
-        plan_agent.receive_task(TASK)
-        next_search_plan = plan_agent.plan(common_agent_answer, critic_agent_response)
-        new_queries = [
-            item["Query"]
-            for item in yaml.safe_load(next_search_plan).get("NewSearchQueries", [])
-        ]
-        logger.info(
-            f"\n{Fore.GREEN}{'=' * 20}== AGENT_NEXT_SEARCH_PLAN =={'=' * 20}{Style.RESET_ALL}\n{next_search_plan}\n"
+            logger.info(
+                colorize_message(
+                    message_title="ALL SEARCH QUERIES",
+                    color="black",
+                    message_content=", ".join(map(str, common_agent.queryDB)),
+                )
+            )
+            logger.info(
+                colorize_message(
+                    message_title="FINAL ANSWER",
+                    color="red",
+                    message_content=common_agent_answer,
+                )
+            )
+
+            return f"\n{common_agent_answer}\n"
+
+        # 根据critic的建议再执行一次搜索和爬虫操作
+        # 先构建rendered_prompt
+        reflection_data = {
+            "user_question": TASK,
+            "previous_answer": common_agent_answer,
+            "user_feedback": critic_agent_response,
+            "search_history": common_agent.queryDB,
+        }
+        search_again_prompt = common_agent.render_template(
+            common_agent.load_template("planner_agent_with_reflection.txt"),
+            reflection_data,
         )
+        try:
+            web_result_markdown_text = common_agent.search_and_browse(
+                search_again_prompt
+            )
+        except:
+            logger.info(
+                colorize_message(
+                    message_title=f"TOTAL ITERATIONS: {iteration + 1}", color="red"
+                )
+            )
 
-        # Search results - green
-        common_agent.queryDB.update(new_queries)
-        search_results = common_agent.search_aggregator.search(new_queries)
+            logger.info(
+                colorize_message(
+                    message_title="ALL SEARCH QUERIES",
+                    color="black",
+                    message_content=", ".join(map(str, common_agent.queryDB)),
+                )
+            )
+
+            logger.info(
+                colorize_message(
+                    message_title="FINAL ANSWER",
+                    color="red",
+                    message_content=common_agent_answer,
+                )
+            )
+
+            # we run out of searches for now, so we force the agent to give a final answer:
+            return f"\n{common_agent_answer}\n"
+
         logger.info(
-            f"\n{Fore.GREEN}{'=' * 20}== SEARCH_RESULTS =={'=' * 20}{Style.RESET_ALL}\n{search_results}\n"
+            colorize_message(
+                message_title="WEB RESULT MARKDOWN TEXT",
+                color="blue",
+                message_content=web_result_markdown_text,
+            )
         )
 
         # Check if reached max iterations
         if iteration == MAX_ITERATION - 1:
             logger.info(
-                f"\n{Fore.RED}{'=' * 20}== TOTAL ITERATIONS: {iteration + 1} =={'=' * 20}{Style.RESET_ALL}\n"
-            )
-            logger.info(
-                f"\n{Fore.BLACK}{'=' * 20}== ALL SEARCH QUERIES =={'=' * 20}{Style.RESET_ALL}\n{common_agent.queryDB}\n"
-            )
-            logger.info(
-                f"\n{Fore.RED}{'=' * 20}== FINAL ANSWER =={'=' * 20}{Style.RESET_ALL}\n{common_agent_answer}\n"
+                colorize_message(
+                    message_title=f"TOTAL ITERATIONS: {iteration + 1}", color="red"
+                )
             )
 
+            logger.info(
+                colorize_message(
+                    message_title="ALL SEARCH QUERIES",
+                    color="black",
+                    message_content=", ".join(map(str, common_agent.queryDB)),
+                )
+            )
 
-if __name__ == "__main__":
-    main()
+            logger.info(
+                colorize_message(
+                    message_title="FINAL ANSWER",
+                    color="red",
+                    message_content=common_agent_answer,
+                )
+            )
+
+            return f"\n{common_agent_answer}\n"

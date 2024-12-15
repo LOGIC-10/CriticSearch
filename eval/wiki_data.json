@@ -1,0 +1,1402 @@
+[
+    {
+        "question_id": "Q765",
+        "question": "what colors are in a rainbow",
+        "document_title": "Rainbow",
+        "answer": "It takes the form of a multicoloured arc .",
+        "label": 0
+    },
+    {
+        "question_id": "Q1746",
+        "question": "what mountains are on appalachian trail",
+        "document_title": "Appalachian Trail",
+        "answer": "The Appalachian National Scenic Trail, generally known as the Appalachian Trail or simply the A.T., is a marked hiking trail in the eastern United States extending between Springer Mountain in Georgia and Mount Katahdin in Maine .",
+        "label": 1
+    },
+    {
+        "question_id": "Q1110",
+        "question": "when did the lutheran church began",
+        "document_title": "Lutheranism",
+        "answer": "Like most denominations, Lutheranism is split between Liberal and Conservative/Confessional camps.",
+        "label": 0
+    },
+    {
+        "question_id": "Q335",
+        "question": "what does the federal reserve do",
+        "document_title": "Federal Reserve System",
+        "answer": "The government also exercises some control over the Federal Reserve by appointing and setting the salaries of the system's highest-level employees.",
+        "label": 0
+    },
+    {
+        "question_id": "Q1881",
+        "question": "who coined the term bucket list",
+        "document_title": "The Bucket List",
+        "answer": "The film opened in wide release in the United States and Canada on January 11, 2008 and was released in the United Kingdom on February 8, 2008, and in Australia on February 21, 2008.",
+        "label": 0
+    },
+    {
+        "question_id": "Q2560",
+        "question": "what is oregon institute of technology like",
+        "document_title": "Oregon Institute of Technology",
+        "answer": "The university also has sites in Salem , La Grande , and Seattle , as well as online degree offerings.",
+        "label": 0
+    },
+    {
+        "question_id": "Q1045",
+        "question": "Who should the democrats vote for on 11/2/10",
+        "document_title": "Democratic Party (United States)",
+        "answer": "Current President of the United States Barack Obama is the 15th Democrat to hold the office of Presidency.",
+        "label": 0
+    },
+    {
+        "question_id": "Q830",
+        "question": "How far is it from Quitman Texas to  Natchez Mississippi",
+        "document_title": "Natchez, Mississippi",
+        "answer": "It predates Jackson, which replaced Natchez as the capital in 1822, by more than a century.",
+        "label": 0
+    },
+    {
+        "question_id": "Q2064",
+        "question": "when was the web invented",
+        "document_title": "World Wide Web",
+        "answer": "With a web browser , one can view web pages that may contain text, images, videos, and other multimedia , and navigate between them via hyperlinks .",
+        "label": 0
+    },
+    {
+        "question_id": "Q1335",
+        "question": "what year was elvis born",
+        "document_title": "Elvis Presley",
+        "answer": "Prescription drug abuse severely deteriorated his health, and he died suddenly in 1977 at the age of 42.",
+        "label": 0
+    },
+    {
+        "question_id": "Q1742",
+        "question": "what song did ricky martin sing at the grammy awards",
+        "document_title": "Ricky Martin",
+        "answer": "Martin began his career at age twelve with the all-boy pop group Menudo; after five years with the group, he released his Spanish-language solo album, Ricky Martin , in 1991.",
+        "label": 0
+    },
+    {
+        "question_id": "Q1678",
+        "question": "what is a wiki platform",
+        "document_title": "Wiki",
+        "answer": "Wikis serve many different purposes, such as knowledge management and notetaking .",
+        "label": 0
+    },
+    {
+        "question_id": "Q1642",
+        "question": "what year did john adams become  president?",
+        "document_title": "John Adams",
+        "answer": "Adams signed the controversial Alien and Sedition Acts , and built up the army and navy especially in the face of an undeclared naval war (called the \" Quasi-War \") with France , 1798\u20131800.",
+        "label": 0
+    },
+    {
+        "question_id": "Q931",
+        "question": "what kind of company is Microsoft?",
+        "document_title": "Microsoft",
+        "answer": "Since the 1990s, it has increasingly diversified from the operating system market and has made a number of corporate acquisitions .",
+        "label": 0
+    },
+    {
+        "question_id": "Q2480",
+        "question": "when were 4g wireless networks launched in the United States?",
+        "document_title": "4G",
+        "answer": "Equipment made for different continents are not always compatible, because of different frequency bands.",
+        "label": 0
+    },
+    {
+        "question_id": "Q1671",
+        "question": "what nuns ran the french hospital in ny?",
+        "document_title": "List of charitable organizations in the Roman Catholic Archdiocese of New York",
+        "answer": "The following list is being added to and is incomplete:",
+        "label": 0
+    },
+    {
+        "question_id": "Q126",
+        "question": "how old do you have to be to get in the olympics",
+        "document_title": "Olympic Games",
+        "answer": "Some of these adjustments include the creation of the Winter Games for ice and winter sports, the Paralympic Games for athletes with a disability, and the Youth Olympic Games for teenage athletes.",
+        "label": 0
+    },
+    {
+        "question_id": "Q1172",
+        "question": "what part of the pre-world war 1 arms race was the most intense?",
+        "document_title": "Causes of World War I",
+        "answer": "The deepest distinction among these accounts is between stories that see it as the inevitable and predictable outcome of certain factors, and those that describe it as an arbitrary and unfortunate mistake.",
+        "label": 0
+    },
+    {
+        "question_id": "Q1171",
+        "question": "what materials are used for facial reconstruction",
+        "document_title": "Forensic facial reconstruction",
+        "answer": "In addition to remains involved in criminal investigations, facial reconstructions are created for remains believed to be of historical value and for remains of prehistoric hominids and humans .",
+        "label": 0
+    },
+    {
+        "question_id": "Q1746",
+        "question": "what mountains are on appalachian trail",
+        "document_title": "Appalachian Trail",
+        "answer": "The path is maintained by 30 trail clubs and multiple partnerships, and managed by the National Park Service and the nonprofit Appalachian Trail Conservancy .",
+        "label": 0
+    },
+    {
+        "question_id": "Q849",
+        "question": "how many people come over the border from mexico annually",
+        "document_title": "Illegal immigration to the United States",
+        "answer": "The undocumented immigrant population of the United States in 2008 was estimated by the Center for Immigration Studies to be about 11 million people, down from 12.5 million people in 2007.",
+        "label": 0
+    },
+    {
+        "question_id": "Q187",
+        "question": "how does the book flatlands related to pre calc",
+        "document_title": "Precalculus",
+        "answer": "In American mathematics education , precalculus (or Algebra 3 in some areas), is an advanced form of secondary school algebra , and a foundational mathematical discipline.",
+        "label": 0
+    },
+    {
+        "question_id": "Q439",
+        "question": "what does judgment as a matter of law mean",
+        "document_title": "Judgment as a matter of law",
+        "answer": "However, in order to move for j.n.o.v., the movant must have moved for a JMOL before the verdict as well.",
+        "label": 0
+    },
+    {
+        "question_id": "Q936",
+        "question": "how many kids does erykah badu have",
+        "document_title": "Erykah Badu",
+        "answer": "She is known as the \"First Lady of Neo-Soul\" or the \"Queen of Neo-Soul\".",
+        "label": 0
+    },
+    {
+        "question_id": "Q1642",
+        "question": "what year did john adams become  president?",
+        "document_title": "John Adams",
+        "answer": "A political theorist and historian, Adams largely wrote the Massachusetts Constitution in 1780, which together with his earlier Thoughts on Government , influenced American political thought.",
+        "label": 0
+    },
+    {
+        "question_id": "Q2746",
+        "question": "when was the first census of all 50 states",
+        "document_title": "U.S. state",
+        "answer": "Historically, the tasks of public safety (in the sense of controlling crime), public education , public health , transportation , and infrastructure have generally been considered primarily state responsibilities, although all of these now have significant federal funding and regulation as well (based largely upon the Commerce Clause , the Taxing and Spending Clause , and the Necessary and Proper Clause of the U.S. Constitution).",
+        "label": 0
+    },
+    {
+        "question_id": "Q2746",
+        "question": "when was the first census of all 50 states",
+        "document_title": "U.S. state",
+        "answer": "Kentucky, Massachusetts, Pennsylvania, and Virginia use the official title of Commonwealth rather than State.",
+        "label": 0
+    },
+    {
+        "question_id": "Q1526",
+        "question": "who plays rosie in mamma mia",
+        "document_title": "Mamma Mia!",
+        "answer": "Mamma Mia!",
+        "label": 0
+    },
+    {
+        "question_id": "Q2770",
+        "question": "when was library of congress built",
+        "document_title": "Library of Congress",
+        "answer": "The head of the Library is the Librarian of Congress , currently James H. Billington .",
+        "label": 0
+    },
+    {
+        "question_id": "Q839",
+        "question": "what days are smackdown on",
+        "document_title": "WWE SmackDown",
+        "answer": "The show originally debuted in the United States on the UPN television network on April 29, 1999, but after the merger of UPN and the WB , SmackDown began airing on The CW in 2006.",
+        "label": 0
+    },
+    {
+        "question_id": "Q1677",
+        "question": "when did george washington died?",
+        "document_title": "George Washington",
+        "answer": "After victory had been finalized in 1783, Washington resigned as Commander-in-chief rather than seize power, proving his opposition to dictatorship and his commitment to American republicanism .",
+        "label": 0
+    },
+    {
+        "question_id": "Q3018",
+        "question": "What is St. Lucia Known for?",
+        "document_title": "Saint Lucia",
+        "answer": "It covers a land area of 617 km2 (238.23 sq mi) and has a population of 174,000 (2010).",
+        "label": 0
+    },
+    {
+        "question_id": "Q1623",
+        "question": "who had the social contract theory",
+        "document_title": "Social contract",
+        "answer": "Each solved the problem of political authority in a different way.",
+        "label": 0
+    },
+    {
+        "question_id": "Q1878",
+        "question": "what time will the world end on may 21",
+        "document_title": "2011 end times prediction",
+        "answer": "Camping, who was then president of the Family Radio Christian network, claimed the Bible as his source and said May 21 would be the date of the Rapture and the day of judgment \"beyond the shadow of a doubt\".",
+        "label": 0
+    },
+    {
+        "question_id": "Q1750",
+        "question": "when did fidel castro take over cuba",
+        "document_title": "Fidel Castro",
+        "answer": "Ideologically-based reforms introducing central economic planning and expanding healthcare and education were accompanied by state control of the press and the suppression of internal dissent.",
+        "label": 0
+    },
+    {
+        "question_id": "Q2694",
+        "question": "who was kentucky s first basketball coach",
+        "document_title": "Kentucky Wildcats men's basketball",
+        "answer": "Kentucky also leads all schools in total NCAA tournament appearances with 52, is first in NCAA tournament wins with 111, and ranks second to UCLA in NCAA championships with 8.",
+        "label": 0
+    },
+    {
+        "question_id": "Q229",
+        "question": "how many types of sclerosis",
+        "document_title": "Multiple sclerosis",
+        "answer": "There is no known cure for multiple sclerosis.",
+        "label": 0
+    },
+    {
+        "question_id": "Q2313",
+        "question": "what is zoom range",
+        "document_title": "Zoom lens",
+        "answer": "One sacrifice of a zoom lens is wide open aperture image quality and maybe other sacrifices, because there is no perfect lens.",
+        "label": 0
+    },
+    {
+        "question_id": "Q335",
+        "question": "what does the federal reserve do",
+        "document_title": "Federal Reserve System",
+        "answer": "The Federal Reserve System has both private and public components, and was designed to serve the interests of both the general public and private bankers.",
+        "label": 0
+    },
+    {
+        "question_id": "Q356",
+        "question": "what does a f 22 raptor cost",
+        "document_title": "Lockheed Martin F-22 Raptor",
+        "answer": "The aircraft was variously designated F-22 and F/A-22 during the years prior to formally entering USAF service in December 2005 as the F-22A.",
+        "label": 0
+    },
+    {
+        "question_id": "Q670",
+        "question": "how the ku klux klan contributed to segregation",
+        "document_title": "Ku Klux Klan",
+        "answer": "The second KKK flourished nationwide in the early and mid-1920s, and adopted the same costumes and code words as the first Klan, while introducing cross burnings .",
+        "label": 0
+    },
+    {
+        "question_id": "Q591",
+        "question": "how long do lights stay on eiffel tower at night?",
+        "document_title": "Eiffel Tower",
+        "answer": "Tickets can be purchased to ascend, by stairs or lift (elevator), to the first and second levels.",
+        "label": 0
+    },
+    {
+        "question_id": "Q439",
+        "question": "what does judgment as a matter of law mean",
+        "document_title": "Judgment as a matter of law",
+        "answer": "This procedural quirk is necessary because it is considered a violation of the 7th amendment for a judge to overturn a jury verdict.",
+        "label": 0
+    },
+    {
+        "question_id": "Q1878",
+        "question": "what time will the world end on may 21",
+        "document_title": "2011 end times prediction",
+        "answer": "In March 2012 Camping \"humbly acknowledged\" that he had been mistaken, that his attempt to predict a date was \"sinful,\" and that his critics had been right in pointing to the scriptural text \"of that day and hour knoweth no man\".",
+        "label": 0
+    },
+    {
+        "question_id": "Q1896",
+        "question": "where did sharecroppers get their last name",
+        "document_title": "Sharecropping",
+        "answer": "Sharecropping is a system of agriculture in which a landowner allows a tenant to use the land in return for a share of the crops produced on the land.",
+        "label": 0
+    },
+    {
+        "question_id": "Q92",
+        "question": "How much is US National Debt limit?",
+        "document_title": "National debt of the United States",
+        "answer": "The federal government budget deficit or surplus is the difference between government receipts and spending, ignoring intra-governmental transfers.",
+        "label": 0
+    },
+    {
+        "question_id": "Q167",
+        "question": "how many people were killed in the oklahoma city bombing",
+        "document_title": "Oklahoma City bombing",
+        "answer": "Extensive rescue efforts were undertaken by local, state, federal, and worldwide agencies in the wake of the bombing, and substantial donations were received from across the country.",
+        "label": 0
+    },
+    {
+        "question_id": "Q813",
+        "question": "How Works Diaphragm Pump",
+        "document_title": "Diaphragm pump",
+        "answer": "There are three main types of diaphragm pumps:",
+        "label": 0
+    },
+    {
+        "question_id": "Q2547",
+        "question": "What was Captain Ahab's Ship in the novel \"Moby Dick\"",
+        "document_title": "Moby-Dick",
+        "answer": "It is considered to be one of the Great American Novels and a treasure of world literature .",
+        "label": 0
+    },
+    {
+        "question_id": "Q187",
+        "question": "how does the book flatlands related to pre calc",
+        "document_title": "Precalculus",
+        "answer": "Some precalculus courses might differ with others in terms of content.",
+        "label": 0
+    },
+    {
+        "question_id": "Q1750",
+        "question": "when did fidel castro take over cuba",
+        "document_title": "Fidel Castro",
+        "answer": "Fidel Alejandro Castro Ruz (; born August 13, 1926) is a Cuban communist revolutionary and politician who was Prime Minister of Cuba from 1959 to 1976, and President from 1976 to 2008.",
+        "label": 0
+    },
+    {
+        "question_id": "Q126",
+        "question": "how old do you have to be to get in the olympics",
+        "document_title": "Olympic Games",
+        "answer": "Over 13,000 athletes compete at the Summer Olympic Games and Winter Games in 33 different sports and nearly 400 events.",
+        "label": 0
+    },
+    {
+        "question_id": "Q393",
+        "question": "how many acres is toledo zoo",
+        "document_title": "Toledo Zoo",
+        "answer": "Toledo Zoo is a zoo located in Toledo, Ohio .",
+        "label": 0
+    },
+    {
+        "question_id": "Q627",
+        "question": "how many laws in judaism",
+        "document_title": "Judaism",
+        "answer": "Historically, special courts enforced Jewish law; today, these courts still exist but the practice of Judaism is mostly voluntary.",
+        "label": 0
+    },
+    {
+        "question_id": "Q1779",
+        "question": "what movie has the line in it \"I'm walking here! I'm walking here!\"?'",
+        "document_title": "AFI's 100 Years...100 Movie Quotes",
+        "answer": "The American Film Institute revealed the list on June 21, 2005, in a three-hour television program on CBS .",
+        "label": 0
+    },
+    {
+        "question_id": "Q2497",
+        "question": "what is the country of Ecuador known as?",
+        "document_title": "Ecuador",
+        "answer": "The country's largest city is Guayaquil .",
+        "label": 0
+    },
+    {
+        "question_id": "Q1647",
+        "question": "what year did J.F. Rutherford die",
+        "document_title": "Joseph Franklin Rutherford",
+        "answer": "Rutherford introduced many organizational and doctrinal changes that helped shape the beliefs and practices of Jehovah's Witnesses.",
+        "label": 0
+    },
+    {
+        "question_id": "Q2673",
+        "question": "What was The Autocrat of the Breakfast Table about?",
+        "document_title": "The Autocrat of the Breakfast-Table",
+        "answer": "The author had written two essays with the same name which were published in the earlier The New-England Magazine in November 1831 and February 1832, which are alluded to in a mention of an \"interruption\" at the start of the very first essay.",
+        "label": 0
+    },
+    {
+        "question_id": "Q2257",
+        "question": "who is  the secretary of state florida",
+        "document_title": "Secretary of state (U.S. state government)",
+        "answer": "In three states, the Secretary of State is elected by the state legislature ; the General Assembly of Tennessee meets in joint convention to elect the Secretary of State to a four-year term, and the Maine Legislature and New Hampshire General Court also select their Secretaries of State, but to two-year terms.",
+        "label": 0
+    },
+    {
+        "question_id": "Q1335",
+        "question": "what year was elvis born",
+        "document_title": "Elvis Presley",
+        "answer": "Presley's first RCA single, \" Heartbreak Hotel \", released in January 1956, was a number-one hit.",
+        "label": 0
+    },
+    {
+        "question_id": "Q263",
+        "question": "what episode of different strokes was clarence clemons in",
+        "document_title": "Clarence Clemons",
+        "answer": "Clarence Anicholas Clemons, Jr. (January 11, 1942 \u2013 June 18, 2011), also known as The Big Man, was an American musician and actor.",
+        "label": 0
+    },
+    {
+        "question_id": "Q555",
+        "question": "How is temperature determined?",
+        "document_title": "Temperature measurement",
+        "answer": "A medical/clinical thermometer showing the temperature of 38.7 \u00b0C",
+        "label": 0
+    },
+    {
+        "question_id": "Q2958",
+        "question": "Who is the highest scoring NBA player",
+        "document_title": "List of National Basketball Association season scoring leaders",
+        "answer": "These have been the entry criteria since the 1974\u201375 season .",
+        "label": 0
+    },
+    {
+        "question_id": "Q126",
+        "question": "how old do you have to be to get in the olympics",
+        "document_title": "Olympic Games",
+        "answer": "Every two years, the Olympics and its media exposure provide unknown athletes with the chance to attain national, and sometimes international fame.",
+        "label": 0
+    },
+    {
+        "question_id": "Q1956",
+        "question": "what are the charges against Casey Anthony",
+        "document_title": "Death of Caylee Anthony",
+        "answer": "The trial lasted six weeks, from May to July 2011.",
+        "label": 0
+    },
+    {
+        "question_id": "Q725",
+        "question": "what happens in vegas plot",
+        "document_title": "What Happens in Vegas",
+        "answer": "The title is based on the marketing catchphrase, \" What happens in Vegas, stays in Vegas .\"",
+        "label": 0
+    },
+    {
+        "question_id": "Q1285",
+        "question": "when does a solution crystallize?",
+        "document_title": "Crystallization",
+        "answer": "Crystallization is therefore an aspect of precipitation , obtained through a variation of the solubility conditions of the solute in the solvent , as compared to precipitation due to chemical reaction.",
+        "label": 0
+    },
+    {
+        "question_id": "Q1956",
+        "question": "what are the charges against Casey Anthony",
+        "document_title": "Death of Caylee Anthony",
+        "answer": "Investigative reports and trial testimony alternated between duct tape being found near the front of the skull and on the mouth of the skull.",
+        "label": 0
+    },
+    {
+        "question_id": "Q2138",
+        "question": "what is the difference between Cub cadet at home depot",
+        "document_title": "Cub Cadet",
+        "answer": "Cub Cadet loader",
+        "label": 0
+    },
+    {
+        "question_id": "Q1641",
+        "question": "where did the tradition of leaving a sock come from",
+        "document_title": "Christmas stocking",
+        "answer": "Some people even put their Christmas stocking by their bedposts so Santa Claus can fill it by the bed while they sleep.",
+        "label": 0
+    },
+    {
+        "question_id": "Q1956",
+        "question": "what are the charges against Casey Anthony",
+        "document_title": "Death of Caylee Anthony",
+        "answer": "Caylee Marie Anthony (August 9, 2005 \u2013 2008) was a two-year-old American girl who lived in Orlando, Florida with her mother, Casey Marie Anthony, and her maternal grandparents, George and Cindy Anthony.",
+        "label": 0
+    },
+    {
+        "question_id": "Q439",
+        "question": "what does judgment as a matter of law mean",
+        "document_title": "Judgment as a matter of law",
+        "answer": "Once the defendant has finished presenting his/her case, the plaintiff may move for JMOL, and so may the defendant.",
+        "label": 0
+    },
+    {
+        "question_id": "Q1630",
+        "question": "what are the most known sports in america",
+        "document_title": "Sports in the United States",
+        "answer": "The top league, Major League Soccer , continues to grow and has surpassed the NBA and the NHL in average attendance, although it lags far behind in revenue and TV viewership.",
+        "label": 0
+    },
+    {
+        "question_id": "Q2614",
+        "question": "what is india's current income gap",
+        "document_title": "Income in India",
+        "answer": "Although income inequality in India is relatively small ( Gini coefficient : 32.5 in year 1999- 2000); India's nominal Gini index rose to 36.8 in 2005, while real Gini after tax remained nearly flat at 32.6.",
+        "label": 0
+    },
+    {
+        "question_id": "Q1354",
+        "question": "what the atmosphere on mercury",
+        "document_title": "Atmosphere of Mercury",
+        "answer": "This conclusion was confirmed in 1974 when the Mariner 10 spacecraft discovered only a tenuous exosphere.",
+        "label": 0
+    },
+    {
+        "question_id": "Q256",
+        "question": "HOW MANY TEAMS CAN A LEAGUE SEND TO LITTLE LEAGUE ALL-STARS",
+        "document_title": "Little League Baseball",
+        "answer": "Founded by Carl Stotz in 1939 as a three- team league in Williamsport , Pennsylvania , Little League Baseball encourages local volunteers to organize and operate Little League programs that are annually chartered through Little League International.",
+        "label": 0
+    },
+    {
+        "question_id": "Q2991",
+        "question": "what is the name of chris cornell's band?",
+        "document_title": "Chris Cornell",
+        "answer": "Chris Cornell (born Christopher John Boyle; July 20, 1964) is an American rock musician best known as the lead vocalist and rhythm guitarist for Soundgarden and as the former lead vocalist for Audioslave .",
+        "label": 1
+    },
+    {
+        "question_id": "Q1677",
+        "question": "when did george washington died?",
+        "document_title": "George Washington",
+        "answer": "George Washington ( \u2013 , 1799) was the first President of the United States (1789\u20131797), the commander-in-chief of the Continental Army during the American Revolutionary War , and one of the Founding Fathers of the United States .",
+        "label": 1
+    },
+    {
+        "question_id": "Q1667",
+        "question": "what is am 2201",
+        "document_title": "AM-2201",
+        "answer": "AM-2201 (1-(5-fluoropentyl)-3-(1-naphthoyl)indole) is a research chemical that acts as a potent but nonselective full agonist for the cannabinoid receptor .",
+        "label": 1
+    },
+    {
+        "question_id": "Q2301",
+        "question": "what was the parthenon used for",
+        "document_title": "Parthenon",
+        "answer": "These sculptures, now known as the Elgin Marbles or the Parthenon Marbles, were sold in 1816 to the British Museum in London, where they are now displayed.",
+        "label": 0
+    },
+    {
+        "question_id": "Q985",
+        "question": "what area code is 949",
+        "document_title": "Area code 949",
+        "answer": "Area code 949 is an area code in California that is contained mostly within South Orange County .",
+        "label": 1
+    },
+    {
+        "question_id": "Q778",
+        "question": "what colony did france 1900",
+        "document_title": "French colonial empire",
+        "answer": "Full citizenship rights - assimilation - were offered, although in reality \"assimilation was always receding [and] the colonial populations treated like subjects not citizens.\"",
+        "label": 0
+    },
+    {
+        "question_id": "Q2139",
+        "question": "where is scotty mccreery from",
+        "document_title": "Scotty McCreery",
+        "answer": "His debut studio album, Clear as Day , was released in October 2011 and was certified platinum in the United States.",
+        "label": 0
+    },
+    {
+        "question_id": "Q2497",
+        "question": "what is the country of Ecuador known as?",
+        "document_title": "Ecuador",
+        "answer": "The new constitution of 2008 is the first in the world to recognize legally enforceable Rights of Nature , or ecosystem rights.",
+        "label": 0
+    },
+    {
+        "question_id": "Q1960",
+        "question": "what organic molecules are found in cottage cheese",
+        "document_title": "Cheese",
+        "answer": "The long storage life of some cheese, especially if it is encased in a protective rind, allows selling when markets are favorable.",
+        "label": 0
+    },
+    {
+        "question_id": "Q2536",
+        "question": "when was pearl harbor bombed",
+        "document_title": "Attack on Pearl Harbor",
+        "answer": "However, the lack of any formal warning, particularly while negotiations were still apparently ongoing, led President Franklin D. Roosevelt to proclaim December 7, 1941, \" a date which will live in infamy \".",
+        "label": 0
+    },
+    {
+        "question_id": "Q991",
+        "question": "how many baseball clubs did walter o malley buy",
+        "document_title": "Walter O'Malley",
+        "answer": "His detractors who say that he was not a visionary, but instead a man who was in the right place at the right time, still regard him as the most powerful and influential owner in baseball after moving the team.",
+        "label": 0
+    },
+    {
+        "question_id": "Q2770",
+        "question": "when was library of congress built",
+        "document_title": "Library of Congress",
+        "answer": "After much of the original collection had been destroyed during the War of 1812 , Thomas Jefferson sold 6,487 books \u2014 his entire personal collection \u2014 to the library in 1815.",
+        "label": 0
+    },
+    {
+        "question_id": "Q2744",
+        "question": "what is the german name for frederick friedrich",
+        "document_title": "Frederick (given name)",
+        "answer": "Frederick is a masculine given name meaning \"peaceful ruler.\"",
+        "label": 0
+    },
+    {
+        "question_id": "Q1429",
+        "question": "who won the 2010 world cup",
+        "document_title": "2010 FIFA World Cup",
+        "answer": "The 2010 FIFA World Cup was the 19th FIFA World Cup , the world championship for men's national association football teams.",
+        "label": 0
+    },
+    {
+        "question_id": "Q839",
+        "question": "what days are smackdown on",
+        "document_title": "WWE SmackDown",
+        "answer": "From its launch in 1999, SmackDown broadcast on Thursday nights, but on September 9, 2005, the show moved to Friday nights.",
+        "label": 0
+    },
+    {
+        "question_id": "Q3018",
+        "question": "What is St. Lucia Known for?",
+        "document_title": "Saint Lucia",
+        "answer": "They signed a treaty with the native Carib people in 1660.",
+        "label": 0
+    },
+    {
+        "question_id": "Q1804",
+        "question": "Who wrote the song, \"Just the Way You Are\"",
+        "document_title": "Just the Way You Are",
+        "answer": "In film and television:",
+        "label": 0
+    },
+    {
+        "question_id": "Q2243",
+        "question": "where is Shelton Benjamin, WWE",
+        "document_title": "Shelton Benjamin",
+        "answer": "During his tenure with the company, he won the Intercontinental Championship three times , the United States Championship once , and the WWE Tag Team Championship twice with Haas.",
+        "label": 0
+    },
+    {
+        "question_id": "Q596",
+        "question": "how is stoning performed",
+        "document_title": "Hajj",
+        "answer": "The state of being physically and financially capable of performing the Hajj is called istita'ah and a Muslim who fulfils this condition is called a mustati.",
+        "label": 0
+    },
+    {
+        "question_id": "Q8",
+        "question": "How are epithelial tissues joined together?",
+        "document_title": "Tissue (biology)",
+        "answer": "In Biology , Tissue is a cellular organizational level intermediate between cells and a complete organism .",
+        "label": 0
+    },
+    {
+        "question_id": "Q1155",
+        "question": "what percentage of the human body is water",
+        "document_title": "Body water",
+        "answer": "Also, obesity decreases the percentage of water in the body, sometimes to as low as 45 percent\".",
+        "label": 0
+    },
+    {
+        "question_id": "Q841",
+        "question": "how many episodes of young justice",
+        "document_title": "List of Young Justice episodes",
+        "answer": "Young Justice is an American animated television series created by Greg Weisman and Brandon Vietti for Cartoon Network .",
+        "label": 0
+    },
+    {
+        "question_id": "Q2142",
+        "question": "where is david ortiz from",
+        "document_title": "David Ortiz",
+        "answer": "David Am\u00e9rico Ortiz Arias (born November 18, 1975), nicknamed \"Big Papi\", is a Dominican-American professional baseball designated hitter with the Boston Red Sox of Major League Baseball (MLB).",
+        "label": 1
+    },
+    {
+        "question_id": "Q2929",
+        "question": "where is ccr from",
+        "document_title": "Creedence Clearwater Revival",
+        "answer": "The band consisted of lead vocalist, lead guitarist, and primary songwriter John Fogerty , his brother and rhythm guitarist Tom Fogerty , bassist Stu Cook , and drummer Doug Clifford .",
+        "label": 0
+    },
+    {
+        "question_id": "Q931",
+        "question": "what kind of company is Microsoft?",
+        "document_title": "Microsoft",
+        "answer": "The company's 1986 initial public offering , and subsequent rise in its share price, created an estimated three billionaires and 12,000 millionaires from Microsoft employees.",
+        "label": 0
+    },
+    {
+        "question_id": "Q1677",
+        "question": "when did george washington died?",
+        "document_title": "George Washington",
+        "answer": "Washington quickly became a senior officer in the colonial forces during the first stages of the French and Indian War .",
+        "label": 0
+    },
+    {
+        "question_id": "Q1709",
+        "question": "who made the roller skates",
+        "document_title": "Roller skating",
+        "answer": "People roller skating",
+        "label": 0
+    },
+    {
+        "question_id": "Q2497",
+        "question": "what is the country of Ecuador known as?",
+        "document_title": "Ecuador",
+        "answer": "Ecuador is also home to a great variety of species, many of them endemic , like those of the Gal\u00e1pagos islands .",
+        "label": 0
+    },
+    {
+        "question_id": "Q1614",
+        "question": "what motor does a 2001 monte carlo",
+        "document_title": "Chevrolet Monte Carlo",
+        "answer": "The first four (1970\u201372, 1973\u201377, 1978\u201380 and 1981\u201388) were of a rear-wheel-drive, V8-powered (V6 available beginning in 1978) coupe style, utilizing separate body-on-frame construction.",
+        "label": 0
+    },
+    {
+        "question_id": "Q2632",
+        "question": "what is contemporary period based on",
+        "document_title": "Contemporary classical music",
+        "answer": "However, the term may also be employed in a broader sense to refer to all post-1945 modern musical forms .",
+        "label": 0
+    },
+    {
+        "question_id": "Q1647",
+        "question": "what year did J.F. Rutherford die",
+        "document_title": "Joseph Franklin Rutherford",
+        "answer": "Rutherford and seven other Watch Tower executives were imprisoned in 1918 after charges were laid over the publication of The Finished Mystery, a book deemed seditious for its opposition to World War I .",
+        "label": 0
+    },
+    {
+        "question_id": "Q578",
+        "question": "how many people go to macarthur 2010",
+        "document_title": "Douglas MacArthur",
+        "answer": "For the diplomat, see Douglas MacArthur II .",
+        "label": 0
+    },
+    {
+        "question_id": "Q3018",
+        "question": "What is St. Lucia Known for?",
+        "document_title": "Saint Lucia",
+        "answer": "England took control of the island from 1663 to 1667; in ensuing years, it was at war with France 14 times and rule of the island changed frequently (it was seven times each ruled by the French and British).",
+        "label": 0
+    },
+    {
+        "question_id": "Q1757",
+        "question": "when did scott pilgrim come out",
+        "document_title": "Scott Pilgrim vs. the World",
+        "answer": "The film received generally positive reviews by critics and fans of the graphic novel, but it failed to recoup its production budget during its release in theaters, grossing $31.5 million in North America and $16 million overseas.",
+        "label": 0
+    },
+    {
+        "question_id": "Q1840",
+        "question": "what nationality is kris jenner",
+        "document_title": "Kris Jenner",
+        "answer": "Kristen Mary \"Kris\" Jenner (n\u00e9e Houghton, previously Kardashian; born November 5, 1955) is an American socialite, author and television personality.",
+        "label": 1
+    },
+    {
+        "question_id": "Q712",
+        "question": "how many kids  go to a new school in a day in the usa",
+        "document_title": "Education in the United States",
+        "answer": "Government supported, free public schools for all started being established after the revolution, and expanded in the 19th century, as the results of efforts of men like Horace Mann and Booker T. Washington .",
+        "label": 0
+    },
+    {
+        "question_id": "Q197",
+        "question": "how many xbox 360 games are there",
+        "document_title": "List of Xbox 360 games",
+        "answer": "For a chronological list, click the sort button in the 'First released' column.",
+        "label": 0
+    },
+    {
+        "question_id": "Q1150",
+        "question": "who sang proud mary",
+        "document_title": "Proud Mary",
+        "answer": "\"Proud Mary\" is a rock song written by American singer-songwriter and multi-instrumentalist John Fogerty , and recorded by his band Creedence Clearwater Revival .",
+        "label": 1
+    },
+    {
+        "question_id": "Q778",
+        "question": "what colony did france 1900",
+        "document_title": "French colonial empire",
+        "answer": "In rivalry with England , France began to establish colonies in North America , the Caribbean , and India , following the Spanish and Portuguese successes during the Age of Discovery .",
+        "label": 0
+    },
+    {
+        "question_id": "Q2770",
+        "question": "when was library of congress built",
+        "document_title": "Library of Congress",
+        "answer": "Located in four buildings in Washington, D.C., as well as the Packard Campus in Culpeper, Virginia , it is one of the two largest libraries in the world by shelf space and number of books, the other being The British Library .",
+        "label": 0
+    },
+    {
+        "question_id": "Q1956",
+        "question": "what are the charges against Casey Anthony",
+        "document_title": "Death of Caylee Anthony",
+        "answer": "Casey told detectives several falsehoods, including that the child had been kidnapped by a nanny on June 9, and that she had been trying to find her, too frightened to alert the authorities.",
+        "label": 0
+    },
+    {
+        "question_id": "Q253",
+        "question": "how many planets is jupiter away from the sun?",
+        "document_title": "Jupiter",
+        "answer": "( Mars can briefly match Jupiter's brightness at certain points in its orbit.)",
+        "label": 0
+    },
+    {
+        "question_id": "Q2929",
+        "question": "where is ccr from",
+        "document_title": "Creedence Clearwater Revival",
+        "answer": "Their musical style encompassed the roots rock and swamp rock genres.",
+        "label": 0
+    },
+    {
+        "question_id": "Q1903",
+        "question": "What party describes a candidate that focuses on creating new social patterns or values with direct government action",
+        "document_title": "Democratic Party (United States)",
+        "answer": "The Democratic Party is one of the two major contemporary political parties in the United States along with the Republican Party .",
+        "label": 0
+    },
+    {
+        "question_id": "Q500",
+        "question": "how do people get color blindness?",
+        "document_title": "Color blindness",
+        "answer": "The most usual cause is a fault in the development of one or more sets of retinal cones that perceive color in light and transmit that information to the optic nerve.",
+        "label": 0
+    },
+    {
+        "question_id": "Q2179",
+        "question": "what is top marginal tax rate",
+        "document_title": "Income tax in the United States",
+        "answer": "Taxpayers generally must self assess income tax by filing tax returns.",
+        "label": 0
+    },
+    {
+        "question_id": "Q2387",
+        "question": "where is baby bash from",
+        "document_title": "Baby Bash",
+        "answer": "Cyclone followed in 2007, with its title single featuring T-Pain and its follow-up, \" What Is It \" featuring Sean Kingston , landing on the Billboard charts as well.",
+        "label": 0
+    },
+    {
+        "question_id": "Q880",
+        "question": "how many different energy drinks are sold in the u.s",
+        "document_title": "Energy drink",
+        "answer": "They generally contain large amounts of caffeine and other stimulants.",
+        "label": 0
+    },
+    {
+        "question_id": "Q578",
+        "question": "how many people go to macarthur 2010",
+        "document_title": "Douglas MacArthur",
+        "answer": "He officially accepted Japan's surrender on 2 September 1945, and oversaw the occupation of Japan from 1945 to 1951.",
+        "label": 0
+    },
+    {
+        "question_id": "Q2514",
+        "question": "what is dominican republic's most important natural resource",
+        "document_title": "Dominican Republic",
+        "answer": "Christopher Columbus landed on it in 1492, and it became the site of the first permanent European settlement in the Americas, namely Santo Domingo , the country's capital and Spain's first capital in the New World .",
+        "label": 0
+    },
+    {
+        "question_id": "Q1641",
+        "question": "where did the tradition of leaving a sock come from",
+        "document_title": "Christmas stocking",
+        "answer": "However, coal is rarely if ever left in a stocking, as it is considered cruel.",
+        "label": 0
+    },
+    {
+        "question_id": "Q385",
+        "question": "how many nature oceans are on earth",
+        "document_title": "Ocean",
+        "answer": "In terms of the hydrosphere of the Earth, the ocean contains 97% of the Earth's water.",
+        "label": 0
+    },
+    {
+        "question_id": "Q1677",
+        "question": "when did george washington died?",
+        "document_title": "George Washington",
+        "answer": "He supported Alexander Hamilton 's programs to pay off all state and national debt, to implement an effective tax system and to create a national bank (despite opposition from Thomas Jefferson ).",
+        "label": 0
+    },
+    {
+        "question_id": "Q627",
+        "question": "how many laws in judaism",
+        "document_title": "Judaism",
+        "answer": "Judaism is not a homogenous religion, and embraces a number of streams and views.",
+        "label": 0
+    },
+    {
+        "question_id": "Q1746",
+        "question": "what mountains are on appalachian trail",
+        "document_title": "Appalachian Trail",
+        "answer": "The trail passes through the states of Georgia, North Carolina , Tennessee , Virginia , West Virginia , Maryland , Pennsylvania , New Jersey , New York , Connecticut , Massachusetts , Vermont , New Hampshire , and Maine.",
+        "label": 0
+    },
+    {
+        "question_id": "Q880",
+        "question": "how many different energy drinks are sold in the u.s",
+        "document_title": "Energy drink",
+        "answer": "An energy drink is a type of beverage containing stimulant drugs, chiefly caffeine , which is marketed as providing mental or physical stimulation.",
+        "label": 0
+    },
+    {
+        "question_id": "Q1395",
+        "question": "WHO won 2010 mlb mvp",
+        "document_title": "Major League Baseball Most Valuable Player Award",
+        "answer": "The BBWAA does not offer a clear-cut definition of what \"most valuable\" means, instead leaving the judgment to the individual voters.",
+        "label": 0
+    },
+    {
+        "question_id": "Q489",
+        "question": "What county is Aurora, IN",
+        "document_title": "Aurora, Colorado",
+        "answer": "Aurora is one of the principal cities of the Denver-Aurora-Broomfield, CO Metropolitan Statistical Area (Metro Denver).",
+        "label": 0
+    },
+    {
+        "question_id": "Q2617",
+        "question": "what is the song just a dream by carrie underwood about",
+        "document_title": "Just a Dream (Carrie Underwood song)",
+        "answer": "The song was nominated for 2010 Grammy Award for Best Female Country Vocal Performance .",
+        "label": 0
+    },
+    {
+        "question_id": "Q2290",
+        "question": "what is fastest ethernet hub",
+        "document_title": "Ethernet hub",
+        "answer": "The availability of low-priced network switches has largely rendered hubs obsolete but they are still seen in 20th century installations and more specialized applications.",
+        "label": 0
+    },
+    {
+        "question_id": "Q2302",
+        "question": "what is stepwise linear regression",
+        "document_title": "Stepwise regression",
+        "answer": "The frequent practice of fitting the final selected model followed by reporting estimates and confidence intervals without adjusting them to take the model building process into account has led to calls to stop using stepwise model building altogether or to at least make sure model uncertainty is correctly reflected.",
+        "label": 0
+    },
+    {
+        "question_id": "Q2248",
+        "question": "what is the significance of the headwear of a saudi prince",
+        "document_title": "Mecca",
+        "answer": "It was absorbed into Saudi Arabia in 1925.",
+        "label": 0
+    },
+    {
+        "question_id": "Q578",
+        "question": "how many people go to macarthur 2010",
+        "document_title": "Douglas MacArthur",
+        "answer": "As the effective ruler of Japan, he oversaw sweeping economic, political and social changes.",
+        "label": 0
+    },
+    {
+        "question_id": "Q439",
+        "question": "what does judgment as a matter of law mean",
+        "document_title": "Judgment as a matter of law",
+        "answer": "Timing is very important in making a motion for JMOL; the motion can only be made once the opposing party has presented its case.",
+        "label": 0
+    },
+    {
+        "question_id": "Q119",
+        "question": "what do you want from me quotes",
+        "document_title": "What Do You Want From Me",
+        "answer": "\"What Do You Want from Me?\"",
+        "label": 0
+    },
+    {
+        "question_id": "Q2415",
+        "question": "What is D Application in code blocks",
+        "document_title": "Block code",
+        "answer": "Block Codes are conceptually useful because they allow coding theorists, mathematicians , and computer scientists to study the limitations of all block codes in a unified way.",
+        "label": 0
+    },
+    {
+        "question_id": "Q1336",
+        "question": "what are the arb medications",
+        "document_title": "ARB",
+        "answer": "ARb, the United States Navy hull classification symbol for \"base repair ship \"",
+        "label": 0
+    },
+    {
+        "question_id": "Q1757",
+        "question": "when did scott pilgrim come out",
+        "document_title": "Scott Pilgrim vs. the World",
+        "answer": "Scott Pilgrim vs. the World was planned as a film after the first volume of the comic was released.",
+        "label": 0
+    },
+    {
+        "question_id": "Q1960",
+        "question": "what organic molecules are found in cottage cheese",
+        "document_title": "Cheese",
+        "answer": "Cheesemakers near a dairy region may benefit from fresher, lower-priced milk, and lower shipping costs.",
+        "label": 0
+    },
+    {
+        "question_id": "Q1630",
+        "question": "what are the most known sports in america",
+        "document_title": "Sports in the United States",
+        "answer": "In many cases college athletics are more popular than professional sports, with the major sanctioning body being the NCAA .",
+        "label": 0
+    },
+    {
+        "question_id": "Q2746",
+        "question": "when was the first census of all 50 states",
+        "document_title": "U.S. state",
+        "answer": "Debates over states' rights were a contributing factor to the outbreak of the American Civil War .",
+        "label": 0
+    },
+    {
+        "question_id": "Q2765",
+        "question": "what is the difference between alpha lipoic acid and lipoic acid",
+        "document_title": "Lipoic acid",
+        "answer": "Although the intracellular environment is strongly reducing, both free LA and its reduced form, dihydrolipoic acid (DHLA), have been detected in cells after administration of LA.",
+        "label": 0
+    },
+    {
+        "question_id": "Q2142",
+        "question": "where is david ortiz from",
+        "document_title": "David Ortiz",
+        "answer": "He is one of 50 MLB players in history to hit at least 400 career home runs.",
+        "label": 0
+    },
+    {
+        "question_id": "Q1445",
+        "question": "what part of the plant are avocados",
+        "document_title": "Avocado",
+        "answer": "Trees are partially self-pollinating and often are propagated through grafting to maintain a predictable quality and quantity of the fruit.",
+        "label": 0
+    },
+    {
+        "question_id": "Q1172",
+        "question": "what part of the pre-world war 1 arms race was the most intense?",
+        "document_title": "Causes of World War I",
+        "answer": "Although the chain of events unleashed by the assassination triggered the war, the war's origins go deeper, involving national politics, cultures, economics, and a complex web of alliances and counterbalances that had developed between the various European powers since 1870.",
+        "label": 0
+    },
+    {
+        "question_id": "Q2420",
+        "question": "what is ron weasley's sister's name",
+        "document_title": "Ron Weasley",
+        "answer": "Along with Harry and Hermione, he is a member of the Gryffindor house.",
+        "label": 0
+    },
+    {
+        "question_id": "Q1985",
+        "question": "what are SLR cameras",
+        "document_title": "Single-lens reflex camera",
+        "answer": "The historic 1949 Zeiss Ikon VEB Contax S , manufactured in Dresden , the first pentaprism SLR for eye-level viewing",
+        "label": 0
+    },
+    {
+        "question_id": "Q2961",
+        "question": "what is direct marketing channel",
+        "document_title": "Direct Marketing",
+        "answer": "Direct marketing relies on being able to address the members of a target market .",
+        "label": 0
+    },
+    {
+        "question_id": "Q578",
+        "question": "how many people go to macarthur 2010",
+        "document_title": "Douglas MacArthur",
+        "answer": "From 1919 to 1922, MacArthur served as Superintendent of the U.S. Military Academy at West Point, where he attempted a series of reforms.",
+        "label": 0
+    },
+    {
+        "question_id": "Q604",
+        "question": "what channel is shopnbc on",
+        "document_title": "ShopNBC",
+        "answer": "Its main competitors are HSN (Home Shopping Network) and QVC .",
+        "label": 0
+    },
+    {
+        "question_id": "Q2179",
+        "question": "what is top marginal tax rate",
+        "document_title": "Income tax in the United States",
+        "answer": "Some deductions are subject to limits.",
+        "label": 0
+    },
+    {
+        "question_id": "Q1172",
+        "question": "what part of the pre-world war 1 arms race was the most intense?",
+        "document_title": "Causes of World War I",
+        "answer": "They were successful in 1912 and 1913 but did not succeed in in 1914.",
+        "label": 0
+    },
+    {
+        "question_id": "Q1742",
+        "question": "what song did ricky martin sing at the grammy awards",
+        "document_title": "Ricky Martin",
+        "answer": "Enrique \"Ricky\" Mart\u00edn Morales (born December 24, 1971), is a Puerto Rican pop singer, musician, songwriter, actor and author who achieved prominence, first as a member of the Puerto Rican boy band Menudo , and as a solo artist since 1991.",
+        "label": 0
+    },
+    {
+        "question_id": "Q85",
+        "question": "how much is an adult film actor paid",
+        "document_title": "Pornographic film actor",
+        "answer": "The Venus Awards are presented each year in Berlin as part of the Venus Berlin trade fair .",
+        "label": 0
+    },
+    {
+        "question_id": "Q1445",
+        "question": "what part of the plant are avocados",
+        "document_title": "Avocado",
+        "answer": "Commercially, it ripens after harvesting.",
+        "label": 0
+    },
+    {
+        "question_id": "Q644",
+        "question": "what hormones produce thyroid",
+        "document_title": "Thyroid hormone",
+        "answer": "These are further processed by decarboxylation and deiodination to produce iodothyronamine (T1a) and thyronamine (T0a).",
+        "label": 0
+    },
+    {
+        "question_id": "Q2280",
+        "question": "when were the jews removed from the promised land",
+        "document_title": "History of the Jews in the Land of Israel",
+        "answer": "During the biblical period, two kingdoms occupied the highland zone, the kingdom of Israel in the north and, somewhat later to emerge, the kingdom of Judah in the south: Israel was conquered c.722 BCE , and Judah c.586 BCE .",
+        "label": 0
+    },
+    {
+        "question_id": "Q525",
+        "question": "how many episodes of boardwalk empire",
+        "document_title": "Boardwalk Empire (episode)",
+        "answer": "Paige Wiser of the Chicago Sun-Times called it \"... an event not to be missed,\" and praised Buscemi in particular, calling his performance \"fascinating.\"",
+        "label": 0
+    },
+    {
+        "question_id": "Q66",
+        "question": "how did armando christian perez become famous",
+        "document_title": "Pitbull (entertainer)",
+        "answer": "Since then, he has released three other albums under the label: El Mariel in 2006, The Boatlift in 2007, and Planet Pit in 2011.",
+        "label": 0
+    },
+    {
+        "question_id": "Q2176",
+        "question": "what was mexico's original capital",
+        "document_title": "Mexico city",
+        "answer": "The city was originally built on an island of Lake Texcoco by the Aztecs in 1325 as Tenochtitlan , which was almost completely destroyed in the 1521 siege of Tenochtitlan , and subsequently redesigned and rebuilt in accordance with the Spanish urban standards .",
+        "label": 0
+    },
+    {
+        "question_id": "Q1677",
+        "question": "when did george washington died?",
+        "document_title": "George Washington",
+        "answer": "Because of his strategy, Revolutionary forces captured two major British armies at Saratoga in 1777 and Yorktown in 1781 .",
+        "label": 0
+    },
+    {
+        "question_id": "Q729",
+        "question": "how did James Dean die?",
+        "document_title": "James Dean",
+        "answer": "The other two roles that defined his stardom were as loner Cal Trask in East of Eden (1955), and as the surly ranch hand, Jett Rink, in Giant (1956).",
+        "label": 0
+    },
+    {
+        "question_id": "Q2770",
+        "question": "when was library of congress built",
+        "document_title": "Library of Congress",
+        "answer": "Although it is open to the public, only Library employees, Members of Congress, Supreme Court justices and other high-ranking government officials may check out books.",
+        "label": 0
+    },
+    {
+        "question_id": "Q2468",
+        "question": "what is article 5 about",
+        "document_title": "Article Five of the United States Constitution",
+        "answer": "state ratifying conventions held in three-fourths of the states.",
+        "label": 0
+    },
+    {
+        "question_id": "Q1614",
+        "question": "what motor does a 2001 monte carlo",
+        "document_title": "Chevrolet Monte Carlo",
+        "answer": "Following a several year hiatus following the discontinuation of the rear-drive Monte Carlo after 1988, the nameplate was revived for 1995 on a front-drive, V6-powered coupe based on the Chevrolet Lumina sedan.",
+        "label": 0
+    },
+    {
+        "question_id": "Q644",
+        "question": "what hormones produce thyroid",
+        "document_title": "Thyroid hormone",
+        "answer": "All three isoforms of the deiodinases are selenium-containing enzymes, thus dietary selenium is essential for T3 production.",
+        "label": 0
+    },
+    {
+        "question_id": "Q2420",
+        "question": "what is ron weasley's sister's name",
+        "document_title": "Ron Weasley",
+        "answer": "He is a member of the Weasley family, a pure blood family, who reside in \" The Burrow \" outside Ottery St. Catchpole.",
+        "label": 0
+    },
+    {
+        "question_id": "Q2827",
+        "question": "who is in The school of athens",
+        "document_title": "The School of Athens",
+        "answer": "It was painted between 1509 and 1511 as a part of Raphael's commission to decorate with frescoes the rooms now known as the , in the Apostolic Palace in the Vatican .",
+        "label": 0
+    },
+    {
+        "question_id": "Q253",
+        "question": "how many planets is jupiter away from the sun?",
+        "document_title": "Jupiter",
+        "answer": "Ganymede , the largest of these moons, has a diameter greater than that of the planet Mercury .",
+        "label": 0
+    },
+    {
+        "question_id": "Q1667",
+        "question": "what is am 2201",
+        "document_title": "AM-2201",
+        "answer": "As the dosage is much smaller than most other synthetic cannabinoids, users may accidentally dose too much.",
+        "label": 0
+    },
+    {
+        "question_id": "Q2514",
+        "question": "what is dominican republic's most important natural resource",
+        "document_title": "Dominican Republic",
+        "answer": "A large Dominican diaspora exists, most of it in the United States.",
+        "label": 0
+    },
+    {
+        "question_id": "Q2142",
+        "question": "where is david ortiz from",
+        "document_title": "David Ortiz",
+        "answer": "Mostly a designated hitter, Ortiz played first base during his early career.",
+        "label": 0
+    },
+    {
+        "question_id": "Q2139",
+        "question": "where is scotty mccreery from",
+        "document_title": "Scotty McCreery",
+        "answer": "He also released a Christmas album, Christmas with Scotty McCreery , which has been certified gold.",
+        "label": 0
+    },
+    {
+        "question_id": "Q712",
+        "question": "how many kids  go to a new school in a day in the usa",
+        "document_title": "Education in the United States",
+        "answer": "The resulting No Child Left Behind Act of 2001 was controversial and its goals proved to be unrealistic.",
+        "label": 0
+    },
+    {
+        "question_id": "Q868",
+        "question": "what country took over ireland",
+        "document_title": "Ireland",
+        "answer": "It is the third-largest island in Europe and the twentieth-largest island on Earth.",
+        "label": 0
+    },
+    {
+        "question_id": "Q2718",
+        "question": "what is jagger bombs",
+        "document_title": "J\u00c3\u00a4gerbomb",
+        "answer": "The J\u00e4gerbomb () is a bomb shot cocktail that was originally mixed by dropping a shot of J\u00e4germeister into a glass of beer and in recent years evolved by the Bagheri brothers (UK) with Red Bull or other energy drinks.",
+        "label": 1
+    },
+    {
+        "question_id": "Q385",
+        "question": "how many nature oceans are on earth",
+        "document_title": "Ocean",
+        "answer": "The word \" sea \" is often used interchangeably with \"ocean\", but strictly speaking a sea is a body of saline water (possibly a division of the World Ocean) partly or fully enclosed by land.",
+        "label": 0
+    },
+    {
+        "question_id": "Q126",
+        "question": "how old do you have to be to get in the olympics",
+        "document_title": "Olympic Games",
+        "answer": "There are several Olympic rituals and symbols, such as the Olympic flag and torch , as well as the opening and closing ceremonies .",
+        "label": 0
+    },
+    {
+        "question_id": "Q2694",
+        "question": "who was kentucky s first basketball coach",
+        "document_title": "Kentucky Wildcats men's basketball",
+        "answer": "The team's huge fan base is often referred to as the \" Big Blue Nation \" or the \"Big Blue Mist\", the latter because the fans typically engulf tournament and neutral-site venues.",
+        "label": 0
+    },
+    {
+        "question_id": "Q2243",
+        "question": "where is Shelton Benjamin, WWE",
+        "document_title": "Shelton Benjamin",
+        "answer": "He first spent time in Ohio Valley Wrestling , where he held the Southern Tag Team Championship four times .",
+        "label": 0
+    },
+    {
+        "question_id": "Q2248",
+        "question": "what is the significance of the headwear of a saudi prince",
+        "document_title": "Mecca",
+        "answer": "Because of this, Mecca has lost many thousand-year-old buildings and archaeological sites.",
+        "label": 0
+    },
+    {
+        "question_id": "Q1677",
+        "question": "when did george washington died?",
+        "document_title": "George Washington",
+        "answer": "Washington's Farewell Address was an influential primer on republican virtue and a warning against partisanship, sectionalism, and involvement in foreign wars.",
+        "label": 0
+    },
+    {
+        "question_id": "Q167",
+        "question": "how many people were killed in the oklahoma city bombing",
+        "document_title": "Oklahoma City bombing",
+        "answer": "As a result of the bombing, the U.S. government passed the Antiterrorism and Effective Death Penalty Act of 1996 , which tightened the standards for habeas corpus in the United States , as well as legislation designed to increase the protection around federal buildings to deter future terrorist attacks.",
+        "label": 0
+    },
+    {
+        "question_id": "Q256",
+        "question": "HOW MANY TEAMS CAN A LEAGUE SEND TO LITTLE LEAGUE ALL-STARS",
+        "document_title": "Little League Baseball",
+        "answer": "The organization's administrative office is located in South Williamsport.",
+        "label": 0
+    },
+    {
+        "question_id": "Q1081",
+        "question": "what separates me from you album",
+        "document_title": "What Separates Me from You",
+        "answer": "The album debuted on the US Billboard 200 at number 11 with 58,000 first week sales, becoming A Day to Remember's personal best, as Homesick peaked at number 21.",
+        "label": 0
+    },
+    {
+        "question_id": "Q1915",
+        "question": "where did the olmecs come from",
+        "document_title": "Olmec",
+        "answer": "Olmec Head No. 3 from San Lorenzo Tenochtitlan 1200\u2013900 BCE",
+        "label": 0
+    },
+    {
+        "question_id": "Q809",
+        "question": "how is spider solitaire scored",
+        "document_title": "Spider (solitaire)",
+        "answer": "Spider is a type of Patience game.",
+        "label": 0
+    },
+    {
+        "question_id": "Q2257",
+        "question": "who is  the secretary of state florida",
+        "document_title": "Secretary of state (U.S. state government)",
+        "answer": "In three states with no Lieutenant Governor; Arizona , Oregon and Wyoming , as well as the U.S. territory of Puerto Rico , the Secretary of State is first in the line of succession in the event of a gubernatorial vacancy.",
+        "label": 0
+    },
+    {
+        "question_id": "Q1384",
+        "question": "who won the super in xl1",
+        "document_title": "Super Bowl XLI",
+        "answer": "Super Bowl XLI was an American football game between the American Football Conference (AFC) champion Indianapolis Colts and the National Football Conference (NFC) champion Chicago Bears to decide the National Football League (NFL) champion for the 2006 season .",
+        "label": 0
+    },
+    {
+        "question_id": "Q2882",
+        "question": "where are the jonas brothers right now",
+        "document_title": "Jonas Brothers",
+        "answer": "In the summer of 2008 they starred in the Disney Channel Original Movies Camp Rock and in 2010 it's sequel, Camp Rock 2: The Final Jam .",
+        "label": 0
+    },
+    {
+        "question_id": "Q991",
+        "question": "how many baseball clubs did walter o malley buy",
+        "document_title": "Walter O'Malley",
+        "answer": "O'Malley ceded the team presidency to his son, Peter, in but retained the titles of owner and chairman of the Dodgers until his death in 1979.",
+        "label": 0
+    },
+    {
+        "question_id": "Q1526",
+        "question": "who plays rosie in mamma mia",
+        "document_title": "Mamma Mia!",
+        "answer": "is a stage musical written by British playwright Catherine Johnson , based on the songs of ABBA , composed by Benny Andersson and Bj\u00f6rn Ulvaeus , former members of the band.",
+        "label": 0
+    },
+    {
+        "question_id": "Q2779",
+        "question": "what is the movie when jennifer love hewitt cooks",
+        "document_title": "Jennifer Love Hewitt",
+        "answer": "She was identified as the \"#1 reader choice\" on the November 1999 and May 2009 covers of Maxim .",
+        "label": 0
+    },
+    {
+        "question_id": "Q1538",
+        "question": "who starred in the original true grit",
+        "document_title": "True Grit (1969 film)",
+        "answer": "True Grit is a 1969 American western film written by Marguerite Roberts and directed by Henry Hathaway .",
+        "label": 0
+    }
+]

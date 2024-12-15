@@ -1,0 +1,421 @@
+id,question,model_answer,ground_truth_answer,binary_success,type
+Q765,what colors are in a rainbow,"
+A rainbow typically displays seven colors, which are often remembered by the acronym ROYGBIV. The colors are:
+
+1. Red
+2. Orange
+3. Yellow
+4. Green
+5. Blue
+6. Indigo
+7. Violet
+
+These colors appear in this specific order when light is refracted, reflected, and dispersed through water droplets in the atmosphere.
+",It takes the form of a multicoloured arc .,0,0
+Q1746,what mountains are on appalachian trail,"
+The Appalachian Trail (AT) traverses a variety of mountain ranges along its 2,190-mile route from Georgia to Maine. Here are some of the key mountain ranges and notable mountains along the trail:
+
+1. **Southern Appalachians**:
+   - **Great Smoky Mountains**: Notable peaks include Clingmans Dome (the highest point on the AT at 6,643 feet) and Mount LeConte.
+   - **Blue Ridge Mountains**: This range includes areas in North Carolina and Virginia, featuring peaks like Hawksbill Mountain and Mount Mitchell (the highest peak east of the Mississippi River at 6,684 feet).
+
+2. **Central Appalachians**:
+   - **Virginia's Allegheny Mountains**: Peaks include Bald Knob and High Knob.
+   - **Catoctin Mountains**: Located in Maryland, features include Catoctin Mountain Park.
+
+3. **Northern Appalachians**:
+   - **Green Mountains**: Located in Vermont, notable peaks include Killington Peak and Mount Mansfield.
+   - **White Mountains**: In New Hampshire, featuring peaks like Mount Washington (the highest peak in the Northeastern U.S.) and Franconia Ridge.
+
+4. **Maine's Appalachian Range**:
+   - **Mahoosuc Range**: Known for its rugged terrain and includes peaks like Mahoosuc Notch.
+   - **Baxter State Park**: Home to Mount Katahdin, the northern terminus of the AT.
+
+These ranges and peaks provide diverse hiking experiences, from challenging climbs and stunning views to tranquil woodlands. Each section of the AT offers unique geological and ecological features, making it a popular destination for hikers.
+","The Appalachian National Scenic Trail, generally known as the Appalachian Trail or simply the A.T., is a marked hiking trail in the eastern United States extending between Springer Mountain in Georgia and Mount Katahdin in Maine .",0,1
+Q1110,when did the lutheran church began,"
+The Lutheran Church began in the early 16th century, primarily associated with Martin Luther, a German monk and theologian. The pivotal moment is often considered to be October 31, 1517, when Luther posted his ""Ninety-Five Theses"" on the door of the Wittenberg Castle Church. This act is seen as the catalyst for the Protestant Reformation, which challenged the practices and doctrines of the Roman Catholic Church.
+
+Luther's teachings and reforms led to the establishment of a distinct Lutheran tradition within Christianity, emphasizing justification by faith, the authority of Scripture, and the priesthood of all believers. The formal establishment of the Lutheran Church as a denomination occurred over the following decades, particularly with the Augsburg Confession in 1530, which outlined Lutheran beliefs in response to Catholic doctrine.
+","Like most denominations, Lutheranism is split between Liberal and Conservative/Confessional camps.",0,0
+Q335,what does the federal reserve do,"
+The Federal Reserve, often referred to as the Fed, is the central banking system of the United States. Its primary functions and responsibilities include:
+
+1. **Monetary Policy**: The Fed implements monetary policy to influence the economy by managing interest rates and controlling the money supply. Its goals are to promote maximum employment, stabilize prices, and moderate long-term interest rates.
+
+2. **Supervision and Regulation**: The Fed supervises and regulates banks and other financial institutions to ensure the safety and soundness of the banking system. It also works to protect consumers' credit rights.
+
+3. **Financial Services**: The Federal Reserve provides various financial services, including processing payments through the Federal Reserve System, serving as a bank for the U.S. government, and acting as a lender of last resort to banks in need of liquidity.
+
+4. **Stability of the Financial System**: The Fed monitors and addresses risks to the financial system to maintain its stability. This includes conducting stress tests on large banks to assess their ability to withstand economic shocks.
+
+5. **Research and Data Analysis**: The Federal Reserve conducts economic research and provides data to inform its policy decisions and the public. This research covers a wide range of economic issues, including inflation, unemployment, and overall economic growth.
+
+6. **Currency Issuance**: The Fed is responsible for issuing and regulating the supply of U.S. currency, including coins and paper money.
+
+Overall, the Federal Reserve plays a crucial role in the U.S. economy by influencing monetary conditions, overseeing the banking system, and striving to maintain financial stability.
+",The government also exercises some control over the Federal Reserve by appointing and setting the salaries of the system's highest-level employees.,0,0
+Q1881,who coined the term bucket list,"
+The term ""bucket list"" was coined by screenwriter Justin Zackham while he was working on the screenplay for the 2007 film ""The Bucket List,"" which starred Jack Nicholson and Morgan Freeman. The film revolves around two terminally ill men who escape from their hospital to fulfill a list of experiences they wish to complete before they ""kick the bucket,"" a colloquial expression meaning to die.
+
+While Zackham is credited with popularizing the term, the concept of creating a list of things to do before one dies existed in various forms prior to the film's release. Notably, the phrase ""bucket list"" itself emerged in a few contexts before 2007, though these instances were not widely recognized. 
+
+1. **Earlier References**: 
+   - The phrase appeared in a 1993 report by the National Labor Relations Board, where it referred to agenda items that could not be addressed at a meeting, indicating a procedural context rather than a personal life list.
+   - In 2004, the term was used in the book *Unfair & Unbalanced: The Lunatic Magniloquence of Henry E. Panky* by Patrick M. Carlisle, where it was contextually linked to life ambitions, marking its first usage in a context closer to its current meaning.
+
+2. **Etymology of ""Kick the Bucket""**: 
+   - The idiom ""kick the bucket,"" which means to die, has been in use since at least the late 18th century. It is believed that ""bucket list"" evolved from this expression, solidifying the connection between the idea of dying and the urgency to fulfill one's aspirations.
+
+3. **Cultural Impact**: 
+   - Zackham wrote a personal list titled ""Justin's List of Things to Do Before I Kick the Bucket,"" which he later shortened to ""Justin's Bucket List."" This initial list was a source of inspiration for the film's screenplay. The film's success significantly popularized the term ""bucket list,"" leading to its inclusion in major dictionaries like Merriam-Webster and the Oxford English Dictionary.
+
+In summary, while Justin Zackham is credited with coining the term ""bucket list"" for the film, the concept had existed in various forms prior to 2007, and the term itself became widely recognized and popularized through the film's narrative and themes.
+","The film opened in wide release in the United States and Canada on January 11, 2008 and was released in the United Kingdom on February 8, 2008, and in Australia on February 21, 2008.",0,0
+Q2560,what is oregon institute of technology like,"
+The Oregon Institute of Technology (Oregon Tech) is a public university located primarily in Klamath Falls, Oregon, with a significant presence in the Portland metropolitan area. As Oregon's only polytechnic university, it specializes in technical subjects and applied sciences, providing a hands-on, project-based learning environment designed to prepare students for careers in high-demand fields such as engineering, healthcare, and technology.
+
+### Key Features of Oregon Tech:
+
+1. **Academic Programs**: Oregon Tech offers nearly 50 undergraduate and graduate degree programs, including a Doctor of Physical Therapy. Its majors span areas like engineering, health professions, business, communication, and applied sciences. The focus is on innovation, scholarship, and applied research, ensuring that students receive a rigorous education that is relevant to current industry needs.
+
+2. **Student Experience**: The university emphasizes real-world learning through internships, externships, and field experiences. Students often report that the faculty are accessible and involved, contributing to a supportive academic environment. The average student-to-faculty ratio is approximately 14:1, allowing for personalized attention in classes.
+
+3. **Campus Life**: The Klamath Falls campus features residential facilities that help foster social connections among students. Although some students desire improvements in campus amenities and food options, many appreciate the close-knit community feel and the scenic surroundings, which include stunning views of nearby natural landscapes. The Portland-Metro campus offers a more urban experience, catering to students in a vibrant tech hub.
+
+4. **Diversity and Inclusion**: Oregon Tech has a diverse student body, with a significant percentage of racial and ethnic minorities and a mix of in-state and out-of-state students. The university actively promotes an inclusive atmosphere through various programs and initiatives.
+
+5. **Career Outcomes**: Graduates from Oregon Tech tend to have strong job prospects, with a median starting salary of about $61,000. The university's focus on applied sciences and technology aligns well with industry demands, resulting in high employability rates for its graduates.
+
+6. **Overall Reputation**: The university is well-regarded for its value, ranking among the top colleges in Oregon. Student reviews often highlight the quality of education, the dedication of faculty, and the strong alumni network, which can be beneficial for job placement after graduation.
+
+In summary, Oregon Tech is characterized by its practical, hands-on approach to education, a supportive community, and a commitment to preparing students for successful careers in various technical fields.
+","The university also has sites in Salem , La Grande , and Seattle , as well as online degree offerings.",0,0
+Q1045,Who should the democrats vote for on 11/2/10,"
+The question ""Who should the Democrats vote for on 11/2/10?"" pertains to the midterm elections held on November 2, 2010, a pivotal moment that significantly impacted the political landscape in the United States. In light of the feedback provided, here’s a more direct and actionable response that includes specific recommendations and endorsements for Democratic voters during that election:
+
+### Updated Recommendations for Democratic Voters on November 2, 2010:
+
+1. **Key Democratic Candidates to Support**:
+   - **Senate**: 
+     - **Barbara Boxer** (California): Incumbent Senator facing a competitive race, she was a strong advocate for progressive policies, including healthcare reform and environmental protections.
+     - **Harry Reid** (Nevada): As Senate Majority Leader, his re-election was crucial for preserving Democratic control in the Senate.
+   - **House of Representatives**:
+     - **Nancy Pelosi** (California, District 8): The then-Speaker of the House, her leadership was vital for advancing Democratic legislative priorities.
+
+2. **Statewide Offices**:
+   - **Jerry Brown** (California): Running for Governor, he focused on progressive issues, including education and healthcare.
+   - **Deval Patrick** (Massachusetts): Incumbent Governor, known for his work on healthcare reform, key issues for Democratic voters.
+
+3. **Voter Guides and Endorsements**:
+   - Voters should consult endorsements from local Democratic organizations and influential groups such as the **Democratic Congressional Campaign Committee (DCCC)**. For example, the **Potrero Hill Democratic Club** endorsed candidates like Barbara Boxer and Jerry Brown, reflecting their alignment with core Democratic values.
+
+4. **Issues to Consider**:
+   - **Economic Recovery**: Given the backdrop of the Great Recession, Democratic candidates who prioritized job creation and economic stability should be supported.
+   - **Healthcare**: Voters were encouraged to back candidates who defended the **Affordable Care Act (ACA)** and worked towards expanding healthcare access.
+
+5. **Strategic Voting**:
+   - In closely contested districts, voters were advised to rally behind candidates with the best chance of defeating Republican challengers. This strategic approach was essential to minimize losses in the House and maintain a Democratic presence in the Senate.
+
+### Conclusion:
+Democratic voters on November 2, 2010, were encouraged to support candidates like Barbara Boxer and Harry Reid at the federal level, as well as Jerry Brown and Deval Patrick at the state level. By focusing on candidates who aligned with key issues such as economic recovery and healthcare reform, and utilizing local endorsements as a guide, Democrats aimed to navigate a challenging electoral environment characterized by widespread discontent and a strong Republican wave.
+
+This structured approach not only provided a clear direction for voters but also emphasized the importance of informed decision-making in a critical midterm election.
+",Current President of the United States Barack Obama is the 15th Democrat to hold the office of Presidency.,0,0
+Q830,How far is it from Quitman Texas to  Natchez Mississippi,"
+The distance from Quitman, Texas to Natchez, Mississippi is approximately 315 miles (507 kilometers). If driving nonstop, the trip would take around 5 hours and 11 minutes. However, it is advisable to account for additional time for rest stops, gas, or food along the way.
+","It predates Jackson, which replaced Natchez as the capital in 1822, by more than a century.",0,0
+Q2064,when was the web invented,"
+The World Wide Web was invented by Tim Berners-Lee in 1989. He proposed it while working at CERN (the European Organization for Nuclear Research) as a way to facilitate information sharing among researchers. The first website was launched on August 6, 1991.
+","With a web browser , one can view web pages that may contain text, images, videos, and other multimedia , and navigate between them via hyperlinks .",0,0
+Q1335,what year was elvis born,"
+Elvis Presley was born on January 8, 1935.
+","Prescription drug abuse severely deteriorated his health, and he died suddenly in 1977 at the age of 42.",0,0
+Q1742,what song did ricky martin sing at the grammy awards,"
+Ricky Martin performed the song ""Oye Cómo Va"" at the Latin Grammy Awards in 2000. This performance was part of a medley alongside Celia Cruz and Gloria Estefan, honoring the legacy of Tito Puente. The song is a famous cha-cha-chá originally composed by Puente, which Martin electrified with his rendition, showcasing his commitment to celebrating his roots while achieving crossover success.
+","Martin began his career at age twelve with the all-boy pop group Menudo; after five years with the group, he released his Spanish-language solo album, Ricky Martin , in 1991.",0,0
+Q1678,what is a wiki platform,"
+A wiki platform is a collaborative web-based application that allows users to create, edit, and manage content collectively. It serves as a user-generated repository of knowledge, where anyone with access can contribute and refine information. The most recognized example of a wiki platform is Wikipedia, which acts as an extensive encyclopedia that is constantly updated by its users.
+
+### Key Features of a Wiki Platform:
+
+1. **Collaborative Editing**: Multiple users can contribute to and edit content simultaneously or over time, fostering a communal knowledge base.
+
+2. **Version Control**: Wikis maintain a history of changes, enabling users to track edits, revert to previous versions, and see who made specific changes.
+
+3. **User Permissions**: Access levels can vary among users, allowing for controlled editing and viewing rights depending on the user's role.
+
+4. **Rich Text Editors**: Wikis often utilize WYSIWYG (What You See Is What You Get) editors, making it easy for users to format text, add images, and incorporate links without needing to know complex coding languages.
+
+5. **Search Functionality**: Built-in search engines allow users to find specific content quickly, even in large repositories of information.
+
+6. **Discussion Pages**: Many wikis include areas where users can discuss edits, propose changes, and resolve disputes, enhancing collaborative efforts.
+
+### Importance of Wikis:
+
+Wikis are valuable tools for knowledge sharing, particularly in educational settings and organizations. They allow for the documentation of processes, collective learning, and the effective sharing of institutional knowledge. The democratic nature of wikis can lead to high-quality, reliable information as errors can be corrected by other users quickly.
+
+### Examples of Wiki Platforms:
+
+- **MediaWiki**: The software that powers Wikipedia, known for its extensive capabilities but requiring some technical knowledge to set up.
+- **DokuWiki**: An open-source wiki that is user-friendly and suitable for small to medium projects, utilizing a simple text format and offering a broad range of plugins.
+- **Wiki.js**: A modern, extensible wiki engine designed for flexibility and ease of use, compatible with multiple databases.
+- **Confluence**: A popular choice in corporate environments, particularly for teams using Atlassian products, which integrates seamlessly with project management tools.
+- **BookStack**: A free, open-source documentation platform that organizes content into a book-like structure, suitable for team collaboration.
+
+### Conclusion:
+
+Wikis provide a unique approach to information management, enabling collective contributions to knowledge bases. Their collaborative nature and user-friendly features make them essential tools for organizations and communities aiming to foster knowledge sharing and enhance productivity.
+","Wikis serve many different purposes, such as knowledge management and notetaking .",0,0
+Q1642,what year did john adams become  president?,"
+John Adams became president in 1797. He served as the second president of the United States, holding office from March 4, 1797, to March 4, 1801.
+","Adams signed the controversial Alien and Sedition Acts , and built up the army and navy especially in the face of an undeclared naval war (called the "" Quasi-War "") with France , 1798–1800.",0,0
+Q931,what kind of company is Microsoft?,"
+Microsoft Corporation is a multinational technology company that develops, licenses, and supports a wide range of software products, services, and devices. Founded in 1975 by Bill Gates and Paul Allen, the company is best known for its software products, including the Windows operating system and the Microsoft Office suite of productivity applications. 
+
+In addition to software, Microsoft has a significant presence in several other areas:
+
+1. **Cloud Computing**: Through its Azure platform, Microsoft provides a variety of cloud services, including computing power, storage, and networking.
+
+2. **Hardware**: Microsoft also produces hardware products, including the Surface line of tablets and laptops, as well as Xbox gaming consoles.
+
+3. **Enterprise Solutions**: The company offers enterprise software solutions, such as Dynamics 365 for business management, and various tools for collaboration and communication, including Microsoft Teams.
+
+4. **Artificial Intelligence**: Microsoft is invested in AI technologies, integrating them into its products and platforms, such as the Azure AI services.
+
+5. **Gaming**: In addition to the Xbox gaming console, Microsoft has a significant presence in the gaming industry through its Xbox Game Studios and the acquisition of gaming companies.
+
+Overall, Microsoft is recognized as one of the largest and most influential technology companies in the world, with a diverse portfolio that spans multiple sectors in the tech industry.
+","Since the 1990s, it has increasingly diversified from the operating system market and has made a number of corporate acquisitions .",0,0
+Q2480,when were 4g wireless networks launched in the United States?,"
+4G wireless networks in the United States began to be rolled out in 2009. The first major carrier to launch a 4G network was Sprint, which introduced its WiMAX network in June 2009. Following that, other carriers, including Verizon and AT&T, began launching their own 4G LTE networks in late 2010 and 2011. Verizon's LTE network went live in December 2010, marking a significant step in the adoption of 4G technology in the U.S.
+","Equipment made for different continents are not always compatible, because of different frequency bands.",0,0
+Q1671,what nuns ran the french hospital in ny?,"
+The French hospital in New York was run by the **Sisters of Charity**. This religious order played a significant role in healthcare during the 19th and early 20th centuries, particularly in urban centers like New York City. The Sisters of Charity were known for their dedication to serving the poor and providing medical care, often establishing hospitals and healthcare facilities to address the needs of their communities.
+
+If you have further questions about the specific contributions of the Sisters of Charity or the history of the French hospital, feel free to ask!
+",The following list is being added to and is incomplete:,0,0
+Q126,how old do you have to be to get in the olympics,"
+To participate in the Olympics, there is no universal minimum age requirement that applies to all athletes. Instead, age eligibility is determined by the specific rules of each International Sports Federation (IF) for the respective sport, as stated in the Olympic Charter. This means that while some sports have established minimum age requirements, others may not.
+
+### Age Requirements by Sport
+
+1. **Diving**: Minimum age is **14**.
+2. **Gymnastics**: Minimum age is **16**.
+3. **Breaking (Breakdancing)**: Minimum age is **15**.
+4. **Boxing**: Minimum age is **18**.
+5. **Swimming**: No official minimum age set by the International Federation, but many countries, including the U.S. and Canada, typically impose a minimum age of **13**.
+6. **Track and Field**: Similar to swimming, there is no official minimum age at the international level, but national rules can set a minimum, often around **13** in places like the U.S. However, countries like Spain and Russia have higher requirements, with ages set at **14** and **18**, respectively.
+
+### Variability by Country
+
+While international governing bodies set some age limits, national federations have the authority to impose their own regulations, leading to significant variability. For instance:
+- **United States and Canada**: Generally allow athletes as young as **13** in swimming and track events.
+- **Spain**: Sets the minimum age at **14** for certain sports.
+- **Russia**: Imposes a minimum age of **18** for boxing and **14** for diving.
+
+### Summary
+
+Overall, while some sports have specific age limits, many do not enforce a universal minimum age, leaving it up to the individual countries to determine their eligibility criteria. Therefore, the minimum age to compete in the Olympics can vary widely depending on the sport and the athlete's country of origin. Athletes as young as **10** have competed in the Olympics historically, but modern competitions tend to have more structured age guidelines.
+
+In conclusion, if you're considering Olympic participation, it's crucial to check the specific requirements for the sport in question and the regulations of the athlete's national governing body.
+","Some of these adjustments include the creation of the Winter Games for ice and winter sports, the Paralympic Games for athletes with a disability, and the Youth Olympic Games for teenage athletes.",0,0
+Q1172,what part of the pre-world war 1 arms race was the most intense?,"
+The most intense part of the pre-World War I arms race was the naval arms race between Germany and Great Britain, primarily occurring from 1898 to 1912. This period was characterized by fierce competition in naval construction and strategic developments, significantly driven by Germany's ambitions to challenge Britain's long-standing naval supremacy.
+
+The naval arms race gained unprecedented momentum with the launch of HMS Dreadnought in 1906, which redefined naval warfare. Dreadnought was the first battleship to feature an “all-big-gun” design with a uniform caliber of 12-inch guns, and it was also powered by steam turbines. This revolutionary design rendered all previous battleships obsolete, creating a sense of urgency among other nations, particularly Germany, to match Britain's naval advancements.
+
+As Dreadnought set the new standard for battleships, Britain initially held a substantial lead, with seven Dreadnoughts and three battlecruisers by May 1910, while Germany had only completed its first two Dreadnoughts at that time. However, German Admiral Alfred von Tirpitz's strategic vision, which sought to build a fleet capable of posing a credible threat to British interests, led to a significant escalation in naval construction. The German naval laws enacted from 1898 onward aimed to increase the size and capability of the Imperial German Navy, with Tirpitz advocating for a fleet that could at least deter British naval power.
+
+Public sentiment played a crucial role in both nations' naval policies. In Britain, the press and public opinion drove political leaders to respond aggressively to German naval expansions. The Liberal government, initially inclined to reduce defense spending, faced pressure to increase naval funding in light of the perceived threat from Germany, resulting in a rise in naval estimates and a commitment to build additional Dreadnoughts.
+
+By 1914, Britain had commissioned 29 Dreadnoughts compared to Germany's 17, illustrating the intense competition that characterized this arms race. The rivalry was not merely quantitative; it also involved qualitative advancements in naval technology and strategy. The British focus on maintaining naval superiority was rooted in the nation's reliance on maritime trade and imperial interests, making any challenge to their naval dominance a matter of national security.
+
+The naval arms race significantly influenced Anglo-German relations, fostering a climate of suspicion and hostility. As tensions escalated, attempts to negotiate limitations on naval expansion failed, leading to an environment where both nations felt compelled to continue their military build-up. This arms race intersected with broader militaristic trends in Europe, contributing to the overall climate of insecurity that precipitated the outbreak of World War I.
+
+In conclusion, the naval arms race between Germany and Great Britain stands out as the most intense aspect of the pre-World War I arms competition. Its direct implications for international conflict and the visible strain it placed on diplomatic relations underscored its critical role in shaping the geopolitical landscape of the early 20th century. The interplay between these naval developments, national pride, and military strategy created a volatile environment that ultimately contributed to the war's outbreak.
+","The deepest distinction among these accounts is between stories that see it as the inevitable and predictable outcome of certain factors, and those that describe it as an arbitrary and unfortunate mistake.",0,0
+Q1171,what materials are used for facial reconstruction,"
+Facial reconstruction utilizes a variety of materials tailored to meet the specific needs of surgical procedures and patient outcomes. Below is an organized and updated overview of the materials used in facial reconstruction, incorporating feedback for conciseness and clarity:
+
+### 1. Biocompatible Implants
+These materials are designed to integrate well with human tissue.
+
+- **Titanium**: Widely used in craniofacial plating systems for its strength, corrosion resistance, and excellent biocompatibility. While it promotes osseointegration, it can cause surrounding bone resorption due to the ""stress shielding effect."" Its visibility through thin skin layers may raise aesthetic concerns.
+
+- **Polyetheretherketone (PEEK)**: Known for its high strength and compatibility with imaging modalities. PEEK can be customized during surgery for a precise fit. However, it has a slightly higher risk of infection compared to titanium.
+
+### 2. Bone Grafts
+Essential for reconstructive surgery, bone grafts can be autologous (from the patient), allogeneic (from a donor), or synthetic.
+
+- **Cortical Bone Grafts**: Sourced from the calvarium or iliac crest, these provide structural support but can have unpredictable resorption rates.
+
+- **Autologous Fat**: Harvested from other body areas, this can restore soft tissue volume but does not provide skeletal augmentation.
+
+### 3. Resorbable Materials
+These materials gradually break down in the body, often used temporarily during healing.
+
+- **Polylactic Acid (PLA)** and **Polyglycolic Acid (PGA)**: Frequently used in plates and screws for fixation. They are beneficial for temporary support, minimizing the need for hardware removal.
+
+### 4. Soft Tissue Fillers
+Used for non-surgical facial rejuvenation:
+
+- **Hyaluronic Acid**: Commonly used for filling wrinkles and enhancing contours, with results lasting several months.
+
+- **Collagen**: Sometimes employed for soft tissue defects but less frequently than hyaluronic acid.
+
+### 5. Synthetic Meshes and Membranes
+Support soft tissue repair and guide bone regeneration.
+
+- **Porous Polyethylene (MedPor)**: Known for low infection rates and tissue integration, MedPor is used in facial reconstruction, especially for microtia repair.
+
+- **Hydroxyapatite (HaP)**: This bioceramic mimics bone and promotes healing. It is often combined with PLA to enhance stability. Recent advances in 3D printing technology are being explored for creating customized HaP-based implants.
+
+### 6. Prosthetics
+For cases where surgical reconstruction is not feasible, prosthetics can restore function and appearance.
+
+- **Silicone and Acrylics**: Common materials for facial prostheses, known for their biocompatibility and ability to match skin color. However, they may need regular replacement due to wear.
+
+### 7. Sutures and Adhesives
+Various suturing materials (absorbable and non-absorbable) and tissue adhesives are used for wound closure, ensuring proper healing and alignment of tissues.
+
+### Conclusion
+The choice of materials in facial reconstruction depends on the specific surgical technique, the extent of reconstruction, and individual patient anatomy and health considerations. While titanium and PEEK are leading choices due to their mechanical properties, emerging technologies such as 3D printing of biocompatible materials present exciting future possibilities for tailored solutions in facial reconstruction.
+
+Future advancements continue to emphasize reducing complications and improving aesthetic and functional outcomes, with ongoing research into integrating patient-specific needs and innovations in materials science.
+","In addition to remains involved in criminal investigations, facial reconstructions are created for remains believed to be of historical value and for remains of prehistoric hominids and humans .",0,0
+Q1746,what mountains are on appalachian trail,"
+The Appalachian Trail (AT) traverses a variety of mountain ranges along its approximately 2,190-mile route from Georgia to Maine. Here are some of the notable mountains and ranges along the trail:
+
+1. **Southern Appalachians**:
+   - **Great Smoky Mountains**: Includes peaks like Clingmans Dome, the highest point on the AT.
+   - **Blue Ridge Mountains**: Features several sections of the trail, including parts of Virginia's Shenandoah National Park.
+
+2. **Central Appalachians**:
+   - **Allegheny Mountains**: Found in West Virginia and parts of Virginia, including areas like the Monongahela National Forest.
+   - **Catoctin Mountains**: Located in Maryland, this range includes sections of the trail near the Catoctin Mountain Park.
+
+3. **Northeastern Appalachians**:
+   - **White Mountains**: Located in New Hampshire, this area includes some of the most rugged and challenging sections of the trail, including Mount Washington.
+   - **Green Mountains**: In Vermont, the AT runs through this range, featuring peaks like Camel's Hump and Mount Mansfield.
+
+4. **Maine**:
+   - **Mahoosuc Range**: Known for its difficult terrain and beautiful scenery.
+   - **Baxter State Park**: Home to Mount Katahdin, the northern terminus of the Appalachian Trail.
+
+These mountain ranges offer diverse landscapes, ecosystems, and varying levels of difficulty for hikers, contributing to the AT's popularity as a long-distance hiking trail.
+","The path is maintained by 30 trail clubs and multiple partnerships, and managed by the National Park Service and the nonprofit Appalachian Trail Conservancy .",0,0
+Q849,how many people come over the border from mexico annually,"
+The number of people crossing the U.S.-Mexico border annually has shown significant fluctuations in recent years. According to U.S. Customs and Border Protection (CBP), in fiscal year 2023, there were over **2 million encounters** with migrants crossing the border. This figure represents the total number of encounters, which may include individuals who were apprehended multiple times, rather than the unique number of individuals crossing.
+
+This figure was a slight decrease from fiscal year 2022, where there were over **2.2 million encounters**. The end of 2023 saw an unprecedented spike, with approximately **250,000 encounters** recorded in December 2023 alone, marking the highest monthly total ever recorded.
+
+However, the trend shifted significantly in 2024. By August, the number of encounters had sharply declined, with reports indicating around **58,038 encounters** for that month, reflecting a **77% drop** from December 2023. Further data shows that by September 2024, the encounters had decreased to approximately **54,000**, representing a **75.4% decrease** compared to September 2023.
+
+It's important to note that ""encounters"" include both apprehensions and expulsions of migrants who cross without authorization, and the same individual can be counted multiple times if they attempt to cross again. Therefore, while the **2 million** figure for fiscal year 2023 gives a snapshot of border activity, it does not equate to the number of distinct individuals who crossed the border.
+
+In summary, the annual figures for border crossings can vary greatly due to changing circumstances, enforcement policies, and other factors. Recent estimates indicate that over **2 million encounters** occurred in fiscal year 2023, but the landscape has shifted significantly in 2024 with a substantial decrease in encounters.
+","The undocumented immigrant population of the United States in 2008 was estimated by the Center for Immigration Studies to be about 11 million people, down from 12.5 million people in 2007.",0,0
+Q187,how does the book flatlands related to pre calc,"
+The book ""Flatland: A Romance of Many Dimensions,"" written by Edwin A. Abbott in 1884, is intricately connected to pre-calculus, primarily through its exploration of geometric concepts and the nature of dimensions. This relationship can be more explicitly detailed, addressing the gaps highlighted in previous responses.
+
+### Key Connections to Pre-Calculus:
+
+1. **Understanding Dimensions**: 
+   ""Flatland"" introduces readers to a two-dimensional world inhabited by geometric shapes. This foundational concept serves as a springboard to understanding higher dimensions, which is a significant topic in pre-calculus. The text illustrates how A. Square, a two-dimensional being, struggles to comprehend the existence of a third dimension. This struggle can help pre-calculus students grasp the concept of dimensions, emphasizing how our understanding can be limited by our perceived reality.
+
+2. **Geometric Shapes and Properties**: 
+   The novella's characters, such as lines, triangles, and squares, exemplify various geometric properties and relationships. In pre-calculus, students study the properties of these shapes, including angles, sides, and classifications (e.g., isosceles, equilateral). Abbott uses the square's perspective to explain how shapes with more sides (like pentagons and hexagons) symbolize higher intelligence and social status in ""Flatland."" This metaphor enhances students' understanding of the properties of polygons and their relationships, which is crucial in pre-calculus.
+
+3. **Visualization of Higher Dimensions**: 
+   ""Flatland"" serves as an imaginative tool for visualizing dimensions beyond the third. The book describes how A. Square perceives a three-dimensional sphere as a series of two-dimensional cross-sections (circles) at different points. This analogy aids pre-calculus students in understanding concepts like cross-sections and projections, which are foundational for further studies in calculus. The ability to visualize how a three-dimensional object can be represented in two dimensions is an important skill in mathematics.
+
+4. **Introduction to Conic Sections**: 
+   While ""Flatland"" does not explicitly detail conic sections, the exploration of higher dimensions and the transformation of shapes can lead to discussions about them. Conic sections—such as circles, ellipses, parabolas, and hyperbolas—are crucial in pre-calculus. Understanding how shapes transform between dimensions can enhance students' ability to analyze and manipulate these figures, facilitating a deeper comprehension of their properties and equations. For instance, considering how a circle is a specific type of conic section can provide insight into its geometric properties and equations.
+
+5. **Mathematical Logic and Reasoning**: 
+   The challenges A. Square faces in conveying the existence of higher dimensions parallel the logical reasoning required in pre-calculus. Abbott’s narrative encourages critical thinking and logical reasoning—skills vital in mathematics. For example, when A. Square attempts to explain dimensionality to his fellow Flatlanders, his struggles reflect the necessity of clear reasoning and logical progression in solving mathematical problems. This can relate to how students must build upon foundational concepts to understand more complex ideas in mathematics.
+
+### Conclusion:
+In summary, ""Flatland"" serves as an engaging and imaginative approach to exploring key geometric concepts and the nature of dimensions, making it highly relevant to pre-calculus studies. By connecting the abstract ideas in ""Flatland"" with specific mathematical applications such as understanding geometric properties, visualizing higher dimensions, and introducing conic sections, the novella enhances student engagement and deepens their understanding of essential pre-calculus concepts. This makes ""Flatland"" not just a literary work, but also a valuable educational resource in the field of mathematics, fostering a richer understanding of the interconnectedness of geometry and dimensionality.
+","In American mathematics education , precalculus (or Algebra 3 in some areas), is an advanced form of secondary school algebra , and a foundational mathematical discipline.",0,0
+Q765,what colors are in a rainbow,"
+A rainbow typically displays seven colors, which can be remembered using the acronym ROYGBIV. The colors are:
+
+1. Red
+2. Orange
+3. Yellow
+4. Green
+5. Blue
+6. Indigo
+7. Violet
+
+These colors appear in this order from the outer edge to the inner edge of the arc.
+",It takes the form of a multicoloured arc .,1,0
+Q1746,what mountains are on appalachian trail,"
+The Appalachian Trail (AT) traverses a variety of mountain ranges along its 2,190-mile route from Georgia to Maine. Some of the notable mountains and ranges along the trail include:
+
+1. **Southern Appalachian Mountains**:
+   - **Amicalola Falls** and **Springer Mountain** in Georgia (the southern terminus of the AT).
+   - **Blood Mountain** in Georgia.
+   - **Cheaha Mountain** in Alabama (the highest point in Alabama).
+
+2. **Great Smoky Mountains**:
+   - **Clingmans Dome** (the highest point on the AT at 6,643 feet).
+   - **Mount LeConte**.
+
+3. **Blue Ridge Mountains**:
+   - **Raven Cliff Mountain**.
+   - **Humpback Rocks** and **McAffee Knob** in Virginia.
+
+4. **Allegheny Mountains**:
+   - **Mount Rogers** in Virginia (the highest point in Virginia).
+   - **Grayson Highlands**.
+
+5. **Green Mountains**:
+   - **Killington Peak** in Vermont.
+   - **Mount Mansfield** (the highest point in Vermont).
+
+6. **White Mountains**:
+   - **Mount Washington** (the highest peak in the Northeastern U.S. and known for its severe weather).
+   - **Franconia Ridge**.
+
+7. **Maine Mountains**:
+   - **Baxter Peak** on **Mount Katahdin** (the northern terminus of the AT).
+
+These mountains are just a few highlights, and the trail features numerous other peaks and ridges that offer stunning views and diverse ecosystems along its journey through the eastern United States.
+","The Appalachian National Scenic Trail, generally known as the Appalachian Trail or simply the A.T., is a marked hiking trail in the eastern United States extending between Springer Mountain in Georgia and Mount Katahdin in Maine .",0,1
+Q1110,when did the lutheran church began,"
+The Lutheran Church began in the early 16th century, primarily associated with the teachings of Martin Luther, a German monk and theologian. The pivotal moment often cited is Luther's posting of his Ninety-Five Theses on October 31, 1517, in Wittenberg, Germany. This act is commonly regarded as the catalyst for the Protestant Reformation, which led to the establishment of various Protestant denominations, including Lutheranism. The formal establishment of the Lutheran Church as a distinct denomination occurred in the years following Luther's reforms, particularly with the Augsburg Confession in 1530, which outlined Lutheran beliefs and practices.
+","Like most denominations, Lutheranism is split between Liberal and Conservative/Confessional camps.",0,0
+Q439,what does judgment as a matter of law mean,"
+""Judgment as a matter of law"" (often referred to as ""JMOL"") is a legal term used in the context of civil and criminal trials. It refers to a situation where a judge rules that no reasonable jury could find in favor of one party based on the evidence presented during the trial. In essence, it means that the evidence overwhelmingly supports one side, making it unnecessary for the jury to deliberate on that issue.
+
+JMOL can be requested by either party during a trial, typically after the opposing party has presented its case. If the judge grants the motion for judgment as a matter of law, the case is decided in favor of the moving party without the need for a jury decision on that specific issue. If the judge denies the motion, the case continues, and the jury will ultimately decide the matter.
+
+This legal mechanism helps streamline the trial process by eliminating claims or defenses that lack sufficient evidentiary support. It is often invoked in situations where the evidence is clear-cut, making it a way to avoid unnecessary jury deliberation on issues that are not genuinely in dispute.
+","However, in order to move for j.n.o.v., the movant must have moved for a JMOL before the verdict as well.",0,0
+Q936,how many kids does erykah badu have,"
+Erykah Badu has three children. Their names are Seven Sirius Benjamin, Puma Sabti Curry, and Mars Merkaba Thedford. Each child has a different father, including rapper André 3000, with whom she shares her son Seven, and rapper Jay Electronica, with whom she shares her daughter Puma.
+","She is known as the ""First Lady of Neo-Soul"" or the ""Queen of Neo-Soul"".",0,0
+Q2746,when was the first census of all 50 states,"
+The first census that included all 50 states was conducted in 1970. Prior to this, the U.S. Census only included the contiguous 48 states, with Alaska and Hawaii being added as states in 1959. The census conducted in 1970 was the first to account for the entire United States as it exists today.
+","Historically, the tasks of public safety (in the sense of controlling crime), public education , public health , transportation , and infrastructure have generally been considered primarily state responsibilities, although all of these now have significant federal funding and regulation as well (based largely upon the Commerce Clause , the Taxing and Spending Clause , and the Necessary and Proper Clause of the U.S. Constitution).",0,0
+Q2746,when was the first census of all 50 states,"
+The first census that included all 50 states was conducted in 1960. This was the 23rd decennial census in the United States, and it marked the first time that data was collected from every state, as Hawaii and Alaska were both admitted to the Union in 1959.
+","Kentucky, Massachusetts, Pennsylvania, and Virginia use the official title of Commonwealth rather than State.",0,0
+Q1526,who plays rosie in mamma mia,"
+In the original West End production of ""Mamma Mia!"", the character Rosie is played by actress Louise Plowright. In the film adaptations, Rosie is portrayed by Julie Walters. If you have a specific production in mind, please let me know!
+",Mamma Mia!,0,0
+Q2770,when was library of congress built,"
+The Library of Congress was established on April 24, 1800, when President John Adams approved an act of Congress that allocated $5,000 for the purchase of books to serve the legislative needs of Congress as it relocated from Philadelphia to Washington, D.C. Initially, the collection was housed in the U.S. Capitol.
+
+In 1814, during the War of 1812, the library suffered a significant setback when British forces burned the Capitol, destroying most of the collection. To rebuild, Congress purchased former President Thomas Jefferson's personal library of 6,487 volumes in 1815, which broadened the library's focus beyond mere legislative needs and laid the foundation for its future growth.
+
+The original building specifically constructed for the Library, known as the Thomas Jefferson Building, opened to the public on November 1, 1897. This marked a significant milestone in the Library's history, providing it with a dedicated space for its expanding collections and services. The Library continued to grow, adding two more major buildings: the John Adams Building in 1939 and the James Madison Memorial Building in 1980.
+
+Today, the Library of Congress is recognized as the largest library in the world, with over 170 million items in its collection, serving not just Congress but also the public and scholars alike.
+","The head of the Library is the Librarian of Congress , currently James H. Billington .",0,0
+Q839,what days are smackdown on,"
+WWE SmackDown typically airs on Friday nights. The show usually starts at 8:00 PM Eastern Time and runs for two hours, concluding at 10:00 PM. However, it's always a good idea to check your local listings or the WWE website for any schedule changes or special events.
+","The show originally debuted in the United States on the UPN television network on April 29, 1999, but after the merger of UPN and the WB , SmackDown began airing on The CW in 2006.",0,0
