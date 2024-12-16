@@ -1,259 +1,185 @@
-import asyncio
 import json
-import os
-import time
-from typing import List, Optional, overload
+import re
+from pathlib import Path
+from typing import Dict
 
 import yaml
-
-# from jinja2 import Environment, FileSystemLoader
-from jinja2 import Template
+from jinja2 import Environment, FileSystemLoader
 from loguru import logger
+from sqlmodel import Session, select
 
 from .config import settings
-from .llm_service import ChatCompletionMessage, call_llm
+from .llm_service import call_llm
 from .models import ConversationManager
-from .tools import AsyncWebScraper, SearchAggregator, ToolRegistry
+from .tools.search_adapter.db.database import engine
+from .tools.search_adapter.db.models import HistoryQuery
+from .tools.toolbox import Toolbox
 
 
 class BaseAgent:
     # Class-level attributes, shared across all instances
-    queryDB = set()  # A set to store queries
-    tool_registry = ToolRegistry()  # Registry for tools
     user_question = ""
+
+    # # 对于citationDB,应该是一个字典，key是query，value是内容和来源
+    # # 这个列表中的每个元素都是一个字典，代表一个搜索的问题以及对应的搜索结果
+    # citationDB = [
+    #     {  # citationDB中只会把受到critic表扬的搜索结果加入
+    #         "why do we say google was facing challenges in 2019?": {
+    #             "document_id": {  # 这个document_id是一个唯一的标识符，用于标识这个文档
+    #                 "url": "",
+    #                 "title": "",
+    #                 "content": "",
+    #             }
+    #         }
+    #     }
+    # ]
+
     conversation_manager = ConversationManager()
+    conversation_manager.available_tools = Toolbox.get_function_schemas()
 
-    def __init__(self):
-        base_dir = os.path.dirname(
-            os.path.abspath(__file__)
-        )  # Directory of the current script
-        self.prompts_dir = os.path.join(base_dir, "prompts")
-        # self.env = Environment(loader=FileSystemLoader(self.prompts_dir))
-
-        # 对于citationDB,应该是一个字典，key是query，value是内容和来源
-        # 这个列表中的每个元素都是一个字典，代表一个搜索的问题以及对应的搜索结果
-        self.citationDB = [
-            {  # citationDB中只会把受到critic表扬的搜索结果加入
-                "why do we say google was facing challenges in 2019?": {
-                    "document_id": {  # 这个document_id是一个唯一的标识符，用于标识这个文档
-                        "url": "",
-                        "title": "",
-                        "content": "",
-                    }
-                }
-            }
-        ]
-        self.search_aggregator = SearchAggregator()
-
-        self.search_aggregator_schema = (
-            BaseAgent.tool_registry.get_or_create_tool_schema(
-                self.search_aggregator.search
-            )
-        )
-
-        self.web_scraper = AsyncWebScraper()
-
-        self.web_scraper_schema = BaseAgent.tool_registry.get_or_create_tool_schema(
-            self.web_scraper.scrape
-        )
-
-        BaseAgent.conversation_manager.available_tools = (
-            BaseAgent.tool_registry.get_or_create_tool_schema(
-                self.web_scraper.scrape, self.search_aggregator.search
-            )
-        )
-
-        self.repeat_turns = 10
-
-    def load_template(self, filename):
-        """
-        Loads a template file from the prompts directory.
-
-        :param filename: The name of the template file to load.
-        :return: The content of the file as a string.
-        """
-        filepath = os.path.join(self.prompts_dir, filename)
-
-        # Ensure the file exists
-        if not os.path.exists(filepath):
-            raise FileNotFoundError(
-                f"Template file '{filename}' not found in {self.prompts_dir}"
-            )
-
-        # Read and return the content of the file
-        with open(filepath, "r", encoding="utf-8") as file:
-            return file.read()
-
-    def render_template(self, template_str, data):
-        """
-        Render a template using string formatting.
-
-        :param template_str: Template content as a string.
-        :param data: Dictionary of variables to replace in the template.
-        :return: Rendered string.
-        """
-        template = Template(template_str)
-        return template.render(**data)
-
-    @overload
-    def common_chat(
-        self, usr_prompt: List, tools: None = None
-    ) -> ChatCompletionMessage: ...
-
-    @overload
-    def common_chat(self, usr_prompt: str, tools: List) -> ChatCompletionMessage: ...
-
-    @overload
-    def common_chat(self, usr_prompt: str, tools: None = None) -> str: ...
-
-    def common_chat(
-        self,
-        usr_prompt: str | List,
-        tools: Optional[List] = None,
-        role: str = "assistant",
-    ) -> ChatCompletionMessage | str | None:
+    @staticmethod
+    def common_chat(usr_prompt: str, use_tool: bool = True, role: str | None = None) -> str:
         llm_response = call_llm(
             model=settings.default_model,
             usr_prompt=usr_prompt,
             config=settings,
-            tools=tools,
+            tools=BaseAgent.conversation_manager.available_tools if use_tool else None,
         )
 
-        # logger.info(f"usr_prompt:\n{usr_prompt}")
+        # BaseAgent.conversation_manager.append_to_history(
+        #     role="user", content=usr_prompt
+        # )
+
         # logger.info(f"llm_response:\n{llm_response}")
 
-        if tools is not None:
-            return llm_response
-
-        BaseAgent.conversation_manager.append_to_history(
-            role=role, content=llm_response.content
-        )
-
-        return llm_response.content
-
-    def update_answer(self, query, previous_answer, search_results, critic_feedback):
-        data = {
-            "query": query,
-            "previous_answer": previous_answer,
-            "search_results": search_results,
-            "critic_feedback": critic_feedback,
-        }
-
-        agent_update_answer_prompt = self.load_template("agent_update_answer.txt")
-        rendered_prompt = self.render_template(agent_update_answer_prompt, data)
-
-        agent_update_answer_response = self.common_chat(usr_prompt=rendered_prompt)
-
-        return agent_update_answer_response
-
-    def model_confident(self, query):
-        """
-        检查模型是否对当前问题有信心。
-        """
-        data = {"user_question": query}
-        agent_confidence_prompt = self.load_template("agent_confidence.txt")
-
-        rendered_prompt = self.render_template(agent_confidence_prompt, data)
-        agent_confidence_response = self.common_chat(usr_prompt=rendered_prompt)
-
-        return agent_confidence_response
-
-    def search_and_browse(self, rendered_prompt) -> str | None:
-        search_with_tool_response = self.common_chat(
-            usr_prompt=rendered_prompt, tools=self.search_aggregator_schema
-        )
-
-        logger.info(f"search_with_tool_response:\n{search_with_tool_response}")
-
+        if role is not None:
+            role = role
+        else:
+            role = "assistant"
+            
         # If no tool calls, return the response immediately
-        if search_with_tool_response.tool_calls is None:
-            return search_with_tool_response.content
-
-        BaseAgent.conversation_manager.append_tool_call_to_history(
-            search_with_tool_response.tool_calls
-        )
-
-        final_search_results = ""
-
-        for tool_call in search_with_tool_response.tool_calls:
-            query = json.loads(tool_call.function.arguments).get("query", "")
-
-            search_results = asyncio.run(self.search_aggregator.search(query=query))
-
-            time.sleep(1)
-
-            BaseAgent.conversation_manager.append_tool_call_result_to_history(
-                tool_call_id=tool_call.id,
-                name="search",
-                content=search_results,
+        if llm_response.tool_calls is None:
+            BaseAgent.conversation_manager.append_to_history(
+                role=role, content=llm_response.content
             )
 
-            BaseAgent.queryDB.update(query)
+            assert llm_response.content is not None, "llm_response.content is None"
 
-            final_search_results += f"{search_results}"
+            return llm_response.content
 
-        web_scraper_prompt = self.load_template("web_scraper.txt")
-        web_scraper_rendered_prompt = self.render_template(
-            web_scraper_prompt,
-            {
-                "user_question": self.user_question,
-                "initial_search_results": final_search_results,
-            },
-        )
-
-        # Interact with the model for web scraping
-        web_scraper_response = self.common_chat(
-            usr_prompt=web_scraper_rendered_prompt,
-            tools=self.web_scraper_schema,
-        )
-
-        # If no tool calls, return the response immediately
-        if web_scraper_response.tool_calls is None:
-            return web_scraper_response.content
-
-        BaseAgent.conversation_manager.append_tool_call_to_history(
-            web_scraper_response.tool_calls
-        )
-
-        final_web_scraper_results = ""
-
-        for tool_call in web_scraper_response.tool_calls:
-            urls = json.loads(tool_call.function.arguments).get("urls", [])
-
-            web_scraper_results = asyncio.run(self.web_scraper.scrape(urls=urls))
-
-            BaseAgent.conversation_manager.append_tool_call_result_to_history(
-                tool_call_id=tool_call.id,
-                name="scrape",
-                content=web_scraper_results,  # type: ignore
+        else:
+            BaseAgent.conversation_manager.append_tool_call_to_history(
+                llm_response.tool_calls,
+                content=llm_response.content,
             )
 
-            final_web_scraper_results += web_scraper_results  # type: ignore
+            tool_call_result_list = []
 
-        return final_web_scraper_results
+            for tool_call in llm_response.tool_calls:
+                tool_call_result = json.dumps(
+                    Toolbox.execute_tool_call(tool_call), ensure_ascii=True
+                )
 
-    def receive_task(self, task):
+                tool_call_result_list.append(tool_call_result)
+
+                BaseAgent.conversation_manager.append_tool_call_result_to_history(
+                    tool_call_id=tool_call.id,
+                    name=tool_call.function.name,
+                    content=tool_call_result,
+                )
+
+            return "\n\n".join(tool_call_result_list)
+
+    @staticmethod
+    def render_template(name: str, **kwargs) -> str:
+        template_dir = Path("critic_search/prompts")
+
+        # Ensure the template directory exists
+        if not template_dir.exists():
+            raise FileNotFoundError(
+                f"The specified template directory '{template_dir}' does not exist."
+            )
+
+        # Create a Jinja2 environment
+        env = Environment(loader=FileSystemLoader(template_dir))
+
+        # Determine the template filename with '.j2' as the default extension
+        template_filename = f"{name}.txt"
+
+        # Load the template
+        try:
+            template = env.get_template(template_filename)
+        except FileNotFoundError:
+            raise FileNotFoundError(
+                f"The specified template '{template_filename}' does not exist in '{template_dir}'."
+            )
+
+        # Render the template with the user_query as a variable
+        return template.render(**kwargs)
+
+    @staticmethod
+    def extract_and_validate_yaml(model_response) -> str | Dict | None:
         """
-        接收原始任务。
+        Extracts YAML content wrapped in ```yaml``` from the response,
+        validates it, and retries if parsing fails.
         """
-        self.original_task = task
-
-    def extract_and_validate_yaml(self, model_response):
-        # 正则表达式匹配包裹在```yaml```之间的内容
-        import re
-
         match = re.search(r"```yaml\n([\s\S]*?)\n```", model_response, re.DOTALL)
 
         if not match:
-            return None  # 如果没有找到匹配的内容，返回None
+            return model_response
 
-        model_response = match.group(1).strip()
+        yaml_content = match.group(1).strip()
 
         try:
-            # 尝试解析YAML内容
-            parsed_yaml = yaml.safe_load(model_response)
-            return yaml.dump(parsed_yaml, default_flow_style=False)
+            return yaml.safe_load(yaml_content)
+        except yaml.YAMLError as e:
+            logger.warning(f"Failed to parse YAML: {e}. Retrying...")
+            return None  # Indicate failure to parse YAML
 
-        except yaml.YAMLError as exc:
-            print(f"Invalid YAML content: {exc}")
-            return None
+    @staticmethod
+    def chat_with_template(
+        template_name: str, use_tool: bool = True, role: str | None = None ,**template_params
+    ) -> str | Dict:
+        logger.success(
+            f"Chat using template: {template_name} with using tool or not: {use_tool}"
+        )
+
+        prompt = BaseAgent.render_template(name=template_name, **template_params)
+
+        def perform_request():
+            """Helper to perform chat request and validate YAML."""
+            response = BaseAgent.common_chat(usr_prompt=prompt, use_tool=use_tool, role=role)
+            return BaseAgent.extract_and_validate_yaml(response)
+
+        result = perform_request()
+
+        if result is None:  # Retry if YAML extraction failed
+            result = perform_request()
+
+        assert result is not None
+
+        return result
+
+    @staticmethod
+    def get_all_history_queries() -> str:
+        """
+        Fetch all unique queries from the HistoryQuery table.
+
+        Returns:
+            List[str]: A list of all unique queries.
+        """
+        try:
+            with Session(engine) as session:
+                # Fetch all query values from the HistoryQuery table
+                statement = select(HistoryQuery.query)
+                results = session.exec(statement).all()
+
+                # Convert results to a list and join with commas
+                result_list = list(results)
+                joined_results = ", ".join(result_list)
+
+                return joined_results
+
+        except Exception:
+            logger.exception(f"Failed to fetch queries from HistoryQuery.")
+            return ""

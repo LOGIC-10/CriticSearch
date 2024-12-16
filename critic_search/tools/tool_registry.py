@@ -1,55 +1,94 @@
-from typing import Callable, Dict, List
+import inspect
+import json
+from typing import Callable, List
 
-from loguru import logger
+from openai.types.chat.chat_completion_message_tool_call import (
+    ChatCompletionMessageToolCall,
+)
+from openai.types.chat.chat_completion_tool_param import ChatCompletionToolParam
+
+from critic_search.log import colorize_message, logger
 
 from .models import Tool
 
 
+def register_tool_function(func: Callable):
+    """
+    Registers a function as a tool that can be invoked via tool calls.
+    Adds a marker to indicate that this function is a tool.
+
+    Args:
+        func (Callable): The function to register as a tool.
+
+    Returns:
+        Callable: The original function, now marked as a tool.
+    """
+    original_func = inspect.unwrap(func)
+    setattr(original_func, "_is_tool", True)  # Mark the function as a tool
+    return func
+
+
 class ToolRegistry:
     """
-    A registry for managing tools using their function names as keys.
-
-    This class provides functionality to retrieve or create schemas for tools
-    based on provided functions, storing them for reuse and easy access.
+    A registry for managing tool functions. Allows retrieval of function
+    schemas and executing tool calls dynamically.
     """
 
-    def __init__(self):
+    @classmethod
+    def get_function_schemas(cls) -> List[ChatCompletionToolParam]:
         """
-        Initialize an empty registry for storing tool schemas.
-
-        Attributes:
-            _tools (Dict[str, dict]): A dictionary mapping function names
-                                      to their respective schemas.
-        """
-        self._tools: Dict[str, dict] = {}
-
-    def get_or_create_tool_schema(self, *target_functions: Callable) -> List[Dict]:
-        """
-        Retrieve or create tool schemas for the given functions.
-
-        If a function's schema is not already registered, it will be created
-        using `Tool.create_schema_from_function` and added to the registry.
-
-        Args:
-            *target_functions (Callable): One or more functions for which
-                                          schemas are to be retrieved or created.
+        Retrieves the schemas for all registered tool functions.
 
         Returns:
-            List[Dict]: A list of schemas corresponding to the provided functions.
+            List[ChatCompletionToolParam]: A list of schemas representing
+            the parameters for each registered tool function.
         """
+        # Get all functions marked as tools
+        functions = [
+            member
+            for _, member in inspect.getmembers(cls)
+            if callable(member) and getattr(member, "_is_tool", False)
+        ]
+
+        # Create schemas for each tool function
         schemas = []
-        for target_function in target_functions:
-            func_name = target_function.__name__
+        for tool_function in functions:
+            schema = Tool.create_schema_from_function(tool_function)
+            schemas.append(schema)
 
-            # Create schema if not already registered
-            if func_name not in self._tools:
-                self._tools[func_name] = Tool.create_schema_from_function(
-                    target_function
-                )
-                logger.debug(
-                    f"Created tool schema for: {func_name}, schema: {self._tools[func_name]}"
-                )
-
-            schemas.append(self._tools[func_name])
+        # Log the generated schemas
+        colorize_message(
+            message_title="Generated Tool Schemas", message_content=f"{schemas}"
+        )
 
         return schemas
+
+    @classmethod
+    def execute_tool_call(cls, tool_call: ChatCompletionMessageToolCall):
+        """
+        Executes a tool function based on the provided tool call.
+
+        Args:
+            tool_call (ChatCompletionMessageToolCall): The tool call containing
+            the function name and parameters to execute.
+
+        Returns:
+            The result of executing the function.
+        """
+        # Extract function name and arguments from the tool call
+        function_name = tool_call.function.name
+        arguments = json.loads(tool_call.function.arguments)
+
+        logger.success(f"Executing tool: {function_name} with arguments: {arguments}")
+
+        # Retrieve the target function based on its name
+        target_function = getattr(cls, function_name)
+
+        # Execute the function and return the result
+        result = target_function(**arguments)
+
+        logger.info(
+            f"Tool '{function_name}' executed successfully with result:\n{result}"
+        )
+
+        return result

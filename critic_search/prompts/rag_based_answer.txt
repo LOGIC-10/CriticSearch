@@ -14,9 +14,8 @@ The following is some reference information and materials provided to you:
 
 {{web_result_markdown_text}}
 
- Now, I will repeat the user’s question again:
- 
- {{user_question}}
+Now, I will repeat the user’s question again:
 
+{{user_question}}
 
- Please ensure that you follow all the requirements and guidelines mentioned above, and provide a truthful, useful, and logically complete response.
+Please ensure that you follow all the requirements and guidelines mentioned above, and provide a truthful, useful, and logically complete response.

@@ -1,193 +1,157 @@
-import time
-
-import yaml
+from typing import Dict
 
 from .base_agent import BaseAgent
 from .config import settings
-from .critic_agent import CriticAgent
 from .log import colorize_message, logger, set_logger_level_from_config
 
 
-def truncate_to_character_limit(text, max_chars=100000):
-    if hasattr(text, "content"):
-        text = text.content  # Extract the content attribute
-
-    # Ensure `text` is a string before truncating
-    if isinstance(text, str) and len(text) > max_chars:
-        return text[:max_chars]
-    return text
+def truncate_text(text: str, max_length: int = 100000) -> str:
+    """Truncate the input text to a maximum character limit."""
+    return text[:max_length] if len(text) > max_length else text
 
 
-def main(TASK, MAX_ITERATION):
-    # Initialize agents
-    common_agent = BaseAgent()
+def log_iteration_info(
+    iteration_number: int, all_search_queries: str, final_agent_answer: str
+):
+    """记录当前迭代的信息。"""
+    colorize_message(message_title=f"TOTAL ITERATIONS: {iteration_number}", color="red")
 
-    # initialize the task
-    common_agent.user_question = TASK
+    colorize_message(
+        message_title="ALL SEARCH QUERIES",
+        message_content=all_search_queries,
+    )
+    colorize_message(
+        message_title="FINAL ANSWER",
+        color="red",
+        message_content=final_agent_answer,
+    )
+
+
+def get_agent_answer_with_plan(
+    user_task: str,
+    plan_template_name: str,
+    **plan_kwargs,  # 额外的关键字参数，灵活打包
+) -> tuple[str, str]:
+    # 1) 生成 search_plan
+    # 由调用端决定要不要传入 previous_answer、user_feedback、search_history 等
+    search_plan = BaseAgent.chat_with_template(
+        template_name=plan_template_name, user_question=user_task, **plan_kwargs
+    )
+
+    # 2) 使用 web_scraper 得到爬取结果
+    search_results = BaseAgent.chat_with_template(
+        template_name="web_scraper",
+        user_question=user_task,
+        initial_search_results=search_plan,
+    )
+
+    assert isinstance(search_results, str), (
+        f"Expected 'search_results' to be str, but got '{type(search_results).__name__}'. "
+        f"Partial content: {repr(str(search_results)[:200])}"
+    )
+
+    # 3) 根据爬取结果生成最终答案
+    agent_answer = BaseAgent.chat_with_template(
+        template_name="rag_based_answer",
+        user_question=user_task,
+        web_result_markdown_text=truncate_text(search_results),
+        use_tool=False,
+    )
+
+    assert isinstance(agent_answer, str)
+    assert isinstance(search_plan, str)
+
+    return agent_answer, search_plan
+
+
+def main(user_task: str, max_iterations: int):
+    """Main function to handle the agent's iterative process."""
 
     set_logger_level_from_config(log_level=settings.log_level.upper())
 
-    logger.success(f"Starting the conversation with task: {TASK}")
-    
-    BaseAgent.conversation_manager.append_to_history(role="user", content=TASK)
+    BaseAgent.conversation_manager.append_to_history(role="user", content=user_task)
 
-    for iteration in range(MAX_ITERATION):
-        colorize_message(
-            message_title=f"ITERATION {iteration + 1}", color="cyan", style="bold"
-        )
-
-        if iteration == 0:
-            # Initialize search_results as None
-            search_results = None
-
-            # Model confidence check - yellow
-            agent_confident = common_agent.model_confident(TASK)
-            agent_confident_yaml = common_agent.extract_and_validate_yaml(
-                agent_confident
+    for iteration in range(1, max_iterations):
+        if iteration == 1:
+            colorize_message(
+                message_title=f"ITERATION {iteration}",
+                color="cyan",
+                style="bold",
             )
 
-            if agent_confident_yaml is None:
-                logger.warning(
-                    "Failed to extract valid YAML content. Defaulting to 'false'."
+            # Step 1: Confidence check
+            confidence_response = BaseAgent.chat_with_template(
+                template_name="model_confidence",
+                user_question=user_task,
+                use_tool=False,
+            )
+
+            colorize_message(message_content=confidence_response)
+
+            assert isinstance(
+                confidence_response, Dict
+            ), f"Expected a dict, got {type(confidence_response).__name__}."
+
+            is_confident = (
+                confidence_response.get("confidence", "true").lower() == "true"
+            )
+
+            if is_confident:
+                # 如果模型有信心，直接生成答案
+                agent_answer = BaseAgent.common_chat(
+                    usr_prompt=user_task, use_tool=False
                 )
-                agent_confident = False
             else:
-                agent_confident_dict = yaml.safe_load(agent_confident_yaml)
-                agent_confident = (
-                    agent_confident_dict.get("confidence", "true").lower() == "true"
+                # 如果模型不自信，生成初始搜索计划并获取答案
+                agent_answer, search_plan = get_agent_answer_with_plan(
+                    user_task=user_task,
+                    plan_template_name="planner_agent_initial_search_plan",
                 )
-
-            if agent_confident:
-                # When confident, only get the answer
-                common_agent_answer = common_agent.common_chat(usr_prompt=TASK)
-            else:
-                # When not confident, get both answer and search results
-                data = {
-                    "user_question": TASK,
-                }
-                initial_search_prompt = common_agent.load_template(
-                    "planner_agent_initial_search_plan.txt"
-                )
-                initial_search_rendered_prompt = common_agent.render_template(
-                    initial_search_prompt, data
-                )
-                logger.info(f"initial_search_rendered_prompt: {initial_search_rendered_prompt}")
-
-                initial_web_result_markdown_text = common_agent.search_and_browse(
-                    initial_search_rendered_prompt
-                )
-                logger.info(f"Initial web result: {initial_web_result_markdown_text}")
-
-                rag_based_answer_prompt = common_agent.render_template(
-                    common_agent.load_template("rag_based_answer.txt"),
-                    {
-                        "user_question": common_agent.user_question,
-                        "web_result_markdown_text": initial_web_result_markdown_text,
-                    },
-                )
-
-                common_agent_answer = common_agent.common_chat(
-                    usr_prompt=rag_based_answer_prompt,
-                )
-
         else:
-            # 前面根据critc的返回得到了新的网页搜索结果web_result_markdown_text
-            common_agent_answer = common_agent.update_answer(
-                query=TASK,
-                previous_answer=common_agent_answer,
-                search_results=truncate_to_character_limit(web_result_markdown_text),
-                critic_feedback=critic_agent_response,
+            # 后续迭代：基于之前的答案和反馈更新答案
+            agent_answer = BaseAgent.chat_with_template(
+                template_name="agent_update_answer",
+                query=user_task,
+                previous_answer=agent_answer,
+                search_results=search_plan,
+                critic_feedback=critic_feedback,
+                use_tool=False,
             )
-            time.sleep(0.5)  # hitting rate limits for gpt mini
 
-        colorize_message(
-            message_title="COMMON AGENT ANSWER",
-            color="magenta",
-            message_content=common_agent_answer,
+        # 获取评论反馈
+        critic_feedback = BaseAgent.chat_with_template(
+            template_name="critic_agent",
+            user_question=user_task,
+            agent_answer=agent_answer,
+            use_tool=False,
+            role="critic",
         )
 
-        # Critic evaluation - blue
-        critic_agent = CriticAgent()
-        critic_agent.receive_task(TASK)
-        critic_agent.receive_agent_answer(common_agent_answer)
-        critic_agent_response = critic_agent.critic()
+        assert isinstance(critic_feedback, Dict)
 
-        colorize_message(
-            message_title="CRITIC_AGENT_RESPONSE",
-            color="blue",
-            message_content=critic_agent_response,
+        if critic_feedback.get("Stop", "").lower() == "true":
+            logger.success("Critic feedback indicates stopping the conversation.")
+
+            assert isinstance(agent_answer, str)
+
+            log_iteration_info(
+                iteration, BaseAgent.get_all_history_queries(), agent_answer
+            )
+
+            break
+
+        # 生成带有反思的搜索计划并获取新的答案
+        agent_answer, search_plan = get_agent_answer_with_plan(
+            user_task=user_task,
+            plan_template_name="planner_agent_with_reflection",
+            previous_answer=agent_answer,
+            user_feedback=critic_feedback,
+            search_history=BaseAgent.get_all_history_queries(),
         )
 
-        if yaml.safe_load(critic_agent_response).get("Stop", {}).lower() == "true":
-            colorize_message(
-                message_title=f"TOTAL ITERATIONS: {iteration + 1}", color="red"
-            )
-
-            colorize_message(
-                message_title="ALL SEARCH QUERIES",
-                color="black",
-                message_content=", ".join(map(str, common_agent.queryDB)),
-            )
-            colorize_message(
-                message_title="FINAL ANSWER",
-                color="red",
-                message_content=common_agent_answer,
-            )
-
-            return f"\n{common_agent_answer}\n"
-
-        # 根据critic的建议再执行一次搜索和爬虫操作
-        # 先构建rendered_prompt
-        reflection_data = {
-            "user_question": TASK,
-            "previous_answer": common_agent_answer,
-            "user_feedback": critic_agent_response,
-            "search_history": common_agent.queryDB,
-        }
-        search_again_prompt = common_agent.render_template(
-            common_agent.load_template("planner_agent_with_reflection.txt"),
-            reflection_data,
+        # 记录当前迭代的信息
+        log_iteration_info(
+            iteration_number=iteration,
+            all_search_queries=BaseAgent.get_all_history_queries(),
+            final_agent_answer=agent_answer,
         )
-        try:
-            web_result_markdown_text = common_agent.search_and_browse(
-                search_again_prompt
-            )
-        except:
-            colorize_message(
-                message_title=f"TOTAL ITERATIONS: {iteration + 1}", color="red"
-            )
-
-            colorize_message(
-                message_title="ALL SEARCH QUERIES",
-                color="black",
-                message_content=", ".join(map(str, common_agent.queryDB)),
-            )
-
-            colorize_message(
-                message_title="FINAL ANSWER",
-                color="red",
-                message_content=common_agent_answer,
-            )
-
-            # we run out of searches for now, so we force the agent to give a final answer:
-            return f"\n{common_agent_answer}\n"
-
-        # Check if reached max iterations
-        if iteration == MAX_ITERATION - 1:
-            colorize_message(
-                message_title=f"TOTAL ITERATIONS: {iteration + 1}", color="red"
-            )
-
-            colorize_message(
-                message_title="ALL SEARCH QUERIES",
-                color="black",
-                message_content=", ".join(map(str, common_agent.queryDB)),
-            )
-
-            colorize_message(
-                message_title="FINAL ANSWER",
-                color="red",
-                message_content=common_agent_answer,
-            )
-
-            return f"\n{common_agent_answer}\n"

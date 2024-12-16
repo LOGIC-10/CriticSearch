@@ -1,11 +1,14 @@
 # critic_search/tools/search_adapter/models.py
-from datetime import datetime
 from typing import Dict, List, Optional
 
 from pydantic import BaseModel, Field, model_serializer
-from sqlmodel import Field, SQLModel
+from sqlalchemy.exc import IntegrityError
+from sqlmodel import Session
 
 from critic_search.log import logger
+
+from .db.database import engine
+from .db.models import HistoryQuery, UniqueContent
 
 
 class SearchResult(BaseModel):
@@ -44,39 +47,68 @@ class SearchResponseList(BaseModel):
 
     @model_serializer
     def ser_model(self) -> str:
-        """
-        Serialize the list of SearchResponse objects into a dictionary,
-        ensuring unique content across queries.
-
-        Returns:
-            Dict[str, str]: A dictionary where the key is the query,
-                            and the value is a formatted string representation of the search response.
-        """
-        global_seen_contents = set()  # 全局去重逻辑
         total_results = 0
         unique_results_count = 0
         result_str = ""
 
-        for response in self.responses:
-            if response.error_message:
-                logger.debug(
-                    f"Skipping serialize query '{response.query}' due to error: {response.error_message}"
-                )
-                continue  # 跳过有 error_message 的响应
+        with Session(engine) as session:
+            for response in self.responses:
+                if response.error_message:
+                    logger.warning(
+                        f"Skipping response due to error: {response.error_message}"
+                    )
+                    continue
 
-            unique_results = []
-            for res in response.results:
-                total_results += 1
-                if res.content not in global_seen_contents:
-                    global_seen_contents.add(res.content)
-                    unique_results.append(res)
+                try:
+                    # Sub-transaction for HistoryQuery
+                    with session.begin_nested():
+                        history_entry = HistoryQuery(query=response.query)
+                        session.add(history_entry)
+                        session.flush()  # Write HistoryQuery to the database
+                        logger.debug(f"Inserted HistoryQuery: {history_entry}")
 
-            # 将去重后的结果更新到当前 response
-            response.results = unique_results
-            unique_results_count += len(unique_results)
-            result_str += response.model_dump()  # type: ignore
+                    # Sub-transaction for UniqueContent
+                    unique_results = []
+                    for res in response.results:
+                        total_results += 1  # Increment total results counter
+                        try:
+                            with session.begin_nested():
+                                unique_content = UniqueContent(content=res.content)
+                                session.add(unique_content)
+                                session.flush()  # Write UniqueContent to the database
+                                unique_results.append(res)
+                                unique_results_count += (
+                                    1  # Increment unique results counter
+                                )
+                                logger.debug(
+                                    f"Inserted UniqueContent: {unique_content}"
+                                )
+                        except IntegrityError:
+                            # Handle duplicate content gracefully
+                            logger.debug(f"Duplicate content skipped: {res.content}")
+                            session.rollback()  # Rollback only this sub-transaction
 
-        # 打印提示信息
+                    # Finalize the deduplicated results for the response
+                    response.results = unique_results
+                    result_str += response.model_dump()  # type: ignore
+
+                    logger.info(
+                        f"Processed query '{response.query}' with {len(unique_results)} unique results."
+                    )
+
+                except Exception:
+                    # Rollback the entire transaction for this response
+                    logger.exception(f"Failed to process query '{response.query}'.")
+                    session.rollback()
+
+            # Commit all successful operations
+            try:
+                session.commit()
+            except Exception:
+                logger.exception("Failed to commit the session.")
+                session.rollback()
+
+        # Log the deduplication summary
         duplicates_removed = total_results - unique_results_count
         logger.success(
             f"Serialization completed. Total results: {total_results}, "
@@ -85,45 +117,3 @@ class SearchResponseList(BaseModel):
         )
 
         return result_str
-
-
-class SearchClientUsage(SQLModel, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
-    client_name: str = Field(default=None, index=True)
-    usage_count: int = Field(default=0)
-    max_usage: int = Field(default=1000)
-    reset_time: datetime = Field(default=None)  # 初始值为 None
-
-
-if __name__ == "__main__":
-    response_1 = SearchResponse(
-        query="Python programming",
-        results=[
-            SearchResult(
-                title="Python.org",
-                url="https://www.python.org",
-                content="Official Python website.",
-            ),
-            SearchResult(
-                title="Learn Python",
-                url="https://www.learnpython.org",
-                content="Interactive Python tutorial.",
-            ),
-        ],
-    )
-
-    response_2 = SearchResponse(
-        query="Asynchronous programming",
-        results=[
-            SearchResult(
-                title="AsyncIO",
-                url="https://docs.python.org/3/library/asyncio.html",
-                content="Official AsyncIO documentation.",
-            ),
-        ],
-    )
-
-    response_list = SearchResponseList(responses=[response_1, response_2])
-
-    dumped_data = response_list.model_dump()
-    print(dumped_data)

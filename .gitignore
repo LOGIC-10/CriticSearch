@@ -199,3 +199,4 @@ settings.yaml
 config.yaml
 .DS_Store
 *.sqlite
+test.py

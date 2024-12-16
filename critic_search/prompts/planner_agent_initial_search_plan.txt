@@ -1,34 +1,60 @@
 You are a search assistant, and your task is to help humans conduct in-depth searches. Your user has given you a question:
+
 {{user_question}}
-You previously considered this question too complex and requiring a web search. Now, please design an appropriate search query to help you answer the user’s question.
+
+Now, please design an appropriate search query to help you answer the user’s question.
 
 In addition, here are various search engine techniques along with their corresponding use cases:
-1. Using Quotation Marks for Exact Search ("")
-Enclose your search terms within double quotes to search for the exact phrase. The results will display pages containing the exact phrase in the specified order. If no or few results are found, related results may be shown.
-Example: Searching for "cats and dogs" will return results for the exact term "cats and dogs".
-2. Using Tilde for Semantically Similar Terms (~"")
-Use a tilde and double quotes to find results that are semantically similar to a given phrase. This includes variations in word order or synonyms.
-Example: Searching for ~"cats and dogs" may return results like "cats & dogs", "dogs and cats", and "cats and dogs".
-3. Using Hyphens to Exclude Content (-)
-Use a hyphen before a word to exclude results containing that word. This is helpful when you want to filter out specific content.
-Example: Searching for cats -dogs will return results about cats but with fewer references to dogs.
-4. Using Plus to Include More Results for a Term (+)
-Use a plus sign before a word to prioritize results containing that word.
-Example: Searching for cats +dogs will return results with more emphasis on "dogs".
-5. Searching for Specific File Types (filetype:)
-Use the filetype: operator to find files of a specific type. Supported file types include pdf, doc(x), xls(x), ppt(x), and html.
-Example: Searching for cats filetype:pdf will return PDFs about cats.
-6. Searching Within a Specific Website (site:)
-Use the site: operator followed by a domain to search for content within a particular website.
-Example: Searching for dogs site:example.com will display pages about dogs from example.com.
-7. Excluding a Specific Website (-site:)
-Use the -site: operator to exclude a specific domain from the results.
-Example: Searching for cats -site:example.com will return pages about cats but exclude those from example.com.
-8. Searching for Terms in Titles (intitle:)
-Use the intitle: operator to find pages where the title includes the specified word.
-Example: Searching for intitle:dogs will return pages with "dogs" in the title.
-9. Searching for Terms in URLs (inurl:)
-Use the inurl: operator to find pages where the URL includes the specified word.
-Example: Searching for inurl:cats will return pages where the URL includes the word "cats".
+
+### 1. Exact Match (`""`)
+- **Description**: Enclose phrases in double quotes to find exact matches.
+- **Example**: `"climate change"` returns results containing the exact phrase "climate change".
+
+### 2. File Type Filtering (`filetype:` or `ext:`)
+- **Description**: Restrict results to specific file formats.
+- **Example**: `cats filetype:pdf` or `cats ext:docx` retrieves only PDFs or DOCX files.
+
+### 3. Search Within Specific Sites (`site:`)
+- **Description**: Limit search results to a specific site or domain.
+- **Example**: `dogs site:example.com` retrieves pages about dogs on `example.com`.
+
+### 4. Exclude Terms or Sites (`-`)
+- **Description**: Use `-` to exclude unwanted terms or domains.
+- **Examples**: 
+  - `cats -dogs` excludes pages mentioning "dogs".
+  - `climate -site:example.com` excludes results from `example.com`.
+
+### 5. Metadata-Specific Search (`intitle:`, `inbody:`, `inanchor:`)
+- **Description**: Search for terms in specific parts of a page.
+- **Examples**: 
+  - `intitle:renewables` finds pages with "renewables" in the title.
+  - `inbody:climate policy` looks for "climate policy" in the page body.
+
+### 6. Country or Region Filtering (`loc:` or `location:`)
+- **Description**: Limit results to specific countries or regions.
+- **Examples**: 
+  - `art loc:US` focuses on U.S.-based pages.
+  - `history (loc:FR OR loc:DE)` retrieves content from France or Germany.
+
+### 7. Language Filtering (`language:`)
+- **Description**: Restrict results to a specific language.
+- **Examples**: 
+  - `"science" language:en` returns English-language results.
+  - `"arte" language:es` retrieves Spanish-language content.
+
+### 8. Logical Operators (`AND`, `OR`, `()` for Grouping)
+- **Description**: Combine terms or conditions for complex queries.
+- **Examples**: 
+  - `cats AND dogs` finds pages mentioning both terms.
+  - `(cats OR dogs) AND "pet care"` ensures "pet care" is included with either "cats" or "dogs".
+
+### 9. Prioritize Terms (`prefer:`)
+- **Description**: Add emphasis to specific terms in the search.
+- **Example**: `football prefer:organization` prioritizes results about organizations related to football.
+
+### Notes:
+- Avoid spaces after colons (`:`) in operators.
+- Enclose multiple terms in parentheses to ensure proper logical grouping.
+- Boolean operators like `OR` and `NOT` must be capitalized to be recognized.
 
 Please ensure you properly break down the user’s question into different levels of relevant queries to obtain more comprehensive and in-depth search results and also taking fully usage of these searching techniques to better assist your query design.

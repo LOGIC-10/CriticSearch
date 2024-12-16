@@ -1,15 +1,10 @@
 from .search_aggregator import SearchAggregator
 
 if __name__ == "__main__":
-    import asyncio
+    search_aggregator = SearchAggregator()
 
-    async def main():
-        search_aggregator = SearchAggregator()
+    response = search_aggregator.search_with_multiplex(
+        queries=["Who is Leo Messi?", "Who is Cristiano Ronaldo?"]
+    )
 
-        # 调用异步搜索方法
-        response = await search_aggregator.search(query=["Who is Leo Messi?"])
-
-        print(response)
-
-    # 使用 asyncio.run 执行异步主函数
-    asyncio.run(main())
+    print(response.model_dump())

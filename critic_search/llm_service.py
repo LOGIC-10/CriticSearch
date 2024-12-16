@@ -7,6 +7,8 @@ from openai.types.chat.chat_completion_user_message_param import (
     ChatCompletionUserMessageParam,
 )
 
+from .log import logger
+
 
 class ModelManager:
     def __init__(self, config):

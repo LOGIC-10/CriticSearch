@@ -26,6 +26,9 @@ Critic Search is an intelligent querying and analysis framework designed to enha
 - **Features**: Enables high-quality search results with advanced filtering.  
 - **Free Tier**: 1,000 free requests per month, 3 transactions per second.  
 
+### [Serpapi](https://serpapi.com/)
+- **Features**: Scrape Google and other search engines from our fast, easy, and complete API..
+- **Free Tier**: 100 free requests per month.
 
 ## Run critic_search
 

@@ -57,7 +57,47 @@ class ScrapedDataList(BaseModel):
         return "\n---\n".join(result)
 
 
-class AsyncWebScraper:
+class ScrapedDataList(BaseModel):
+    data: List[ScrapedData] = Field(default_factory=list)
+    max_content_length: int = 5000
+
+    @model_serializer
+    def ser_model(self) -> str:
+        # 用于存储拼接后的字符串
+        result = []
+
+        # 遍历所有 ScrapedData 对象
+        for data in self.data:
+            # 优先处理错误
+            if data.error:
+                result.append(f"Error for URL {data.url}: {data.error}\n")
+                continue  # 如果有错误，跳过后续处理
+
+            # 处理标题，如果没有标题，用 "Untitled"
+            title = data.title if data.title else "Untitled"
+
+            # 处理内容，如果没有内容，用 "No content available"
+            content_lines = data.content
+            if content_lines is None or len(content_lines) == 0:
+                content_lines = ["No content available"]
+            elif isinstance(content_lines, str):
+                content_lines = [content_lines]
+
+            # 合并内容为一个字符串
+            content = "\n".join(content_lines)
+
+            # 截断内容以确保长度不超过 max_content_length
+            if len(content) > self.max_content_length:
+                content = content[: self.max_content_length] + "..."
+
+            # 拼接 URL、标题和内容
+            result.append(f"URL: {data.url}\nTitle: {title}\nContent:\n{content}\n")
+
+        # 将所有拼接的内容合并成一个长字符串
+        return "\n---\n".join(result)
+
+
+class WebScraper:
     @staticmethod
     async def scrape(urls: List[str]):
         """
@@ -78,29 +118,33 @@ class AsyncWebScraper:
                     if response.status_code != 200:
                         return ScrapedData(
                             url=url,
-                            error=f"HTTP {response.status_code}: Unable to fetch page.",
+                            error=f"HTTP {response.status_code}: {response.content.decode('utf-8', errors='ignore')}",
                         )
 
                     html = response.text
                     soup = BeautifulSoup(html, "html.parser")
 
-                    # Remove script and style elements
-                    for script in soup(["script", "style", "meta", "noscript"]):
-                        script.decompose()
+                    # Remove unnecessary elements like script, style, meta, noscript
+                    for tag in soup(["script", "style", "meta", "noscript"]):
+                        tag.decompose()
 
-                    # Extract content based on specified elements or automatic content detection
+                    # Extract the main content from various elements
                     main_content = (
                         soup.find("main")
                         or soup.find("article")
                         or soup.find("div", class_=re.compile(r"content|main|article"))
                     )
+
                     if main_content:
                         content = main_content.get_text(strip=True).splitlines()
                     else:
+                        # If no main content is found, fall back to paragraph elements
                         content = [p.get_text(strip=True) for p in soup.find_all("p")]
 
-                    # Clean up the content and return
-                    content = [re.sub(r"\s+", " ", c).strip() for c in content]
+                    # Clean up the content by removing extra spaces and newlines
+                    content = [
+                        re.sub(r"\s+", " ", c).strip() for c in content if c.strip()
+                    ]
 
                     return ScrapedData(
                         url=url,
@@ -116,7 +160,4 @@ class AsyncWebScraper:
 
         scraped_data = await asyncio.gather(*(fetch_url(url) for url in urls))
 
-        # Wrap results in ScrapedDataList
-        result = ScrapedDataList(data=scraped_data).model_dump()
-        logger.info(f"Scraped data:\n{result}")
-        return result
+        return ScrapedDataList(data=scraped_data).model_dump()
