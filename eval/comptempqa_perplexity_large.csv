@@ -1,3 +1,4 @@
+id,question,model_answer,ground_truth_answer,binary_success,rating,timeframe,type
 1,Did the Winter Olympic Games in 1994 which had 1737 participants had a higher number of participants than the sports season in 2006 in Germany which had 32 participants?,"To compare the number of participants between the 1994 Winter Olympic Games and the context you mentioned for 2006, we need to clarify the specific event or context for the 2006 figure.
 
 The 1994 Winter Olympic Games in Lillehammer, Norway, had 1,737 athletes participating from 67 nations[4][5].
