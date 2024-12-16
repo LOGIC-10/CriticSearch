@@ -1,0 +1,7 @@
+label,accuracy,accuracy_per_dollar,dataset_type,model_size
+comptempqa_perplexity_small,0.64,0.256,comptempqa,sonar-small
+hotpotqa_perplexity_small,0.645,0.258,hotpotqa,sonar-small
+comptempqa_perplexity_large,0.66,0.12000000000000001,comptempqa,sonar-large
+hotpotqa_perplexity_large,0.6,0.10909090909090909,hotpotqa,sonar-large
+comptempqa_critic,0.8666666666666667,0.1625000000001016,comptempqa,critic-gpt-4o-mini
+hotpotqa_critic,0.43333333333333335,0.0812500000000508,hotpotqa,critic-gpt-4o-mini
