@@ -111,7 +111,7 @@ def main(TASK, MAX_ITERATION=1):
             colorize_message(
                 message_title="CRITIC_AGENT_RESPONSE",
                 color="blue",
-                message_content=common_agent_answer,
+                message_content=critic_agent_response,
             )
         )
 
