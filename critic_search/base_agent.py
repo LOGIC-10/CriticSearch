@@ -1,6 +1,7 @@
 import asyncio
 import json
 import os
+import time
 from typing import List, Optional, overload
 
 import yaml
@@ -54,6 +55,12 @@ class BaseAgent:
 
         self.web_scraper_schema = BaseAgent.tool_registry.get_or_create_tool_schema(
             self.web_scraper.scrape
+        )
+
+        BaseAgent.conversation_manager.available_tools = (
+            BaseAgent.tool_registry.get_or_create_tool_schema(
+                self.web_scraper.scrape, self.search_aggregator.search
+            )
         )
 
         self.repeat_turns = 10
@@ -112,8 +119,8 @@ class BaseAgent:
             tools=tools,
         )
 
-        # logger.info(f"usr_prompt:\n {usr_prompt}")
-        # logger.info(f"llm_response:\n {llm_response}")
+        # logger.info(f"usr_prompt:\n{usr_prompt}")
+        # logger.info(f"llm_response:\n{llm_response}")
 
         if tools is not None:
             return llm_response
@@ -164,82 +171,31 @@ class BaseAgent:
             search_with_tool_response.tool_calls
         )
 
-        # Extract tool call IDs and their corresponding queries
-        tool_call_id_to_queries = {
-            tool_call.id: json.loads(tool_call.function.arguments).get("query", [])
-            for tool_call in search_with_tool_response.tool_calls
-        }
+        final_search_results = ""
 
-        # Collect all queries in a single list for batch search
-        all_queries = [
-            query for queries in tool_call_id_to_queries.values() for query in queries
-        ]
+        for tool_call in search_with_tool_response.tool_calls:
+            query = json.loads(tool_call.function.arguments).get("query", "")
 
-        logger.info(f"All queries extracted: {all_queries}")
+            search_results = asyncio.run(self.search_aggregator.search(query=query))
 
-        # Update the query DB with the new queries
-        BaseAgent.queryDB.update(set(all_queries))  # type: ignore
-
-        # Execute the batch search and retrieve results
-        search_results = asyncio.run(
-            self.search_aggregator.search(query=all_queries)
-        )  # Returns a dictionary
-
-        # Build the response map (tool_call_id -> query -> search_result)
-        tool_call_id_to_response = {
-            tool_call_id: {
-                query: search_results.get(
-                    query
-                )  # Match queries with their search results
-                for query in queries
-            }
-            for tool_call_id, queries in tool_call_id_to_queries.items()
-        }
-
-        # Initialize a list to store the function call result messages
-        function_call_result_messages = []
-
-        # Iterate through the tool_call_id_to_response dictionary and build messages
-        for tool_call_id, queries_to_responses in tool_call_id_to_response.items():
-            # Concatenate all search results
-            search_result = "\n".join(
-                value for value in queries_to_responses.values() if value is not None
-            )
-
-            search_result_json = json.dumps(
-                {
-                    "query": list(queries_to_responses.keys()),  # List of queries
-                    "search_result": search_result,  # Concatenated search results
-                }
-            )
-            # Build the response message for each tool call
-            message = {
-                "role": "tools",
-                "content": search_result_json,
-                "tool_call_id": tool_call_id,
-            }
+            time.sleep(1)
 
             BaseAgent.conversation_manager.append_tool_call_result_to_history(
-                tool_call_id=tool_call_id,
+                tool_call_id=tool_call.id,
                 name="search",
-                content=search_result_json,
+                content=search_results,
             )
 
-            function_call_result_messages.append(message)
+            BaseAgent.queryDB.update(query)
 
-        # 根据初步的搜索结果进行筛选然后网页爬取
-        # Extract search results from tool messages
-        search_results = [
-            json.loads(msg["content"])["search_result"]
-            for msg in function_call_result_messages
-        ]
+            final_search_results += f"{search_results}"
 
         web_scraper_prompt = self.load_template("web_scraper.txt")
         web_scraper_rendered_prompt = self.render_template(
             web_scraper_prompt,
             {
                 "user_question": self.user_question,
-                "initial_search_results": search_results,
+                "initial_search_results": final_search_results,
             },
         )
 
@@ -257,49 +213,22 @@ class BaseAgent:
             web_scraper_response.tool_calls
         )
 
-        final_web_scraper_results = []
+        final_web_scraper_results = ""
+
         for tool_call in web_scraper_response.tool_calls:
             urls = json.loads(tool_call.function.arguments).get("urls", [])
 
             web_scraper_results = asyncio.run(self.web_scraper.scrape(urls=urls))
 
-            web_scraper_results_str = self._format_web_scraper_results(
-                web_scraper_results
-            )
-
             BaseAgent.conversation_manager.append_tool_call_result_to_history(
                 tool_call_id=tool_call.id,
                 name="scrape",
-                content=web_scraper_results_str,
+                content=web_scraper_results,  # type: ignore
             )
 
-            final_web_scraper_results.append(web_scraper_results_str)
+            final_web_scraper_results += web_scraper_results  # type: ignore
 
-        return "\n".join(final_web_scraper_results)
-
-    def _format_web_scraper_results(self, web_scraper_results) -> str:
-        """
-        Format web scraper results into markdown text.
-
-        Args:
-            web_scraper_results: List of scraping results with title, url and content
-
-        Returns:
-            str: Formatted markdown text with results
-        """
-        result_blocks = []
-        for item in web_scraper_results:
-            title = item.title or "No Title"
-            content_lines = item.content
-            if content_lines is None:
-                content_lines = []
-            elif isinstance(content_lines, str):
-                content_lines = [content_lines]
-
-            block = f"## [{title}]({item.url})\n\n" + "\n".join(content_lines)
-            result_blocks.append(block)
-
-        return "\n\n---\n\n".join(result_blocks)
+        return final_web_scraper_results
 
     def receive_task(self, task):
         """

@@ -5,7 +5,6 @@ from typing import List, Literal, Optional
 from openai.types.chat.chat_completion_message_tool_call import (
     ChatCompletionMessageToolCall,
 )
-from openai.types.chat.chat_completion_tool_param import ChatCompletionToolParam
 from pydantic import (
     BaseModel,
     SerializationInfo,
@@ -30,7 +29,7 @@ class HistoryItem(BaseModel):
 class ConversationManager(BaseModel):
     history: List[HistoryItem] = []
     max_history_length: int = 10  # Limit for conversation history
-    available_tools: List[ChatCompletionToolParam] = []
+    available_tools: List = []
     save_path: Path = Path("conversation_history.jsonl")
     delete_on_init: bool = True  # Flag to delete file on initialization
 

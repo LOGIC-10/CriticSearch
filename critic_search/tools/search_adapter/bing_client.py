@@ -42,7 +42,7 @@ class BingClient(BaseSearchClient):
             # 查询词可以包含 Bing 高级操作符，例如使用 site: 操作符限定结果来源于特定域名。
             # 示例：q="fishing+site:fishing.contoso.com"。
             # 注意：即使使用了 site: 操作符，结果可能仍会包含其他站点的内容，具体取决于相关结果的数量。
-            "count": 1,  # 返回的搜索结果数量。默认值为 10，最大值为 50。
+            "count": 2,  # 返回的搜索结果数量。默认值为 10，最大值为 50。
             # 可以与 offset 参数结合使用来分页结果。
             # 示例：如果每页显示 10 个搜索结果，第一页设置 count=10 和 offset=0，
             # 第二页设置 offset=10，以此类推。分页时可能存在部分结果重叠。

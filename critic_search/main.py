@@ -168,12 +168,6 @@ def main(TASK, MAX_ITERATION):
             # we run out of searches for now, so we force the agent to give a final answer:
             return f"\n{common_agent_answer}\n"
 
-        colorize_message(
-            message_title="WEB RESULT MARKDOWN TEXT",
-            color="blue",
-            message_content=web_result_markdown_text,
-        )
-
         # Check if reached max iterations
         if iteration == MAX_ITERATION - 1:
             colorize_message(

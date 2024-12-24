@@ -1,5 +1,4 @@
 # critic_search/search_adapter/aggregator.py
-import re
 from asyncio import gather
 from typing import Dict, List
 
@@ -9,7 +8,6 @@ from critic_search.log import logger
 from .bing_client import BingClient
 from .exceptions import InvalidAPIKeyError, RetryError, UsageLimitExceededError
 from .models import SearchResponse, SearchResponseList
-from .search_client_usage_db import initialize_db
 from .tavily_client import TavilyClient
 
 
@@ -29,13 +27,6 @@ class SearchAggregator:
 
         self.available_clients = set(self.clients.keys())
 
-        # Define a regex pattern for identifying search operators
-        self.search_operators_pattern = re.compile(
-            r'(".*?"|\bsite:|filetype:|intitle:|inurl:|\b[-+~]\b)'
-        )
-
-        initialize_db()
-
     def mark_engine_unavailable(self, engine: str):
         """
         Mark a specific search engine as unavailable.
@@ -45,18 +36,6 @@ class SearchAggregator:
         """
         if engine in self.available_clients:
             self.available_clients.remove(engine)
-
-    def contains_search_operators(self, query: str) -> bool:
-        """
-        Check if a query contains special search operators.
-
-        Args:
-            query (str): The search query.
-
-        Returns:
-            bool: True if the query contains special operators, False otherwise.
-        """
-        return bool(self.search_operators_pattern.search(query))
 
     async def _search_single_query(
         self, query: str, engines: List[str]
@@ -95,7 +74,7 @@ class SearchAggregator:
             error_message="Search failed: No available search engines for this query.",
         )
 
-    async def search(self, query: List[str]) -> Dict[str, str]:
+    async def search(self, query: List[str]) -> str:
         """
         Performs a search using the provided query.
         Supports various search techniques using special syntax.
@@ -115,4 +94,4 @@ class SearchAggregator:
         responses = await gather(*tasks)
 
         # Return the search responses as a dictionary
-        return SearchResponseList(responses=responses).model_dump()
+        return SearchResponseList(responses=responses).model_dump()  # type: ignore

@@ -12,14 +12,11 @@ class SearchResult(BaseModel):
     title: str
     url: str
     content: str
-    score: Optional[float] = None
-    published_date: Optional[str] = None
 
 
 class SearchResponse(BaseModel):
     query: str
     results: List[SearchResult] = Field(default_factory=list)
-    response_time: Optional[float] = None
     error_message: Optional[str] = None
 
     @model_serializer
@@ -27,6 +24,10 @@ class SearchResponse(BaseModel):
         if self.error_message:
             formatted_response = (
                 f"\nQuery: {self.query}\nError: {self.error_message}\n" + "-" * 50
+            )
+        elif self.results == []:
+            formatted_response = (
+                f"\nQuery: {self.query}\nError: No results found." + "-" * 50
             )
         else:
             formatted_response = f"\nQuery: {self.query}\nSearch Results:\n" + "-" * 50
@@ -42,7 +43,7 @@ class SearchResponseList(BaseModel):
     responses: List[SearchResponse] = Field(default_factory=list)
 
     @model_serializer
-    def ser_model(self) -> Dict[str, str]:
+    def ser_model(self) -> str:
         """
         Serialize the list of SearchResponse objects into a dictionary,
         ensuring unique content across queries.
@@ -51,10 +52,10 @@ class SearchResponseList(BaseModel):
             Dict[str, str]: A dictionary where the key is the query,
                             and the value is a formatted string representation of the search response.
         """
-        result = {}
         global_seen_contents = set()  # 全局去重逻辑
         total_results = 0
         unique_results_count = 0
+        result_str = ""
 
         for response in self.responses:
             if response.error_message:
@@ -73,7 +74,7 @@ class SearchResponseList(BaseModel):
             # 将去重后的结果更新到当前 response
             response.results = unique_results
             unique_results_count += len(unique_results)
-            result[response.query] = response.model_dump()
+            result_str += response.model_dump()  # type: ignore
 
         # 打印提示信息
         duplicates_removed = total_results - unique_results_count
@@ -83,7 +84,7 @@ class SearchResponseList(BaseModel):
             f"Duplicates removed: {duplicates_removed}."
         )
 
-        return result
+        return result_str
 
 
 class SearchClientUsage(SQLModel, table=True):
