@@ -25,6 +25,9 @@ dev = [
     "ruff>=0.8.0",
 ]
 
+[tool.ruff]
+exclude = ["eval"]
+
 [tool.ruff.lint]
 # 启用导入排序规则
 select = ["I001"]

@@ -1,7 +1,8 @@
 import inspect
+import json
 import logging
 import sys
-from typing import Literal, Optional
+from typing import Dict, Literal, Optional
 
 from loguru import logger
 
@@ -48,7 +49,41 @@ def set_logger_level_from_config(log_level):
     """
     logger.remove()
     logger.add(
-        sys.stderr, level=log_level, enqueue=True, backtrace=False, diagnose=False
+        sys.stderr,
+        level=log_level,
+        enqueue=True,
+        backtrace=False,
+        diagnose=False,
+        filter=lambda record: record["level"].name != "SUCCESS",
+    )
+    success_format = (
+        "<green>{time:YYYY-MM-DD HH:mm:ss.SSS}</green> | "  # 时间格式
+        "<level>{level: <8}</level> | "  # 日志级别
+        "<cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - "  # 模块、函数、行号
+        "<bold>{message}</bold>"  # 日志消息
+    )
+
+    # SUCCESS 特定格式输出
+    logger.add(
+        sink=sys.stderr,
+        level="SUCCESS",  # 针对 SUCCESS 日志
+        format=success_format,
+        filter=lambda record: record["level"].name == "SUCCESS",  # 仅过滤 SUCCESS 日志
+        enqueue=True,
+        backtrace=False,
+        diagnose=False,
+    )
+
+    logger.add(
+        "output.txt",
+        level=log_level,
+        enqueue=True,
+        backtrace=False,
+        diagnose=False,
+        rotation=None,  # 不进行文件分割
+        retention=None,  # 不保留旧日志
+        format="{time:YYYY-MM-DD HH:mm:ss.SSS} | {level: <8} | {name}:{function}:{line} - {message}",
+        mode="w",  # 每次覆盖文件
     )
 
     # Intercept standard logging
@@ -57,51 +92,43 @@ def set_logger_level_from_config(log_level):
     logger.success(f"Log level set to {log_level}!")
 
 
-COLOR_MAP = {
-    "black": {"dark": "white", "light": "black"},
-    "blue": {"dark": "light-blue", "light": "blue"},
-    "cyan": {"dark": "light-cyan", "light": "cyan"},
-    "green": {"dark": "light-green", "light": "green"},
-    "magenta": {"dark": "light-magenta", "light": "magenta"},
-    "red": {"dark": "light-red", "light": "red"},
-    "white": {"dark": "black", "light": "white"},
-    "yellow": {"dark": "light-yellow", "light": "yellow"},
-}
-
-
 def colorize_message(
     message_title: Optional[str] = "",
     color: Literal[
         "black", "blue", "cyan", "green", "magenta", "red", "white", "yellow"
     ] = "black",
     style: Literal["bold", "dim", "normal", "italic", "underline"] = "normal",
-    message_content: Optional[str] = "",
-) -> str:
-    # Determine the theme-specific color
-    theme_color = COLOR_MAP[color][settings.theme]
-
+    message_content: Optional[str] | Dict = "",
+):
     # Open and close tags for color and style
-    color_tag = f"<{theme_color}>" if theme_color else ""
-
+    color_tag = f"<{color}>" if color else ""
     style_tag = f"<{style}>" if style != "normal" else ""
 
+    # Generate the closing tag properly
+    close_tag = ""
     if color_tag and style_tag:
         close_tag = "</></>"
-    elif color_tag or style_tag:
+    elif color_tag:
         close_tag = "</>"
-    else:
-        close_tag = ""
+    elif style_tag:
+        close_tag = "</>"
 
-    # Fixed separator and styled title
+    # Styled title
     styled_title = (
         f"{style_tag}{color_tag}{'=' * 20} {message_title} {'=' * 20}{close_tag}"
         if message_title
         else ""
     )
 
-    # Combine title and content
-    return (
-        f"\n{styled_title}\n{message_content}\n"
-        if message_content
+    # Format content
+    if isinstance(message_content, Dict):
+        formatted_content = json.dumps(message_content, ensure_ascii=True, indent=2)
+    else:
+        formatted_content = str(message_content) if message_content else ""
+
+    # Log the message
+    logger.success(
+        f"\n{styled_title}\n{formatted_content}\n"
+        if formatted_content
         else f"\n{styled_title}\n"
     )

@@ -16,9 +16,7 @@ class CriticAgent(BaseAgent):
         data = self.get_data_for_critic()
 
         rendered_prompt = self.render_template(self.critic_prompt, data)
-        model_response = self.common_chat(usr_prompt=rendered_prompt)
-
-        BaseAgent.conversation_manager.add_history(role="user", content=model_response)
+        model_response = self.common_chat(usr_prompt=rendered_prompt, role="critic")
 
         try:
             formatted_yaml = self.extract_and_validate_yaml(model_response)

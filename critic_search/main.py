@@ -3,8 +3,9 @@ import time
 import yaml
 
 from .base_agent import BaseAgent
+from .config import settings
 from .critic_agent import CriticAgent
-from .log import colorize_message, logger
+from .log import colorize_message, logger, set_logger_level_from_config
 
 
 def truncate_to_character_limit(text, max_chars=100000):
@@ -17,18 +18,20 @@ def truncate_to_character_limit(text, max_chars=100000):
     return text
 
 
-def main(TASK, MAX_ITERATION=1):
+def main(TASK, MAX_ITERATION):
     # Initialize agents
     common_agent = BaseAgent()
 
     # initialize the task
     common_agent.user_question = TASK
 
+    set_logger_level_from_config(log_level=settings.log_level.upper())
+
+    BaseAgent.conversation_manager.append_to_history(role="user", content=TASK)
+
     for iteration in range(MAX_ITERATION):
-        logger.info(
-            colorize_message(
-                message_title=f"ITERATION {iteration + 1}", color="cyan", style="bold"
-            )
+        colorize_message(
+            message_title=f"ITERATION {iteration + 1}", color="cyan", style="bold"
         )
 
         if iteration == 0:
@@ -93,12 +96,10 @@ def main(TASK, MAX_ITERATION=1):
             )
             time.sleep(0.5)  # hitting rate limits for gpt mini
 
-        logger.info(
-            colorize_message(
-                message_title="COMMON AGENT ANSWER",
-                color="magenta",
-                message_content=common_agent_answer,
-            )
+        colorize_message(
+            message_title="COMMON AGENT ANSWER",
+            color="magenta",
+            message_content=common_agent_answer,
         )
 
         # Critic evaluation - blue
@@ -107,34 +108,26 @@ def main(TASK, MAX_ITERATION=1):
         critic_agent.receive_agent_answer(common_agent_answer)
         critic_agent_response = critic_agent.critic()
 
-        logger.info(
-            colorize_message(
-                message_title="CRITIC_AGENT_RESPONSE",
-                color="blue",
-                message_content=critic_agent_response,
-            )
+        colorize_message(
+            message_title="CRITIC_AGENT_RESPONSE",
+            color="blue",
+            message_content=critic_agent_response,
         )
 
         if yaml.safe_load(critic_agent_response).get("Stop", {}).lower() == "true":
-            logger.info(
-                colorize_message(
-                    message_title=f"TOTAL ITERATIONS: {iteration + 1}", color="red"
-                )
+            colorize_message(
+                message_title=f"TOTAL ITERATIONS: {iteration + 1}", color="red"
             )
 
-            logger.info(
-                colorize_message(
-                    message_title="ALL SEARCH QUERIES",
-                    color="black",
-                    message_content=", ".join(map(str, common_agent.queryDB)),
-                )
+            colorize_message(
+                message_title="ALL SEARCH QUERIES",
+                color="black",
+                message_content=", ".join(map(str, common_agent.queryDB)),
             )
-            logger.info(
-                colorize_message(
-                    message_title="FINAL ANSWER",
-                    color="red",
-                    message_content=common_agent_answer,
-                )
+            colorize_message(
+                message_title="FINAL ANSWER",
+                color="red",
+                message_content=common_agent_answer,
             )
 
             return f"\n{common_agent_answer}\n"
@@ -156,61 +149,47 @@ def main(TASK, MAX_ITERATION=1):
                 search_again_prompt
             )
         except:
-            logger.info(
-                colorize_message(
-                    message_title=f"TOTAL ITERATIONS: {iteration + 1}", color="red"
-                )
+            colorize_message(
+                message_title=f"TOTAL ITERATIONS: {iteration + 1}", color="red"
             )
 
-            logger.info(
-                colorize_message(
-                    message_title="ALL SEARCH QUERIES",
-                    color="black",
-                    message_content=", ".join(map(str, common_agent.queryDB)),
-                )
+            colorize_message(
+                message_title="ALL SEARCH QUERIES",
+                color="black",
+                message_content=", ".join(map(str, common_agent.queryDB)),
             )
 
-            logger.info(
-                colorize_message(
-                    message_title="FINAL ANSWER",
-                    color="red",
-                    message_content=common_agent_answer,
-                )
+            colorize_message(
+                message_title="FINAL ANSWER",
+                color="red",
+                message_content=common_agent_answer,
             )
 
             # we run out of searches for now, so we force the agent to give a final answer:
             return f"\n{common_agent_answer}\n"
 
-        logger.info(
-            colorize_message(
-                message_title="WEB RESULT MARKDOWN TEXT",
-                color="blue",
-                message_content=web_result_markdown_text,
-            )
+        colorize_message(
+            message_title="WEB RESULT MARKDOWN TEXT",
+            color="blue",
+            message_content=web_result_markdown_text,
         )
 
         # Check if reached max iterations
         if iteration == MAX_ITERATION - 1:
-            logger.info(
-                colorize_message(
-                    message_title=f"TOTAL ITERATIONS: {iteration + 1}", color="red"
-                )
+            colorize_message(
+                message_title=f"TOTAL ITERATIONS: {iteration + 1}", color="red"
             )
 
-            logger.info(
-                colorize_message(
-                    message_title="ALL SEARCH QUERIES",
-                    color="black",
-                    message_content=", ".join(map(str, common_agent.queryDB)),
-                )
+            colorize_message(
+                message_title="ALL SEARCH QUERIES",
+                color="black",
+                message_content=", ".join(map(str, common_agent.queryDB)),
             )
 
-            logger.info(
-                colorize_message(
-                    message_title="FINAL ANSWER",
-                    color="red",
-                    message_content=common_agent_answer,
-                )
+            colorize_message(
+                message_title="FINAL ANSWER",
+                color="red",
+                message_content=common_agent_answer,
             )
 
             return f"\n{common_agent_answer}\n"

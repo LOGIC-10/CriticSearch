@@ -7,7 +7,6 @@ from critic_search.config import settings
 from critic_search.log import logger
 
 from .bing_client import BingClient
-from .duckduckgo_client import DuckDuckGoClient
 from .exceptions import InvalidAPIKeyError, RetryError, UsageLimitExceededError
 from .models import SearchResponse, SearchResponseList
 from .search_client_usage_db import initialize_db
@@ -16,9 +15,7 @@ from .tavily_client import TavilyClient
 
 class SearchAggregator:
     def __init__(self):
-        self.clients: Dict[str, DuckDuckGoClient | TavilyClient | BingClient] = {
-            "duckduckgo": DuckDuckGoClient()
-        }
+        self.clients: Dict[str, TavilyClient | BingClient] = {}
 
         # 如果 Tavily 的 API key 存在，初始化客户端
         tavily_api_key = settings.search_engine.tavily.api_key
@@ -106,31 +103,16 @@ class SearchAggregator:
         Args:
             query (List[str]): A list of search queries.
         """
-        # If query is a single string, convert it into a list with one element
-        if isinstance(query, str):
-            query = [query]
+        # Get the list of currently available search engines
+        engines = list(self.available_clients)
+        if not engines:
+            raise ValueError("No available engines to perform the search.")
 
-        # Choose the engine dynamically based on whether the query contains search operators
-        async def dynamic_engine_task(q: str):
-            """
-            动态选择引擎并执行任务。
-            Args:
-                q (str): 当前查询。
-                delay (float): 延迟时间。
-            """
-            # 动态选择有效的引擎
-            engines = (
-                ["duckduckgo"]
-                if self.contains_search_operators(q)
-                else list(self.available_clients)
-            )
+        # Create tasks for concurrent search
+        tasks = [self._search_single_query(q, engines) for q in query]
 
-            if not engines:
-                raise ValueError(f"No available engines for query: {q}")
-            return await self._search_single_query(q, engines)
-
-        # Perform concurrent searches for multiple queries
-        # 为每个任务动态添加延迟，但保持并发
-        tasks = [dynamic_engine_task(q) for i, q in enumerate(query)]
+        # Execute all tasks and gather the responses
         responses = await gather(*tasks)
+
+        # Return the search responses as a dictionary
         return SearchResponseList(responses=responses).model_dump()

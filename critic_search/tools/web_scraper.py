@@ -59,7 +59,15 @@ class AsyncWebScraper:
                         content = [p.get_text(strip=True) for p in soup.find_all("p")]
 
                     # Clean up the content and return
-                    content = [re.sub(r"\s+", " ", c).strip() for c in content]
+                    max_length = 5000  # Set the maximum content length
+                    content = [
+                        (
+                            re.sub(r"\s+", " ", c).strip()[:max_length] + "..."
+                            if len(c.strip()) > max_length
+                            else c.strip()
+                        )
+                        for c in content
+                    ]
 
                     return ScrapedData(
                         url=url,

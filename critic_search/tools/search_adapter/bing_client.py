@@ -1,6 +1,4 @@
 # critic_search/search_adapter/bing_client.py
-from typing import Literal
-
 import httpx
 from loguru import logger
 from tenacity import (
@@ -12,7 +10,7 @@ from tenacity import (
 )
 
 from .base_search_client import BaseSearchClient
-from .exceptions import InvalidAPIKeyError, RatelimitException, UsageLimitExceededError
+from .exceptions import InvalidAPIKeyError, RatelimitException
 from .models import SearchResponse, SearchResult
 
 
@@ -25,6 +23,8 @@ class BingClient(BaseSearchClient):
         self.base_url = "https://api.bing.microsoft.com/v7.0/search"
         self._api_key = api_key
 
+        self._client_name = "BingClient"
+
     @retry(
         stop=stop_after_attempt(5),  # 重试最多5次
         wait=wait_exponential(multiplier=1, min=4, max=30)
@@ -34,60 +34,60 @@ class BingClient(BaseSearchClient):
     async def search(
         self,
         query: str,
-        max_results: int = 10,
     ) -> SearchResponse:
-        """
-        Perform an asynchronous search on Bing.
-
-        Args:
-            query (str): The search query.
-            days (int, optional): Time limit in days. Bing doesn't support direct day filtering similarly,
-                                  so you can ignore or implement custom logic.
-            max_results (int, optional): Maximum number of results to return.
-            region (Literal["us-en", "cn-zh"], optional): Region or language code for the search.
-
-        Returns:
-            SearchResponse: Pydantic model containing the search results.
-        """
         headers = {"Ocp-Apim-Subscription-Key": self._api_key}
 
-        # You could add a 'mkt' parameter to target a specific market.
-        # For example, "mkt": "en-US".
         params = {
-            "q": query,
-            "count": max_results,
-            # You can add additional Bing parameters here if needed.
+            "q": query,  # 用户的搜索查询词。不能为空。
+            # 查询词可以包含 Bing 高级操作符，例如使用 site: 操作符限定结果来源于特定域名。
+            # 示例：q="fishing+site:fishing.contoso.com"。
+            # 注意：即使使用了 site: 操作符，结果可能仍会包含其他站点的内容，具体取决于相关结果的数量。
+            "count": 1,  # 返回的搜索结果数量。默认值为 10，最大值为 50。
+            # 可以与 offset 参数结合使用来分页结果。
+            # 示例：如果每页显示 10 个搜索结果，第一页设置 count=10 和 offset=0，
+            # 第二页设置 offset=10，以此类推。分页时可能存在部分结果重叠。
+            "safeSearch": "strict",  # 过滤成人内容的设置。
+            # 可选值：
+            # - "Off": 返回包含成人文本和图片但不包括成人视频的内容。
+            # - "Moderate": 返回包含成人文本但不包括成人图片或视频的内容。
+            # - "Strict": 不返回任何成人文本、图片或视频内容。
+            "responseFilter": "Webpages",  # 用逗号分隔的答案类型，指定要在响应中包含的内容。
+            # 如果未指定此参数，则响应包含所有相关的数据类型。
+            # 可选值包括：
+            # - Computation, Entities, Images, News, Places, RelatedSearches,
+            #   SpellSuggestions, TimeZone, Translations, Videos, Webpages。
+            # 示例：使用 &responseFilter=-images 排除图片结果。
+            # 注意：若想获得单一答案类型，应优先使用特定的 API 端点。
         }
-
-        logger.debug(f"Using 'bing' for query '{query}'.")
 
         async with httpx.AsyncClient(timeout=10) as client:
             response = await client.get(self.base_url, headers=headers, params=params)
 
-            # 处理 HTTP 状态码
-            if response.status_code == 429:
-                raise RatelimitException("Rate limit exceeded.")
-            elif response.status_code == 401:
-                raise InvalidAPIKeyError()
-
-            # 如果响应为其他错误状态码，抛出异常
-            response.raise_for_status()
-
-            # 如果响应成功，解析 JSON 数据
+        if response.status_code == 200:
             json_response = response.json()
 
-        # 解析 Bing 的响应
-        web_pages = json_response.get("webPages", {})
-        items = web_pages.get("value", [])
+            # 解析 Bing 的响应
+            web_pages = json_response.get("webPages", {})
+            items = web_pages.get("value", [])
 
-        results = []
-        for item in items:
-            results.append(
-                SearchResult(
-                    title=item.get("name", ""),
-                    url=item.get("url", ""),
-                    content=item.get("snippet", ""),
+            results = []
+            for item in items:
+                results.append(
+                    SearchResult(
+                        title=item.get("name", ""),
+                        url=item.get("url", ""),
+                        content=item.get("snippet", ""),
+                    )
                 )
-            )
 
-        return SearchResponse(query=query, results=results)
+            return SearchResponse(query=query, results=results)
+        # 处理 HTTP 状态码
+        if response.status_code == 429:
+            raise RatelimitException()
+        elif response.status_code == 401:
+            raise InvalidAPIKeyError()
+        else:
+            return SearchResponse(
+                query=query,
+                error_message=f"Unexpected status code: {response.status_code}. Response: {response.text}",
+            )

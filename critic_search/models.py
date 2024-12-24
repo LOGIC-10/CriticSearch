@@ -1,61 +1,177 @@
-from typing import Dict, List, Literal, Optional
+import json
+from pathlib import Path
+from typing import List, Literal, Optional
 
 from openai.types.chat.chat_completion_message_tool_call import (
     ChatCompletionMessageToolCall,
 )
-from pydantic import BaseModel, model_serializer
+from openai.types.chat.chat_completion_tool_param import ChatCompletionToolParam
+from pydantic import (
+    BaseModel,
+    SerializationInfo,
+    SerializerFunctionWrapHandler,
+    field_serializer,
+    model_serializer,
+)
+
+from .log import logger
 
 
-# 定义单条历史记录的模型
+# Model for a single history entry
 class HistoryItem(BaseModel):
-    role: Literal["user", "assistant", "tools"]
+    role: Literal["user", "assistant", "tool", "critic"]
     content: Optional[str] = None
     tool_calls: Optional[List[ChatCompletionMessageToolCall]] = None
     tool_call_id: Optional[str] = None
     name: Optional[str] = None
 
-    @model_serializer
-    def ser_model(self) -> Dict:
-        """序列化单条历史记录为 ShareGPT 格式"""
-        if self.role == "tools":
-            return {
-                "from": "function_call",
-                "value": self.content,
-            }
-        else:
-            return {
-                "from": self.role,
-                "value": self.content or "",
-            }
 
-
-# 管理历史记录的类
+# Manager class for conversation history
 class ConversationManager(BaseModel):
     history: List[HistoryItem] = []
+    max_history_length: int = 10  # Limit for conversation history
+    available_tools: List[ChatCompletionToolParam] = []
+    save_path: Path = Path("conversation_history.jsonl")
+    delete_on_init: bool = True  # Flag to delete file on initialization
 
-    def add_history(self, role: Literal["user", "assistant"], content, **kwargs):
+    def __init__(self, **data):
+        super().__init__(**data)
+        if self.delete_on_init and self.save_path.exists():
+            try:
+                self.save_path.unlink()  # Delete the file if it exists
+                logger.info(f"Deleted existing file: {self.save_path}")
+            except Exception as e:
+                logger.error(f"Failed to delete file {self.save_path}: {e}")
+                raise
+        # Set the flag to False to avoid further deletions
+        self.delete_on_init = False
+
+    @field_serializer("history")
+    def serialize_history(self, history: List[HistoryItem]):
+        serialized_history = []
+        for item in history[-self.max_history_length :]:
+            serialized_history.append(item.model_dump(exclude_none=True))
+        return serialized_history
+
+    @model_serializer(mode="wrap")
+    def custom_serialize(
+        self, handler: SerializerFunctionWrapHandler, info: SerializationInfo
+    ):
+        """
+        Custom serialization logic that handles different contexts, such as 'sharegpt'.
+        """
+        # Perform default serialization
+        result = handler(self)
+
+        result = result["history"]
+
+        if info.context and info.context.get("sharegpt"):
+            # Transform history into ShareGPT format
+            # TODO: human 和 observation 必须出现在奇数位置，gpt 和 function 必须出现在偶数位置
+            conversations = []
+            for item in self.history:
+                role_mapping = {
+                    "user": "human",
+                    "assistant": "function_call",
+                    "tool": "observation",
+                    "critic": "critic",
+                }
+
+                role = role_mapping.get(item.role, item.role)
+                value = item.content if item.content else None
+
+                # For tool calls, include the tool_call_id or arguments
+                if role == "function_call":
+                    if item.tool_calls:
+                        for tool_call in item.tool_calls:
+                            value = json.dumps(
+                                {
+                                    "name": tool_call.function.name,
+                                    "arguments": tool_call.function.arguments,
+                                },
+                                ensure_ascii=True,
+                            )
+
+                            conversations.append({"from": role, "value": value})
+                    else:
+                        conversations.append({"from": "gpt", "value": value})
+
+                elif role == "observation":
+                    conversations.append(
+                        {"from": role, "value": json.dumps(value, ensure_ascii=True)}
+                    )
+
+                else:
+                    conversations.append({"from": role, "value": value})
+
+            # Build final output structure
+            result = {
+                "conversations": conversations,
+                "tools": json.dumps(self.available_tools, ensure_ascii=True),
+            }
+
+        return result
+
+    def write(self, data: dict, path: Path | str):
+        if isinstance(path, str):
+            path = Path(path)
+
+        try:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            with path.open("a", encoding="utf-8") as f:
+                json_str = json.dumps(data, ensure_ascii=True, indent=2)
+                f.write(json_str + "\n")
+        except Exception as e:
+            logger.error(f"Failed to write to {path}: {e}")
+            raise
+
+    def _auto_save(self):
+        """Auto save after each update if save_path is set"""
+        self.write(
+            path=self.save_path, data=self.history[-1].model_dump(exclude_none=True)
+        )
+
+    def append_to_history(
+        self,
+        role: Literal["user", "assistant", "tool", "critic"],
+        content: Optional[str] = None,
+        **kwargs,
+    ):
+        """
+        Add a new message to the conversation history.
+        """
         self.history.append(HistoryItem(role=role, content=content, **kwargs))
+        self._auto_save()
 
-    def add_tool_call_to_history(self, tool_calls, content):
-        self.add_history(role="assistant", content=content, tool_calls=tool_calls)
+        # logger.info(f"Current history:\n{self.model_dump()}")
 
-    def add_tool_call_result_to_history(self, message: Dict):
-        self.history.append(HistoryItem.model_validate((message)))
+    def append_tool_call_to_history(
+        self, tool_calls: List[ChatCompletionMessageToolCall]
+    ):
+        """
+        Add a tool call entry to the conversation history.
+        """
+        self.append_to_history(role="assistant", tool_calls=tool_calls)
+
+    def append_tool_call_result_to_history(
+        self, tool_call_id: str, name: str, content: str
+    ):
+        """
+        Add a tool call result to the conversation history.
+        """
+        self.append_to_history(
+            role="tool", tool_call_id=tool_call_id, name=name, content=content
+        )
 
     def clear_history(self):
+        """
+        Clear the entire conversation history.
+        """
         self.history.clear()
-
-    # TODO:
-    # 1. 使得 system 在最开始
-    # 2. 使得 human 和 observation 必须出现在奇数位置，gpt 和 function 必须出现在偶数位置
-    @model_serializer
-    def ser_model(self) -> Dict:
-        """序列化完整历史记录为 ShareGPT 格式"""
-        return {"conversations": [item.model_dump() for item in self.history]}
 
 
 if __name__ == "__main__":
     manager = ConversationManager()
-    manager.add_history("user", "What is the weather today?")
-    manager.add_history("assistant", "It's sunny and warm.")
+    manager.append_to_history("user", "What is the weather today?")
+    manager.append_to_history("assistant", "It's sunny and warm.")
     print(manager.model_dump())

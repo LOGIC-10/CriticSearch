@@ -43,7 +43,18 @@ class BaseAgent:
             }
         ]
         self.search_aggregator = SearchAggregator()
+
+        self.search_aggregator_schema = (
+            BaseAgent.tool_registry.get_or_create_tool_schema(
+                self.search_aggregator.search
+            )
+        )
+
         self.web_scraper = AsyncWebScraper()
+
+        self.web_scraper_schema = BaseAgent.tool_registry.get_or_create_tool_schema(
+            self.web_scraper.scrape
+        )
 
         self.repeat_turns = 10
 
@@ -89,7 +100,10 @@ class BaseAgent:
     def common_chat(self, usr_prompt: str, tools: None = None) -> str: ...
 
     def common_chat(
-        self, usr_prompt: str | List, tools: Optional[List] = None
+        self,
+        usr_prompt: str | List,
+        tools: Optional[List] = None,
+        role: str = "assistant",
     ) -> ChatCompletionMessage | str | None:
         llm_response = call_llm(
             model=settings.default_model,
@@ -97,14 +111,17 @@ class BaseAgent:
             config=settings,
             tools=tools,
         )
-        # TODO: Do we need to add this message to history?
-        # self.history.append({"role": "user", "content": usr_prompt})
-        # self.history.append({"role": "assistant", "content": llm_response})
+
+        # logger.info(f"usr_prompt:\n {usr_prompt}")
+        # logger.info(f"llm_response:\n {llm_response}")
 
         if tools is not None:
-            # logger.debug(f"usr_prompt:\n {usr_prompt}")
-            # logger.debug(f"llm_response:\n {llm_response}")
             return llm_response
+
+        BaseAgent.conversation_manager.append_to_history(
+            role=role, content=llm_response.content
+        )
+
         return llm_response.content
 
     def update_answer(self, query, previous_answer, search_results, critic_feedback):
@@ -136,19 +153,15 @@ class BaseAgent:
 
     def search_and_browse(self, rendered_prompt) -> str | None:
         search_with_tool_response = self.common_chat(
-            usr_prompt=rendered_prompt,
-            tools=BaseAgent.tool_registry.get_or_create_tool_schema(
-                self.search_aggregator.search
-            ),
+            usr_prompt=rendered_prompt, tools=self.search_aggregator_schema
         )
 
         # If no tool calls, return the response immediately
         if search_with_tool_response.tool_calls is None:
             return search_with_tool_response.content
 
-        BaseAgent.conversation_manager.add_tool_call_to_history(
-            tool_calls=search_with_tool_response.tool_calls,
-            content=search_with_tool_response.content,
+        BaseAgent.conversation_manager.append_tool_call_to_history(
+            search_with_tool_response.tool_calls
         )
 
         # Extract tool call IDs and their corresponding queries
@@ -163,6 +176,9 @@ class BaseAgent:
         ]
 
         logger.info(f"All queries extracted: {all_queries}")
+
+        # Update the query DB with the new queries
+        BaseAgent.queryDB.update(set(all_queries))  # type: ignore
 
         # Execute the batch search and retrieve results
         search_results = asyncio.run(
@@ -190,20 +206,23 @@ class BaseAgent:
                 value for value in queries_to_responses.values() if value is not None
             )
 
+            search_result_json = json.dumps(
+                {
+                    "query": list(queries_to_responses.keys()),  # List of queries
+                    "search_result": search_result,  # Concatenated search results
+                }
+            )
             # Build the response message for each tool call
             message = {
                 "role": "tools",
-                "content": json.dumps(
-                    {
-                        "query": list(queries_to_responses.keys()),  # List of queries
-                        "search_result": search_result,  # Concatenated search results
-                    }
-                ),
+                "content": search_result_json,
                 "tool_call_id": tool_call_id,
             }
 
-            BaseAgent.conversation_manager.add_tool_call_result_to_history(
-                message={**message, "name": "search"}
+            BaseAgent.conversation_manager.append_tool_call_result_to_history(
+                tool_call_id=tool_call_id,
+                name="search",
+                content=search_result_json,
             )
 
             function_call_result_messages.append(message)
@@ -227,42 +246,36 @@ class BaseAgent:
         # Interact with the model for web scraping
         web_scraper_response = self.common_chat(
             usr_prompt=web_scraper_rendered_prompt,
-            tools=BaseAgent.tool_registry.get_or_create_tool_schema(
-                self.web_scraper.scrape
-            ),
+            tools=self.web_scraper_schema,
         )
 
         # If no tool calls, return the response immediately
         if web_scraper_response.tool_calls is None:
             return web_scraper_response.content
 
-        BaseAgent.conversation_manager.add_tool_call_to_history(
-            tool_calls=web_scraper_response.tool_calls,
-            content=search_with_tool_response.content,
+        BaseAgent.conversation_manager.append_tool_call_to_history(
+            web_scraper_response.tool_calls
         )
 
-        # Extract tool call IDs and their corresponding queries
-        tool_call_id_to_urls = {
-            tool_call.id: json.loads(tool_call.function.arguments).get("urls", [])
-            for tool_call in web_scraper_response.tool_calls
-        }
+        final_web_scraper_results = []
+        for tool_call in web_scraper_response.tool_calls:
+            urls = json.loads(tool_call.function.arguments).get("urls", [])
 
-        # Collect all URLs in a single list for batch scraping
-        all_urls = [url for urls in tool_call_id_to_urls.values() for url in urls]
-        logger.info(f"All URLs extracted: {all_urls}")
+            web_scraper_results = asyncio.run(self.web_scraper.scrape(urls=urls))
 
-        # TODO: Add scrape tool result to history which involes changing scrape function return format equal to search function
-        # Execute the batch scraping and retrieve results
-        web_scraper_results = asyncio.run(
-            self.web_scraper.scrape(urls=all_urls)
-        )  # Returns a dictionary
+            web_scraper_results_str = self._format_web_scraper_results(
+                web_scraper_results
+            )
 
-        web_result_markdown_text = self._format_web_scraper_results(web_scraper_results)
+            BaseAgent.conversation_manager.append_tool_call_result_to_history(
+                tool_call_id=tool_call.id,
+                name="scrape",
+                content=web_scraper_results_str,
+            )
 
-        # Update the query DB with the new queries
-        BaseAgent.queryDB.update(set(all_queries))  # type: ignore
+            final_web_scraper_results.append(web_scraper_results_str)
 
-        return web_result_markdown_text
+        return "\n".join(final_web_scraper_results)
 
     def _format_web_scraper_results(self, web_scraper_results) -> str:
         """
