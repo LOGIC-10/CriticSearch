@@ -116,10 +116,30 @@ class ConversationManager(BaseModel):
             path = Path(path)
 
         try:
+            # Create parent directories if they do not exist
             path.parent.mkdir(parents=True, exist_ok=True)
-            with path.open("a", encoding="utf-8") as f:
-                json_str = json.dumps(data, ensure_ascii=True, indent=2)
-                f.write(json_str + "\n")
+
+            # Check if the file exists and read existing data
+            if path.exists():
+                with path.open("r", encoding="utf-8") as f:
+                    try:
+                        # Try to parse the existing JSON data (expecting a list at the top level)
+                        existing_data = json.load(f)
+                        if not isinstance(existing_data, list):
+                            existing_data = []  # Ensure it's a list
+                    except json.JSONDecodeError:
+                        # If the file is empty or corrupt, start with an empty list
+                        existing_data = []
+            else:
+                existing_data = []
+
+            # Append the new data to the existing array
+            existing_data.append(data)
+
+            # Write the updated array back to the file
+            with path.open("w", encoding="utf-8") as f:
+                json.dump(existing_data, f, ensure_ascii=True, indent=2)
+
         except Exception as e:
             logger.error(f"Failed to write to {path}: {e}")
             raise

@@ -27,6 +27,8 @@ def main(TASK, MAX_ITERATION):
 
     set_logger_level_from_config(log_level=settings.log_level.upper())
 
+    logger.success(f"Starting the conversation with task: {TASK}")
+    
     BaseAgent.conversation_manager.append_to_history(role="user", content=TASK)
 
     for iteration in range(MAX_ITERATION):
