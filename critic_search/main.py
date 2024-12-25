@@ -71,10 +71,12 @@ def main(TASK, MAX_ITERATION):
                 initial_search_rendered_prompt = common_agent.render_template(
                     initial_search_prompt, data
                 )
+                logger.info(f"initial_search_rendered_prompt: {initial_search_rendered_prompt}")
 
                 initial_web_result_markdown_text = common_agent.search_and_browse(
                     initial_search_rendered_prompt
                 )
+                logger.info(f"Initial web result: {initial_web_result_markdown_text}")
 
                 rag_based_answer_prompt = common_agent.render_template(
                     common_agent.load_template("rag_based_answer.txt"),

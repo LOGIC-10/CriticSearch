@@ -163,6 +163,8 @@ class BaseAgent:
             usr_prompt=rendered_prompt, tools=self.search_aggregator_schema
         )
 
+        logger.info(f"search_with_tool_response:\n{search_with_tool_response}")
+
         # If no tool calls, return the response immediately
         if search_with_tool_response.tool_calls is None:
             return search_with_tool_response.content

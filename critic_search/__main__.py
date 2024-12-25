@@ -3,10 +3,10 @@ from .run_tasks import run_tasks
 # Example usage:
 if __name__ == "__main__":
     tasks = [
-        """Which interdisciplinary scholar, renowned for their contributions to both artificial intelligence and neuroethics, currently holds a faculty position in the Department of Cognitive Science at a university, and has co-authored a seminal paper on the ethical implications of AI in medical decision-making?""",
-        """What are the ethical considerations surrounding the use of AI in autonomous vehicles, and how might this affect regulatory frameworks?"""
+        "How will the introduction of central bank digital currencies (CBDCs) impact the traditional banking system and financial stability in the next five years?",
+        "What are the potential benefits and challenges of using AI-driven predictive maintenance in the manufacturing industry, and how can companies effectively implement such systems?"
     ]
-    MAX_ITERATION = 5
+    MAX_ITERATION = 20
     output_file = "conversation_history_sharegpt.jsonl"
 
     # Run the tasks with the specified number of iterations
