@@ -165,12 +165,12 @@ class ConversationManager(BaseModel):
         # logger.info(f"Current history:\n{self.model_dump()}")
 
     def append_tool_call_to_history(
-        self, tool_calls: List[ChatCompletionMessageToolCall]
+        self, tool_calls: List[ChatCompletionMessageToolCall], content: Optional[str] = None, 
     ):
         """
         Add a tool call entry to the conversation history.
         """
-        self.append_to_history(role="assistant", tool_calls=tool_calls)
+        self.append_to_history(role="assistant", tool_calls=tool_calls, content=content)
 
     def append_tool_call_result_to_history(
         self, tool_call_id: str, name: str, content: str
