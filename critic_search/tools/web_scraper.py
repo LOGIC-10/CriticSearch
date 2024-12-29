@@ -48,7 +48,7 @@ class ScrapedDataList(BaseModel):
 
             # 截断内容以确保长度不超过 max_content_length
             if len(content) > self.max_content_length:
-                content = content[: self.max_content_length] + "..."
+                content = content[: self.max_content_length] + "[TOO LONG, END]"
 
             # 拼接 URL、标题和内容
             result.append(f"URL: {data.url}\nTitle: {title}\nContent:\n{content}\n")

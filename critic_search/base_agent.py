@@ -252,7 +252,7 @@ class BaseAgent:
         try:
             # 尝试解析YAML内容
             parsed_yaml = yaml.safe_load(model_response)
-            return yaml.dump(parsed_yaml, default_flow_style=False)
+            return yaml.dump(parsed_yaml, default_flow_style=False, allow_unicode=True)
 
         except yaml.YAMLError as exc:
             print(f"Invalid YAML content: {exc}")
