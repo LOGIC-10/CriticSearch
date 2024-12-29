@@ -19,7 +19,7 @@ class ScrapedData(BaseModel):
 
 class ScrapedDataList(BaseModel):
     data: List[ScrapedData] = Field(default_factory=list)
-    max_content_length: int = 5000
+    max_content_length: int = 50000
 
     @model_serializer
     def ser_model(self) -> str:
