@@ -53,6 +53,7 @@ def call_llm(
     usr_prompt: str | Iterable[ChatCompletionMessageParam],
     config,
     tools: List | None,
+    tool_choice = 'auto'
 ) -> ChatCompletionMessage:
     try:
         model_manager = ModelManager(config)
@@ -71,6 +72,7 @@ def call_llm(
             temperature=model_config.get("temperature", 0.7),
             max_tokens=model_config.get("max_tokens", 8192),
             tools=tools,  # type: ignore
+            tool_choice=tool_choice
         )
 
         response_message = response.choices[0].message

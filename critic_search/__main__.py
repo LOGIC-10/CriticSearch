@@ -3,7 +3,7 @@ from .run_tasks import run_tasks
 # Example usage:
 if __name__ == "__main__":
     tasks = [
-        "Search for the information of a AI researcher Qinyu Luo",
+        "How many people are there in THUNLP?",
     ]
     MAX_ITERATION = 10
     output_file = "conversation_history_sharegpt.jsonl"

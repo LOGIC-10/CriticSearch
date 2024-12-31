@@ -111,12 +111,14 @@ class BaseAgent:
         usr_prompt: str | List,
         tools: Optional[List] = None,
         role: str = "assistant",
+        tool_choice: Optional[str] = None,
     ) -> ChatCompletionMessage | str | None:
         llm_response = call_llm(
             model=settings.default_model,
             usr_prompt=usr_prompt,
             config=settings,
             tools=tools,
+            tool_choice = tool_choice
         )
 
         # logger.info(f"usr_prompt:\n{usr_prompt}")
@@ -160,7 +162,9 @@ class BaseAgent:
 
     def search_and_browse(self, rendered_prompt) -> str | None:
         search_with_tool_response = self.common_chat(
-            usr_prompt=rendered_prompt, tools=self.search_aggregator_schema
+            usr_prompt=rendered_prompt,
+            tools=self.search_aggregator_schema,
+            tool_choice="required",
         )
 
         logger.info(f"search_with_tool_response:\n{search_with_tool_response}")
@@ -205,6 +209,7 @@ class BaseAgent:
         web_scraper_response = self.common_chat(
             usr_prompt=web_scraper_rendered_prompt,
             tools=self.web_scraper_schema,
+            tool_choice="required",
         )
 
         # If no tool calls, return the response immediately

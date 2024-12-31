@@ -60,6 +60,7 @@ def main(TASK, MAX_ITERATION):
             if agent_confident:
                 # When confident, only get the answer
                 common_agent_answer = common_agent.common_chat(usr_prompt=TASK)
+
             else:
                 # When not confident, get both answer and search results
                 data = {
@@ -71,13 +72,16 @@ def main(TASK, MAX_ITERATION):
                 initial_search_rendered_prompt = common_agent.render_template(
                     initial_search_prompt, data
                 )
-                logger.info(f"initial_search_rendered_prompt: {initial_search_rendered_prompt}")
+                # logger.info(f"initial_search_rendered_prompt: {initial_search_rendered_prompt}")
 
+                # search_and_browse 直接一口气执行搜索和爬虫操作并且返回了format好的网页结果
+                # TODO： 返回的link必须要有对应的uuid，才能让模型生成的时候在citation字段引用
                 initial_web_result_markdown_text = common_agent.search_and_browse(
                     initial_search_rendered_prompt
                 )
-                logger.info(f"Initial web result: {initial_web_result_markdown_text}")
+                logger.info(f"Initial web result: {initial_web_result_markdown_text}") # 这一步就是提供了做RAG answer的信息内容
 
+                # TODO： RAG-based answer 这里需要更新prompt，变成字典的回答形式： comprehensive_dict_answer.txt
                 rag_based_answer_prompt = common_agent.render_template(
                     common_agent.load_template("rag_based_answer.txt"),
                     {
