@@ -8,16 +8,6 @@ from .critic_agent import CriticAgent
 from .log import colorize_message, logger, set_logger_level_from_config
 
 
-def truncate_to_character_limit(text, max_chars=100000):
-    if hasattr(text, "content"):
-        text = text.content  # Extract the content attribute
-
-    # Ensure `text` is a string before truncating
-    if isinstance(text, str) and len(text) > max_chars:
-        return text[:max_chars]
-    return text
-
-
 def main(TASK, MAX_ITERATION):
     # Initialize agents
     common_agent = BaseAgent()
@@ -28,7 +18,7 @@ def main(TASK, MAX_ITERATION):
     set_logger_level_from_config(log_level=settings.log_level.upper())
 
     logger.success(f"Starting the conversation with task: {TASK}")
-    
+
     BaseAgent.conversation_manager.append_to_history(role="user", content=TASK)
 
     for iteration in range(MAX_ITERATION):
@@ -71,7 +61,9 @@ def main(TASK, MAX_ITERATION):
                 initial_search_rendered_prompt = common_agent.render_template(
                     initial_search_prompt, data
                 )
-                logger.info(f"initial_search_rendered_prompt: {initial_search_rendered_prompt}")
+                logger.info(
+                    f"initial_search_rendered_prompt: {initial_search_rendered_prompt}"
+                )
 
                 initial_web_result_markdown_text = common_agent.search_and_browse(
                     initial_search_rendered_prompt
@@ -95,7 +87,7 @@ def main(TASK, MAX_ITERATION):
             common_agent_answer = common_agent.update_answer(
                 query=TASK,
                 previous_answer=common_agent_answer,
-                search_results=truncate_to_character_limit(web_result_markdown_text),
+                search_results=web_result_markdown_text,
                 critic_feedback=critic_agent_response,
             )
             time.sleep(0.5)  # hitting rate limits for gpt mini
