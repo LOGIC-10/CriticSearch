@@ -6,95 +6,46 @@ import httpx
 from bs4 import BeautifulSoup
 from pydantic import BaseModel, Field, model_serializer
 
-from critic_search.log import logger
-
 
 class ScrapedData(BaseModel):
     url: str
     title: Optional[str] = None
-    content: List[str] = Field(default_factory=list)
-    metadata: Optional[dict] = None
+    content: Optional[str] = None
     error: Optional[str] = None
 
 
 class ScrapedDataList(BaseModel):
     data: List[ScrapedData] = Field(default_factory=list)
-    max_content_length: int = 5000
+    max_content_length: int = 50000  # Max length for individual content
+    max_output_length: int = 100000  # Max length for the entire serialized result
 
     @model_serializer
     def ser_model(self) -> str:
-        # 用于存储拼接后的字符串
+        # List to store concatenated strings
         result = []
 
-        # 遍历所有 ScrapedData 对象
         for data in self.data:
-            # 优先处理错误
             if data.error:
                 result.append(f"Error for URL {data.url}: {data.error}\n")
-                continue  # 如果有错误，跳过后续处理
+                continue  # Skip further processing if there's an error
 
-            # 处理标题，如果没有标题，用 "Untitled"
-            title = data.title if data.title else "Untitled"
+            assert data.content is not None
 
-            # 处理内容，如果没有内容，用 "No content available"
-            content_lines = data.content
-            if content_lines is None or len(content_lines) == 0:
-                content_lines = ["No content available"]
-            elif isinstance(content_lines, str):
-                content_lines = [content_lines]
+            # Truncate content to ensure it does not exceed max_content_length
+            if len(data.content) > self.max_content_length:
+                data.content = data.content[: self.max_content_length] + "[TOO LONG, END]"
 
-            # 合并内容为一个字符串
-            content = "\n".join(content_lines)
+            result.append(
+                f"URL: {data.url}\nTitle: {data.title}\nContent:\n{data.content}\n"
+            )
 
-            # 截断内容以确保长度不超过 max_content_length
-            if len(content) > self.max_content_length:
-                content = content[: self.max_content_length] + "..."
+        output = "\n---\n".join(result)
 
-            # 拼接 URL、标题和内容
-            result.append(f"URL: {data.url}\nTitle: {title}\nContent:\n{content}\n")
+        # Apply final length truncation to the overall result
+        if len(output) > self.max_output_length:
+            output = output[: self.max_output_length] + "\n[OUTPUT TOO LONG, TRUNCATED]"
 
-        # 将所有拼接的内容合并成一个长字符串
-        return "\n---\n".join(result)
-
-
-class ScrapedDataList(BaseModel):
-    data: List[ScrapedData] = Field(default_factory=list)
-    max_content_length: int = 5000
-
-    @model_serializer
-    def ser_model(self) -> str:
-        # 用于存储拼接后的字符串
-        result = []
-
-        # 遍历所有 ScrapedData 对象
-        for data in self.data:
-            # 优先处理错误
-            if data.error:
-                result.append(f"Error for URL {data.url}: {data.error}\n")
-                continue  # 如果有错误，跳过后续处理
-
-            # 处理标题，如果没有标题，用 "Untitled"
-            title = data.title if data.title else "Untitled"
-
-            # 处理内容，如果没有内容，用 "No content available"
-            content_lines = data.content
-            if content_lines is None or len(content_lines) == 0:
-                content_lines = ["No content available"]
-            elif isinstance(content_lines, str):
-                content_lines = [content_lines]
-
-            # 合并内容为一个字符串
-            content = "\n".join(content_lines)
-
-            # 截断内容以确保长度不超过 max_content_length
-            if len(content) > self.max_content_length:
-                content = content[: self.max_content_length] + "..."
-
-            # 拼接 URL、标题和内容
-            result.append(f"URL: {data.url}\nTitle: {title}\nContent:\n{content}\n")
-
-        # 将所有拼接的内容合并成一个长字符串
-        return "\n---\n".join(result)
+        return output
 
 
 class WebScraper:
@@ -118,42 +69,47 @@ class WebScraper:
                     if response.status_code != 200:
                         return ScrapedData(
                             url=url,
-                            error=f"HTTP {response.status_code}: {response.content.decode('utf-8', errors='ignore')}",
+                            error=f"HTTP {response.status_code}: {response.reason_phrase}",
                         )
 
                     html = response.text
                     soup = BeautifulSoup(html, "html.parser")
 
-                    # Remove unnecessary elements like script, style, meta, noscript
-                    for tag in soup(["script", "style", "meta", "noscript"]):
-                        tag.decompose()
+                    # Remove script and style elements
+                    for script in soup(["script", "style", "meta", "noscript"]):
+                        script.decompose()
 
-                    # Extract the main content from various elements
+                    # Extract content based on specified elements or automatic content detection
                     main_content = (
                         soup.find("main")
                         or soup.find("article")
                         or soup.find("div", class_=re.compile(r"content|main|article"))
                     )
-
                     if main_content:
-                        content = main_content.get_text(strip=True).splitlines()
+                        # Extract main content text and split into lines
+                        content_lines = main_content.get_text(strip=True).splitlines()
                     else:
-                        # If no main content is found, fall back to paragraph elements
-                        content = [p.get_text(strip=True) for p in soup.find_all("p")]
+                        # Extract text from all <p> elements
+                        content_lines = [
+                            p.get_text(strip=True) for p in soup.find_all("p")
+                        ]
 
-                    # Clean up the content by removing extra spaces and newlines
-                    content = [
-                        re.sub(r"\s+", " ", c).strip() for c in content if c.strip()
+                    # Clean up the content
+                    content_lines = [
+                        re.sub(r"\s+", " ", c).strip() for c in content_lines
                     ]
+
+                    # If content_lines is empty, provide a default value
+                    if not content_lines:
+                        content = "No content available"
+                    else:
+                        # Combine the list of lines into a single string
+                        content = "\n".join(content_lines)
 
                     return ScrapedData(
                         url=url,
-                        title=soup.title.string if soup.title else None,
-                        content=content,
-                        metadata={
-                            "length": len("".join(content)),
-                            "elements_found": len(content),
-                        },
+                        title=soup.title.string if soup.title else "Untitled",
+                        content=content
                     )
             except Exception as e:
                 return ScrapedData(url=url, error=f"Error: {str(e)}")
