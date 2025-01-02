@@ -38,7 +38,9 @@ class BaseAgent:
     conversation_manager.available_tools = Toolbox.get_function_schemas()
 
     @staticmethod
-    def common_chat(usr_prompt: str, use_tool: bool = True, role: str | None = None) -> str:
+    def common_chat(
+        usr_prompt: str, use_tool: bool = True, role: str | None = None
+    ) -> str:
         llm_response = call_llm(
             model=settings.default_model,
             usr_prompt=usr_prompt,
@@ -56,7 +58,7 @@ class BaseAgent:
             role = role
         else:
             role = "assistant"
-            
+
         # If no tool calls, return the response immediately
         if llm_response.tool_calls is None:
             BaseAgent.conversation_manager.append_to_history(
@@ -138,7 +140,10 @@ class BaseAgent:
 
     @staticmethod
     def chat_with_template(
-        template_name: str, use_tool: bool = True, role: str | None = None ,**template_params
+        template_name: str,
+        use_tool: bool = True,
+        role: str | None = None,
+        **template_params,
     ) -> str | Dict:
         logger.success(
             f"Chat using template: {template_name} with using tool or not: {use_tool}"
@@ -148,7 +153,9 @@ class BaseAgent:
 
         def perform_request():
             """Helper to perform chat request and validate YAML."""
-            response = BaseAgent.common_chat(usr_prompt=prompt, use_tool=use_tool, role=role)
+            response = BaseAgent.common_chat(
+                usr_prompt=prompt, use_tool=use_tool, role=role
+            )
             return BaseAgent.extract_and_validate_yaml(response)
 
         result = perform_request()

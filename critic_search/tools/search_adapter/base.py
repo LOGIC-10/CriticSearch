@@ -1,8 +1,11 @@
-from typing import Dict
+from threading import Lock
+from typing import Dict, Set
 
+from loguru import logger
 from niquests import Session
 from niquests.models import Response
 
+from .db.database import recreate_db
 from .models import SearchResponse
 
 
@@ -38,12 +41,26 @@ class SearchEngineBase:
 
 
 class SearchAggregatorMeta(type):
-    _api_keys: Dict[str, str] = {}
+    _engines: Dict[str, SearchEngineBase] = {}
+    _lock = Lock()
+    _engines_loaded = False
 
     @classmethod
-    def set_api_keys(mcs, api_keys: Dict[str, str]):
-        mcs._api_keys.update(api_keys)
+    def set_engines(mcs, engines: Dict[str, SearchEngineBase]):
+        """
+        存储搜索引擎实例到元类，便于共享
+        """
+        mcs._engines.update(engines)
 
     def __call__(cls, *args, **kwargs):
-        instance = super().__call__(*args, **kwargs)
-        return instance
+        """
+        实例化时直接复用元类中存储的 _engines，并确保只加载一次引擎。
+        """
+        with cls._lock:
+            if not cls._engines_loaded:
+                instance = super().__call__(*args, **kwargs)
+                instance._load_engines_from_settings()
+                recreate_db()
+                logger.info("Engines loaded.")
+                cls._engines_loaded = True
+        return super().__call__(*args, **kwargs)

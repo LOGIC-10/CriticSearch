@@ -5,13 +5,12 @@ from loguru import logger
 from niquests import Session
 from niquests.models import Response
 from tenacity import RetryError
-from urllib3.util import Retry
+from urllib3_future.util import Retry
 
 from critic_search.config import settings
 
 from .base import SearchAggregatorMeta, SearchEngineBase
 from .bing_client import BingSearchEngine
-from .db.database import initialize_db
 from .duckduckgo_client import DuckDuckGoSearchEngine
 from .models import SearchResponse, SearchResponseList
 from .serpapi_client import SerpAPISearchEngine
@@ -22,65 +21,42 @@ retries = Retry(
     backoff_factor=1,  # Exponential backoff (1s, 2s, 4s, 8s, ...)
     backoff_max=10,  # Cap the delay at 10 seconds
     status_forcelist=[429, 500, 502, 503, 504],  # Retry on these HTTP codes
+    raise_on_status=False,
 )
 
 
 class SearchAggregator(metaclass=SearchAggregatorMeta):
     _unavailable_engines: Set[str] = set()
-    _lock = Lock()
-
-    # 标识是否已经从 settings 中加载过 API Key
-    _keys_loaded = False
 
     def __init__(self):
         """
-        在构造方法里，如果还没有加载过，则自动从 settings 读取 API Keys 并存进元类。
-        这样就不需要应用在外部显式调用 set_api_keys。
+        在构造方法中，如果引擎实例还没有加载过，则加载一次。
         """
-        with self._lock:
-            # 如果还没加载过，就从 settings 读取
-            if not self._keys_loaded:
-                self._load_api_keys_from_settings()
-                initialize_db()
+        self.engines = type(self)._engines
 
-                self._keys_loaded = True
-
-        self.engines: Dict[str, SearchEngineBase] = {}
-
-        # 取出元类中存储的全部key
-        all_keys = type(self)._api_keys
-
-        if "tavily" not in self._unavailable_engines:
-            tavily_key = all_keys.get("tavily")
-            if tavily_key:
-                self.engines["tavily"] = TavilySearchEngine(api_key=tavily_key)
-
-        # 如果 serpapi key 不存在，就不初始化 serpapi
-        if "serpapi" not in self._unavailable_engines:
-            serpapi_key = all_keys.get("serpapi")
-            if serpapi_key:
-                self.engines["serpapi"] = SerpAPISearchEngine(api_key=serpapi_key)
-
-        # 如果 bing key 不存在，就不初始化 bing
-        if "bing" not in self._unavailable_engines:
-            bing_key = all_keys.get("bing")
-            if bing_key:
-                self.engines["bing"] = BingSearchEngine(api_key=bing_key)
-
-    def _load_api_keys_from_settings(self):
+    def _load_engines_from_settings(self):
         """
-        只在第一次需要时，从 settings 中读取并写进元类，
-        之后就可以直接从元类 _api_keys 获取。
+        从 settings 中加载配置并初始化搜索引擎实例。
         """
-        # 拿到 tavily / serpapi 的值
+        # 从 settings 中获取 API keys
         tavily_key = settings.search_engine.tavily.api_key
         serpapi_key = settings.search_engine.serpapi.api_key
         bing_key = settings.search_engine.bing.api_key
 
-        # 调用元类的 set_api_keys 来存储它们
-        type(self).set_api_keys(
-            {"tavily": tavily_key, "serpapi": serpapi_key, "bing": bing_key}
-        )
+        # 初始化引擎实例
+        engines = {}
+
+        if "tavily" not in self._unavailable_engines and tavily_key:
+            engines["tavily"] = TavilySearchEngine(api_key=tavily_key)
+
+        if "serpapi" not in self._unavailable_engines and serpapi_key:
+            engines["serpapi"] = SerpAPISearchEngine(api_key=serpapi_key)
+
+        if "bing" not in self._unavailable_engines and bing_key:
+            engines["bing"] = BingSearchEngine(api_key=bing_key)
+
+        # 存储到元类
+        type(self).set_engines(engines)
 
     @classmethod
     def mark_engine_unavailable(cls, engine_name: str):
@@ -96,6 +72,9 @@ class SearchAggregator(metaclass=SearchAggregatorMeta):
     @logger.catch
     def search(self, queries: List[str]) -> str:
         final_responses = []
+
+        # Limit the number of queries to search when debugging
+        queries = queries[: settings.search_max_queries]
 
         # Start with all queries
         remaining_queries = queries

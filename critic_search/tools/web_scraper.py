@@ -6,6 +6,8 @@ import httpx
 from bs4 import BeautifulSoup
 from pydantic import BaseModel, Field, model_serializer
 
+from critic_search.config import settings
+
 
 class ScrapedData(BaseModel):
     url: str
@@ -24,7 +26,7 @@ class ScrapedDataList(BaseModel):
         # List to store concatenated strings
         result = []
 
-        for data in self.data:
+        for data in self.data[: settings.scrape_max_responses]:
             if data.error:
                 result.append(f"Error for URL {data.url}: {data.error}\n")
                 continue  # Skip further processing if there's an error
@@ -33,7 +35,9 @@ class ScrapedDataList(BaseModel):
 
             # Truncate content to ensure it does not exceed max_content_length
             if len(data.content) > self.max_content_length:
-                data.content = data.content[: self.max_content_length] + "[TOO LONG, END]"
+                data.content = (
+                    data.content[: self.max_content_length] + "[TOO LONG, END]"
+                )
 
             result.append(
                 f"URL: {data.url}\nTitle: {data.title}\nContent:\n{data.content}\n"
@@ -94,9 +98,14 @@ class WebScraper:
                             p.get_text(strip=True) for p in soup.find_all("p")
                         ]
 
-                    # Clean up the content
+                    # Clean up the content and HTML escaping
                     content_lines = [
-                        re.sub(r"\s+", " ", c).strip() for c in content_lines
+                        re.sub(
+                            r"<.*?>",
+                            lambda m: "\\" + m.group(0),
+                            re.sub(r"\s+", " ", c).strip(),
+                        )
+                        for c in content_lines
                     ]
 
                     # If content_lines is empty, provide a default value
@@ -109,11 +118,13 @@ class WebScraper:
                     return ScrapedData(
                         url=url,
                         title=soup.title.string if soup.title else "Untitled",
-                        content=content
+                        content=content,
                     )
             except Exception as e:
                 return ScrapedData(url=url, error=f"Error: {str(e)}")
 
-        scraped_data = await asyncio.gather(*(fetch_url(url) for url in urls))
+        scraped_data = await asyncio.gather(
+            *(fetch_url(url) for url in urls[: settings.scrape_max_urls])
+        )
 
         return ScrapedDataList(data=scraped_data).model_dump()

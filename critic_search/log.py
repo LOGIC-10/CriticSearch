@@ -2,6 +2,8 @@ import inspect
 import json
 import logging
 import sys
+from datetime import datetime
+from pathlib import Path
 from typing import Dict, Literal, Optional
 
 from loguru import logger
@@ -31,6 +33,48 @@ class InterceptHandler(logging.Handler):
         )
 
 
+# 基础日志目录
+BASE_LOG_DIR = Path("critic_search/.data")
+
+
+def get_daily_log_path():
+    """
+    动态生成当天的日志目录，并返回日志文件的路径
+    """
+    current_date = datetime.now().strftime("%Y-%m-%d")
+    save_dir = BASE_LOG_DIR / current_date / f"log.log"
+
+    return save_dir
+
+
+def content_based_rotation(message, file):
+    """
+    自定义切分逻辑，返回新的固定文件路径。
+    """
+    if "Log level set to" in message.record["message"]:
+        return True
+    return False
+
+
+# 删除过期的日志目录
+def clean_old_logs():
+    """
+    删除超过 3 天的日志目录
+    """
+    current_date = datetime.now()  # 使用当前时区
+    for log_dir in BASE_LOG_DIR.iterdir():
+        if log_dir.is_dir():
+            try:
+                dir_date = datetime.strptime(log_dir.name, "%Y-%m-%d")
+                if (current_date - dir_date).days > 3:
+                    for log_file in log_dir.iterdir():
+                        log_file.unlink()  # 删除日志文件
+                    log_dir.rmdir()  # 删除目录
+            except ValueError:
+                # 如果文件夹名称不是日期格式，跳过
+                continue
+
+
 def set_logger_level_from_config(log_level):
     """
     Configures the loguru logger with specified log level and integrates it with the standard logging module.
@@ -48,6 +92,8 @@ def set_logger_level_from_config(log_level):
       all logs consistently across the application.
     """
     logger.remove()
+    clean_old_logs()
+
     logger.add(
         sys.stderr,
         level=log_level,
@@ -75,15 +121,14 @@ def set_logger_level_from_config(log_level):
     )
 
     logger.add(
-        "output.txt",
+        get_daily_log_path(),  # 动态生成日志路径
         level=log_level,
         enqueue=True,
         backtrace=False,
         diagnose=False,
-        rotation=None,  # 不进行文件分割
-        retention=None,  # 不保留旧日志
+        rotation=content_based_rotation,  # 使用自定义切分逻辑
+        retention=None,
         format="{time:YYYY-MM-DD HH:mm:ss.SSS} | {level: <8} | {name}:{function}:{line} - {message}",
-        mode="w",  # 每次覆盖文件
     )
 
     # Intercept standard logging

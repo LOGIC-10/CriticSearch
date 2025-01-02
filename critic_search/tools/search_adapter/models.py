@@ -5,6 +5,7 @@ from pydantic import BaseModel, Field, model_serializer
 from sqlalchemy.exc import IntegrityError
 from sqlmodel import Session
 
+from critic_search.config import settings
 from critic_search.log import logger
 
 from .db.database import engine
@@ -30,11 +31,11 @@ class SearchResponse(BaseModel):
             )
         elif self.results == []:
             formatted_response = (
-                f"\nQuery: {self.query}\nError: No results found." + "-" * 50
+                f"\nQuery: {self.query}\nError: No results found.\n" + "-" * 50
             )
         else:
             formatted_response = f"\nQuery: {self.query}\nSearch Results:\n" + "-" * 50
-            for i, res in enumerate(self.results, 1):
+            for i, res in enumerate(self.results[: settings.search_max_responses], 1):
                 formatted_response += (
                     f"\n[{i}]:\nTITLE: {res.title}\nURL: {res.url}\nCONTENT: {res.content}\n"
                     + "-" * 50

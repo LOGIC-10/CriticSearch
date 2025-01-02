@@ -87,8 +87,13 @@ class ToolRegistry:
         # Execute the function and return the result
         result = target_function(**arguments)
 
-        logger.info(
-            f"Tool '{function_name}' executed successfully with result:\n{result}"
-        )
+        try:
+            logger.info(
+                f"Tool '{function_name}' executed successfully with result:\n{result}"
+            )
+        except ValueError:
+            print(
+                f"Tool '{function_name}' executed successfully with result:\n{result}"
+            )
 
         return result

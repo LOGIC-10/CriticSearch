@@ -1,13 +1,10 @@
-from pathlib import Path
-
-from .base_agent import BaseAgent
+from .log import logger
 from .main import main
 
 
 def run_tasks(
     tasks: list,
     max_iterations: int = 10,
-    output_file: Path | str = "conversation_history_sharegpt.jsonl",
 ):
     """
     Function to handle multiple tasks, run them iteratively, and log conversation history.
@@ -15,14 +12,15 @@ def run_tasks(
     Parameters:
     - tasks (list): List of task strings (questions) to process.
     - max_iterations (int): Maximum number of iterations for each task.
-    - output_file (Path | str): Path to save the conversation history in sharegpt format.
     """
 
     for task in tasks:
-        # Run the main function for each task
         main(task, max_iterations)
 
-        # Log conversation history after each task
+        logger.success(f"Task '{task}' completed successfully.")
+
+        """
+        # Log conversation history after each task in sharegpt format.
         conversation_data = BaseAgent.conversation_manager.model_dump(
             context={"sharegpt": True}
         )
@@ -30,3 +28,4 @@ def run_tasks(
             data=conversation_data,
             path=output_file,
         )
+        """

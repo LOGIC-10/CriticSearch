@@ -35,5 +35,8 @@ class Toolbox(ToolRegistry):
         Args:
             urls (List[str]): A list of URLs to scrape content from.
         """
-        scraped_data = asyncio.run(WebScraper().scrape(urls))
+        with asyncio.Runner() as runner:
+            scraped_data = runner.run(
+                WebScraper().scrape(urls)
+            )  # 自动管理事件循环，无需 nest_asyncio.apply()
         return scraped_data

@@ -1,13 +1,10 @@
 from typing import Dict
 
+from critic_search.tools.search_adapter.db.database import recreate_db
+
 from .base_agent import BaseAgent
 from .config import settings
 from .log import colorize_message, logger, set_logger_level_from_config
-
-
-def truncate_text(text: str, max_length: int = 100000) -> str:
-    """Truncate the input text to a maximum character limit."""
-    return text[:max_length] if len(text) > max_length else text
 
 
 def log_iteration_info(
@@ -54,7 +51,7 @@ def get_agent_answer_with_plan(
     agent_answer = BaseAgent.chat_with_template(
         template_name="rag_based_answer",
         user_question=user_task,
-        web_result_markdown_text=truncate_text(search_results),
+        web_result_markdown_text=search_results,
         use_tool=False,
     )
 
@@ -69,9 +66,11 @@ def main(user_task: str, max_iterations: int):
 
     set_logger_level_from_config(log_level=settings.log_level.upper())
 
+    logger.success(f"Start to process Task: '{user_task}'")
+
     BaseAgent.conversation_manager.append_to_history(role="user", content=user_task)
 
-    for iteration in range(1, max_iterations):
+    for iteration in range(1, max_iterations + 1):
         if iteration == 1:
             colorize_message(
                 message_title=f"ITERATION {iteration}",
@@ -155,3 +154,6 @@ def main(user_task: str, max_iterations: int):
             all_search_queries=BaseAgent.get_all_history_queries(),
             final_agent_answer=agent_answer,
         )
+
+    logger.success("Conversation ended.")
+    recreate_db()

@@ -15,7 +15,8 @@ DATABASE_URL = f"sqlite:///{DATABASE_PATH}"
 engine = create_engine(DATABASE_URL)
 
 
-def initialize_db():
+def recreate_db():
+    """重新创建数据库表结构。如果表已存在则删除后重建。"""
     if DATABASE_PATH.exists():
         with engine.connect() as conn:
             # Drop `UniqueContent` and `HistoryQuery` tables if they exist

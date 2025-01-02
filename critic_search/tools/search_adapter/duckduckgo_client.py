@@ -1,5 +1,5 @@
 from duckduckgo_search import DDGS
-from duckduckgo_search.exceptions import RatelimitException
+from duckduckgo_search.exceptions import DuckDuckGoSearchException
 from tenacity import (
     retry,
     retry_if_exception_type,
@@ -16,7 +16,7 @@ class DuckDuckGoSearchEngine:
         stop=stop_after_attempt(5),  # 重试最多5次
         wait=wait_exponential(multiplier=1, min=4, max=30)
         + wait_random(min=1, max=5),  # 指数退避 + 随机抖动
-        retry=retry_if_exception_type(RatelimitException),
+        retry=retry_if_exception_type(DuckDuckGoSearchException),
     )
     @staticmethod
     def search(query: str):

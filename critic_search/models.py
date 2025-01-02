@@ -1,19 +1,20 @@
 import json
+from datetime import datetime
 from pathlib import Path
-from typing import List, Literal, Optional
+from typing import Dict, List, Literal, Optional
 
+from charset_normalizer import from_bytes
 from openai.types.chat.chat_completion_message_tool_call import (
     ChatCompletionMessageToolCall,
 )
 from pydantic import (
     BaseModel,
+    Field,
     SerializationInfo,
     SerializerFunctionWrapHandler,
     field_serializer,
     model_serializer,
 )
-
-from .log import logger
 
 
 # Model for a single history entry
@@ -25,25 +26,32 @@ class HistoryItem(BaseModel):
     name: Optional[str] = None
 
 
+def generate_save_path():
+    """
+    生成保存路径：
+    - 目录为 critic_search/.data/YYYY-MM-DD
+    - 文件名为 HH-MM-SS.json
+    """
+    base_dir = Path("critic_search/.data")
+    current_date = datetime.now().strftime("%Y-%m-%d")
+    current_time = datetime.now().strftime("%H-%M-%S")
+    save_dir = base_dir / current_date
+    save_dir.mkdir(parents=True, exist_ok=True)
+
+    save_file = save_dir / f"conversation_history_{current_time}.json"  # 文件名为时间戳
+
+    if not save_file.exists():
+        save_file.write_text("[]", encoding="utf-8")  # 初始内容为空数组
+
+    return save_file
+
+
 # Manager class for conversation history
 class ConversationManager(BaseModel):
     history: List[HistoryItem] = []
     max_history_length: int = 10  # Limit for conversation history
     available_tools: List = []
-    save_path: Path = Path("conversation_history.jsonl")
-    delete_on_init: bool = True  # Flag to delete file on initialization
-
-    def __init__(self, **data):
-        super().__init__(**data)
-        if self.delete_on_init and self.save_path.exists():
-            try:
-                self.save_path.unlink()  # Delete the file if it exists
-                logger.info(f"Deleted existing file: {self.save_path}")
-            except Exception as e:
-                logger.error(f"Failed to delete file {self.save_path}: {e}")
-                raise
-        # Set the flag to False to avoid further deletions
-        self.delete_on_init = False
+    save_path: Path = Field(default_factory=generate_save_path)
 
     @field_serializer("history")
     def serialize_history(self, history: List[HistoryItem]):
@@ -111,44 +119,27 @@ class ConversationManager(BaseModel):
 
         return result
 
-    def write(self, data: dict, path: Path | str):
-        if isinstance(path, str):
-            path = Path(path)
-
-        try:
-            # Create parent directories if they do not exist
-            path.parent.mkdir(parents=True, exist_ok=True)
-
-            # Check if the file exists and read existing data
-            if path.exists():
-                with path.open("r", encoding="utf-8") as f:
-                    try:
-                        # Try to parse the existing JSON data (expecting a list at the top level)
-                        existing_data = json.load(f)
-                        if not isinstance(existing_data, list):
-                            existing_data = []  # Ensure it's a list
-                    except json.JSONDecodeError:
-                        # If the file is empty or corrupt, start with an empty list
-                        existing_data = []
-            else:
+    def write(self, data: Dict):
+        with self.save_path.open("r", encoding="utf-8") as f:
+            try:
+                # Try to parse the existing JSON data (expecting a list at the top level)
+                existing_data = json.load(f)
+                if not isinstance(existing_data, list):
+                    existing_data = []  # Ensure it's a list
+            except json.JSONDecodeError:
+                # If the file is empty or corrupt, start with an empty list
                 existing_data = []
 
             # Append the new data to the existing array
             existing_data.append(data)
 
             # Write the updated array back to the file
-            with path.open("w", encoding="utf-8") as f:
+            with self.save_path.open("w", encoding="utf-8") as f:
                 json.dump(existing_data, f, ensure_ascii=True, indent=2)
-
-        except Exception as e:
-            logger.error(f"Failed to write to {path}: {e}")
-            raise
 
     def _auto_save(self):
         """Auto save after each update if save_path is set"""
-        self.write(
-            path=self.save_path, data=self.history[-1].model_dump(exclude_none=True)
-        )
+        self.write(data=self.history[-1].model_dump(exclude_none=True))
 
     def append_to_history(
         self,
@@ -159,7 +150,14 @@ class ConversationManager(BaseModel):
         """
         Add a new message to the conversation history.
         """
-        self.history.append(HistoryItem(role=role, content=content, **kwargs))
+        # Normalize and process the content
+        if content is not None:
+            normalized_bytes = content.encode("utf-8", errors="replace")
+            processed_content = str(from_bytes(normalized_bytes).best())
+        else:
+            processed_content = None
+
+        self.history.append(HistoryItem(role=role, content=processed_content, **kwargs))
         self._auto_save()
 
         # logger.info(f"Current history:\n{self.model_dump()}")
