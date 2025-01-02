@@ -1,8 +1,10 @@
 import asyncio
 import json
 import os
+import re
 import time
-from typing import List, Optional, overload
+import uuid
+from typing import List, Optional, overload, Dict, TypedDict
 
 import yaml
 
@@ -22,6 +24,8 @@ class BaseAgent:
     tool_registry = ToolRegistry()  # Registry for tools
     user_question = ""
     conversation_manager = ConversationManager()
+    # Add class-level URL-UUID mapping
+    url_uuid_mapping: Dict[str, str] = {}
 
     def __init__(self):
         base_dir = os.path.dirname(
@@ -226,14 +230,21 @@ class BaseAgent:
             urls = json.loads(tool_call.function.arguments).get("urls", [])
 
             web_scraper_results = asyncio.run(self.web_scraper.scrape(urls=urls))
+            
+            # Update URL-UUID mapping from scraping results
+            for item in web_scraper_results["json"]["data"]:
+                if item["content"] != ["No content available"]:
+                    BaseAgent.url_uuid_mapping[item["uuid"]] = item["url"]
+                else:
+                    continue  # Skip items with no content
 
             BaseAgent.conversation_manager.append_tool_call_result_to_history(
                 tool_call_id=tool_call.id,
                 name="scrape",
-                content=web_scraper_results,  # type: ignore
+                content=web_scraper_results["text"],
             )
 
-            final_web_scraper_results += web_scraper_results  # type: ignore
+            final_web_scraper_results += web_scraper_results["text"]
 
         return final_web_scraper_results
 
@@ -244,8 +255,6 @@ class BaseAgent:
         self.original_task = task
 
     def extract_and_validate_yaml(self, model_response):
-        # 正则表达式匹配包裹在```yaml```之间的内容
-        import re
 
         match = re.search(r"```yaml\n([\s\S]*?)\n```", model_response, re.DOTALL)
 

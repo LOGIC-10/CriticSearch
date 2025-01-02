@@ -14,9 +14,23 @@ The following is some reference information and materials provided to you:
 
 {{web_result_markdown_text}}
 
+
+Please answer it in a JSON format:
+
+{
+    "each of your sentence or paragraph here": { # each key is a solid statement with data and facts get from the provided information
+        "citation": ["uuid-1", "uuid-2"], # The UUIDs here are the chunks of text from the provided information that you need to reference, meaning the information in this paragraph supports your above answer
+    },
+    "the second sentence or paragraph here": {
+        "citation": ["uuid-3", "uuid-4"], 
+    },
+    "the third sentence or paragraph here": {
+        "citation": ["uuid-3", "uuid-4"], 
+    },
+}
+
 Now, I will repeat the user’s question again:
  
 {{user_question}}
 
-
-Please ensure that you follow all the requirements and guidelines mentioned above, and provide a truthful, useful, and logically complete response.
+Please ensure that you follow all the requirements and guidelines mentioned above, and provide a truthful, useful, and logically complete response in the demanded JSON format.

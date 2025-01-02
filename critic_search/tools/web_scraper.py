@@ -1,5 +1,6 @@
 import asyncio
 import re
+import uuid
 from typing import List, Optional
 
 import httpx
@@ -11,6 +12,7 @@ from critic_search.log import logger
 
 class ScrapedData(BaseModel):
     url: str
+    uuid: str = Field(default_factory=lambda: str(uuid.uuid4()))
     title: Optional[str] = None
     content: List[str] = Field(default_factory=list)
     metadata: Optional[dict] = None
@@ -50,11 +52,26 @@ class ScrapedDataList(BaseModel):
             if len(content) > self.max_content_length:
                 content = content[: self.max_content_length] + "[TOO LONG, END]"
 
-            # 拼接 URL、标题和内容
-            result.append(f"URL: {data.url}\nTitle: {title}\nContent:\n{content}\n")
+            # 拼接 URL、UUID、标题和内容
+            result.append(f"URL: {data.url}\nUUID: {data.uuid}\nTitle: {title}\nContent:\n{content}\n")
 
         # 将所有拼接的内容合并成一个长字符串
         return "\n---\n".join(result)
+
+    def to_json(self):
+        """Return JSON representation of the data"""
+        return {
+            "data": [
+                {
+                    "url": item.url,
+                    "uuid": item.uuid,
+                    "title": item.title,
+                    "content": item.content,
+                    "error": item.error,
+                    "metadata": item.metadata
+                } for item in self.data
+            ]
+        }
 
 
 class AsyncWebScraper:
@@ -117,6 +134,10 @@ class AsyncWebScraper:
         scraped_data = await asyncio.gather(*(fetch_url(url) for url in urls))
 
         # Wrap results in ScrapedDataList
-        result = ScrapedDataList(data=scraped_data).model_dump()
-        logger.info(f"Scraped data:\n{result}")
-        return result
+        result = ScrapedDataList(data=scraped_data)
+        
+        # Return both JSON and string representation
+        return {
+            "json": result.to_json(),
+            "text": result.model_dump()
+        }

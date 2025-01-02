@@ -83,7 +83,7 @@ def main(TASK, MAX_ITERATION):
 
                 # TODO： RAG-based answer 这里需要更新prompt，变成字典的回答形式： comprehensive_dict_answer.txt
                 rag_based_answer_prompt = common_agent.render_template(
-                    common_agent.load_template("rag_based_answer.txt"),
+                    common_agent.load_template("rag_based_formatted_answer.txt"),
                     {
                         "user_question": common_agent.user_question,
                         "web_result_markdown_text": initial_web_result_markdown_text,
