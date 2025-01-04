@@ -6,7 +6,7 @@ import httpx
 from bs4 import BeautifulSoup
 from pydantic import BaseModel, Field, model_serializer
 
-from critic_search.config import settings
+from criticsearch.config import settings
 
 
 class ScrapedData(BaseModel):

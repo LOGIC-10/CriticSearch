@@ -8,13 +8,17 @@ Critic Search is an intelligent querying and analysis framework designed to enha
 
 `curl -LsSf https://astral.sh/uv/install.sh | sh`
 
+### Creating a virtual environment
+
+`uv venv --python 3.12`
+
+### Installing all dependencies
+
+`uv sync --all-groups`
+
 ### Adding dependencies
 
 `uv add httpx`
-
-### Creating a virtual environment
-
-`uv venv`
 
 ## Obtain Search Engine API Keys (Optional)
 
@@ -30,6 +34,15 @@ Critic Search is an intelligent querying and analysis framework designed to enha
 - **Features**: Scrape Google and other search engines from our fast, easy, and complete API..
 - **Free Tier**: 100 free requests per month.
 
+
+## Using pip(Alternative)
+
+### Installing dependencies
+
+```python
+pip install -r requirements.txt
+```
+
 ## Run critic_search
 
 1. Rename `settings.yaml.template` to `settings.template`.
@@ -37,5 +50,5 @@ Critic Search is an intelligent querying and analysis framework designed to enha
 2. Run command.
 
 ```python
-python -m critic_search
+criticsearch "How will the introduction of central bank digital currencies (CBDCs) impact the traditional banking system and financial stability in the next five years?" --max-iterations 5
 ```

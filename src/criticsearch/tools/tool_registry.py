@@ -7,7 +7,7 @@ from openai.types.chat.chat_completion_message_tool_call import (
 )
 from openai.types.chat.chat_completion_tool_param import ChatCompletionToolParam
 
-from critic_search.log import colorize_message, logger
+from criticsearch.log import colorize_message, logger
 
 from .models import Tool
 

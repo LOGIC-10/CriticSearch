@@ -7,7 +7,7 @@ from niquests.models import Response
 from tenacity import RetryError
 from urllib3_future.util import Retry
 
-from critic_search.config import settings
+from criticsearch.config import settings
 
 from .base import SearchAggregatorMeta, SearchEngineBase
 from .bing_client import BingSearchEngine

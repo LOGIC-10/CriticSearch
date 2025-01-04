@@ -1,4 +1,3 @@
-# critic_search/config.py
 from dynaconf import Dynaconf
 
 settings = Dynaconf(

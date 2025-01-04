@@ -4,7 +4,7 @@ from loguru import logger
 from sqlalchemy import text
 from sqlmodel import SQLModel, create_engine
 
-HIDDEN_DATA_DIR = Path("critic_search/.data")
+HIDDEN_DATA_DIR = Path(".data")
 HIDDEN_DATA_DIR.mkdir(parents=True, exist_ok=True)  # Ensure the hidden folder exists
 
 # Define the database file path

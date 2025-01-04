@@ -1,5 +1,5 @@
 [project]
-name = "agentfactory"
+name = "criticsearch" # crix, critsearch, crsearch base on PEP-423 Use a single name
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
@@ -7,13 +7,14 @@ requires-python = ">=3.12"
 dependencies = [
     "beautifulsoup4>=4.12.3",
     "charset-normalizer>=3.4.1",
-    "duckduckgo-search>=7.1.1",
+    "click>=8.1.8",
+    "duckduckgo-search>=7.2.0",
     "dynaconf>=3.2.6",
     "griffe>=1.5.1",
     "httpx>=0.27.2",
     "jinja2>=3.1.4",
     "loguru>=0.7.2",
-    "niquests>=3.11.4",
+    "niquests[speedups]>=3.11.4",
     "openai>=1.55.0",
     "pydantic>=2.10.0",
     "pyyaml>=6.0.2",
@@ -27,12 +28,21 @@ dev = [
 ]
 eval = [
     "datasets>=3.2.0",
+    "ipykernel>=6.29.5",
+    "ipywidgets>=8.1.5",
     "nbformat>=5.10.4",
 ]
 
 [tool.ruff]
-exclude = ["eval"]
+exclude = ["eval.ipynb"]
 
 [tool.ruff.lint]
 # 启用导入排序规则
 select = ["I001"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project.scripts]
+criticsearch = "criticsearch:cli"

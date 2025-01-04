@@ -34,7 +34,7 @@ class InterceptHandler(logging.Handler):
 
 
 # 基础日志目录
-BASE_LOG_DIR = Path("critic_search/.data")
+BASE_LOG_DIR = Path(".data")
 
 
 def get_daily_log_path():

@@ -1,6 +1,6 @@
 from typing import Dict
 
-from critic_search.tools.search_adapter.db.database import recreate_db
+from criticsearch.tools.search_adapter.db.database import recreate_db
 
 from .base_agent import BaseAgent
 from .config import settings

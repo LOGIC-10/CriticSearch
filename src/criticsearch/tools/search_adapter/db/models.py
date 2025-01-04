@@ -1,4 +1,3 @@
-# critic_search/tools/search_adapter/db/models.py
 from datetime import datetime
 from typing import Optional
 

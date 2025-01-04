@@ -1,12 +1,11 @@
-# critic_search/tools/search_adapter/models.py
 from typing import Dict, List, Optional
 
 from pydantic import BaseModel, Field, model_serializer
 from sqlalchemy.exc import IntegrityError
 from sqlmodel import Session
 
-from critic_search.config import settings
-from critic_search.log import logger
+from criticsearch.config import settings
+from criticsearch.log import logger
 
 from .db.database import engine
 from .db.models import HistoryQuery, UniqueContent

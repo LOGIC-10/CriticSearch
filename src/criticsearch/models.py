@@ -27,12 +27,7 @@ class HistoryItem(BaseModel):
 
 
 def generate_save_path():
-    """
-    生成保存路径：
-    - 目录为 critic_search/.data/YYYY-MM-DD
-    - 文件名为 HH-MM-SS.json
-    """
-    base_dir = Path("critic_search/.data")
+    base_dir = Path(".data")
     current_date = datetime.now().strftime("%Y-%m-%d")
     current_time = datetime.now().strftime("%H-%M-%S")
     save_dir = base_dir / current_date

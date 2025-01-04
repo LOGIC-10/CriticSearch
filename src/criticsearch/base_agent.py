@@ -14,6 +14,7 @@ from .models import ConversationManager
 from .tools.search_adapter.db.database import engine
 from .tools.search_adapter.db.models import HistoryQuery
 from .tools.toolbox import Toolbox
+from importlib.resources import files, as_file
 
 
 class BaseAgent:
@@ -94,30 +95,30 @@ class BaseAgent:
 
     @staticmethod
     def render_template(name: str, **kwargs) -> str:
-        template_dir = Path("critic_search/prompts")
+        template_dir = files("criticsearch.prompts")
 
-        # Ensure the template directory exists
-        if not template_dir.exists():
-            raise FileNotFoundError(
-                f"The specified template directory '{template_dir}' does not exist."
-            )
+        # Ensure the template directory is valid
+        if not template_dir.is_dir():
+            raise FileNotFoundError(f"The specified template directory '{template_dir}' does not exist.")
 
-        # Create a Jinja2 environment
-        env = Environment(loader=FileSystemLoader(template_dir))
+        # Convert Traversable to Path for FileSystemLoader compatibility
+        with as_file(template_dir) as template_path:
+            # Initialize Jinja2 environment
+            env = Environment(loader=FileSystemLoader(template_path))
 
-        # Determine the template filename with '.j2' as the default extension
-        template_filename = f"{name}.txt"
+            # Determine the template filename with '.j2' as the default extension
+            template_filename = f"{name}.txt"
 
-        # Load the template
-        try:
-            template = env.get_template(template_filename)
-        except FileNotFoundError:
-            raise FileNotFoundError(
-                f"The specified template '{template_filename}' does not exist in '{template_dir}'."
-            )
+            # Load the template
+            try:
+                template = env.get_template(template_filename)
+            except FileNotFoundError:
+                raise FileNotFoundError(
+                    f"The specified template '{template_filename}' does not exist in '{template_dir}'."
+                )
 
-        # Render the template with the user_query as a variable
-        return template.render(**kwargs)
+            # Render the template with the user_query as a variable
+            return template.render(**kwargs)
 
     @staticmethod
     def extract_and_validate_yaml(model_response) -> str | Dict | None:
