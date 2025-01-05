@@ -10,7 +10,7 @@ from openai.types.chat.chat_completion_tool_param import ChatCompletionToolParam
 from criticsearch.log import colorize_message, logger
 
 from .models import Tool
-
+from charset_normalizer import from_bytes
 
 def register_tool_function(func: Callable):
     """
@@ -87,13 +87,16 @@ class ToolRegistry:
         # Execute the function and return the result
         result = target_function(**arguments)
 
+        result_bytes = result.encode('utf-8')
+        normalized_result = str(from_bytes(result_bytes).best())
+
         try:
             logger.info(
-                f"Tool '{function_name}' executed successfully with result:\n{result}"
+                f"Tool '{function_name}' executed successfully with result:\n{normalized_result}"
             )
         except ValueError:
             print(
-                f"Tool '{function_name}' executed successfully with result:\n{result}"
+                f"Tool '{function_name}' executed successfully with result:\n{normalized_result}"
             )
 
-        return result
+        return normalized_result

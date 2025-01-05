@@ -1,5 +1,4 @@
-from threading import Lock
-from typing import Dict, List, Set
+from typing import List, Set
 
 from loguru import logger
 from niquests import Session
@@ -9,7 +8,7 @@ from urllib3_future.util import Retry
 
 from criticsearch.config import settings
 
-from .base import SearchAggregatorMeta, SearchEngineBase
+from .base import SearchAggregatorMeta
 from .bing_client import BingSearchEngine
 from .duckduckgo_client import DuckDuckGoSearchEngine
 from .models import SearchResponse, SearchResponseList

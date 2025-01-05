@@ -1,9 +1,8 @@
-import asyncio
 import re
 from typing import List, Optional
 
-import httpx
 from bs4 import BeautifulSoup
+from niquests import Session
 from pydantic import BaseModel, Field, model_serializer
 
 from criticsearch.config import settings
@@ -54,7 +53,7 @@ class ScrapedDataList(BaseModel):
 
 class WebScraper:
     @staticmethod
-    async def scrape(urls: List[str]):
+    def scrape(urls: List[str]):
         """
         Scrapes content from a list of webpages asynchronously.
 
@@ -65,66 +64,84 @@ class WebScraper:
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
         }
 
-        async def fetch_url(url: str) -> ScrapedData:
+        scraped_data = []
+
+        with Session(multiplexed=True) as session:
+            responses = [session.get(url, headers=headers) for url in urls]
+            session.gather()
+
+        for response in responses:
             try:
-                async with httpx.AsyncClient() as client:
-                    response = await client.get(url, headers=headers, timeout=10)
-
-                    if response.status_code != 200:
-                        return ScrapedData(
-                            url=url,
-                            error=f"HTTP {response.status_code}: {response.reason_phrase}",
-                        )
-
-                    html = response.text
-                    soup = BeautifulSoup(html, "html.parser")
-
-                    # Remove script and style elements
-                    for script in soup(["script", "style", "meta", "noscript"]):
-                        script.decompose()
-
-                    # Extract content based on specified elements or automatic content detection
-                    main_content = (
-                        soup.find("main")
-                        or soup.find("article")
-                        or soup.find("div", class_=re.compile(r"content|main|article"))
-                    )
-                    if main_content:
-                        # Extract main content text and split into lines
-                        content_lines = main_content.get_text(strip=True).splitlines()
-                    else:
-                        # Extract text from all <p> elements
-                        content_lines = [
-                            p.get_text(strip=True) for p in soup.find_all("p")
-                        ]
-
-                    # Clean up the content and HTML escaping
-                    content_lines = [
-                        re.sub(
-                            r"<.*?>",
-                            lambda m: "\\" + m.group(0),
-                            re.sub(r"\s+", " ", c).strip(),
-                        )
-                        for c in content_lines
-                    ]
-
-                    # If content_lines is empty, provide a default value
-                    if not content_lines:
-                        content = "No content available"
-                    else:
-                        # Combine the list of lines into a single string
-                        content = "\n".join(content_lines)
-
+                if response.status_code != 200:
                     return ScrapedData(
-                        url=url,
-                        title=soup.title.string if soup.title else "Untitled",
-                        content=content,
+                        url=response.url,  # type: ignore
+                        error=f"HTTP {response.status_code}: {response.reason_phrase}",
                     )
-            except Exception as e:
-                return ScrapedData(url=url, error=f"Error: {str(e)}")
 
-        scraped_data = await asyncio.gather(
-            *(fetch_url(url) for url in urls[: settings.scrape_max_urls])
-        )
+                html = response.text
+                soup = BeautifulSoup(html, "html.parser")  # type: ignore
+
+                # Remove script and style elements
+                for script in soup(["script", "style", "meta", "noscript"]):
+                    script.decompose()
+
+                # Extract content based on specified elements or automatic content detection
+                main_content = (
+                    soup.find("main")
+                    or soup.find("article")
+                    or soup.find("div", class_=re.compile(r"content|main|article"))
+                )
+                if main_content:
+                    # Extract main content text and split into lines
+                    content_lines = main_content.get_text(strip=True).splitlines()
+                else:
+                    # Extract text from all <p> elements
+                    content_lines = [p.get_text(strip=True) for p in soup.find_all("p")]
+
+                # Clean up the content and HTML escaping
+                content_lines = [
+                    re.sub(
+                        r"<.*?>",
+                        lambda m: "\\" + m.group(0),
+                        re.sub(r"\s+", " ", c).strip(),
+                    )
+                    for c in content_lines
+                ]
+
+                # If content_lines is empty, provide a default value
+                if not content_lines:
+                    content = "No content available"
+                else:
+                    # Combine the list of lines into a single string
+                    content = "\n".join(content_lines)
+
+                data = ScrapedData(
+                    url=response.url,  # type: ignore
+                    title=soup.title.string if soup.title else "Untitled",
+                    content=content,
+                )
+            except Exception as e:
+                data = ScrapedData(url=response.url, error=f"Error: {str(e)}")  # type: ignore
+
+            scraped_data.append(data)
 
         return ScrapedDataList(data=scraped_data).model_dump()
+
+
+if __name__ == "__main__":
+    urls = [
+        "https://www.bankinghub.eu/innovation-digital/central-bank-digital-currency",
+        "https://niquests.readthedocs.io/en/stable/user/quickstart.html",
+        "https://docs.github.com/en/site-policy/github-terms/github-terms-of-service",
+    ]
+
+    scraper = WebScraper()
+    import time
+
+    start_time = time.perf_counter()
+    result = scraper.scrape(urls)
+    end_time = time.perf_counter()
+
+    elapsed_time = end_time - start_time
+    print(result)
+    print(f"Scraping took {elapsed_time:.2f} seconds")

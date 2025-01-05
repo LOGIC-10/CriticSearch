@@ -1,8 +1,11 @@
 # tasks_runner.py
+from typing import List
+
+from .config import settings
 from .log import logger
 
 
-def run_tasks(tasks, max_iterations=10):
+def run_tasks(tasks: List[str], max_iterations: int = settings.max_iterations):
     """
     Run multiple tasks iteratively.
 

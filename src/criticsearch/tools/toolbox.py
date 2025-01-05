@@ -1,4 +1,3 @@
-import asyncio
 from typing import List
 
 from .search_adapter import SearchAggregator
@@ -35,8 +34,5 @@ class Toolbox(ToolRegistry):
         Args:
             urls (List[str]): A list of URLs to scrape content from.
         """
-        with asyncio.Runner() as runner:
-            scraped_data = runner.run(
-                WebScraper().scrape(urls)
-            )  # 自动管理事件循环，无需 nest_asyncio.apply()
+        scraped_data = WebScraper().scrape(urls)
         return scraped_data

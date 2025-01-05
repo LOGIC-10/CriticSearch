@@ -1,5 +1,6 @@
 import json
 import re
+from importlib.resources import as_file, files
 from pathlib import Path
 from typing import Dict
 
@@ -14,7 +15,6 @@ from .models import ConversationManager
 from .tools.search_adapter.db.database import engine
 from .tools.search_adapter.db.models import HistoryQuery
 from .tools.toolbox import Toolbox
-from importlib.resources import files, as_file
 
 
 class BaseAgent:
@@ -99,7 +99,9 @@ class BaseAgent:
 
         # Ensure the template directory is valid
         if not template_dir.is_dir():
-            raise FileNotFoundError(f"The specified template directory '{template_dir}' does not exist.")
+            raise FileNotFoundError(
+                f"The specified template directory '{template_dir}' does not exist."
+            )
 
         # Convert Traversable to Path for FileSystemLoader compatibility
         with as_file(template_dir) as template_path:

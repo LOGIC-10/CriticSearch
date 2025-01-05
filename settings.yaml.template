@@ -15,7 +15,9 @@ log_level: info
 max_retries: 5
 no_color: false # true, false
 theme: dark # light, dark
-search_max_queries: 2
-search_max_responses: 2
-scrape_max_urls: 2
-scrape_max_responses: 2
+
+max_iterations: 10
+search_max_queries: 10
+search_max_responses: 10
+scrape_max_urls: 10
+scrape_max_responses: 10
