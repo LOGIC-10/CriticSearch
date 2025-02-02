@@ -116,13 +116,15 @@ class BaseAgent:
         tools: Optional[List] = None,
         role: str = "assistant",
         tool_choice: Optional[str] = None,
+        json_mode: Optional[bool] = None,
     ) -> ChatCompletionMessage | str | None:
         llm_response = call_llm(
             model=settings.default_model,
             usr_prompt=usr_prompt,
             config=settings,
             tools=tools,
-            tool_choice = tool_choice
+            tool_choice = tool_choice,
+            json_mode = json_mode,
         )
 
         # logger.info(f"usr_prompt:\n{usr_prompt}")

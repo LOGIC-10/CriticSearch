@@ -92,7 +92,10 @@ def main(TASK, MAX_ITERATION):
 
                 common_agent_answer = common_agent.common_chat(
                     usr_prompt=rag_based_answer_prompt,
+                    json_mode=True,
                 )
+
+                print(f"common_agent_answer: {common_agent_answer}")
 
         else:
             # 前面根据critc的返回得到了新的网页搜索结果web_result_markdown_text
