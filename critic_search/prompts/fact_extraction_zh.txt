@@ -1,0 +1,49 @@
+我们来玩一个逻辑的游戏，我会给你一些新闻文章中的句子，你需要把它转换成一个考题的抽取和回答格式要求以及对应的标准答案，考试的主要内容就是对于段落句子中的关键信息，我来举个例子：
+
+首先我会给你一个用户的query，比如： 写一篇报告详细阐述一下2023年夏威夷山火事件
+
+对于这样的query，会有一些对应的段落，这些都是对应这个query要求得到的人类书写的文章内容，你需要在考题抽取的时候时刻注意人类文章段落和用户query之间的关系。下面给你一个段落的例子：
+
+（段落）：尽管夏威夷州拥有全球最大的集成户外警报系统，但只在自然灾害发生时使用，茂宜岛上有超过80个警报器，然而在火灾期间并未启动民防警报。
+
+针对上述段落，你要转换出一个或者多个可以验证的问题，并且问题和文章主题以及段落相关，然后你还要给出对应的可以verify的答案并以示例的格式返回，你要显示地使用List的方式给出要求的回答格式，比如：
+
+[
+    </question>茂宜岛上有多少个报警器？</question></constrained_format>answer in pure number</constrained_format></answer>有\\boxed{80}个报警器</answer>
+]
+
+或者
+
+[
+    </question>茂宜岛上有多少个报警器？</question></constrained_format>answer in pure number</constrained_format></answer>茂宜岛上有\\boxed{80}个</answer>
+]
+
+
+There are three formats requirement you must follow:
+1. </question>: the question you designed must be included in the Question tag.
+2. </constrained_format>: you need to set a ConstraintFormat for this question, which is included in the tag. The content will vary depending on the question. For example, if it involves a date, you may need to design it in the dd-mm-yy format. It may involve time, names, locations, numbers, and so on. These are all up to you to decide dynamically, and you need to design a reasonable Constraint return format. 
+3. </answer>: You must include the final answer in the </answer> tag, and the only verifiable core content is wrapped with the \\boxed{} tag.
+ 
+
+你发现了吗，你可以在answer部分有很多的文本内容，可以是最终summary的输出一段话，但是\\boxed{}将可verify的答案包裹，里面是最后用来验证的简短的，唯一值的答案一定要在\\boxed{}里面包裹住。同时你需要注意constrained_format里的要求约束了你后面给出answer的在\\boxed{80}里面的内容，是必须符合constrained_format的要求的，需要完全确保一致性。
+
+再举一个例子，你可以给出很多个问题和答案的entry，只要答案是可以唯一verify的就行，不能verify的不要给。：
+
+（段落）：目前只有极少数受害者得以确认身份。 截至8月11日，死亡人数为67人，但该数字仅反映在建筑物外部发现的受害者，因为当地当局一直在等待FEMA派遣其专业人员。
+
+请记住我给你的每一个段落或者文章内容都是相互独立的，针对上面这句，你可以给出：
+
+[
+    </question>截止8月11日有多少人死亡？</question></constrained_format>answer in pure number</constrained_format></answer>有\\boxed{67}人</answer>,
+    </question>当地一直在等待谁派遣专业人员？</question></constrained_format>answer in pure english capital words</constrained_format></answer>\\boxed{FEMA}</answer>
+]
+
+如果给你的句子里没有可以抽取的问题和可验证的唯一答案，你直接返回一个NONE即可，不要有更多其他文本内容。这里指的可验证的唯一答案要求不能是一段话，或者一个短语，因为这样自由度太高了，后期验证无法做字符串的exact match。比如：
+
+- 这些伤者是如何被运送到医院的？由\boxed{空中救护车}运送。
+
+这个例子就不合适。因为内容太复杂了并且灵活性很高，并且这抽取出来的考题也无关这篇文章的主题和段落的主要核心阐述内容。所以这样构造出来的是不合适的，请记住我不需要这样的条目。我需要你抽取出的是深刻的和文章内容以及主题高度相关的深度信息。
+
+现在我们正式开始这个任务，请你记住所有要求并按照我的示例格式给出，我给你一个新的段落或者全篇文章内容：
+
+{{wiki_text}}

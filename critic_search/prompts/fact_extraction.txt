@@ -1,0 +1,54 @@
+You are a super intelligent assistant. Now let's play a logic game. I will provide you with some sentences from news articles, and you need to convert them into a format for exam questions and answers. The main content of the exam is to verify the key information in the paragraph sentences. 
+
+Let me give you an simple example:
+
+First, I will give you a user query, such as: Write a report to elaborate on the 2023 Hawaii wildfire event in detail.
+
+For such a query, there will be some corresponding paragraphs. These are the human-written article content that meets the requirements of the query. You need to pay close attention to the relationship between the human article paragraphs and the user query when extracting the exam questions. Here is an example of a paragraph:
+
+
+(Paragraph): Although Hawaii has the world's largest integrated outdoor alarm system, which is only used during natural disasters, there are more than 80 alarms on Maui, yet the civil defense alarms were not activated during the fire.
+
+
+For the above paragraph, you need to convert it into one or more verifiable questions, which are related to the article topic and the paragraph. You also need to provide the corresponding verifiable answers and return them in the example format. You must explicitly use the List format to show the required answer format, for example:
+
+[
+"</question>How many alarms are there on Maui?</question></constrained_format>answer in pure number</constrained_format></answer>There are \\boxed{80} alarms</answer>"
+]
+
+Or
+
+[
+"</question>How many alarms are there on Maui?</question></constrained_format>answer in pure number</constrained_format></answer>Maui has \\boxed{80}</answer>
+"]
+
+There are three formats requirement you must follow:
+1. </question>: the question you designed must be included in the Question tag.
+2. </constrained_format>: you need to set a ConstraintFormat for this question, which is included in the tag. The content will vary depending on the question. For example, if it involves a date, you may need to design it in the dd-mm-yy format. It may involve time, names, locations, numbers, and so on. These are all up to you to decide dynamically, and you need to design a reasonable Constraint return format. 
+3. </answer>: You must include the final answer in the </answer> tag, and the only verifiable core content is wrapped with the \\boxed{} tag.
+ 
+Did you notice that you can have a lot of text content in the answer part, which can be a paragraph of the final summary output, but \\boxed{} wraps the verifiable answer. The content inside \\boxed{} is the final answer used for verification and must be a short, unique value. It must be wrapped in \\boxed{}. At the same time, you need to pay attention to the requirements in constrained_format, which restricts the content you provide in the answer. The content in \\boxed{80} must comply with the requirements of constrained_format to ensure consistency.
+
+Here is another example. You can provide many entries of questions and answers as long as the answers are unique and verifiable:
+
+(Paragraph): Currently, only a handful of victims have been identified. As of August 11, the death toll was 67, but this number only reflects the victims found outside the buildings, as local authorities have been waiting for FEMA to send its specialists.
+
+Remember that each paragraph or article content I give you is independent. For the above sentence, you can provide:
+
+[
+"</question>How many people died as of August 11?</question></constrained_format>answer in pure number</constrained_format></answer>\\boxed{67}</answer>",
+"</question>Who have the local authorities been waiting for to send specialists?</question></constrained_format>answer in pure english capital words</constrained_format></answer>\\boxed{FEMA}</answer>"
+]
+
+If there are no extractable questions and unique verifiable answers in the sentence I give you, you just return NONE directly, and do not include any other text content. The verifiable unique answer required here cannot be a paragraph or a phrase, because the degree of freedom is too high and it is impossible to do string exact match in the later verification. For example:
+
+- How were the injured transported to the hospital? By \\boxed{air ambulance}.
+
+This example is not appropriate. The content is too complex and flexible, and the extracted question is also irrelevant to the main topic and core content of the article and paragraph. So this is not suitable. Remember, I don't need such entries. What I need you to extract is the in-depth information that is highly relevant to the article content and topic.
+
+Now let's start the task. Please remember all the requirements and provide them in the format I gave you. I give you a User Query and a new paragraph or the entire article content:
+
+User Query: {{UserQuery}}
+
+(Paragraph / Article):
+{{wiki_text}}
