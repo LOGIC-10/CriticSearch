@@ -46,26 +46,33 @@ def read_json_file(file_path="/Users/logic/Documents/CodeSpace/CriticSearch/Deep
 def process_activity(text):
     # 定义正则：匹配换行后跟"Searched for"和"Read"或"Read more from"
     pattern_search = re.compile(r"\nSearched for\s*(.+)")
-    # 修改read模式，只匹配以http或https开头的URL
     pattern_browse = re.compile(r"\nRead(?: more from)?\s*(https?://[^\s\[\]()]+)")
     
-    match = pattern_search.search(text)
-    if match:
+    actions = []
+    thinking = text
+    
+    # 查找所有search匹配
+    for match in pattern_search.finditer(text):
+        actions.append({
+            "type": "search",
+            "content": match.group(1).strip()
+        })
         thinking = text[:match.start()].strip()
-        return {"thinking": thinking, "action": {"type": "search", "content": match.group(1).strip()}}
     
-    match = pattern_browse.search(text)
-    if match:
+    # 查找所有browse匹配
+    for match in pattern_browse.finditer(text):
         url = match.group(1).strip()
-        # 确保URL不包含Markdown语法
         if '[' not in url and ']' not in url and '(' not in url and ')' not in url:
+            actions.append({
+                "type": "browse",
+                "content": url
+            })
             thinking = text[:match.start()].strip()
-            return {"thinking": thinking, "action": {"type": "browse", "content": url}}
     
-    # 未匹配到或URL格式不符合要求, 全部内容作为thinking
-    return {"thinking": text.strip(), "action": None}
-
-
+    return {
+        "thinking": thinking.strip(),
+        "action": actions if actions else None
+    }
 
 # 处理Activity列表
 def process_activities(activities):
@@ -84,30 +91,17 @@ def process_activities(activities):
         # 处理其他项(包括Activity)
         if isinstance(item, dict) and "Activity" in item:
             processed_activities = []
-            
-            # 处理第一个activity
-            if item["Activity"]:
-                first_activity = process_activity(item["Activity"][0])
-                # 确保第一项为search类型并执行搜索
-                if first_activity.get("action") is None:
-                    first_activity["action"] = {
-                        "type": "search",
-                        "content": first_activity["thinking"]
-                    }
-                first_activity["action"]["result"] = tavily_search(first_activity["action"]["content"])
-                processed_activities.append(first_activity)
-            
-                # 处理剩余的activities
-                for activity in item["Activity"][1:]:
-                    processed = process_activity(activity)
-                    if processed.get("action") and processed["action"].get("type"):
-                        action = processed["action"]
+
+            for activity in item["Activity"]:
+                processed = process_activity(activity)
+                if processed.get("action"):
+                    for action in processed["action"]:
                         if action["type"] == "search":
                             action["result"] = tavily_search(action["content"])
                         elif action["type"] == "browse":
                             action["result"] = tavily_extract(action["content"])
-                    processed_activities.append(processed)
-                    
+                processed_activities.append(processed)
+                
             item["Activity"] = processed_activities
         final_result.append(item)
     
