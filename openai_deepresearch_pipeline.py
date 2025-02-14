@@ -1,6 +1,7 @@
 import json
 import re
-import time  # 添加time模块导入
+import time
+from concurrent.futures import ThreadPoolExecutor
 from tavily import TavilyClient
 
 
@@ -74,6 +75,17 @@ def process_activity(text):
         "action": actions if actions else None
     }
 
+def process_single_activity(activity):
+    """Helper function to process a single activity"""
+    processed = process_activity(activity)
+    if processed.get("action"):
+        for action in processed["action"]:
+            if action["type"] == "search":
+                action["result"] = tavily_search(action["content"])
+            elif action["type"] == "browse":
+                action["result"] = tavily_extract(action["content"])
+    return processed
+
 # 处理Activity列表
 def process_activities(activities):
     if not isinstance(activities, list):
@@ -91,16 +103,10 @@ def process_activities(activities):
         # 处理其他项(包括Activity)
         if isinstance(item, dict) and "Activity" in item:
             processed_activities = []
-
-            for activity in item["Activity"]:
-                processed = process_activity(activity)
-                if processed.get("action"):
-                    for action in processed["action"]:
-                        if action["type"] == "search":
-                            action["result"] = tavily_search(action["content"])
-                        elif action["type"] == "browse":
-                            action["result"] = tavily_extract(action["content"])
-                processed_activities.append(processed)
+            
+            # 使用线程池并行处理activities
+            with ThreadPoolExecutor(max_workers=20) as executor:
+                processed_activities = list(executor.map(process_single_activity, item["Activity"]))
                 
             item["Activity"] = processed_activities
         final_result.append(item)
@@ -117,7 +123,7 @@ if data is None:
 
 # 处理data中的所有元素
 processed_data = []
-for item_list in data:
+for item_list in data[:1]:
     processed_item = process_activities(item_list)
     processed_data.append(processed_item)
 
