@@ -6,7 +6,7 @@ import httpx
 from bs4 import BeautifulSoup
 from pydantic import BaseModel, Field, model_serializer
 
-from critic_search.log import logger
+from criticsearch.log import logger
 
 
 class ScrapedData(BaseModel):
@@ -35,7 +35,9 @@ class ScrapedDataList(BaseModel):
 
             # Truncate content to ensure it does not exceed max_content_length
             if len(data.content) > self.max_content_length:
-                data.content = data.content[: self.max_content_length] + "[TOO LONG, END]"
+                data.content = (
+                    data.content[: self.max_content_length] + "[TOO LONG, END]"
+                )
 
             result.append(
                 f"URL: {data.url}\nTitle: {data.title}\nContent:\n{data.content}\n"
@@ -111,7 +113,7 @@ class AsyncWebScraper:
                     return ScrapedData(
                         url=url,
                         title=soup.title.string if soup.title else "Untitled",
-                        content=content
+                        content=content,
                     )
             except Exception as e:
                 return ScrapedData(url=url, error=f"Error: {str(e)}")

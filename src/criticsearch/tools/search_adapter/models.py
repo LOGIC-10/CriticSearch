@@ -5,7 +5,7 @@ from typing import Dict, List, Optional
 from pydantic import BaseModel, Field, model_serializer
 from sqlmodel import Field, SQLModel
 
-from critic_search.log import logger
+from criticsearch.log import logger
 
 
 class SearchResult(BaseModel):

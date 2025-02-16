@@ -2,8 +2,8 @@
 from asyncio import gather
 from typing import Dict, List
 
-from critic_search.config import settings
-from critic_search.log import logger
+from criticsearch.config import settings
+from criticsearch.log import logger
 
 from .bing_client import BingClient
 from .exceptions import InvalidAPIKeyError, RetryError, UsageLimitExceededError
