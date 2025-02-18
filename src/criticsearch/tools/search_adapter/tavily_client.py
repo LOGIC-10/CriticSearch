@@ -3,7 +3,6 @@ from typing import Literal
 
 import httpx
 from loguru import logger
-from sqlmodel import Session, select
 from tenacity import (
     retry,
     retry_if_exception_type,
@@ -14,12 +13,7 @@ from tenacity import (
 
 from .base_search_client import BaseSearchClient
 from .exceptions import InvalidAPIKeyError, RatelimitException, UsageLimitExceededError
-from .models import SearchClientUsage, SearchResponse
-from .search_client_usage_db import (
-    engine,
-    get_current_time_of_new_york_naive,
-    get_second_day_naive,
-)
+from .models import SearchResponse
 
 
 class TavilyClient(BaseSearchClient):
@@ -33,40 +27,6 @@ class TavilyClient(BaseSearchClient):
         self.headers = {
             "Content-Type": "application/json",
         }
-
-    def _increment_usage_count(self):
-        """
-        增加使用次数，如果达到上限则抛出异常
-        """
-        with Session(engine) as session:
-            usage_record = session.exec(
-                select(SearchClientUsage).where(
-                    SearchClientUsage.client_name == "TavilyClient"
-                )
-            ).first()
-
-            if not usage_record:
-                # 如果记录不存在，则创建新记录
-                usage_record = SearchClientUsage(
-                    client_name="TavilyClient",
-                    usage_count=0,
-                    reset_time=get_second_day_naive(),
-                )
-                session.add(usage_record)
-
-            # 检查是否达到使用上限
-            if usage_record.usage_count >= usage_record.max_usage:
-                if get_current_time_of_new_york_naive() >= usage_record.reset_time:
-                    logger.debug("Reset time reached. Resetting usage count.")
-                    # 重置计数器
-                    usage_record.usage_count = 0
-                    usage_record.reset_time = get_second_day_naive()
-                else:
-                    raise UsageLimitExceededError("Monthly usage limit reached.")
-
-            # 增加使用次数
-            usage_record.usage_count += 1
-            session.commit()
 
     @retry(
         stop=stop_after_attempt(5),  # 重试最多5次
@@ -98,10 +58,7 @@ class TavilyClient(BaseSearchClient):
             "api_key": self._api_key,
         }
 
-        async with httpx.AsyncClient(timeout=30) as client:
-            # 检查和更新使用次数
-            self._increment_usage_count()
-
+        async with httpx.AsyncClient(timeout=30, http2=True) as client:
             response = await client.post(
                 self.base_url + "/search", json=data, headers=self.headers
             )

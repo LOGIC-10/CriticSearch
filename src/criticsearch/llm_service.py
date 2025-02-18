@@ -40,7 +40,7 @@ class ModelManager:
         client = OpenAI(
             api_key=model_config.get("api_key"),
             base_url=model_config.get("base_url", "https://api.openai.com/v1"),
-            timeout=self.config.get("timeout", 60),
+            timeout=self.config.get("timeout", 120),
             max_retries=self.config.get("max_retries"),
         )
 
@@ -52,7 +52,7 @@ def call_llm(
     model,
     usr_prompt: str | Iterable[ChatCompletionMessageParam],
     config,
-    tools: List | None,
+    tools: List | None = None,
 ) -> ChatCompletionMessage:
     model_manager = ModelManager(config)
     client = model_manager.create_client(model)

@@ -1,6 +1,6 @@
 from datasets import load_dataset
 
-from criticsearch.run_tasks import run_tasks
+from criticsearch.tasks_runner import run_tasks
 
 train_ds = load_dataset("google/boolq", split="train")
 

@@ -87,14 +87,6 @@ class SearchResponseList(BaseModel):
         return result_str
 
 
-class SearchClientUsage(SQLModel, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
-    client_name: str = Field(default=None, index=True)
-    usage_count: int = Field(default=0)
-    max_usage: int = Field(default=1000)
-    reset_time: datetime = Field(default=None)  # 初始值为 None
-
-
 if __name__ == "__main__":
     response_1 = SearchResponse(
         query="Python programming",
