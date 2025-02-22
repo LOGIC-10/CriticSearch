@@ -1,6 +1,7 @@
 import asyncio
 import json
 import os
+import re
 import time
 from typing import List, Optional, overload
 
@@ -179,7 +180,7 @@ class BaseAgent:
 
             search_results = asyncio.run(self.search_aggregator.search(query=query))
 
-            time.sleep(1)
+            time.sleep(0.2)
 
             BaseAgent.conversation_manager.append_tool_call_result_to_history(
                 tool_call_id=tool_call.id,
@@ -200,7 +201,6 @@ class BaseAgent:
             },
         )
 
-        from IPython import embed; embed()
 
         # Interact with the model for web scraping
         web_scraper_response = self.common_chat(
@@ -257,4 +257,23 @@ class BaseAgent:
 
         except yaml.YAMLError as exc:
             print(f"Invalid YAML content: {exc}")
+            return None
+        
+        
+    def extract_and_validate_json(self, model_response):
+
+        # Try to extract JSON data wrapped in ```json``` blocks
+        # and return the parsed JSON content
+        match = re.search(r"```json\n([\s\S]*?)\n```", model_response, re.DOTALL)
+        if match:
+            json_content = match.group(1).strip()
+        else:
+            json_content = model_response.strip()
+
+        try:
+            parsed_json = json.loads(json_content)
+            return parsed_json
+        
+        except json.JSONDecodeError as exc:
+            print(f"Invalid JSON content: {exc}")
             return None

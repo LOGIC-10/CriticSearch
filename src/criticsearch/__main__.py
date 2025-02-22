@@ -3,7 +3,7 @@ from criticsearch.tasks_runner import run_tasks
 # Example usage:
 if __name__ == "__main__":
     tasks = [
-        "写一篇不少于2000字的报告，阐述美国和俄罗斯关系的最新变化"
+        "Write a report of no less than 2000 words explaining the latest changes in the relationship between the United States and Russia."
     ]
     MAX_ITERATION = 20
     output_file = "conversation_history_sharegpt.jsonl"
