@@ -1,3 +1,4 @@
+import json
 import time
 
 import yaml
@@ -52,6 +53,7 @@ def main(TASK, MAX_ITERATION):
                 common_agent_answer = common_agent.common_chat(usr_prompt=TASK)
             else:
                 # When not confident, get both answer and search results
+                # 并且第一次全面的搜索后的结果用来构建一个report的结构
                 data = {
                     "user_question": TASK,
                 }
@@ -67,20 +69,27 @@ def main(TASK, MAX_ITERATION):
 
                 initial_web_result_markdown_text = common_agent.search_and_browse(
                     initial_search_rendered_prompt
-                )
+                )# 这里返回的是模型决定了访问哪些后的网页爬取extract的结果
+
                 logger.info(f"Initial web result: {initial_web_result_markdown_text}")
 
-                rag_based_answer_prompt = common_agent.render_template(
-                    common_agent.load_template("rag_based_answer.txt"),
+                # Generate report outline based on search results
+                outline_prompt = common_agent.render_template(
+                    common_agent.load_template("outline_generation.txt"),
                     {
                         "user_question": common_agent.user_question,
                         "web_result_markdown_text": initial_web_result_markdown_text,
                     },
                 )
 
-                common_agent_answer = common_agent.common_chat(
-                    usr_prompt=rag_based_answer_prompt,
+                outline = common_agent.common_chat(
+                    usr_prompt=outline_prompt,
                 )
+
+                # verify the outline is a json string   
+                outline_json = json.loads(outline)
+
+                
 
         else:
             # 前面根据critc的返回得到了新的网页搜索结果web_result_markdown_text
@@ -90,8 +99,10 @@ def main(TASK, MAX_ITERATION):
                 search_results=web_result_markdown_text,
                 critic_feedback=critic_agent_response,
             )
-            time.sleep(0.5)  # hitting rate limits for gpt mini
+            time.sleep(0.1)  # hitting rate limits for gpt mini
 
+        # ========================== #
+        ## 这里在if-else结构之外 ##
         colorize_message(
             message_title="COMMON AGENT ANSWER",
             color="magenta",
