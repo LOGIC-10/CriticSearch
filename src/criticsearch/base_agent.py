@@ -111,9 +111,10 @@ class BaseAgent:
         usr_prompt: str | List,
         tools: Optional[List] = None,
         role: str = "assistant",
+        model: str = settings.default_model,  # 默认使用配置文件中的默认模型
     ) -> ChatCompletionMessage | str | None:
         llm_response = call_llm(
-            model=settings.default_model,
+            model=model,  # 使用传入的model / 默认model
             usr_prompt=usr_prompt,
             config=settings,
             tools=tools,
