@@ -1,4 +1,4 @@
-from .run_tasks import run_tasks
+from criticsearch.tasks_runner import run_tasks
 
 # Example usage:
 if __name__ == "__main__":

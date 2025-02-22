@@ -1,16 +1,16 @@
 [project]
-name = "agentfactory"
+name = "criticsearch"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.10"
 dependencies = [
     "beautifulsoup4>=4.12.3",
     "datasets>=3.2.0",
     "duckduckgo-search>=6.3.5",
     "dynaconf>=3.2.6",
     "griffe>=1.5.1",
-    "httpx>=0.27.2",
+    "httpx[http2]>=0.27.2",
     "jinja2>=3.1.4",
     "loguru>=0.7.2",
     "openai>=1.55.0",
@@ -23,6 +23,8 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "pre-commit>=4.1.0",
+    "pytest>=8.3.4",
     "ruff>=0.8.0",
 ]
 
@@ -31,4 +33,11 @@ exclude = ["eval"]
 
 [tool.ruff.lint]
 # 启用导入排序规则
-select = ["I001"]
+select = ["I001"] 
+
+[project.scripts]
+criticsearch = "criticsearch:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

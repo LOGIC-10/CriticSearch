@@ -2,8 +2,8 @@
 from asyncio import gather
 from typing import Dict, List
 
-from critic_search.config import settings
-from critic_search.log import logger
+from criticsearch.config import settings
+from criticsearch.log import logger
 
 from .bing_client import BingClient
 from .exceptions import InvalidAPIKeyError, RetryError, UsageLimitExceededError
@@ -16,7 +16,7 @@ class SearchAggregator:
         self.clients: Dict[str, TavilyClient | BingClient] = {}
 
         # 如果 Tavily 的 API key 存在，初始化客户端
-        tavily_api_key = settings.search_engine.tavily.api_key
+        tavily_api_key = settings.tavily.api_key
         if tavily_api_key:
             self.clients["tavily"] = TavilyClient(tavily_api_key)
 

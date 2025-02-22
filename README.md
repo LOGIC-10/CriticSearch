@@ -27,6 +27,14 @@ Critic Search is an intelligent querying and analysis framework designed to enha
 - **Free Tier**: 1,000 free requests per month, 3 transactions per second.  
 
 
+## Using pip(Alternative)
+
+### Installing dependencies
+
+```python
+pip install -r requirements.txt
+```
+
 ## Run critic_search
 
 1. Rename `settings.yaml.template` to `settings.template`.
@@ -34,5 +42,5 @@ Critic Search is an intelligent querying and analysis framework designed to enha
 2. Run command.
 
 ```python
-python -m critic_search
+criticsearch "How will the introduction of central bank digital currencies (CBDCs) impact the traditional banking system and financial stability in the next five years?" --max-iterations 5
 ```

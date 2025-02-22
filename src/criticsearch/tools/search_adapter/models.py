@@ -5,7 +5,7 @@ from typing import Dict, List, Optional
 from pydantic import BaseModel, Field, model_serializer
 from sqlmodel import Field, SQLModel
 
-from critic_search.log import logger
+from criticsearch.log import logger
 
 
 class SearchResult(BaseModel):
@@ -85,14 +85,6 @@ class SearchResponseList(BaseModel):
         )
 
         return result_str
-
-
-class SearchClientUsage(SQLModel, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
-    client_name: str = Field(default=None, index=True)
-    usage_count: int = Field(default=0)
-    max_usage: int = Field(default=1000)
-    reset_time: datetime = Field(default=None)  # 初始值为 None
 
 
 if __name__ == "__main__":

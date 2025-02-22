@@ -4,15 +4,23 @@
 
 # %%
 import json
-from tree_comparison import tree_similarity  # imported but not used yet
-from extract_ground_truth import extract_markdown_sections, extractDirectoryTree, extractMarkdownContent
-from critic_search.base_agent import BaseAgent
-from tenacity import retry, stop_after_attempt, wait_fixed
-from concurrent.futures import ThreadPoolExecutor
 import re
+from concurrent.futures import ThreadPoolExecutor
+
 import pandas as pd
+from tenacity import retry, stop_after_attempt, wait_fixed
+from tree_comparison import tree_similarity  # imported but not used yet
+
+from criticsearch.base_agent import BaseAgent
+from extract_ground_truth import (
+    extract_markdown_sections,
+    extractDirectoryTree,
+    extractMarkdownContent,
+)
+
 # %% [markdown]
 # ## ReportBenchmark Class Definition
+
 
 # %%
 class ReportBenchmark:
@@ -22,13 +30,20 @@ class ReportBenchmark:
     and calls prompts (fact_extraction, outline_generation) via BaseAgent's common_chat.
     Also includes a method for FactualQA evaluation using a model (e.g., GPT-4o).
     """
+
     def __init__(self, json_input_path, user_query=None):
         self.json_path = json_input_path
         self.agent = BaseAgent()
-        self.breadth_gt = extractDirectoryTree(self.json_path)  # Extract breadth ground truth，得到一个json结构的广度树
+        self.breadth_gt = extractDirectoryTree(
+            self.json_path
+        )  # Extract breadth ground truth，得到一个json结构的广度树
         self.article_content = extractMarkdownContent(self.json_path)
         self.sections = extract_markdown_sections(self.article_content)
-        self.user_query = f"Generate a comprehensive long report about {self.breadth_gt.get('title', '')}" if user_query is None else user_query
+        self.user_query = (
+            f"Generate a comprehensive long report about {self.breadth_gt.get('title', '')}"
+            if user_query is None
+            else user_query
+        )
 
     def run_fact_extraction(self):
         """
@@ -36,6 +51,7 @@ class ReportBenchmark:
         并行执行，返回一个包含各 section 响应的列表。
         如果对某个 section 10 次尝试后都失败，则发出警告并跳过该 section。
         """
+
         def process_section(section_text):
             @retry(stop=stop_after_attempt(10), wait=wait_fixed(1), reraise=True)
             def attempt():
@@ -62,7 +78,9 @@ class ReportBenchmark:
             try:
                 return attempt()
             except Exception as e:
-                print(f"Warning: Failed to process section after 10 attempts. Skipping this section. Error: {e}")
+                print(
+                    f"Warning: Failed to process section after 10 attempts. Skipping this section. Error: {e}"
+                )
                 return None
 
         with ThreadPoolExecutor() as executor:
@@ -91,7 +109,7 @@ class ReportBenchmark:
         for section in fact_extraction_result:
             parsed_data = self.parse_tagged_data_to_table(section)
             final_parsed_data.append(parsed_data)
-        
+
         if visualization:
             # Merge all parsed data into single list
             merged_data = []
@@ -113,12 +131,12 @@ class ReportBenchmark:
     def parse_tagged_data_to_table(self, entries, csv_path=None):
         """
         Parse a list of strings with tagged data and convert them into a table.
-        
+
         Each entry in the list is expected to contain:
         - A question enclosed between </question> and </question>
         - A format description enclosed between </constrained_format> and </constrained_format>
         - An answer enclosed in </answer> and </answer>
-        
+
         Parameters:
             entries (list of str): List of strings with tagged content.
             csv_path (str): Optional file path to save CSV.
@@ -126,37 +144,37 @@ class ReportBenchmark:
         Returns:
             list of dict: List of dictionaries with parsed data.
         """
-        
+
         parsed_data = []
-        
+
         for entry in entries:
             # Extract question
             question_match = re.search(r"</question>(.*?)</question>", entry)
             question = question_match.group(1).strip() if question_match else ""
-            
+
             # Extract format description
-            format_match = re.search(r"</constrained_format>(.*?)</constrained_format>", entry)
+            format_match = re.search(
+                r"</constrained_format>(.*?)</constrained_format>", entry
+            )
             format_desc = format_match.group(1).strip() if format_match else ""
-            
+
             # Extract answer
             answer_match = re.search(r"</answer>(.*?)</answer>", entry)
             answer = answer_match.group(1).strip() if answer_match else ""
-            
+
             # Append to parsed data
-            parsed_data.append({
-                "Question": question,
-                "Format": format_desc,
-                "Answer": answer
-            })
-    
+            parsed_data.append(
+                {"Question": question, "Format": format_desc, "Answer": answer}
+            )
+
         # Save to CSV if path is provided and ends with '.csv'
-        if csv_path and csv_path.endswith('.csv'):
+        if csv_path and csv_path.endswith(".csv"):
             # Create DataFrame
             df = pd.DataFrame(parsed_data)
             df.to_csv(csv_path, index=False)
             print(f"Table saved to {csv_path}")
             return df
-        
+
         return parsed_data
 
     def verify_extraction_meaningful(self):

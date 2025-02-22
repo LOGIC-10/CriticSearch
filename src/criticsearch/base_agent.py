@@ -13,7 +13,7 @@ from loguru import logger
 from .config import settings
 from .llm_service import ChatCompletionMessage, call_llm
 from .models import ConversationManager
-from .tools import AsyncWebScraper, SearchAggregator, ToolRegistry
+from .tools import ContentScraper, SearchAggregator, ToolRegistry
 
 
 class BaseAgent:
@@ -51,17 +51,16 @@ class BaseAgent:
             )
         )
 
-        self.web_scraper = AsyncWebScraper()
+        self.content_scraper = ContentScraper()
 
-        self.web_scraper_schema = BaseAgent.tool_registry.get_or_create_tool_schema(
-            self.web_scraper.scrape
+        self.content_scraper_schema = BaseAgent.tool_registry.get_or_create_tool_schema(
+            self.content_scraper.scrape
         )
 
-        BaseAgent.conversation_manager.available_tools = (
-            BaseAgent.tool_registry.get_or_create_tool_schema(
-                self.web_scraper.scrape, self.search_aggregator.search
-            )
-        )
+        BaseAgent.conversation_manager.available_tools = [
+            self.content_scraper_schema,
+            self.search_aggregator_schema,
+        ]
 
         self.repeat_turns = 10
 
@@ -204,7 +203,7 @@ class BaseAgent:
         # Interact with the model for web scraping
         web_scraper_response = self.common_chat(
             usr_prompt=web_scraper_rendered_prompt,
-            tools=self.web_scraper_schema,
+            tools=self.content_scraper_schema,
         )
 
         # If no tool calls, return the response immediately
@@ -220,7 +219,7 @@ class BaseAgent:
         for tool_call in web_scraper_response.tool_calls:
             urls = json.loads(tool_call.function.arguments).get("urls", [])
 
-            web_scraper_results = asyncio.run(self.web_scraper.scrape(urls=urls))
+            web_scraper_results = asyncio.run(self.content_scraper.scrape(urls=urls))
 
             BaseAgent.conversation_manager.append_tool_call_result_to_history(
                 tool_call_id=tool_call.id,
