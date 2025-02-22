@@ -200,10 +200,12 @@ class BaseAgent:
             },
         )
 
+        from IPython import embed; embed()
+
         # Interact with the model for web scraping
         web_scraper_response = self.common_chat(
             usr_prompt=web_scraper_rendered_prompt,
-            tools=self.content_scraper_schema,
+            tools=self.content_scraper_schema, 
         )
 
         # If no tool calls, return the response immediately

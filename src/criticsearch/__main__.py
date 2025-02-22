@@ -3,8 +3,7 @@ from criticsearch.tasks_runner import run_tasks
 # Example usage:
 if __name__ == "__main__":
     tasks = [
-        "How will the introduction of central bank digital currencies (CBDCs) impact the traditional banking system and financial stability in the next five years?",
-        # "What are the potential benefits and challenges of using AI-driven predictive maintenance in the manufacturing industry, and how can companies effectively implement such systems?"
+        "写一篇不少于2000字的报告，阐述美国和俄罗斯关系的最新变化"
     ]
     MAX_ITERATION = 20
     output_file = "conversation_history_sharegpt.jsonl"
