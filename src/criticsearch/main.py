@@ -150,7 +150,6 @@ def main(TASK, MAX_ITERATION):
 
                 # verify the outline is a json string   
                 outline_json = common_agent.extract_and_validate_json(outline)
-                print(outline_json)
                 
                 # Flatten the outline to get all sections at all levels
                 flat_sections = flatten_outline(outline_json)
@@ -174,14 +173,23 @@ def main(TASK, MAX_ITERATION):
                 
                 # Reconstruct the markdown with proper hierarchy
                 common_agent_answer = reconstruct_markdown(outline_json, flat_contents)
-                print(common_agent_answer)
-                # 保存到一个md文件
-                with open("report.md", "w") as f:
-                    f.write(common_agent_answer)    
-                
-
+                # 用deepseek润色一下得到正式的version1 report
+                polish_prompt = common_agent.load_template("polish_first_version.txt")
+                polish_rendered_prompt = common_agent.render_template(
+                    polish_prompt,
+                    {
+                        "task": TASK,
+                        "report": common_agent_answer,
+                    },
+                )
+                common_agent_answer = common_agent.common_chat(
+                    usr_prompt=polish_rendered_prompt,
+                    model="aihubmix-DeepSeek-R1"
+                )
+                print(common_agent_answer)  # 这里是第一次生成的正式的polished report
+ 
         else:
-            # 前面根据critc的返回得到了新��网页搜索结果web_result_markdown_text
+            # 前面根据critc的返回得到了新的网页搜索结果web_result_markdown_text
             common_agent_answer = common_agent.update_answer(
                 query=TASK,
                 previous_answer=common_agent_answer,
