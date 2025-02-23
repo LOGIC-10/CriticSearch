@@ -30,8 +30,12 @@ def generate_content_for_section(common_agent, section, TASK):
     prompt = (
         f"Using the following search results:\n\n{search_results}\n\n"
         f"Write one or several detailed paragraphs with data and facts in a logical way about '{title}' under the background of this TOPIC/TASK: '{TASK}', formatted in pure text, without summary sentences."
+        f"Please make sure you are always obeying and using '<\cite>The url link that you used for supporting the previous statement<\cite>' format in every sentence that you are using data from the web."
     )
-    return common_agent.common_chat(usr_prompt=prompt)
+    paragraph = common_agent.common_chat(usr_prompt=prompt)
+    print(f"--- Generated content for '{title}' ---")
+    print(paragraph)
+    return paragraph
 
 def reconstruct_markdown(outline, flat_contents):
     """
@@ -158,7 +162,7 @@ def main(TASK, MAX_ITERATION):
                 with concurrent.futures.ThreadPoolExecutor(max_workers=100) as executor:
                     future_to_section = {
                         executor.submit(generate_content_for_section, common_agent, item["section"], TASK): item 
-                        for item in flat_sections
+                        for item in flat_sections[:3]
                     }
                     
                     # Collect results as they complete
@@ -184,9 +188,13 @@ def main(TASK, MAX_ITERATION):
                 )
                 common_agent_answer = common_agent.common_chat(
                     usr_prompt=polish_rendered_prompt,
-                    model="aihubmix-DeepSeek-R1"
+                    model="gpt-4o"
                 )
                 print(common_agent_answer)  # 这里是第一次生成的正式的polished report
+
+                # 保存第一次生成的report    
+                with open("first_report.md", "w") as f:
+                    f.write(common_agent_answer)
  
         else:
             # 前面根据critc的返回得到了新的网页搜索结果web_result_markdown_text
