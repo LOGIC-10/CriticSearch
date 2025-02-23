@@ -1,6 +1,7 @@
 import json
 import time
 import concurrent.futures
+import re
 
 import yaml
 
@@ -40,7 +41,7 @@ def generate_content_for_section(common_agent, section, TASK):
 def reconstruct_markdown(outline, flat_contents):
     """
     根据展平后的内容与原 outline 结构，拼接生成最终 Markdown 文本
-    使用完整路径作为key确保唯一性
+    使用完整路径为key确保唯一性
     """
     # 构建以完整路径为键的映射字典
     content_map = {}
@@ -74,6 +75,147 @@ def reconstruct_markdown(outline, flat_contents):
         result += helper(section, [outline.get("title")] if "title" in outline else [])
     
     return result
+
+def extract_citations(text):
+    """从文本中提取引用的URLs"""
+    citations = []
+    pattern = r'<cite>(.*?)<\/cite>'
+    matches = re.findall(pattern, text)
+    return matches
+
+def create_document_structure(outline_json, flat_contents):
+    """
+    基于outline结构和生成的内容创建文档结构
+    """
+    document = {
+        "document": {
+            "title": outline_json.get("title", ""),
+            "level": 1,
+            "subsections": []
+        }
+    }
+    
+    # 构建路径到内容的映射
+    content_map = {}
+    for item, content in flat_contents:
+        path_key = tuple(item["path"])
+        content_map[path_key] = content
+        
+    def process_section(section, depth=1, path=[]):
+        current_path = path + [section.get("title")]
+        path_key = tuple(current_path)
+        
+        section_data = {
+            "title": section.get("title"),
+            "level": depth,
+            "paragraphs": []
+        }
+        
+        # 如果有内容，处理段落
+        if path_key in content_map:
+            content = content_map[path_key]
+            paragraphs = content.split('\n\n')  # 假设段落用空行分隔
+            for para in paragraphs:
+                if para.strip():  # 忽略空段落
+                    citations = extract_citations(para)
+                    paragraph_data = {
+                        "text": para.strip(),  # 保留原始文本，包括cite标记
+                        "citations": citations
+                    }
+                    section_data["paragraphs"].append(paragraph_data)
+        
+        # 处理子节点
+        if "children" in section:
+            section_data["subsections"] = []
+            for child in section["children"]:
+                child_data = process_section(child, depth + 1, current_path)
+                section_data["subsections"].append(child_data)
+                
+        return section_data
+    
+    # 处理根节点下的所有节点
+    for section in outline_json.get("children", []):
+        doc_section = process_section(section, 2, [outline_json.get("title")] if "title" in outline_json else [])
+        document["document"]["subsections"].append(doc_section)
+    
+    return document
+
+def parse_markdown_to_structure(markdown_text):
+    """从markdown文本解析出文档结构"""
+    lines = markdown_text.split('\n')
+    document = {
+        "document": {
+            "title": "",
+            "level": 1,
+            "subsections": []
+        }
+    }
+    
+    current_section = document["document"]
+    section_stack = [current_section]
+    current_level = 1
+    current_text = []
+    
+    for line in lines:
+        if line.strip():
+            # 处理标题
+            if line.startswith('#'):
+                # 如果有待处理的段落文本，先��理完
+                if current_text:
+                    paragraph_text = ' '.join(current_text)
+                    if paragraph_text.strip():
+                        citations = extract_citations(paragraph_text)
+                        current_section.setdefault("paragraphs", []).append({
+                            "text": paragraph_text.strip(),
+                            "citations": citations
+                        })
+                    current_text = []
+                
+                # 处理新标题
+                level = len(line.split()[0])  # 计算#的数量
+                title = ' '.join(line.split()[1:])
+                
+                # 根据层级调整当前section
+                while len(section_stack) > 1 and level <= section_stack[-1]["level"]:
+                    section_stack.pop()
+                
+                new_section = {
+                    "title": title,
+                    "level": level,
+                    "subsections": [],
+                    "paragraphs": []
+                }
+                
+                section_stack[-1].setdefault("subsections", []).append(new_section)
+                section_stack.append(new_section)
+                current_section = new_section
+                
+            else:
+                # 收集段落文本
+                current_text.append(line)
+        else:
+            # 空行，处理当前段落
+            if current_text:
+                paragraph_text = ' '.join(current_text)
+                if paragraph_text.strip():
+                    citations = extract_citations(paragraph_text)
+                    current_section.setdefault("paragraphs", []).append({
+                        "text": paragraph_text.strip(),
+                        "citations": citations
+                    })
+                current_text = []
+    
+    # 处理最后一个段落
+    if current_text:
+        paragraph_text = ' '.join(current_text)
+        if paragraph_text.strip():
+            citations = extract_citations(paragraph_text)
+            current_section.setdefault("paragraphs", []).append({
+                "text": paragraph_text.strip(),
+                "citations": citations
+            })
+
+    return document
 
 def main(TASK, MAX_ITERATION):
     # Initialize agents
@@ -162,7 +304,7 @@ def main(TASK, MAX_ITERATION):
                 with concurrent.futures.ThreadPoolExecutor(max_workers=100) as executor:
                     future_to_section = {
                         executor.submit(generate_content_for_section, common_agent, item["section"], TASK): item 
-                        for item in flat_sections[:3]
+                        for item in flat_sections[:2]
                     }
                     
                     # Collect results as they complete
@@ -177,6 +319,8 @@ def main(TASK, MAX_ITERATION):
                 
                 # Reconstruct the markdown with proper hierarchy
                 common_agent_answer = reconstruct_markdown(outline_json, flat_contents)
+                print(common_agent_answer)  # 这里是第一次生成的report,还没有polish
+
                 # 用deepseek润色一下得到正式的version1 report
                 polish_prompt = common_agent.load_template("polish_first_version.txt")
                 polish_rendered_prompt = common_agent.render_template(
@@ -191,10 +335,17 @@ def main(TASK, MAX_ITERATION):
                     model="gpt-4o"
                 )
                 print(common_agent_answer)  # 这里是第一次生成的正式的polished report
-
-                # 保存第一次生成的report    
-                with open("first_report.md", "w") as f:
+                # 保存到一个md
+                with open("first_version_report.md", "w") as f:
                     f.write(common_agent_answer)
+
+                # Polish后从markdown解析出文档结构
+                document_structure = parse_markdown_to_structure(common_agent_answer)
+                common_agent.document_structure = document_structure
+
+                # 保存到一个json文件
+                with open("document_structure.json", "w") as f:
+                    json.dump(document_structure, f, indent=4, ensure_ascii=False)
  
         else:
             # 前面根据critc的返回得到了新的网页搜索结果web_result_markdown_text
