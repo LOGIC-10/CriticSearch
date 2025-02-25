@@ -1,0 +1,118 @@
+Question,Format,Answer
+When did CrowdStrike distribute the faulty update?,answer in dd-mm-yyyy format,\boxed{19-07-2024}
+How many systems crashed due to the faulty update?,answer in pure number,\boxed{8500000}
+What is the estimated financial damage caused by the outage?,answer in currency format,\boxed{10000000000}
+What type of software did the faulty update pertain to?,answer in pure english capital words,\boxed{FALCON SENSOR}
+What industries were affected by the CrowdStrike outage?,answer in structured list,"\boxed{AIRLINES, AIRPORTS, BANKS, HOTELS, HOSPITALS, MANUFACTURING, STOCK MARKETS, BROADCASTING, GAS STATIONS, RETAIL STORES, GOVERNMENT SERVICES}"
+What is the name of CrowdStrike's endpoint detection and response agent?,answer in pure english,\boxed{Falcon}
+How many fields were expected in the channel file's array?,answer in pure number,\boxed{21}
+How many fields did the channel file actually have?,answer in pure number,\boxed{20}
+What major error occurred related to the software update distribution?,answer in pure english capital words,\boxed{SIMULTANEOUS DISTRIBUTION TO ALL CUSTOMERS}
+What date and time did CrowdStrike distribute the faulty configuration update?,answer in dd-mm-yyyy hh:mm UTC format,\boxed{19-07-2024 04:09}
+Which operating systems were affected by the faulty CrowdStrike update?,answer in pure english capital words,\boxed{WINDOWS 10 AND WINDOWS 11}
+What was the time when CrowdStrike reverted the content update?,answer in hh:mm UTC format,\boxed{05:27}
+At what time did Google confirm that the CrowdStrike update was at fault?,answer in hh:mm UTC format,\boxed{07:15}
+What was the nature of the problem that caused the machines to malfunction?,answer in pure english capital words,\boxed{INVALID PAGE FAULT}
+Which platform experienced an unrelated outage the day before the CrowdStrike incident?,answer in pure english capital words,\boxed{MICROSOFT AZURE}
+What recovery option was recommended by Microsoft for restoring affected systems?,answer in pure english,\boxed{restoring a backup from before 18 July}
+What type of disk encryption can complicate the recovery process?,answer in pure english,\boxed{BitLocker}
+What is required for recovery of systems with BitLocker enabled?,answer in pure english,\boxed{48-digit numeric BitLocker recovery keys}
+What specific timestamp is mentioned for the files to be deleted during remediation?,answer in hh:mm format,\boxed{04:09}
+How many customers did CrowdStrike have at the time of the incident?,answer in pure number,There were \boxed{24000} customers
+What percentage of Fortune 500 companies were CrowdStrike's customers?,answer in pure percentage,Nearly \boxed{60} percent
+"As of 20 July, how many devices were estimated to be affected by the Microsoft update?",answer in pure number,Approximately \boxed{8500000} devices
+What was the estimated financial loss faced by the top 500 US companies due to the outage?,answer in pure currency format,Near \boxed{5.4 billion} dollars
+What will the total cost to the UK economy likely fall between?,answer in pure currency format,Between \boxed{1.7} billion and \boxed{2.3} billion pounds
+What does CrowdStrike's terms and conditions for their Falcon software limit liability to?,answer in pure english phrases,\boxed{fees paid}
+On what date was a breach of Article 32 reported by a data-protection expert?,answer in dd-mm-yyyy format,\boxed{19-07-2024}
+Which Australian airports experienced operational disruptions due to the IT outage?,answer in pure english lists of airport names,"The affected airports include Sydney Airport, Melbourne Airport, Adelaide Airport, Brisbane Airport, Canberra Airport, Darwin Airport, Hobart Airport, Launceston Airport, and Perth Airport."
+What was the impact of the IT outage on Sydney Airport?,answer in pure english sentence,"The outage affected some operations, leading to potential delays throughout the evening."
+Which New Zealand airport was affected by the IT outage?,answer in pure english capital words,\boxed{CHRISTCHURCH AIRPORT}
+Which airline cancelled the most flights in India due to the outage?,answer in pure english,\boxed{IndiGo}
+How many flights were cancelled in total in India as of 18:14 IST?,answer in pure number,\boxed{200}
+On what date did Hong Kong Express cancel some flights?,answer in dd-mm-yyyy format,\boxed{20-07-2024}
+Which platform did the airlines rely on that was affected by the outage?,answer in pure english,\boxed{Microsoft Azure}
+What were passengers at Hong Kong International Airport directed with due to system malfunctions?,answer in pure english,\boxed{handwritten signs}
+Which Spanish airport traffic control manager mentioned an IT outage?,answer in pure english capital words,\boxed{ENAIRE}
+What was the percentage of Swiss International Air Lines flights grounded due to the IT outage?,answer in pure number,\boxed{30}
+At what time did Berlin Brandenburg Airport announce that operational processes were affected by IT problems?,answer in hh:mm (24-hour format),\boxed{07:00}
+Which UK airport experienced frozen departure boards?,answer in pure english capital words,\boxed{EDINBURGH AIRPORT}
+What issue did Lufthansa experience related to their website?,answer in pure english text,\boxed{PROFILE AND BOOKING RETRIEVAL}
+Which airline was forced to cancel a small number of flights due to an outage?,answer in pure english capital words,\boxed{RYANAIR}
+What caused delays at major airports in Greece?,answer in pure english text,\boxed{CHAOTIC SCENES DUE TO PASSENGERS WAITING FOR HOURS}
+"On what date was the ground stop issued by United, Delta, and American Airlines?",answer in dd-mm-yyyy format,The ground stop was issued on \boxed{19-07-2024}
+"How many flights did Delta cancel on July 20, 2024?",answer in pure number,Delta cancelled \boxed{1400} flights on 20 July 2024.
+What was the total estimated loss for Delta due to the disruptions?,answer in pure number,The total estimated loss for Delta due to the disruptions was \boxed{550} million dollars.
+How many flights were cancelled over five days due to the outages?,answer in pure number,Delta had cancelled over \boxed{7000} flights over five days.
+Who did Delta CEO Ed Bastian say Delta would sue to recoup some losses?,answer in pure english capital words,Delta would sue \boxed{CROWDSTRIKE}.
+How many passengers were estimated to have been affected by the flight cancellations?,answer in pure number,Approximately \boxed{1.3} million passengers were affected.
+What incident made it difficult for travelers to check into hotels at San Francisco International Airport?,answer in pure english capital words,The difficult situation for travelers was due to \boxed{THE OUTAGE}.
+Which banks in the US were affected by the IT outages?,"answer in pure english capital words, separated by commas","\boxed{CHASE BANK, BANK OF AMERICA, WELLS FARGO, U.S. BANCORP, CAPITAL ONE, CHARLES SCHWAB}"
+What time did Banco Bradesco disable the login button?,answer in HH:MM UTC format,\boxed{12:00}
+Which platform in the Philippines experienced problems alongside banks?,answer in pure english capital words,"\boxed{MAYA, GCash}"
+Which financial entity in Turkey could not be accessed due to the outage?,answer in pure english capital words,\boxed{DENIZBANK}
+How many banks and NBFCs were reported affected in India?,answer in pure number,\boxed{10}
+What was the status of the London Stock Exchange during the outages?,answer in pure english capital words,\boxed{OPERATING NORMALLY}
+Which United States departments experienced disruptions due to the incident?,answer in pure english capital words,"\boxed{DEPARTMENT OF HOMELAND SECURITY, NASA, FEDERAL TRADE COMMISSION, NATIONAL NUCLEAR SECURITY ADMINISTRATION, DEPARTMENT OF JUSTICE, DEPARTMENT OF EDUCATION, DEPARTMENT OF VETERANS AFFAIRS, DEPARTMENT OF ENERGY}"
+Which city declared the outages to be a city emergency?,answer in pure english capital words,"\boxed{PORTLAND, OREGON}"
+"What was affected in Arizona, South Dakota, Texas, and Washington state?",answer in pure english capital words,\boxed{ELECTION AND VOTING REGISTRATION DATABASES}
+Which emergency service experienced outages in parts of the United States?,answer in pure english capital words,\boxed{911 SERVICE}
+Which systems used by the US federal courts were unaffected?,answer in pure english capital words,\boxed{CM/ECF AND PACER}
+Which department in Copenhagen was unable to receive automatic fire alerts?,answer in pure english capital words,\boxed{COPENHAGEN FIRE DEPARTMENT}
+What caused the traffic disruptions reported at the Canada–United States border?,answer in pure english sentence,The traffic disruptions were caused by a \boxed{partial outage of the telephone reporting system}
+At what time did the Washington Metropolitan Area Transit Authority's live tracking become available on 19 July?,answer in hh:mm am/pm format,Live tracking became available at \boxed{9:30 am}
+Which transport authorities experienced issues with vehicle tracking and arrival notices?,answer in pure english capital words,The \boxed{MASSACHUSETTS BAY TRANSPORTATION AUTHORITY} and \boxed{METROPOLITAN TRANSPORTATION AUTHORITY}
+What was the effect of the outage on UK rail companies in London?,answer in pure english sentence,Cab riders in London could not pay with credit or debit cards and thus required \boxed{cash}
+Which hospitals in North America postponed non-urgent surgeries and visits due to the IT outage?,answer in pure english capital words,"\boxed{MEMORIAL SLOAN KETTERING CANCER CENTER, MASS GENERAL BRIGHAM HOSPITAL SYSTEM, CINCINNATI CHILDREN'S HOSPITAL MEDICAL CENTER}"
+What system did Kaiser San Jose Medical Center lose access to due to the outage?,answer in pure english capital words,"\boxed{PATIENT RECORDS, NEWBORN VITAL SIGNS MONITORING SYSTEM, SECURITY SYSTEMS}"
+What did the Federal Public Service Health in Belgium report regarding hospital admissions?,answer in pure english capital words,\boxed{DISRUPTED NEW-PATIENT ADMISSIONS}
+Which two hospitals in the Netherlands were affected by the outages?,answer in pure english capital words,"\boxed{SCHEPERZIEKENHUIS, SLINGELAND ZIEKENHUIS}"
+What did the London Ambulance Service experience as a result of the IT outages?,answer in pure english capital words,\boxed{UNPRECEDENTED SURGE}
+Which TV station had to resort to airing national news via Scripps News due to the global outage?,answer in pure english capital words,\boxed{KSHB-TV}
+What event caused Mercedes AMG PETRONAS F1 Team to manually address problems on their computers?,answer in pure english capital words,\boxed{2024 HUNGARIAN GRAND PRIX}
+What were the two ESPN shows that simulcasted in place of SportsCenter during the outage?,answer in pure english capital words,\boxed{GET UP AND FIRST TAKE}
+Which service announced that they wouldn't sell tickets via ticket booths over the weekend due to the outage?,answer in pure english capital words,\boxed{UNIVERSAL STUDIOS JAPAN}
+What is the name of the free-to-air children's television channel that was affected by the outage?,answer in pure english capital words,\boxed{CBBC}
+Which phone and internet service provider announced unavailability of customer service due to the outage?,answer in pure english capital words,\boxed{BOUYGUES TELECOM}
+What contingency plan was activated by the 2024 Summer Olympics organising committee?,answer in pure english capital words,\boxed{CONTINGENCY PLAN}
+Which sim racing service was affected by the outage in America?,answer in pure english capital words,\boxed{IRACING}
+What type of online games in Korea shut down due to the outage?,answer in pure english capital words,\boxed{KOREAN ONLINE GAMES}
+Which supermarket chain in Germany closed some of its stores due to IT outages?,answer in pure english capital words,\boxed{TEGUT}
+Which supermarket chain experienced payment problems in New Zealand?,answer in pure english capital words,\boxed{WOOLWORTHS}
+What limit was imposed on the Starbucks mobile application after the IT outage?,answer in pure english capital words,\boxed{BASIC VIEWING OF ACCOUNTS}
+Which convenience store chain experienced issues at its Speedway locations?,answer in pure english capital words,\boxed{7-ELEVENE}
+What pharmacy chain in Norway suspended services due to the IT outages?,answer in pure english capital words,\boxed{APOTEK1}
+What app used in Amazon warehouses was taken down due to the outage?,answer in pure english capital words,\boxed{A TO Z}
+What service became unavailable to Amazon employees during the outage?,answer in pure english capital words,\boxed{ANYTIME PAY}
+Which major container hub in the Baltic was affected by the outage?,answer in pure english capital words,\boxed{DCT GDAŃSK}
+How long did Tesla halt production at its Gigafactory Berlin-Brandenburg?,answer in duration format (hours),\boxed{4}
+Which US port closed briefly due to the outage?,answer in pure english capital words,\boxed{PORT OF HOUSTON}
+What precaution was taken at the Malmberget mine in Sweden?,answer in pure english capital words,\boxed{EVACUATION}
+Who is the CEO of CrowdStrike?,answer in pure english capital words,\boxed{GEORGE KURTZ}
+What compensation did CrowdStrike offer to some employees for helping customers recover?,answer in pure english,\boxed{10 Ubereats vouchers}
+At which event did CrowdStrike win the 2024 Pwnie Awards for the ''Most Epic Fail''?,answer in pure english,\boxed{DEF CON}
+What is the name of the parody website created after the CrowdStrike incident?,answer in pure english,\boxed{CLOWNSTRIKE}
+What did the Russian Digital Communications Ministry report regarding system failures at Russian airports?,answer in pure english capital words,\boxed{NO REPORTS OF SYSTEM FAILURES}
+What has the Kremlin stated about its systems?,answer in pure english capital words,\boxed{WORKING AS NORMAL}
+Which agency confirmed that no domestic airlines were affected?,answer in pure english capital words,\boxed{RUSSIAN FEDERAL AIR TRANSPORT AGENCY}
+What was the main concern expressed in the editorial by the Chinese state-run Global Times?,answer in pure english capital words,\boxed{DECREASED DEPENDENCY ON WESTERN FIRMS}
+How was the CrowdStrike-related IT outage described by Troy Hunt?,answer in pure english paragraph,Troy Hunt called the incident the \boxed{largest IT outage in history}
+What was the title used by the magazine Slate to describe the incident?,answer in pure english paragraph,Slate described the incident as \boxed{Y2K Lite}
+What term did news reporters use to describe the outage?,answer in pure english paragraph,News reporters used the term \boxed{digital pandemic}
+What did AirAsia CEO Tony Fernandes demand in response to the incident?,answer in pure english capital words,Fernandes demanded \boxed{ANSWERS AND COMPENSATION}
+Which companies took advantage of the CrowdStrike incident to promote their own software?,answer in pure english paragraph,"Chinese cybersecurity companies such as 360 Security, QAX and Tencent took advantage of the incident."
+What type of scams did governments and cybersecurity agencies warn about after the incident?,answer in pure english capital words,\boxed{PHISHING SCAMS}
+What company was impersonated in the phishing emails and phone calls?,answer in pure english capital words,\boxed{CROWDSTRIKE}
+What was released on 19 July 2024 that caused an IT outage?,answer in pure english text,It was an instance of a template tested and released in March 2024 as part of an update to the Falcon Sensor software.
+What is the name of the specific file that led to the software crash?,answer in pure english text,\boxed{Channel File 291}
+What software was involved in the validation failure leading to the IT outage?,answer in pure english text,\boxed{CrowdStrike's content verification software}
+In what mode did the Falcon Sensor crash?,answer in pure english text,\boxed{kernel mode}
+What operating system do the majority of the world's computers use?,answer in pure english capital words,\boxed{MICROSOFT WINDOWS}
+What issue did the outage raise questions about in the IT sector?,answer in pure english capital words,\boxed{OLIGOPOLY AND CENTRALISATION}
+What did security experts suggest to avoid single points of failure?,answer in pure english capital words,\boxed{REDUNDANCY}
+What did cybersecurity consultant Jake Williams say about the outage?,answer in pure english text,\boxed{shown why pushing updates without IT intervention is unsustainable}
+What change may people now demand according to Jake Williams?,answer in pure english text,\boxed{changes in this operating model}
+What antitrust agreement did Microsoft blame for the low-level kernel access to third-party developers?,answer in pure year,\boxed{2009}
+What must Microsoft provide access to according to the antitrust agreement?,answer in pure english,\boxed{APIs used by its own security products}
+What did the European Commission spokesperson state regarding Microsoft's concerns about security?,answer in pure english,\boxed{Microsoft has never raised any concerns about security with the Commission}
+Which framework can software use since macOS Catalina instead of a kernel extension?,answer in pure english,\boxed{Endpoint Security Framework}
