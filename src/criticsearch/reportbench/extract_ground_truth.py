@@ -86,6 +86,70 @@ def build_markdown(node, level=1):
             md += build_markdown(item, level)
     return md
 
+def build_section_content_pairs(node):
+    """
+    递归构建section-content pairs格式的树状结构:
+    {
+        "title": str,            # section标题
+        "content": str,          # section直接包含的文本内容
+        "references": [str],     # 文本内容的引用
+        "children": [{...}]      # 子sections (可选)
+    }
+    """
+    if not isinstance(node, dict):
+        return None
+
+    # 如果不是section节点(没有title)，返回None
+    if "title" not in node:
+        return None
+    
+    result = {
+        "title": node["title"]
+    }
+    
+    # 收集当前节点的文本内容和引用
+    text_parts = []
+    references = set()
+
+    # 处理当前节点及其直接内容的sentences
+    def process_sentences(content):
+        if isinstance(content, dict) and "sentences" in content:
+            for sentence in content["sentences"]:
+                if isinstance(sentence, dict):
+                    if "text" in sentence:
+                        text_parts.append(sentence["text"].strip())
+                    if "references" in sentence and isinstance(sentence["references"], list):
+                        references.update(sentence["references"])
+
+    # 处理当前节点的直接sentences
+    process_sentences(node)
+
+    # 处理content列表中的直接sentences
+    if "content" in node and isinstance(node["content"], list):
+        for item in node["content"]:
+            if not isinstance(item, dict) or "title" not in item:  # 只处理非section的直接内容
+                process_sentences(item)
+
+    # 如果收集到了文本内容，添加到结果中
+    if text_parts:
+        result["content"] = " ".join(text_parts)
+        if references:
+            result["references"] = sorted(list(references))
+
+    # 处理子sections
+    children = []
+    if "content" in node and isinstance(node["content"], list):
+        for child in node["content"]:
+            if isinstance(child, dict) and "title" in child:  # 只处理作为section的子节点
+                child_result = build_section_content_pairs(child)
+                if child_result:
+                    children.append(child_result)
+    
+    if children:
+        result["children"] = children
+
+    return result
+
 def extractDirectoryTree(input_file_path):
     # Read original JSON file
     with open(input_file_path, 'r', encoding='utf-8') as f:
@@ -118,6 +182,26 @@ def extractMarkdownContent(input_file_path):
     # Return markdown text instead of saving to a file
     return md_text
 
+def extractSectionContentPairs(input_file_path):
+    """
+    从JSON文件中提取section-content pairs结构
+    """
+    # 读取原始JSON文件
+    with open(input_file_path, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+    
+    # 构建section-content pairs结构
+    pairs_structure = build_section_content_pairs(data)
+    
+    # 验证JSON结构
+    try:
+        s = json.dumps(pairs_structure)
+        valid_pairs = json.loads(s)
+    except Exception as e:
+        raise ValueError("Invalid JSON structure: " + str(e))
+    
+    return valid_pairs
+
 def extract_markdown_sections(md_text):
     """
     Extract markdown sections based on header lines.
@@ -144,3 +228,8 @@ if __name__ == "__main__":
     # New call to extractMarkdownContent: print markdown text directly
     md_text = extractMarkdownContent(input_path)
     print(f"Markdown content: \n{md_text}")
+    
+    # 测试section-content pairs提取
+    pairs_structure = extractSectionContentPairs(input_path)
+    print("\nExtracted section-content pairs structure:")
+    print(json.dumps(pairs_structure, indent=2))
