@@ -1,3 +1,4 @@
+import asyncio
 import json
 import time
 import concurrent.futures
@@ -5,12 +6,13 @@ import re
 
 import yaml
 
+from criticsearch.reportbench.report_benchmark import ReportBenchmark
 from .base_agent import BaseAgent
 from .config import settings
 from .critic_agent import CriticAgent
 from .log import colorize_message, logger, set_logger_level_from_config
-
-
+from .utils import extract_answer_from_response, extract_queries_from_response, extract_thought_from_response
+from .tools.search_adapter.search_aggregator import SearchAggregator
 
 def flatten_outline(section, depth=1, path=None):
     # 将 outline_json 展平，记录每个节点及其层级和路径
@@ -160,7 +162,7 @@ def parse_markdown_to_structure(markdown_text):
         if line.strip():
             # 处理标题
             if line.startswith('#'):
-                # 如果有待处理的段落文本，先��理完
+                # 如果有待处理的段落文本，先处理完
                 if current_text:
                     paragraph_text = ' '.join(current_text)
                     if paragraph_text.strip():
@@ -220,6 +222,18 @@ def parse_markdown_to_structure(markdown_text):
 def main(TASK, MAX_ITERATION):
     # Initialize agents
     common_agent = BaseAgent()
+    search_agg = SearchAggregator()
+
+    json_file = "/workspaces/CriticSearch/src/criticsearch/reportbench/wiki_data/2024_Syrian_opposition_offensives.json"
+    benchmark = ReportBenchmark(json_file)
+    outline = benchmark.generate_benchmark_item()
+
+    conversation_data = [
+        {
+            "from": "huamn",
+            "value": TASK   
+        }
+    ]
 
     # initialize the task
     common_agent.user_question = TASK
@@ -262,37 +276,129 @@ def main(TASK, MAX_ITERATION):
             else:
                 # When not confident, get both answer and search results
                 # 并且第一次全面的搜索后的结果用来构建一个report的结构
-                data = {
-                    "user_question": TASK,
-                }
-                initial_search_prompt = common_agent.load_template(
-                    "planner_agent_initial_search_plan.txt"
-                )
-                initial_search_rendered_prompt = common_agent.render_template(
-                    initial_search_prompt, data
-                )
-                logger.info(
-                    f"initial_search_rendered_prompt: {initial_search_rendered_prompt}"
-                )
+                # data = {
+                #     "user_question": TASK,
+                # }
+                # initial_search_prompt = common_agent.load_template(
+                #     "planner_agent_initial_search_plan.txt"
+                # )
+                # initial_search_rendered_prompt = common_agent.render_template(
+                #     initial_search_prompt, data
+                # )
 
-                initial_web_result_markdown_text = common_agent.search_and_browse(
-                    initial_search_rendered_prompt
-                )# 这里返回的是模型决定了访问哪些后的网页爬取extract的结果
+                # initial_web_result_markdown_text = common_agent.search_and_browse(
+                #     initial_search_rendered_prompt
+                # )# 这里返回的是模型决定了访问哪些后的网页爬取extract的结果
 
-                logger.info(f"Initial web result: {initial_web_result_markdown_text}")
+                # logger.info(f"Initial web result: {initial_web_result_markdown_text}")
 
-                # Generate report outline based on search results
-                outline_prompt = common_agent.render_template(
-                    common_agent.load_template("outline_generation.txt"),
+                # 这里开始outline由wiki里面的得到，保留层级结构作为后面顺序生成的指导（以及thinking构建的依赖）
+                # 但是每一步的模块生成之后就要做一个rule based的reward / 也可以全文生成完之后拆分开每个模块专门并行做Factual QA这样效率更高
+
+                # 遍历outline里面的内容进行迭代式的thought和generation生成
+                
+                for item in outline:
+                    section_path = item["path"]
+                    merged_section_content = item["merged_section_window_content"]
+                    extracted_facts = item["extracted_facts"]   
+
+                    agent_report_sections = []
+                    angent_report = '\n'.join(agent_report_sections)
+
+
+                    search_thought_prompt = common_agent.load_template("guided_search_thought.txt")  
+                    search_thought_prompt_rendered = common_agent.render_template(search_thought_prompt, 
                     {
-                        "user_question": common_agent.user_question,
-                        "web_result_markdown_text": initial_web_result_markdown_text,
-                    },
-                )
+                            "TASK": TASK,
+                            "context": "There is no previous context since this is the first section at the beginning of the article, only the user's question exists" if iteration == 0 else f"Previous text written by the Agent is:\n\n{angent_report}",
+                            "GroundTruth": merged_section_content,
+                    })
+                    print(f"search_thought_prompt_rendered: {search_thought_prompt_rendered}")
+                    
+                    search_thought_and_queries = common_agent.common_chat(
+                        usr_prompt=search_thought_prompt_rendered,
+                    )
+                    
+                    # 提取thought内容
+                    thought_content = extract_thought_from_response(search_thought_and_queries)
+                    if thought_content:
+                        print(f"Extracted thought process: {thought_content}")
+                    else:
+                        logger.warning("No thought process found in the response")
+                    
+                    # 提取查询列表,最多尝试5次
+                    max_retries = 5
+                    retry_count = 0
+                    queries_list = None
+                    
+                    while retry_count < max_retries:
+                        queries_list = extract_queries_from_response(search_thought_and_queries)
+                        if queries_list and isinstance(queries_list, list) and len(queries_list) > 0:
+                            print(f"Extracted queries: {queries_list}")
+                            conversation_data.append({
+                                "from": "agent",
+                                "thougth": thought_content,
+                                "search": queries_list,
+                            })
+                            break
+                        
+                        logger.warning(f"Attempt {retry_count + 1}: Invalid or empty queries, retrying...")
+                        # 重新生成搜索思维和查询
+                        search_thought_and_queries = common_agent.common_chat(
+                            usr_prompt=search_thought_prompt_rendered,
+                        )
+                        retry_count += 1
+                    
+                    if retry_count == max_retries:
+                        logger.error("Failed to extract valid queries after maximum retries")
+                        continue  # 跳过当前section,处理下一个
+                        
+                    print(search_thought_and_queries)
+                    search_results = asyncio.run(search_agg.search(queries_list))
 
-                outline = common_agent.common_chat(
-                    usr_prompt=outline_prompt,
-                )
+                    # 让模型给出这一段section的内容的撰写
+                    generation_thought_prompt = common_agent.load_template("guided_generation_thought.txt")
+                    generation_thought_prompt_rendered = common_agent.render_template(generation_thought_prompt,
+                    {
+                        "TASK": TASK,
+                        "context": "There is no previous context since this is the first section at the beginning of the article, only the user's question exists" if iteration == 0 else f"Previous report content written by you is:\n\n{angent_report}",
+                        "guidline": section_path,
+                        "search_result": search_results,
+                    })
+                    print(f"generation_thought_prompt_rendered: {generation_thought_prompt_rendered}")
+
+                    section_content = common_agent.common_chat(
+                        usr_prompt=generation_thought_prompt_rendered,
+                    )
+                    # 分别提取thought和answer，citation
+                    thought_content = extract_thought_from_response(section_content)
+                    answer_content = extract_answer_from_response(section_content)
+                    citations = extract_citations(answer_content)
+
+                    
+
+                    # 将生成的内容添加到agent_report_sections
+                    agent_report_sections.append(answer_content)
+                    conversation_data.append(
+                        {
+                            "from": "agent",
+                            "thougth": thought_content,
+                            "answer": answer_content,
+                            "citations": citations,
+                        }
+                    )
+
+                    print(section_content)
+
+                    print(json.dumps(conversation_data, indent=4))
+
+                    # 使用factual_QA_verifier进行问答得到accuracy reward
+                    pass
+
+
+
+                    exit(1)
+
 
                 # verify the outline is a json string   
                 outline_json = common_agent.extract_and_validate_json(outline)
@@ -304,7 +410,7 @@ def main(TASK, MAX_ITERATION):
                 with concurrent.futures.ThreadPoolExecutor(max_workers=100) as executor:
                     future_to_section = {
                         executor.submit(generate_content_for_section, common_agent, item["section"], TASK): item 
-                        for item in flat_sections[:2]
+                        for item in flat_sections
                     }
                     
                     # Collect results as they complete
