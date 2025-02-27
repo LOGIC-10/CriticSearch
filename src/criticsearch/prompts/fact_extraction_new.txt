@@ -46,25 +46,18 @@ Example: Answer in a single syllable word → "Yes"
 
 ---
 
-### **Good Examples:**
+### **Answer Format:**
 
+**Input**
 Paragraph:
-"Although Hawaii has the world's largest integrated outdoor alarm system, which is only used during natural disasters, there are more than 80 alarms on Maui, yet the civil defense alarms were not activated during the fire."
+<the paragraph containing key information>
 
+**Output**
 Extracted Questions:
 [
-  "</question>How many alarms are there on Maui?</question></constrained_format>answer in pure number</constrained_format></answer>\boxed{80}</answer>",
-  "</question>What is the purpose of Hawaii's outdoor alarm system?</question></constrained_format>answer in 5 words</constrained_format></answer>\boxed{Used during natural disasters}</answer>"
-]
-
-Paragraph:
-"Currently, only a handful of victims have been identified. As of August 11, the death toll was 67, but this number only reflects the victims found outside the buildings, as local authorities have been waiting for FEMA to send its specialists."
-
-Extracted Questions:
-[
-  "</question>How many people died as of August 11?</question></constrained_format>answer in pure number</constrained_format></answer>\boxed{67}</answer>",
-  "</question>Who have the local authorities been waiting for to send specialists?</question></constrained_format>answer in pure English capital words</constrained_format></answer>\boxed{FEMA}</answer>",
-  "</question>On what date was the death toll recorded at 67?</question></constrained_format>answer with a date in mm-dd-yyyy format</constrained_format></answer>\boxed{08-11-2023}</answer>"
+  "</question> ... </question></constrained_format> ... </constrained_format></answer> ... </answer>",
+  "</question> ..."
+  "..."
 ]
 
 ---
@@ -88,10 +81,12 @@ Why? The answer could be subjective and difficult to verify with a single value.
 - Maintain answer format consistency, wrapping core responses in \boxed{}.
 Now, let’s begin! Please process the following:
 
-User Query:
 
+** Input **
+User Query:
 {{UserQuery}}
 
 Paragraph:
-
 {{wiki_text}}
+
+**Output**
