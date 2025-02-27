@@ -1,0 +1,570 @@
+2025-02-27 16:03:01.645 | SUCCESS  | criticsearch.log:set_logger_level_from_config:92 - Log level set to INFO!
+2025-02-27 16:03:01.645 | SUCCESS  | criticsearch.main:main:316 - Starting the conversation with task: Write a report about 2024_Syrian_opposition_offensives event
+2025-02-27 16:03:01.646 | SUCCESS  | criticsearch.log:colorize_message:130 - 
+==================== ITERATION 1 ====================
+
+2025-02-27 16:03:02.079 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST https://aihubmix.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-02-27 16:03:12.673 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST https://aihubmix.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-02-27 16:03:12.674 | WARNING  | criticsearch.main:main:400 - No thought process found in the response
+2025-02-27 16:03:12.675 | WARNING  | criticsearch.main:main:418 - Attempt 1: Invalid or empty queries, retrying...
+2025-02-27 16:03:16.095 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST https://aihubmix.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-02-27 16:03:16.097 | WARNING  | criticsearch.main:main:418 - Attempt 2: Invalid or empty queries, retrying...
+2025-02-27 16:03:29.258 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST https://aihubmix.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-02-27 16:03:32.490 | INFO     | httpx._client:_send_single_request:1740 - HTTP Request: POST https://api.tavily.com/search "HTTP/2 200 OK"
+2025-02-27 16:03:32.492 | INFO     | criticsearch.tools.search_adapter.search_aggregator:_search_single_query:48 - 
+Query: Syrian opposition strategy and goals 2024
+Search Results:
+--------------------------------------------------
+[1]:
+TITLE: Syria opposition leader says goal is to 'overthrow' al-Assad
+URL: https://english.alarabiya.net/News/middle-east/2024/12/06/syria-opposition-leader-says-goal-is-to-overthrow-al-assad
+CONTENT: 1 1 Israel's strategic calculations: ... Syria opposition leader says goal is to 'overthrow' al-Assad ... Published: 06 December ,2024: 12:06 PM GST Updated: 06 December ,2024: 01:14 PM GST.
+--------------------------------------------------
+[2]:
+TITLE: 2024 Syrian opposition offensives - Simple English Wikipedia, the free ...
+URL: https://simple.wikipedia.org/wiki/2024_Syrian_opposition_offensives
+CONTENT: On 27 November 2024, a coalition of Syrian opposition groups called the Military Operations Command [25] led by Hay'at Tahrir al-Sham (HTS) and allied Turkish -backed groups [26][27][28] in the Syrian National Army (SNA) launched an offensive against the pro-government Syrian Arab Army (SAA) forces in Idlib, Aleppo and Hama Governorates in Syria. It is codenamed Deterrence of Aggression by HTS
+--------------------------------------------------
+[3]:
+TITLE: 2024 Syrian opposition offensives - Wikipedia
+URL: https://en.wikipedia.org/wiki/2024_Syrian_opposition_offensives
+CONTENT: On 27 November 2024, a coalition of Syrian opposition groups called the Military Operations Command[38] led by Hay'at Tahrir al-Sham (HTS) and allied Turkish-backed groups[39][40][41] in the Syrian National Army (SNA) launched an offensive against the pro-government Syrian Arab Army (SAA) forces in Idlib, Aleppo and Hama Governorates in Syria. In the evening of 6 December 2024, Southern Front forces captured the regional capital of Suwayda, in southern Syria, following pro-government forces withdrawal from the city.[123][124] Concurrently, SDF captured the provincial capital of Deir ez-Zor from pro-government forces, which also left the town of Palmyra in central Homs region.[125][126] By midnight, opposition forces in the southern Daraa Governorate captured its capital Daraa, as well as 90% of the province, as pro-government forces withdrew towards the capital Damascus.[46] Meanwhile, the Syrian Free Army, a different rebel group backed by the United States took control of Palmyra in an offensive launched from the al-Tanf "deconfliction zone".[127]
+--------------------------------------------------
+[4]:
+TITLE: Southern Syria offensive (2024) - Wikipedia
+URL: https://en.wikipedia.org/wiki/Southern_Syria_offensive_(2024)
+CONTENT: Beginning on 29 November 2024, rebel groups commenced operations against Syrian government installations across the southern region, with particular focus on the Daraa and As-Suwayda governorates. According to the Syrian Observatory for Human Rights (SOHR), unidentified combatants fired upon government-loyalist Syrian Armed Forces (SAF) military personnel near Om Shama Town in the eastern region of Suwayda Governorate, resulting in the death of an SAF first lieutenant from Tartus and the wounding of two additional service members.[13] On 30 November, another SAF first lieutenant and three Bedouin tribe members were shot to death by opposing combatants, according to SOHR.[14] SOHR also said a local armed group commander was killed by gunfire in Tafas in western Daraa, while another was wounded.[15] On 30 November 2024, the Syrian Armed Forces implemented a significant military deployment to Daraa, a strategic city in southern Syria.
+--------------------------------------------------
+[5]:
+TITLE: Syrian Rebel Advances: November 2024 Strategic Gains and Implications
+URL: https://genesysdefense.com/intl/advancements-and-strategic-shifts-syrian-rebel-operations-in-november-2024/
+CONTENT: After an in-depth interview with Dr. Adib Enayati, the esteemed director of the Genesys Defense Special Intelligence and Warfare Studies Unit (GDSIWSU), we were provided with a detailed and insightful analysis of the recent advancements made by Syrian rebel factions. Key players include the Syrian National Army (SNA), the Kurdish-led Syrian Democratic Forces (SDF), and Islamist groups like Hayat Tahrir al-Sham (HTS). Syrian National Army (SNA): Operating primarily in northern Syria, the SNA is backed by Turkey and serves as its main proxy force in the region. Syrian Democratic Forces (SDF): Dominated by the Kurdish YPG, the SDF controls large areas of northeastern Syria. The recent gains underscore the rebels’ ability to reassert control in key regions despite ongoing pressures from both Assad-aligned forces and external powers such as Russia.
+--------------------------------------------------
+[6]:
+TITLE: 2024 Syrian opposition offensives - Wikiwand
+URL: https://www.wikiwand.com/en/articles/2024_Syrian_opposition_offensive
+CONTENT: In the evening of 6 December 2024, local forces captured the regional capital of Suwayda, in southern Syria, following the pro-Assad forces' withdrawal from the city.[136][137] Concurrently, SDF captured the provincial capital of Deir ez-Zor from pro-Ba'athist forces, which also left the town of Palmyra in central Homs Governorate.[138][139] By midnight, opposition forces in the southern Daraa Governorate captured its capital Daraa, as well as 90% of the province, as pro-government forces withdrew towards the capital Damascus.[55] Meanwhile, the Syrian Free Army, a different rebel group backed by the United States, took control of Palmyra in an offensive launched from the al-Tanf "deconfliction zone".[140]
+--------------------------------------------------
+[7]:
+TITLE: PDF
+URL: https://www.state.gov/wp-content/uploads/2024/11/ICS_NEA_Syria_Public-Release.pdf
+CONTENT: 2. Mission Strategic Framework Mission Goal: A unified, stable Syria that is governed through the outcome of a Syrian-led political solution, with accountability and justice for the Syrian people, while contributing to regional stability. • Mission Objective 1.1: Advance an inclusive, Syrian-led political solution to the Syrian
+--------------------------------------------------
+[8]:
+TITLE: What Syria's Opposition Resurgence Means for Ankara - Wilson Center
+URL: https://www.wilsoncenter.org/article/what-syrias-opposition-resurgence-means-ankara
+CONTENT: Ankara’s Syria strategy intertwines with HTS-led opposition offensives against Assad, aiming to weaken Kurdish groups, facilitate refugee returns, and solidify Turkey’s regional role.
+--------------------------------------------------
+[9]:
+TITLE: Operation Deterrence of Aggression: Opposition Forces Redraw the Map in ...
+URL: https://syrianobserver.com/syrian-actors/operation-deterrence-of-aggression-opposition-forces-redraw-the-map-in-northern-syria.html
+CONTENT: For supporters of the Syrian revolution, Operation Deterrence of Aggression represents a renewal of hope and a reaffirmation of the principles that ignited the uprising over a decade ago. The operation's successes are seen as evidence of the opposition's resilience and determination to reclaim Syria from authoritarian rule.
+--------------------------------------------------
+[10]:
+TITLE: With allies distracted, Assad's regime finally falls in Syria
+URL: https://asiatimes.com/2024/12/with-allies-distracted-assads-regime-finally-falls-in-syria/
+CONTENT: 1. Syrian opposition forces, led by Hayat Tahrir al-Sham: These groups, supported by Turkey, now control central Syria, extending from the northern border with Turkey to the southern border with Jordan. 2. Kurdish forces: The Kurdish groups control territory in northeastern Syria, bordering Turkey in the north and Iraq in the east. 3. Alawite forces: Pro-Assad Alawite factions, primarily situated in the coastal regions of western Syria, maintain strong ties with Iran, Iraq and Lebanon’s Hezbollah militant group. The fall of Assad disrupts the so-called “axis of resistance”, comprised of Iran, Syria and Tehran’s proxy groups like Hezbollah in Lebanon, Hamas in Gaza and the Houthi rebels in Yemen. Sign up here to comment on Asia Times stories
+--------------------------------------------------
+2025-02-27 16:03:32.511 | INFO     | httpx._client:_send_single_request:1740 - HTTP Request: POST https://api.tavily.com/search "HTTP/2 200 OK"
+2025-02-27 16:03:32.513 | INFO     | criticsearch.tools.search_adapter.search_aggregator:_search_single_query:48 - 
+Query: Russia and Iran influence on 2024 Syrian offensives
+Search Results:
+--------------------------------------------------
+[1]:
+TITLE: Russia-Iran-Assad 'axis of the vulnerable' cracking in Syria
+URL: https://asiatimes.com/2024/12/russia-iran-assad-axis-of-the-vulnerable-cracking-in-syria/
+CONTENT: The so-called "axis of the vulnerable" is breaking in Syria. Starting in 2016, Russia and Iran, propping up the regime of Bashar al-Assad, needed more than a year of bombing, ground assaults and siege to break the rebel opposition in the east of Syria's largest city, Aleppo. Now, in 2024, the rebels needed less than four days to liberate the city and most of Aleppo province.
+--------------------------------------------------
+[2]:
+TITLE: What the Reignited Syrian Civil War Means for Russia and Iran | WPR
+URL: https://www.worldpoliticsreview.com/syria-civil-war-russia-iran/
+CONTENT: Posters of Syrian President Bashar al-Assad and the Syrian national flag are seen in a garbage dumpster in the countryside outside Aleppo, Syria, Dec. 3, 2024 (photo by Rami Alsayed fir NurPhoto
+--------------------------------------------------
+[3]:
+TITLE: Russia's Syria Strategy After Aleppo's Fall - Foreign Policy
+URL: https://foreignpolicy.com/2024/12/02/syria-aleppo-russia-hts-hezbollah-iran/
+CONTENT: Since initiating its military intervention in 2015, Moscow’s influence in Syria has rested on several key elements: a partnership with Iran and its network of nonstate actors; coordination with Turkey, with a view to managing competing interests, such as Turkey’s concerns over Kurdish forces and Russia’s support for the Assad regime; a tenuous balancing act with Israel to prevent unintended military clashes and preserve deconfliction agreements; diplomatic outreach to the Gulf Cooperation Council (GCC); and efforts to maintain a working deconfliction mechanism with the United States. Both sides eventually reconciled, but even within the Astana process—a diplomatic framework launched in 2017 by Iran, Russia, and Turkey to facilitate negotiations on the Syrian conflict and de-escalation zones—they have pursued conflicting aims: Russia supports the Assad regime’s full territorial control, while Turkey backs opposition forces and maintains a military presence in northern Syria to prevent Kurdish autonomy there.
+--------------------------------------------------
+[4]:
+TITLE: As Russia's influence in Syria wanes, Turkey steps in
+URL: https://www.jns.org/as-russias-influence-in-syria-wanes-turkey-steps-in/
+CONTENT: He added that Russia's stance toward Syria's new government had "improved significantly" in the wake of Assad's fall, and that his administration wanted Moscow to "address past mistakes." Russia has routinely bombed Idlib province, where Hayat Tahrir al-Sham was based before taking over the rest of Syria in December 2024.
+--------------------------------------------------
+[5]:
+TITLE: 2024 Syrian opposition offensives - Wikipedia
+URL: https://en.wikipedia.org/wiki/2024_Syrian_opposition_offensives
+CONTENT: On 27 November 2024, a coalition of Syrian opposition groups called the Military Operations Command[38] led by Hay'at Tahrir al-Sham (HTS) and allied Turkish-backed groups[39][40][41] in the Syrian National Army (SNA) launched an offensive against the pro-government Syrian Arab Army (SAA) forces in Idlib, Aleppo and Hama Governorates in Syria. In the evening of 6 December 2024, Southern Front forces captured the regional capital of Suwayda, in southern Syria, following pro-government forces withdrawal from the city.[123][124] Concurrently, SDF captured the provincial capital of Deir ez-Zor from pro-government forces, which also left the town of Palmyra in central Homs region.[125][126] By midnight, opposition forces in the southern Daraa Governorate captured its capital Daraa, as well as 90% of the province, as pro-government forces withdrew towards the capital Damascus.[46] Meanwhile, the Syrian Free Army, a different rebel group backed by the United States took control of Palmyra in an offensive launched from the al-Tanf "deconfliction zone".[127]
+--------------------------------------------------
+[6]:
+TITLE: Why the Syrian conflict is so important for Russia and Iran
+URL: https://www.businessinsider.com/why-syrian-conflict-is-important-for-russia-iran-assad-ukraine-2024-12?op=1
+CONTENT: Russia carried out airstrikes in Syria after rebels launched an offensive against the Syrian government. Russia and Iran have supported Syrian President Bashar Assad for years. Here's why Syria is
+--------------------------------------------------
+[7]:
+TITLE: Syrian Rebels' Offensive and HTS Leader's Possible Death
+URL: https://www.specialeurasia.com/2024/12/01/syria-offensive-hts-al-julani/
+CONTENT: The offensive in Aleppo unfolds against a backdrop of intensifying regional instability, underscoring the intricate web of alliances and rivalries shaping the Middle East. Syria's civil war, now in its 13 th year, remains a theatre for competing geopolitical interests involving Russia, Iran, Turkey, and the United States. Each of these actors
+--------------------------------------------------
+[8]:
+TITLE: Syria's Frozen Conflict Heats Up - United States Institute of Peace
+URL: https://www.usip.org/publications/2024/12/syrias-frozen-conflict-heats
+CONTENT: Over the past several months, Russia, Iran and Hezbollah — collectively responsible for rescuing the Assad regime from potential collapse in 2015 and bolstering the Assad regime's survival in the intervening years — have each experienced significant hits to their power and influence in Syria. Russia, which intervened in Syria in 2015
+--------------------------------------------------
+[9]:
+TITLE: Amid Syria's Rebel Offensive, a Geopolitical Cauldron Simmers - The New ...
+URL: https://www.nytimes.com/2024/12/03/world/middleeast/syria-rebel-offensive-iran-russia.html
+CONTENT: Iran and Russia, both stretched by conflicts of their own, have experienced setbacks in Syria after a rebel offensive in the northwest of the country. Listen to this article · 7:53 min Learn more
+--------------------------------------------------
+[10]:
+TITLE: Iran Update, December 15, 2024 | Institute for the Study of War
+URL: https://www.understandingwar.org/backgrounder/iran-update-december-15-2024
+CONTENT: HTS leader Abu Mohammed al Jolani also reached out to Kurdish Syrians on December 14.[17] Jolani said the Kurds are part of the homeland and partners in the coming Syria.[18]  Members of the Syria Democratic Forces (SDF) leadership acknowledged Jolani’s sentiments and called for negotiations including the Kurds for a ”joint action plan”[19] The Democratic Union Party (PYD), which is the political wing of the YPG, also called for an end to attacks on Kurdish-controlled territory in eastern and northern Syria.[20]  SDF Commander General Mazloum Abdi echoed the PYD statement on December 15 and called for a ”constructive dialogue” to build a new Syria and halt to all military operations in Syria.[21]  CTP-ISW assessed on December 13 that Abdi intends to negotiate a role for the SDF in a future Syrian government, likely to prevent further unrest within Arab populations and militias living under its control.[22] Unrest, defections, and Turkey’s stated intent to ”eliminate” the SDF pose existential threats that are likely encouraging the Kurdish groups to negotiate with Jolani.[23]
+--------------------------------------------------
+2025-02-27 16:03:32.560 | INFO     | httpx._client:_send_single_request:1740 - HTTP Request: POST https://api.tavily.com/search "HTTP/2 200 OK"
+2025-02-27 16:03:32.562 | INFO     | criticsearch.tools.search_adapter.search_aggregator:_search_single_query:48 - 
+Query: Nick Heras analysis on Syrian opposition offensives
+Search Results:
+--------------------------------------------------
+[1]:
+TITLE: Northwestern Syria offensive (2024) - Wikipedia
+URL: https://en.wikipedia.org/wiki/2024_Syria_conflict
+CONTENT: Syrian opposition forces capture more than 100 towns and villages, [9] [10] ... Analysis. Hezbollah, which was a major ally of the Syrian government during the civil war, ... According to Nick Heras, an analyst with the New Lines Institute for Strategy and Policy, the rebels were trying to pre-empt a Syrian government offensive which was being
+--------------------------------------------------
+[2]:
+TITLE: Syria rebels, allies cut key highway as escalating fighting kills ...
+URL: https://www.voanews.com/a/syria-rebels-allies-cut-key-highway-as-escalating-fighting-kills-around-200-/7880717.html
+CONTENT: Analyst Nick Heras of the New Lines Institute for Strategy and Policy said the rebels were "trying to preempt the possibility of a Syrian military campaign in the region of Aleppo," which
+--------------------------------------------------
+[3]:
+TITLE: Nicholas A. Heras - The Washington Institute
+URL: https://www.washingtoninstitute.org/experts/nicholas-heras
+CONTENT: Nicholas Heras is a Middle East analyst with the Jamestown Foundation, a research associate at the National Defense University, and a research analyst with Michael Moran & Associates. ... where he is working on an assess­ment of the impact of the Syrian crisis on the greater Middle East. ... All Policy Analysis by Nicholas A. Heras. Homepage
+--------------------------------------------------
+[4]:
+TITLE: From the Bottom, Up: A Strategy for U.S. Military Support to Syria's ...
+URL: https://www.cnas.org/publications/commentary/from-the-bottom-up-a-strategy-for-u-s-military-support-to-syrias-armed-opposition
+CONTENT: As negotiations continue to uphold a teetering ceasefire in Syria, Center for a New American Security (CNAS) Middle East Security Program researcher Nicholas Heras has written a new report arguing that the primary U.S. effort in Syria should be a bottom-up strategy to build cohesive, moderate, armed opposition institutions with a regional focus.
+--------------------------------------------------
+[5]:
+TITLE: Bottom-Up Peace and Conflict Resolution in Syria: Podcast
+URL: https://newlinesinstitute.org/political-systems/bottom-up-peace-and-conflict-resolution-in-syria/
+CONTENT: In this edition of The New Lines Institute Middle East Center's Post-Assad Podcast series, Middle East Center co-director Nicholas A. Heras sits down with Sasha Ghosh-Siminoff to analyze how humanitarian and economic rehabilitation efforts can support peacebuilding in Syria. Sasha is a Nonresident Fellow with the Middle East Center at The New Lines Institute who has a granular and nuanced
+--------------------------------------------------
+[6]:
+TITLE: 2024 Syrian opposition offensives - Wikipedia
+URL: https://en.wikipedia.org/wiki/2024_Syrian_opposition_offensives
+CONTENT: On 27 November 2024, a coalition of Syrian opposition groups called the Military Operations Command[38] led by Hay'at Tahrir al-Sham (HTS) and allied Turkish-backed groups[39][40][41] in the Syrian National Army (SNA) launched an offensive against the pro-government Syrian Arab Army (SAA) forces in Idlib, Aleppo and Hama Governorates in Syria. In the evening of 6 December 2024, Southern Front forces captured the regional capital of Suwayda, in southern Syria, following pro-government forces withdrawal from the city.[123][124] Concurrently, SDF captured the provincial capital of Deir ez-Zor from pro-government forces, which also left the town of Palmyra in central Homs region.[125][126] By midnight, opposition forces in the southern Daraa Governorate captured its capital Daraa, as well as 90% of the province, as pro-government forces withdrew towards the capital Damascus.[46] Meanwhile, the Syrian Free Army, a different rebel group backed by the United States took control of Palmyra in an offensive launched from the al-Tanf "deconfliction zone".[127]
+--------------------------------------------------
+[7]:
+TITLE: Can a Former Al Qaeda Affiliate Stabilize Syria After Assad? Podcast ...
+URL: https://newlinesinstitute.org/political-systems/can-a-former-al-qaeda-affiliate-stabilize-syria-after-assad/
+CONTENT: These two institutional experts on global Salafist-Jihadist movements and the Syrian conflict assess the likelihood that former Al Qaeda affiliate Hay'at Tahrir Al Sham will be able to turn its shocking military victory over the former Assad regime into a sustainable and inclusive governance system in Syria. Nicholas Heras: Hello, my name is
+--------------------------------------------------
+[8]:
+TITLE: The Prospects for Nation-Building in Syria after Assad: Podcast
+URL: https://newlinesinstitute.org/political-systems/the-prospects-for-nation-building-in-syria-after-assad/
+CONTENT: In this edition of The New Lines Institute Middle East Center's Post-Assad Podcast series, Middle East Center co-director Nicholas A. Heras sits down with Dr. Sultan Alamer to assess how the new governing authorities in Damascus can reimagine Syrian nationalism after Assad and build an inclusive state for all Syrians. Dr. Alamer is a Resident […]
+--------------------------------------------------
+[9]:
+TITLE: 2024 Syrian opposition offensives - Wikiwand
+URL: https://www.wikiwand.com/en/articles/Northwestern_Aleppo_offensive_(2024)
+CONTENT: In the evening of 6 December 2024, local forces captured the regional capital of Suwayda, in southern Syria, following the pro-Assad forces' withdrawal from the city.[136][137] Concurrently, SDF captured the provincial capital of Deir ez-Zor from pro-Ba'athist forces, which also left the town of Palmyra in central Homs Governorate.[138][139] By midnight, opposition forces in the southern Daraa Governorate captured its capital Daraa, as well as 90% of the province, as pro-government forces withdrew towards the capital Damascus.[55] Meanwhile, the Syrian Free Army, a different rebel group backed by the United States, took control of Palmyra in an offensive launched from the al-Tanf "deconfliction zone".[140]
+--------------------------------------------------
+[10]:
+TITLE: 2024 Syrian opposition offensives - Wikiwand
+URL: https://www.wikiwand.com/en/articles/2024_Syrian_offensives
+CONTENT: In the evening of 6 December 2024, local forces captured the regional capital of Suwayda, in southern Syria, following the pro-Assad forces' withdrawal from the city.[136][137] Concurrently, SDF captured the provincial capital of Deir ez-Zor from pro-Ba'athist forces, which also left the town of Palmyra in central Homs Governorate.[138][139] By midnight, opposition forces in the southern Daraa Governorate captured its capital Daraa, as well as 90% of the province, as pro-government forces withdrew towards the capital Damascus.[55] Meanwhile, the Syrian Free Army, a different rebel group backed by the United States, took control of Palmyra in an offensive launched from the al-Tanf "deconfliction zone".[140]
+--------------------------------------------------
+2025-02-27 16:03:32.965 | INFO     | httpx._client:_send_single_request:1740 - HTTP Request: POST https://api.tavily.com/search "HTTP/2 200 OK"
+2025-02-27 16:03:32.967 | INFO     | criticsearch.tools.search_adapter.search_aggregator:_search_single_query:48 - 
+Query: Middle Eastern geopolitical shifts 2024
+Search Results:
+--------------------------------------------------
+[1]:
+TITLE: The key issues that will define Middle East politics in 2024
+URL: https://www.middleeasteye.net/opinion/middle-east-politics-key-issues-define-2024
+CONTENT: This year has been a turbulent and eventful one for the Middle East, marked by geopolitical shifts, escalating conflicts and tragic disasters. Over the past year, major political developments, in particular the Saudi-Iranian deal and the normalisation of Assad's Syria, seemed to hold the potential to reshape the region, with reduced tensions and openings for resolving protracted conflicts. The economic landscape in the Middle East and North Africa region in 2024 is set to be heavily influenced by the adverse spillover effects of the ongoing Gaza crisis Thirdly, the economic landscape in the Middle East and North Africa (Mena) region in 2024 is set to be heavily influenced by the adverse spillover effects of the Gaza crisis.
+--------------------------------------------------
+[2]:
+TITLE: The Middle East in Flux: How 2024 Reshaped Regional Dynamics
+URL: https://medium.com/@penningtonaria/the-middle-east-in-flux-how-2024-reshaped-regional-dynamics-3237afed8583
+CONTENT: A Year of Unprecedented Shifts. The Middle East has experienced transformative changes in 2024, redefining its geopolitical landscape.
+--------------------------------------------------
+[3]:
+TITLE: 2024 a year of unthinkable events that turned Middle East upside down
+URL: https://www.upi.com/Top_News/World-News/2024/12/31/lebanon-lebanon-syria-middle-east-Iran-Hezbollah/2441735659507/
+CONTENT: The unthinkable in the troubled Middle East happened in 2024, with a major geopolitical shift after the stunning collapse of the Syrian regime at the hands of Islamist rebels.
+--------------------------------------------------
+[4]:
+TITLE: Trump's Middle East playbook: Israel, Iran and the new geopolitical ...
+URL: https://www.middleeastmonitor.com/20241112-trumps-middle-east-playbook-israel-iran-and-the-new-geopolitical-game/
+CONTENT: Trump’s Middle East playbook: Israel, Iran and the new geopolitical game – Middle East Monitor Trump’s Middle East playbook: Israel, Iran and the new geopolitical game The 2024 election of Donald Trump as US president signals significant shifts in US foreign policy towards the Middle East, particularly in the context of the ongoing Israel-Hamas conflict. A cornerstone of Trump’s Middle East policy has been his unwavering support for Israel. Trump’s return to the presidency is likely to signal a more hard-line US foreign policy in the Middle East, focusing on containing Iran, supporting Israel and forging alliances through frameworks like the Abraham Accords.
+--------------------------------------------------
+[5]:
+TITLE: Key political trends to watch in the Middle East in 2024 - The New Arab
+URL: https://www.newarab.com/analysis/key-political-trends-watch-middle-east-2024
+CONTENT: Four of them include the Gaza war’s regional impact, Syria’s rehabilitation in the Arab world, the Saudi-Iranian détente’s trajectory, and the possibility of a new Iranian supreme leader coming to power. Beyond the ways in which the issue of Palestine can play out domestically in Arab countries, there are important dynamics in the Gulf sub-region’s security architecture worth watching as Israel’s war on Gaza rages on. “Within the context of the security dilemma, Iran and the GCC states, namely Saudi Arabia and the UAE, by extension will strengthen their military capabilities with the goal of greater deterrence but the risk of increased conflict,” Dr Eric Lob, an associate professor of Politics and International Relations at Florida International University and a Non-Resident Scholar with the Middle East Institute’s Iran Program, told The New Arab.
+--------------------------------------------------
+[6]:
+TITLE: Global Elections Of 2024: A Geopolitical Shift And I...
+URL: https://www.ifcreview.com/articles/2025/january/global-elections-of-2024-a-geopolitical-shift-and-implications-for-ifcs/
+CONTENT: The renewed conflict in the Middle East further complicates the global geopolitical landscape. The Middle East remains a leading region for global oil production, and any disruption to the supply chain, mainly through critical chokepoints like the Strait of Hormuz, could drive energy prices higher and exacerbate inflationary pressures worldwide.
+--------------------------------------------------
+[7]:
+TITLE: Russia's ties with the Middle East will keep growing despite all ... - RT
+URL: https://www.rt.com/news/613340-russia-middle-east-ties-keep-growing/
+CONTENT: In the face of increasing global instability, the Middle East has once again become not just a place of local conflicts but a symbol of deeper geopolitical shifts that will alter the balance of power in the world. Russia and the Middle East: Outcomes of 2024
+--------------------------------------------------
+[8]:
+TITLE: The key issues that will define Middle East politics in 2024
+URL: https://chs-doha.org/en/Insights/Pages/The-key-issues-that-will-define-Middle-East-politics-in-2024.aspx
+CONTENT: Read the full opinion at Middle East Eyes. This year has been a turbulent and eventful one for the Middle East, marked by geopolitical shifts, escalating conflicts and tragic disasters. As we reflect upon the tumultuous events of 2023, it is crucial to consider what next year might hold for the Middle East.
+--------------------------------------------------
+[9]:
+TITLE: 2024: A year in the Middle East - Atlantic Council
+URL: https://www.atlanticcouncil.org/blogs/menasource/2024-a-year-in-the-middle-east/
+CONTENT: Conflict Crisis Management Economy & Business Iran Iraq Israel Lebanon Libya Middle East North Africa Politics & Diplomacy Saudi Arabia Security & Defense Syria The Gulf Yemen The strikes, which represented the first offensive airstrikes by the global coalition formed to protect shipping in the Red Sea, came after months of Houthi attacks on ships headed towards or from Israel, as the Houthis have pledged solidarity to Hamas since the outbreak of the Gaza War. The goal of the strikes, writes Kirsten Fontenrose, a nonresident senior fellow at the Scowcroft Middle East Security Initiative, was to “reduce the group’s ability to destabilize the region, threaten global shipping, endanger Israel and surrounding countries with poorly planned strikes, and protect civilians on land and at sea.” Conflict Crisis Management Economy & Business Iran Iraq Israel Lebanon Libya Middle East North Africa Politics & Diplomacy Saudi Arabia Security & Defense Syria The Gulf Yemen
+--------------------------------------------------
+[10]:
+TITLE: Geopolitical Shifts: Key Developments of 2024
+URL: https://advocatetanmoy.com/geopolitical-shifts-key-developments-of-2024/
+CONTENT: AFRICA Anti-Christian Library Asia Bengali Page Books Buddhist Sanskrit Texts Business and Industry Church Politics Civil Law Constitution Constitution of India Criminology and Criminal Law Department of Humanities Department of Mathematical, Physical and Life Sciences Department of Sanatan Dharma and Civilisation Department of Social Science Diplomatic Relations and Bilateral Agreements Drafting and Pleading Education, Universities and Courses English Literature, Language and Translation Environment and Climate Concern Europe European Human Right Court Geo Political Greek Hindi Page INDEX INDIA Indian Central Acts Institutes of Justinian INTERNATIONAL Jewish Library Judgments of ICJ Judgments United Kingdom Judicial Dictionary LAND Language Law Law Library Law Question Papers Legal Matter Medical Sciences Middle East Money and Banking National News North America Pali Text Parliamentary Practice Policy Watch POLITICAL DOCUMENTS Press Release Professional Examinations Question papers Rig Veda Commentary Sanskrit Sanskrit Dictionary Sanskrit Documents Selective Reading Selective Reading of Rigveda State Legislation Statutory definitions Supreme Court Judgments Treaties Trending U.S Supreme Court UK Facts and Law War, Military and Security
+--------------------------------------------------
+2025-02-27 16:03:33.014 | INFO     | httpx._client:_send_single_request:1740 - HTTP Request: POST https://api.tavily.com/search "HTTP/2 200 OK"
+2025-02-27 16:03:33.015 | INFO     | criticsearch.tools.search_adapter.search_aggregator:_search_single_query:48 - 
+Query: Syrian government military strategy 2024
+Search Results:
+--------------------------------------------------
+[1]:
+TITLE: Southern Syria offensive (2024) - Wikipedia
+URL: https://en.wikipedia.org/wiki/Southern_Syria_offensive_(2024)
+CONTENT: Beginning on 29 November 2024, rebel groups commenced operations against Syrian government installations across the southern region, with particular focus on the Daraa and As-Suwayda governorates. According to the Syrian Observatory for Human Rights (SOHR), unidentified combatants fired upon government-loyalist Syrian Armed Forces (SAF) military personnel near Om Shama Town in the eastern region of Suwayda Governorate, resulting in the death of an SAF first lieutenant from Tartus and the wounding of two additional service members.[13] On 30 November, another SAF first lieutenant and three Bedouin tribe members were shot to death by opposing combatants, according to SOHR.[14] SOHR also said a local armed group commander was killed by gunfire in Tafas in western Daraa, while another was wounded.[15] On 30 November 2024, the Syrian Armed Forces implemented a significant military deployment to Daraa, a strategic city in southern Syria.
+--------------------------------------------------
+[2]:
+TITLE: Syria, year 2024, the fall — Strategic Culture
+URL: https://strategic-culture.su/news/2024/12/09/syria-year-2024-the-fall/
+CONTENT: It is the night between 7 and 8 December 2024: the Arab Republic of Syria, ruled by Bashar al-Assad, falls. ... Sticking to a purely strategic-military calculation, the Syrian army did not suffer many casualties during the retreat, managing to preserve 'human strength' in a country with a total of less than 20 million inhabitants, a low
+--------------------------------------------------
+[3]:
+TITLE: Northwestern Syria offensive (2024) - Wikipedia
+URL: https://en.wikipedia.org/wiki/2024_Syria_conflict
+CONTENT: On 27 November 2024, a coalition of Syrian opposition groups called the Military Operations Command [32] led by Hay'at Tahrir al-Sham (HTS) and allied Turkish-backed groups [33] [34] [35] in the Syrian National Army (SNA) launched an offensive against the pro-government Syrian Arab Army (SAA) forces in Idlib, Aleppo and Hama Governorates in Syria.
+--------------------------------------------------
+[4]:
+TITLE: 2024 Syrian opposition offensives - Wikipedia
+URL: https://en.wikipedia.org/wiki/2024_Syrian_opposition_offensives
+CONTENT: On 27 November 2024, a coalition of Syrian opposition groups called the Military Operations Command[38] led by Hay'at Tahrir al-Sham (HTS) and allied Turkish-backed groups[39][40][41] in the Syrian National Army (SNA) launched an offensive against the pro-government Syrian Arab Army (SAA) forces in Idlib, Aleppo and Hama Governorates in Syria. In the evening of 6 December 2024, Southern Front forces captured the regional capital of Suwayda, in southern Syria, following pro-government forces withdrawal from the city.[123][124] Concurrently, SDF captured the provincial capital of Deir ez-Zor from pro-government forces, which also left the town of Palmyra in central Homs region.[125][126] By midnight, opposition forces in the southern Daraa Governorate captured its capital Daraa, as well as 90% of the province, as pro-government forces withdrew towards the capital Damascus.[46] Meanwhile, the Syrian Free Army, a different rebel group backed by the United States took control of Palmyra in an offensive launched from the al-Tanf "deconfliction zone".[127]
+--------------------------------------------------
+[5]:
+TITLE: Syrian Rebel Advances: November 2024 Strategic Gains and Implications
+URL: https://genesysdefense.com/intl/advancements-and-strategic-shifts-syrian-rebel-operations-in-november-2024/
+CONTENT: After an in-depth interview with Dr. Adib Enayati, the esteemed director of the Genesys Defense Special Intelligence and Warfare Studies Unit (GDSIWSU), we were provided with a detailed and insightful analysis of the recent advancements made by Syrian rebel factions. Key players include the Syrian National Army (SNA), the Kurdish-led Syrian Democratic Forces (SDF), and Islamist groups like Hayat Tahrir al-Sham (HTS). Syrian National Army (SNA): Operating primarily in northern Syria, the SNA is backed by Turkey and serves as its main proxy force in the region. Syrian Democratic Forces (SDF): Dominated by the Kurdish YPG, the SDF controls large areas of northeastern Syria. The recent gains underscore the rebels’ ability to reassert control in key regions despite ongoing pressures from both Assad-aligned forces and external powers such as Russia.
+--------------------------------------------------
+[6]:
+TITLE: 2024 Syrian opposition offensives - Wikiwand
+URL: https://www.wikiwand.com/en/articles/Northwestern_Aleppo_offensive_(2024)
+CONTENT: In the evening of 6 December 2024, local forces captured the regional capital of Suwayda, in southern Syria, following the pro-Assad forces' withdrawal from the city.[136][137] Concurrently, SDF captured the provincial capital of Deir ez-Zor from pro-Ba'athist forces, which also left the town of Palmyra in central Homs Governorate.[138][139] By midnight, opposition forces in the southern Daraa Governorate captured its capital Daraa, as well as 90% of the province, as pro-government forces withdrew towards the capital Damascus.[55] Meanwhile, the Syrian Free Army, a different rebel group backed by the United States, took control of Palmyra in an offensive launched from the al-Tanf "deconfliction zone".[140]
+--------------------------------------------------
+[7]:
+TITLE: US Says It Will Support New Syrian Leaders Who Protect Women and ...
+URL: https://www.military.com/daily-news/2024/12/10/us-says-it-will-support-new-syrian-leaders-who-protect-women-and-renounce-terrorism.html
+CONTENT: The Biden administration says the United States will recognize and support a new Syrian government ... 2024 at 4:15 pm ... signaled its approval of Israel's strikes against Syrian military and
+--------------------------------------------------
+[8]:
+TITLE: A Radiography of HTS Military and Governance Capabilities (Open access)
+URL: https://syria-report.com/a-radiography-of-hts-military-and-governance-capabilities/
+CONTENT: A Radiography of HTS Military and Governance Capabilities (Open access) – Syria Report The lightning attack of Hayat Tahrir Al-Sham (HTS) in the past week and its success in capturing Aleppo and more than doubling the size of the area under its control highlight the significant strides HTS and its civilian arm, the Syrian Salvation Government (SSG), made in recent years in developing their military and governance capabilities: from producing drones, establishing a military academy, setting up a proto central banking entity, and issuing a weekly official gazette. The SSG government, led since the beginning of this year by Prime Minister Mohammad Al-Bashir (who succeeded Ali Kadeh); comprises 11 portfolios: Agriculture and Irrigation, Economy and Resources, Health, Education, Development and Humanitarian Affairs, Local Administration and Services, Higher Education and Scientific Research, Interior, Justice, Information, and Religious Endowments.
+--------------------------------------------------
+[9]:
+TITLE: What is behind US strategy of keeping troops in post-Assad Syria?
+URL: https://www.aljazeera.com/news/2025/1/6/what-is-behind-us-strategy-of-keeping-troops-in-post-assad-syria
+CONTENT: Washington, DC – The administration of United States President Joe Biden has said it is taking a wait-and-see approach to the fledgling government in Syria, with diplomats in recent weeks holding initial meetings with the Hayat Tahrir al-Sham (HTS) head, and the country’s de facto leader, Ahmed al-Sharaa, as well as the newly appointed Foreign Minister Asaad al-Shibani. But since rebels toppled longtime leader Bashar al-Assad in early December, the US has maintained it will keep its deployment of troops in northeast Syria, where US personnel continue to support the Kurdish-led Syrian Democratic Forces (SDF) as part of a decade-long anti-ISIL (ISIS) mission. The US troop presence in Syria has, in part, aimed to ensure those fossil fuel fields stayed out of the hands of both ISIL, which briefly controlled them, and the al-Assad government.
+--------------------------------------------------
+[10]:
+TITLE: The D Brief: What's next for Syria?; Defense-policy bill unveiled; New ...
+URL: https://www.defenseone.com/threats/2024/12/the-d-brief-december-09-2024/401532/
+CONTENT: Outgoing U.S. President Joe Biden called Assad's downfall a "fundamental act of justice" but also a "moment of risk and uncertainty" for the region—especially since ISIS is still
+--------------------------------------------------
+2025-02-27 16:03:33.139 | INFO     | httpx._client:_send_single_request:1740 - HTTP Request: POST https://api.tavily.com/search "HTTP/2 200 OK"
+2025-02-27 16:03:33.141 | INFO     | criticsearch.tools.search_adapter.search_aggregator:_search_single_query:48 - 
+Query: Turkish-backed groups involvement in Syria 2024
+Search Results:
+--------------------------------------------------
+[1]:
+TITLE: 2024 Syrian opposition offensives - Wikipedia
+URL: https://en.wikipedia.org/wiki/2024_Syrian_opposition_offensives
+CONTENT: On 27 November 2024, a coalition of Syrian opposition groups called the Military Operations Command[38] led by Hay'at Tahrir al-Sham (HTS) and allied Turkish-backed groups[39][40][41] in the Syrian National Army (SNA) launched an offensive against the pro-government Syrian Arab Army (SAA) forces in Idlib, Aleppo and Hama Governorates in Syria. In the evening of 6 December 2024, Southern Front forces captured the regional capital of Suwayda, in southern Syria, following pro-government forces withdrawal from the city.[123][124] Concurrently, SDF captured the provincial capital of Deir ez-Zor from pro-government forces, which also left the town of Palmyra in central Homs region.[125][126] By midnight, opposition forces in the southern Daraa Governorate captured its capital Daraa, as well as 90% of the province, as pro-government forces withdrew towards the capital Damascus.[46] Meanwhile, the Syrian Free Army, a different rebel group backed by the United States took control of Palmyra in an offensive launched from the al-Tanf "deconfliction zone".[127]
+--------------------------------------------------
+[2]:
+TITLE: 2024 Syrian opposition offensives - Wikiwand
+URL: https://www.wikiwand.com/en/articles/2024_Syrian_opposition_offensives
+CONTENT: Following the 2024 Manbij offensive, Turkish involvement in the Syrian civil war continued in mid-December with the 2024 Kobani offensive. [154] In December 2024, the factions supported by Turkey announced they would discontinue the ceasefire with groups supported by the US, such as Syrian Democratic Forces.
+--------------------------------------------------
+[3]:
+TITLE: Battle of Aleppo (2024) - Wikipedia
+URL: https://en.wikipedia.org/wiki/Battle_of_Aleppo_(2024)
+CONTENT: 8th Aleppo offensive6th Daraa9th–11th Aleppo offensivesAl-Dumayr1st East Ghouta inter-rebel conflict1st QamishliAleppo bombings8th Rif Dimashq3rd Shaer gas fieldNorthern RaqqaJableh & TartusManbij Tokhar2nd Ithriyah-Raqqa9th Rif Dimashq12th–14th Aleppo offensives 12th13th14th4th Latakia offensive1st Abu Kamal3rd QamishliAtmehal-Rai3rd Al-Hasakah CityOperation Euphrates Shield Northern al-BabDabiqal-Bab5th Hama offensive1st Western al-Bab1st Eastern QalamounSeptember bombings4th QuneitraDeir ez-Zor airstrikeAleppo aid convoy attack15th Aleppo offensiveKhan al-Shih1st Idlib inter-rebel conflict2nd Western al-Bab16th Aleppo offensive2nd Raqqa campaign17th Aleppo offensive4th PalmyraWadi Barada1st Syrian DesertAzaz bombings5th Palmyra4th Deir ez-Zor offensive18th Aleppo offensive2nd Idlib inter-rebel conflict7th DaraaQaboun8th Daraa On 29 November 2024, Syrian opposition groups led by Tahrir al-Sham entered the pro-government, Syrian Arab Army-held city of Aleppo. On 27 November 2024, Syrian opposition groups led by Tahrir al-Sham launched an offensive on pro-government forces in Northwestern Syria.
+--------------------------------------------------
+[4]:
+TITLE: Jihadist NGO linked to Turkish Intelligence increases activities in ...
+URL: https://nordicmonitor.com/2024/12/jihadist-ngo-linked-to-turkish-intelligence-increased-its-activities-in-areas-captured-by-turkey-backed-groups-in-syria/
+CONTENT: Levent Kenez/Stockholm A Turkish government-backed Islamist NGO has ramped up its activities in areas of Syria seized during the offensive launched by Turkey-backed groups on November 27.
+--------------------------------------------------
+[5]:
+TITLE: Turkish involvement in the Syrian civil war - Wikipedia
+URL: https://en.wikipedia.org/wiki/Turkish_involvement_in_the_Syrian_civil_war
+CONTENT: After 2 days of artillery bombardment[250] and airstrikes, the Turkish Land Forces launched an attack on the ISIL-held town of Jarabulus, followed by hundreds of FSA fighters.[252] They were backed by planes from the U.S.-led coalition, launched their first co-ordinated offensive into Syria.[253] Turkey's president Recep Tayyip Erdoğan said on the first day of the operation, called Euphrates Shield, that it was aimed against both the ISIL and People's Protection Units (YPG), a major component of the SDF, saying both ″terror groups that threaten our country in northern Syria″.[254][255] The immediate goal of the military intervention was the capture of the Syrian town of Jarabulus from the ISIL, which was accomplished on the first day of the operation.
+--------------------------------------------------
+[6]:
+TITLE: Turkey's Involvement and Entrenchment in Syria - Goals and Implications ...
+URL: https://israel-alma.org/turkeys-involvement-and-entrenchment-in-syria-goals-and-implications/
+CONTENT: Israel is in the middle, focusing mainly on eliminating the remnants of Iranian capabilities and protecting its border by controlling the Syrian side of the buffer zone, but in the future may be forced to deal with a new Syria managed by parties oriented toward Turkey, which may have an interest in the future to establish a new platform for Sunni militias operating against Israel. Turkey’s involvement in Syria, managed by President Erdogan, reflects an ambitious set of goals: Eliminating Kurdish influence on Turkey’s border, geopolitical expansion and turning Turkey’s status into that of a regional Muslim leader, establishing alliances and economic influence (with Qatar’s support), a strategic foothold for the future, and removing remnants of Iranian or Russian influence identified with the Assad regime.
+--------------------------------------------------
+[7]:
+TITLE: New Phase for the Kurdish Question in Syria - Middle East Forum
+URL: https://www.meforum.org/mef-observer/new-phase-for-the-kurdish-question-in-syria
+CONTENT: With Assad out of the picture, Kurds face a new reality—one marked by significant Turkish involvement in Syria's affairs. While it may seem that Kurds, with U.S. backing, have built strong institutions on the ground, Turkey's multiple invasions in recent years reveal how precarious the situation remains for Syrian Kurds.
+--------------------------------------------------
+[8]:
+TITLE: 2024 Syrian opposition offensives - Wikiwand
+URL: https://www.wikiwand.com/en/articles/Northwestern_Aleppo_offensive_(2024)
+CONTENT: In the evening of 6 December 2024, local forces captured the regional capital of Suwayda, in southern Syria, following the pro-Assad forces' withdrawal from the city.[136][137] Concurrently, SDF captured the provincial capital of Deir ez-Zor from pro-Ba'athist forces, which also left the town of Palmyra in central Homs Governorate.[138][139] By midnight, opposition forces in the southern Daraa Governorate captured its capital Daraa, as well as 90% of the province, as pro-government forces withdrew towards the capital Damascus.[55] Meanwhile, the Syrian Free Army, a different rebel group backed by the United States, took control of Palmyra in an offensive launched from the al-Tanf "deconfliction zone".[140]
+--------------------------------------------------
+[9]:
+TITLE: Turkey is expected to play a major role in shaping the new Syria - NPR
+URL: https://www.npr.org/2024/12/16/nx-s1-5226793/turkey-is-expected-to-play-a-major-role-in-shaping-the-new-syria
+CONTENT: Turkey is set to have significant influence in Syria after Turkish-backed rebels defeated the Assad regime. We look at what Turkey's goals are in the region and what challenges it may face.
+--------------------------------------------------
+[10]:
+TITLE: US-Allies Lose Ground to Turkey-Backed Rebels in Syria
+URL: https://www.newsweek.com/us-allies-lose-ground-turkey-backed-rebels-syria-1999622
+CONTENT: The ascension of Sunni Arab rebels, aided by Turkey—a historic adversary of the Kurds—has marginalized Kurdish groups within Syria's new political order.
+--------------------------------------------------
+2025-02-27 16:03:33.179 | INFO     | httpx._client:_send_single_request:1740 - HTTP Request: POST https://api.tavily.com/search "HTTP/2 200 OK"
+2025-02-27 16:03:33.180 | INFO     | criticsearch.tools.search_adapter.search_aggregator:_search_single_query:48 - 
+Query: Institute for the Study of War analysis on Syrian conflict 2024
+Search Results:
+--------------------------------------------------
+[1]:
+TITLE: Iran Update, December 9, 2024 | Institute for the Study of War
+URL: https://www.understandingwar.org/backgrounder/iran-update-december-9-2024
+CONTENT: The Critical Threats Project (CTP) at the American Enterprise Institute and the Institute for the Study of War (ISW) publish the Iran Update, which provides insights into Iranian and Iranian-sponsored activities that undermine regional stability and threaten US forces and interests. ... emphasized in recent days that the conflict in Syria is an
+--------------------------------------------------
+[2]:
+TITLE: Iran Update, December 6, 2024 | Critical Threats
+URL: https://www.criticalthreats.org/analysis/iran-update-december-6-2024
+CONTENT: The following text also appears in the Institute for the Study of War's Russian Offensive Campaign Assessment. Russian forces have not yet evacuated the Russian naval base in Tartus, Syria as of December 6, but it remains unclear whether Russia will keep its vessels at the port as Syrian rebels continue to advance swiftly across regime-held
+--------------------------------------------------
+[3]:
+TITLE: Iran Update, December 12, 2024 | Institute for the Study of War
+URL: https://www.understandingwar.org/backgrounder/iran-update-december-12-2024
+CONTENT: The most recent statement threatening to punish fighters is likely in response to reports of HTS-led fighters conducting religion-based harassment and revenge killings.[5] Some reports, for instance, claimed that HTS-led fighters “forcefully” entered the Sayyidah Zeynab shrine in Damascus, which is a holy Shia shrine.[6] The reports claimed that the fighters chanted “provocative slogans” while in the shrine.[7] Several reports claimed that the fighters were affiliated with HTS, which reportedly made an informal agreement with Iran to protect Shia sites and minorities in Syria.[8] CTP-ISW cannot verify the details of the event or the accuracy of the reports. [24] https://www.understandingwar.org/backgrounder/iran-update-december-11-2024; https://x.com/Daraa24_24/status/1866567002359468189 [32] https://www.reuters.com/world/middle-east/iran-accepts-tougher-oversight-fordow-enrichment-plant-iaea-reports-2024-12-12/ [55] https://x.com/CENTCOM/status/1866951406986686738 ; https://www.criticalthreats.org/analysis/iran-update-december-11-2024
+--------------------------------------------------
+[4]:
+TITLE: Institute for the Study of War - Wikipedia
+URL: https://en.wikipedia.org/wiki/Institute_for_the_Study_of_War
+CONTENT: The Institute for the Study of War (ISW) is an American nonprofit research group and advocacy think tank founded in 2007 by military historian Kimberly Kagan and headquartered in Washington, D.C. [1] [2] ISW provides research and analysis of modern armed conflicts and foreign affairs.It has produced reports on the Syrian civil war, the War in Afghanistan, and the Iraq War, "focusing on
+--------------------------------------------------
+[5]:
+TITLE: Iran Update, November 24, 2024 - ISW Blog
+URL: https://www.iswresearch.org/2024/11/iran-update-november-24-2024.html
+CONTENT: Jordanian forces disrupted a drug smuggling attempt from Syria, underscoring the risk that Iranian-backed militias could use these smuggling networks to further their efforts to destabilize Jordan. ... (CTP) at the American Enterprise Institute and the Institute for the Study of War (ISW) provides these updates regularly based on regional
+--------------------------------------------------
+[6]:
+TITLE: Iran Update, December 8, 2024 | Institute for the Study of War
+URL: https://www.understandingwar.org/backgrounder/iran-update-december-8-2024
+CONTENT: The Critical Threats Project (CTP) at the American Enterprise Institute and the Institute for the Study of War (ISW) provides these updates regularly based on regional events. CTP-ISW defines the "Axis of Resistance" as the unconventional alliance that Iran has cultivated in the Middle East since the Islamic Republic came to power in 1979.
+--------------------------------------------------
+[7]:
+TITLE: Iran Update, December 1, 2024 | Institute for the Study of War
+URL: https://www.understandingwar.org/backgrounder/iran-update-december-1-2024
+CONTENT: The Critical Threats Project (CTP) at the American Enterprise Institute and the Institute for the Study of War (ISW) provides these updates regularly based on regional events. CTP-ISW defines the "Axis of Resistance" as the unconventional alliance that Iran has cultivated in the Middle East since the Islamic Republic came to power in 1979.
+--------------------------------------------------
+[8]:
+TITLE: Iran Update, June 17, 2024 | Institute for the Study of War
+URL: https://www.understandingwar.org/backgrounder/iran-update-june-17-2024
+CONTENT: The Israel Defense Forces (IDF) said on June 17 that it has dismantled about half of Hamas' forces in Rafah. The IDF 162nd Division advanced into Rafah on May 7 and the IDF said that it now controls approximately 60 to 70 percent of the governorate, i
+--------------------------------------------------
+[9]:
+TITLE: Iran Update, December 31, 2024 | Critical Threats
+URL: https://www.criticalthreats.org/analysis/iran-update-december-31-2024
+CONTENT: Growing conflict between HTS and minority and opposition groups would fuel sectarian tensions, drive an escalation cycle, and risk destabilizing Syria further. Although HTS leader Ahmed al Shara has repeatedly used tempered and inclusive rhetoric in recent weeks, he would struggle to contain such a cycle of violence given some of the extreme
+--------------------------------------------------
+[10]:
+TITLE: Iran Update, May 27, 2024 | Institute for the Study of War
+URL: https://www.understandingwar.org/backgrounder/iran-update-may-27-2024
+CONTENT: It also covers events and trends that affect the stability and decision-making of the Iranian regime. The Critical Threats Project (CTP) at the American Enterprise Institute and the Institute for the Study of War (ISW) provides these updates regularly based on regional events.
+--------------------------------------------------
+2025-02-27 16:03:33.228 | INFO     | httpx._client:_send_single_request:1740 - HTTP Request: POST https://api.tavily.com/search "HTTP/2 200 OK"
+2025-02-27 16:03:33.230 | INFO     | criticsearch.tools.search_adapter.search_aggregator:_search_single_query:48 - 
+Query: Hezbollah strength and involvement in Syrian conflict 2024
+Search Results:
+--------------------------------------------------
+[1]:
+TITLE: From Lebanon to Syria: How Did the Syrian Civil War Reshape Hezbollah's ...
+URL: https://www.habtoorresearch.com/publications/syrian-civil-war-hezbollah-military/
+CONTENT: Hezbollah's intervention in the Syrian civil war to support the Assad regime against the armed opposition has led to mixed outcomes. On the one hand, this intervention enabled the party to develop new military tactics, most notably urban warfare, and to obtain advanced weapons that were used in the support war against Israel on October 8, 2024. It also contributed to changing the party's
+--------------------------------------------------
+[2]:
+TITLE: Hezbollah and the Axis of Resistance in 2024 - Brookings
+URL: https://www.brookings.edu/articles/hezbollah-and-the-axis-of-resistance-in-2024/
+CONTENT: In 2011, Hezbollah came to the defense of the Bashar al-Assad regime in Syria together with Iran and Russia. The aid helped Assad hold onto power through the Arab Spring and the Syrian civil war.
+--------------------------------------------------
+[3]:
+TITLE: Assad's Fall in Syria Might Doom Hezbollah - Foreign Policy
+URL: https://foreignpolicy.com/2024/12/09/hezbollah-syria-iran-lebanon-assad/
+CONTENT: By the end of 2024, most of Hezbollah's ... As the rebel offensive advanced across Syria, Hezbollah was nowhere to be seen. Whether it lacked the capacity to enter the Syrian conflict again at
+--------------------------------------------------
+[4]:
+TITLE: 2024 Syrian opposition offensives - Wikipedia
+URL: https://en.wikipedia.org/wiki/2024_Syrian_opposition_offensives
+CONTENT: On 27 November 2024, a coalition of Syrian opposition groups called the Military Operations Command[38] led by Hay'at Tahrir al-Sham (HTS) and allied Turkish-backed groups[39][40][41] in the Syrian National Army (SNA) launched an offensive against the pro-government Syrian Arab Army (SAA) forces in Idlib, Aleppo and Hama Governorates in Syria. In the evening of 6 December 2024, Southern Front forces captured the regional capital of Suwayda, in southern Syria, following pro-government forces withdrawal from the city.[123][124] Concurrently, SDF captured the provincial capital of Deir ez-Zor from pro-government forces, which also left the town of Palmyra in central Homs region.[125][126] By midnight, opposition forces in the southern Daraa Governorate captured its capital Daraa, as well as 90% of the province, as pro-government forces withdrew towards the capital Damascus.[46] Meanwhile, the Syrian Free Army, a different rebel group backed by the United States took control of Palmyra in an offensive launched from the al-Tanf "deconfliction zone".[127]
+--------------------------------------------------
+[5]:
+TITLE: Hezbollah involvement in the Syrian civil war - Wikipedia
+URL: https://en.wikipedia.org/wiki/Hezbollah_involvement_in_the_Syrian_Civil_War
+CONTENT: On 25 May 2013, Nasrallah announced that Hezbollah is fighting in the Syrian Civil War against Islamic extremists and "pledged that his group will not allow Syrian militants to control areas that border Lebanon".[31] He confirmed that Hezbollah was fighting in the strategic Syrian town of Al-Qusayr on the same side as Assad's forces.[31] In the televised address, he said, "If Syria falls in the hands of America, Israel and the takfiris, the people of our region will go into a dark period."[31] Syrian opposition's National Revolutionary Coation withdrew from the Geneva talks scheduled to be held on June; in denouncement of "Hezbollah and Iran's militia's invasion of Syria".[32]
+--------------------------------------------------
+[6]:
+TITLE: The Escalating Conflict with Hezbollah in Syria - CSIS
+URL: https://www.csis.org/analysis/escalating-conflict-hezbollah-syria
+CONTENT: From the outset of the Syrian war, Hezbollah has helped protect Shi'a populations near the western Syrian city of al-Qusayr and other areas in Syria near Hezbollah's stronghold in Lebanon's Beqaa Valley. 12 Hezbollah has also vowed to protect Shi'a holy sites around Damascus, even producing video games that allow players to fight as
+--------------------------------------------------
+[7]:
+TITLE: How war in Syria changed the image of Hezbollah
+URL: https://www.middleeasteye.net/news/how-syrian-war-changed-hezbollah
+CONTENT: Regardless of the reason, Hezbollah's initial hesitation regarding its involvement in the war waned after 2013, when Nasrallah declared that Syria had "true friends in the region" and that
+--------------------------------------------------
+[8]:
+TITLE: Hezbollah-Syria relations - Wikipedia
+URL: https://en.wikipedia.org/wiki/Hezbollah–Syria_relations
+CONTENT: The Axis of Resistance refers to an alliance led by Iran, which includes state and non-state actors that aim to counter Western influence in the Middle East, particularly that of the United States and Israel. [11] Core members of this alliance are the Assad regime in Syria and Lebanese Hezbollah. [11] [12] Iran has also extended its influence to Iraqi Shia militants.
+--------------------------------------------------
+[9]:
+TITLE: November 26, 2024 - Israel-Hezbollah ceasefire news - CNN International
+URL: https://edition.cnn.com/world/live-news/israel-hezbollah-ceasefire-deal-gaza-war-11-26-24-intl-hnk
+CONTENT: • The Israel-Hezbollah ceasefire agreement has taken effect in Lebanon, according to a timeline laid out by President Joe Biden, who said it was designed to be a permanent cessation of hostilities.” Biden also said the US would help lead another push to secure a ceasefire and hostage deal in Gaza. Those deaths came just a day before Israel’s security cabinet voted Tuesday in favor of a ceasefire deal to end the fighting with militant group Hezbollah in Lebanon, according to an Israeli official. The Israeli security cabinet has voted in favor of a ceasefire deal to end the fighting with militant group Hezbollah in Lebanon, an Israeli official told CNN on Tuesday.
+--------------------------------------------------
+[10]:
+TITLE: Hezbollah backs Syria's al-Assad as opposition forces intensify ...
+URL: https://www.aljazeera.com/news/2024/12/5/hezbollah-backs-syrias-al-assad-as-opposition-forces-intensify-offensive
+CONTENT: Hezbollah backs Syria’s al-Assad as opposition forces intensify offensive | Syria's War News | Al Jazeera News|Syria's War Hezbollah backs Syria’s al-Assad as opposition forces intensify offensive Sign up for Al Jazeera Civilians have also borne the brunt of Syria’s 13-year-long war, which had been largely frozen since 2020 until opposition forces led by Hayat Tahrir al-Sham (HTS), a former al-Qaeda affiliate, launched a new offensive from their strongholds in northwest Syria last week. While al-Assad relied heavily on Russian and Iranian backing throughout the most intense years of Syria’s war, some opposition groups established ties with Turkiye. Source: Al Jazeera and news agencies Al Jazeera Arabic Al Jazeera English Al Jazeera Investigative Unit Al Jazeera Mubasher Al Jazeera Forum
+--------------------------------------------------
+2025-02-27 16:03:33.244 | INFO     | httpx._client:_send_single_request:1740 - HTTP Request: POST https://api.tavily.com/search "HTTP/2 200 OK"
+2025-02-27 16:03:33.245 | INFO     | criticsearch.tools.search_adapter.search_aggregator:_search_single_query:48 - 
+Query: Russia Syria naval base strategic importance
+Search Results:
+--------------------------------------------------
+[1]:
+TITLE: Russia Syria Naval Base - IMMUNO ONCOLOGY
+URL: https://immunooncology.bms.com/russia-syria-naval-base
+CONTENT: The Russian naval base in Syria, known as the Russian Naval Facility Tartus, holds significant strategic importance for both Russia and the Syrian government. This base, located in the Mediterranean Sea, has a rich history and plays a crucial role in Russia's military presence in the region.
+--------------------------------------------------
+[2]:
+TITLE: Russian Naval Base Syria - Data science
+URL: https://staging.datascience.northwestern.edu/russian-naval-base-syria
+CONTENT: The Russian naval base in Syria, located in the port city of Tartus, holds significant strategic importance for both Russia and the Syrian government. This base, established in 1971, has undergone extensive modernization and expansion, solidifying its role as a crucial hub for Russian military operations in the Mediterranean region.
+--------------------------------------------------
+[3]:
+TITLE: Russia's Syria Naval Base: An Essential Strategic Overview
+URL: https://dev.innovation.schoolofmusic.ucla.edu/russias-syria-naval-base-an-essential-strategic-overview
+CONTENT: Russia's naval base in Syria is a critical strategic asset, offering a permanent foothold in the Mediterranean. This comprehensive overview explores its importance, examining the base's capabilities, regional impact, and role in projecting Russian power, providing an essential insight into a key geopolitical development.
+--------------------------------------------------
+[4]:
+TITLE: Russian Naval Base In Syria - Data science
+URL: https://staging.datascience.northwestern.edu/russian-naval-base-in-syria
+CONTENT: The Russian Naval Base in Syria, also known as the Russian Maritime Logistics Support Point, is a significant military installation that has played a crucial role in Russia's involvement in the Syrian Civil War and its broader geopolitical strategy in the Mediterranean region. Located in the port city of Tartus, this base holds strategic importance and has been a focal point of international
+--------------------------------------------------
+[5]:
+TITLE: Russia Syria Naval Base - The Bomb Yearbook Collection
+URL: https://yearbook.lib.iastate.edu/russia-syria-naval-base
+CONTENT: Russia strengthens presence in Syria with naval base, boosting military ties and strategic interests, amid regional conflicts and geopolitical tensions in the Middle East. ... The Tartous naval base is of significant strategic importance to Russia for several reasons: ... * Support for Russian Operations in Syria: The base has played a crucial
+--------------------------------------------------
+[6]:
+TITLE: Naumkin expert: Russian bases in Syria are strategically important for ...
+URL: https://syria.news-pravda.com/en/russia/2024/12/29/15277.html
+CONTENT: The preservation of Russia's military bases in Syria is of strategic importance for maintaining stability in the Mediterranean region. This opinion was expressed by Academician of the Russian Academy of Sciences, scientific director of the Institute of Oriental Studies of the Russian Academy of Sciences Vitaly Naumkin in an interview with TASS.
+--------------------------------------------------
+[7]:
+TITLE: Russian Syrian Naval Base - IMMUNO ONCOLOGY
+URL: https://immunooncology.bms.com/russian-syrian-naval-base
+CONTENT: Russian Syrian Naval Base. The Russian military presence in Syria, particularly its naval base in Tartus, has been a significant development in the region. This article will delve into the history, strategic importance, and implications of Russia's naval base in Syria, shedding light on its role in the complex geopolitical landscape of the
+--------------------------------------------------
+[8]:
+TITLE: Tartus naval base - Wikipedia
+URL: https://en.wikipedia.org/wiki/Tartus_naval_base
+CONTENT: At the end of June 2013, Russian deputy foreign minister Mikhail Bogdanov said in an interview that the facility did not have any strategic or military importance and that Russia had evacuated all civilian and military personnel from Tartus and Syria ("Presently, the Russian Defense Ministry has not a single person stationed in Syria"). [24]
+--------------------------------------------------
+[9]:
+TITLE: How America Could Takeover Russia's Tartus Naval Base in Syria
+URL: https://www.19fortyfive.com/2024/12/how-the-america-could-takeover-russias-tartus-naval-base-in-syria/
+CONTENT: The collapse of Assad's regime in Syria presents an opportunity for the U.S. to secure strategic dominance in the Eastern Mediterranean by striking a deal with Syria's Alawis to take over Russia's Tartus naval base.
+--------------------------------------------------
+[10]:
+TITLE: The Essential Guide To Russia's Syrian Naval Presence: A Comprehensive ...
+URL: https://dev.innovation.schoolofmusic.ucla.edu/the-essential-guide-to-russias-syrian-naval-presence-a-comprehensive-overview
+CONTENT: Uncover the key insights into Russia's naval strategy in Syria with this essential guide. Explore the comprehensive overview, delving into the country's military presence, operations, and its impact on the region's dynamics. Discover the latest developments and gain a deeper understanding of this critical aspect of the Syrian conflict.
+--------------------------------------------------
+2025-02-27 16:03:33.630 | INFO     | httpx._client:_send_single_request:1740 - HTTP Request: POST https://api.tavily.com/search "HTTP/2 200 OK"
+2025-02-27 16:03:33.631 | INFO     | criticsearch.tools.search_adapter.search_aggregator:_search_single_query:48 - 
+Query: Tahrir al-Sham military activities 2024
+Search Results:
+--------------------------------------------------
+[1]:
+TITLE: Iran Update, December 5, 2024 - Institute for the Study of War
+URL: https://www.understandingwar.org/backgrounder/iran-update-december-5-2024
+CONTENT: Hayat Tahrir al Sham (HTS)-aligned opposition groups have begun a campaign to capture Homs after capturing Hama City on December 5. HTS-aligned forces seized control of Hama City and Hama military airport from Syrian Arab Army (SAA) forces on December 5. [1]
+--------------------------------------------------
+[2]:
+TITLE: Battle of Aleppo (2024) - Wikipedia
+URL: https://en.wikipedia.org/wiki/Battle_of_Aleppo_(2024)
+CONTENT: 8th Aleppo offensive6th Daraa9th–11th Aleppo offensivesAl-Dumayr1st East Ghouta inter-rebel conflict1st QamishliAleppo bombings8th Rif Dimashq3rd Shaer gas fieldNorthern RaqqaJableh & TartusManbij Tokhar2nd Ithriyah-Raqqa9th Rif Dimashq12th–14th Aleppo offensives 12th13th14th4th Latakia offensive1st Abu Kamal3rd QamishliAtmehal-Rai3rd Al-Hasakah CityOperation Euphrates Shield Northern al-BabDabiqal-Bab5th Hama offensive1st Western al-Bab1st Eastern QalamounSeptember bombings4th QuneitraDeir ez-Zor airstrikeAleppo aid convoy attack15th Aleppo offensiveKhan al-Shih1st Idlib inter-rebel conflict2nd Western al-Bab16th Aleppo offensive2nd Raqqa campaign17th Aleppo offensive4th PalmyraWadi Barada1st Syrian DesertAzaz bombings5th Palmyra4th Deir ez-Zor offensive18th Aleppo offensive2nd Idlib inter-rebel conflict7th DaraaQaboun8th Daraa On 29 November 2024, Syrian opposition groups led by Tahrir al-Sham entered the pro-government, Syrian Arab Army-held city of Aleppo. On 27 November 2024, Syrian opposition groups led by Tahrir al-Sham launched an offensive on pro-government forces in Northwestern Syria.
+--------------------------------------------------
+[3]:
+TITLE: The Power Groups in Syria after the Fall of the Assad Regime
+URL: https://www.terrorism-info.org.il/en/the-power-groups-in-syria-after-the-fall-of-the-assad-regime/
+CONTENT: On November 27, 2024, armed groups opposing the regime of Syrian President Bashar al-Assad, led by the Islamist-jihadist organization Hayat Tahrir al-Sham, launched Operation Deterrence of Aggression against Syrian army forces and their allies in northwest Syria. Other groups, sponsored by Turkey, initiated the Operation Dawn of Liberation in the Aleppo area, while another coalition of rebel
+--------------------------------------------------
+[4]:
+TITLE: What is Hayat Tahrir al-Sham? And how did the Islamist group ... - Yahoo
+URL: https://www.yahoo.com/news/hayat-tahrir-al-sham-did-220438591.html
+CONTENT: Mon, December 2, 2024 at 10:04 PM UTC ... Strategic shifts and recent activities. Since 2017, Hayat Tahrir al-Sham has been ... It signals a revitalization of Hayat Tahrir al-Sham's military
+--------------------------------------------------
+[5]:
+TITLE: 2024 Hama offensive - Wikipedia
+URL: https://en.wikipedia.org/wiki/2024_Hama_offensive
+CONTENT: Jump to content Main menu Personal tools Toggle the table of contents Tools Abu Mohammad al-Julani  Maj. Gen. Background and causesCasualtiesCities mapTerrorismMassacres Background Main article: Northwestern Syria offensive (2024) On 4 December, SAA forces launched a counter-offensive to regain possession of the 'tracked military vehicles' academy, 18km to the northeast of Hama city.[29]Another offensive was conducted by HTS forces on the village of Al-Kareem, adjacent to Al-Bared village near Joureen, where SAA forces repelled the rebel attacks. In the western Hama countryside, fighting approached the Latakia region, mainly populated by Alawites.[32] Jerusalem Post. Washington Post. Text is available under the Creative Commons Attribution-ShareAlike 4.0 License; additional terms may apply. By using this site, you agree to the Terms of Use and Privacy Policy. Privacy policy
+--------------------------------------------------
+[6]:
+TITLE: What is Hayat Tahrir al-Sham? And how did the Islamist group evolve ...
+URL: https://theconversation.com/what-is-hayat-tahrir-al-sham-and-how-did-the-islamist-group-evolve-into-a-key-player-in-syrias-civil-war-245017
+CONTENT: Strategic shifts and recent activities Since 2017, Hayat Tahrir al-Sham has been the prevailing force in Idlib, the final significant rebel stronghold in Syria.
+--------------------------------------------------
+[7]:
+TITLE: PDF
+URL: https://www.understandingwar.org/sites/default/files/Iran+Update,+December+3,+2024+PDF.pdf
+CONTENT: Syrian opposition forces have continued to advance rapidly and pushed through regime defensive lines in the northern Hama countryside on December 3. Opposition forces—led by Hayat Tahrir al Sham (HTS)—advanced through the northern Hama countryside and seized numerous towns that regime force previously secured only two days ago.[1] Opposition forces captured Halfaya, northwest of Hama City
+--------------------------------------------------
+[8]:
+TITLE: How Hayat Tahrir al-Sham evolved from Radicalism to ruler of Northern Syria
+URL: https://www.juancole.com/2024/12/evolved-radicalism-northern.html
+CONTENT: A major offensive has seen rebel groups in Syria retake the country’s second city, Aleppo – and demonstrated the growing prominence of the Islamist group Hayat Tahrir al-Sham in the 13-year-long civil war. Despite these changes, Hayat Tahrir al-Sham’s core ideology continues to be rooted in jihadism, with the primary objective of overthrowing the Assad government and establishing Islamic rule in Syria. With growing support on the ground, a more professional military and a political wing focused on governance, Hayat Tahrir al-Sham has evolved from a jihadist offshoot into a major player in Syria – a development that has huge implications for the internal dynamics of the war-torn country.
+--------------------------------------------------
+[9]:
+TITLE: Hayat Tahrir al-Sham: The al-Qaida offshoot reviving Syria's war
+URL: https://asiatimes.com/2024/12/hayat-tahrir-al-sham-the-al-qaida-offshoot-reviving-syrias-war/
+CONTENT: The group originated as an offshoot of the Nusra Front, the official al-Qaida affiliate in Syria. Hayat Tahrir al-Sham was initially recognized for its combat effectiveness and its commitment to global jihadist ideology, or the establishment of strict Islamic rule across the Muslim world.
+--------------------------------------------------
+[10]:
+TITLE: 'Dramatic Shifts in Front Lines' Radically Changing Situation as Non ...
+URL: https://press.un.org/en/2024/sc15919.doc.htm
+CONTENT: ‘Dramatic Shifts in Front Lines’ Radically Changing Situation as Non-State Actors Take Control of Syrian Territory, Senior Official Warns Security Council | Meetings Coverage and Press Releases A vast swathe of Syrian territory — containing approximately 7 million people — has come under the control of non-State actors, including the terrorist group Hay’at Tahrir al-Sham and armed opposition groups, the Organization’s senior official for that country told the Security Council today, as he warned that more bloodshed could be on its way. Also briefing the Council was Raed Al Saleh, Director of the White Helmets, who said his organization has been responding to the brutal attacks on Syrians launched by the country’s regime, the Russian Federation and Iranian cross-border militias, which have escalated in the last six days.
+--------------------------------------------------
+2025-02-27 16:03:33.632 | SUCCESS  | criticsearch.tools.search_adapter.models:ser_model:81 - Serialization completed. Total results: 100, Unique results: 87, Duplicates removed: 13.
+2025-02-27 16:03:52.437 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST https://aihubmix.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-02-27 16:03:52.440 | INFO     | absl.logging:handle:1175 - Using default tokenizer.
+2025-02-27 16:03:53.002 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST https://aihubmix.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-02-27 16:03:53.659 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST https://aihubmix.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-02-27 16:03:54.056 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST https://aihubmix.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-02-27 16:03:55.990 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST https://aihubmix.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-02-27 16:03:56.128 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST https://aihubmix.com/v1/chat/completions "HTTP/1.1 200 OK"

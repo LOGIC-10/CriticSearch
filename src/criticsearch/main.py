@@ -219,6 +219,79 @@ def parse_markdown_to_structure(markdown_text):
 
     return document
 
+import re
+from tqdm import tqdm
+from rouge_score import rouge_scorer
+
+def verify_factual_qa(common_agent, agent_report_sections, extracted_facts):
+    """
+    并行验证当前section的所有问题
+    """
+    context = '\n'.join(agent_report_sections)
+    verifier_prompt = common_agent.load_template("factQA_verifier.txt")
+    scorer = rouge_scorer.RougeScorer(['rougeL'], use_stemmer=True)
+    
+    def verify_single_question(fact):
+        qa_data = {
+            "context": context,
+            "user_question": fact["question"],
+            "constrained_format": fact["format"] 
+        }
+        
+        rendered_prompt = common_agent.render_template(verifier_prompt, qa_data)
+        model_answer = common_agent.common_chat(rendered_prompt)
+        
+        pattern = r'\\boxed{(.*?)}'
+        model_boxed = re.findall(pattern, model_answer)
+        ground_truth = re.findall(pattern, fact["answer"])
+        
+        is_correct = False
+        rouge_score = 0.0
+        
+        if model_boxed and ground_truth:
+            model_ans = model_boxed[0].lower()
+            ground_truth = ground_truth[0].lower()
+            is_correct = model_ans == ground_truth
+            
+            # 如果答案不完全匹配，计算ROUGE-L分数
+            if not is_correct:
+                scores = scorer.score(ground_truth, model_ans)
+                rouge_score = scores['rougeL'].fmeasure
+            
+            print(f"{'✓' if is_correct else '✗'} Question: {fact['question']+fact['format']}")
+            print(f"  Expected: {ground_truth}")
+            print(f"  Got: {model_ans}")
+            if not is_correct:
+                print(f"  ROUGE-L: {rouge_score:.4f}\n")
+            
+        return is_correct, rouge_score
+
+    # 使用tqdm包装并行处理
+    with concurrent.futures.ThreadPoolExecutor(max_workers=20) as executor:
+        futures = {executor.submit(verify_single_question, fact): fact for fact in extracted_facts}
+        results = []
+        
+        for future in tqdm(
+            concurrent.futures.as_completed(futures), 
+            total=len(extracted_facts),
+            desc="Verifying questions"
+        ):
+            results.append(future.result())
+    
+    # 分别统计准确率和ROUGE-L分数
+    exact_matches = sum(1 for correct, _ in results if correct)
+    rouge_scores = [score for correct, score in results if not correct]
+    avg_rouge = sum(rouge_scores) / len(extracted_facts) if rouge_scores else 0
+    
+    # 归一化分数：70%权重给exact match，30%权重给ROUGE-L
+    final_accuracy = 0.7 * (exact_matches / len(extracted_facts)) + 0.3 * avg_rouge
+    
+    print(f"\nExact matches: {exact_matches}/{len(extracted_facts)} ({exact_matches/len(extracted_facts):.2%})")
+    print(f"Average ROUGE-L for non-exact matches: {avg_rouge:.2%}")
+    print(f"Final normalized score: {final_accuracy:.2%}")
+    
+    return final_accuracy
+
 def main(TASK, MAX_ITERATION):
     # Initialize agents
     common_agent = BaseAgent()
@@ -331,7 +404,7 @@ def main(TASK, MAX_ITERATION):
                     retry_count = 0
                     queries_list = None
                     
-                    while retry_count < max_retries:
+                    while (retry_count < max_retries):
                         queries_list = extract_queries_from_response(search_thought_and_queries)
                         if queries_list and isinstance(queries_list, list) and len(queries_list) > 0:
                             print(f"Extracted queries: {queries_list}")
@@ -388,14 +461,13 @@ def main(TASK, MAX_ITERATION):
                         }
                     )
 
-                    print(section_content)
-
-                    print(json.dumps(conversation_data, indent=4))
-
                     # 使用factual_QA_verifier进行问答得到accuracy reward
-                    pass
-
-
+                    accuracy = verify_factual_qa(common_agent, agent_report_sections, item["extracted_facts"])
+                    conversation_data.append({
+                        "from": "verifier",
+                        "accuracy": accuracy,
+                        "section": section_path
+                    })
 
                     exit(1)
 
@@ -427,7 +499,7 @@ def main(TASK, MAX_ITERATION):
                 common_agent_answer = reconstruct_markdown(outline_json, flat_contents)
                 print(common_agent_answer)  # 这里是第一次生成的report,还没有polish
 
-                # 用deepseek润色一下得到正式的version1 report
+                # ��deepseek润色一下得到正式的version1 report
                 polish_prompt = common_agent.load_template("polish_first_version.txt")
                 polish_rendered_prompt = common_agent.render_template(
                     polish_prompt,
@@ -445,7 +517,7 @@ def main(TASK, MAX_ITERATION):
                 with open("first_version_report.md", "w") as f:
                     f.write(common_agent_answer)
 
-                # Polish后从markdown解析出文档结构
+                # Polish后从markdown解析出���档结构
                 document_structure = parse_markdown_to_structure(common_agent_answer)
                 common_agent.document_structure = document_structure
 

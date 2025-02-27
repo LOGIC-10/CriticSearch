@@ -9,15 +9,18 @@ from concurrent.futures import ThreadPoolExecutor
 
 import pandas as pd
 from tenacity import retry, stop_after_attempt, wait_fixed
-from tree_comparison import tree_similarity  # imported but not used yet
 from criticsearch.base_agent import BaseAgent
-from extract_ground_truth import (
+from criticsearch.reportbench.extract_ground_truth import (
     extract_markdown_sections,
     extractDirectoryTree,
     extractMarkdownContent,
     extractSectionContentPairs,
 )
+
 from criticsearch.utils import count_tokens
+import os
+import hashlib
+from pathlib import Path
 
 # %% [markdown]
 # ## ReportBenchmark Class Definition
@@ -46,6 +49,29 @@ class ReportBenchmark:
             if user_query is None
             else user_query
         )
+        # 添加缓存相关的属性
+        self.cache_dir = Path("cache/benchmark_results")
+        self.cache_dir.mkdir(parents=True, exist_ok=True)
+
+    def _get_cache_key(self):
+        """生成缓存文件的唯一标识"""
+        # 使用输入文件路径和查询作为缓存key的基础
+        content = f"{self.json_path}_{self.user_query}"
+        return hashlib.md5(content.encode()).hexdigest()
+
+    def _load_from_cache(self):
+        """从缓存加载结果"""
+        cache_file = self.cache_dir / f"{self._get_cache_key()}.json"
+        if cache_file.exists():
+            with open(cache_file, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        return None
+
+    def _save_to_cache(self, results):
+        """保存结果到缓存"""
+        cache_file = self.cache_dir / f"{self._get_cache_key()}.json"
+        with open(cache_file, 'w', encoding='utf-8') as f:
+            json.dump(results, f, ensure_ascii=False, indent=2)
 
     def sliding_window_pairing(self, max_token_length=2000):
         """
@@ -160,9 +186,17 @@ class ReportBenchmark:
                     break
             
             # 创建窗口对象
-            # 修改这里，将 section_window_path_text 设置为窗口中所有部分的标题
-            path_titles = [p["title"] for p in window_path]
-            path_text = " > ".join(path_titles)
+            # 修改这里，将路径文本包含标题的层级信息
+            def format_path_with_depth(path_nodes):
+                formatted_titles = []
+                for node in path_nodes:
+                    depth = node["depth"]
+                    title = node["title"]
+                    formatted_title = '#' * depth + ' ' + title
+                    formatted_titles.append(formatted_title)
+                return ' -> '.join(formatted_titles)
+            
+            path_text = format_path_with_depth(window_path)
             window = {
                 "highest_title": highest_title,
                 "merged_section_window_content": merged_content,
@@ -170,6 +204,7 @@ class ReportBenchmark:
                 "section_window_path_text": path_text,
                 "section_window_tokens": window_tokens
             }
+            
             windows.append(window)
             
             # 下一个窗口的起始位置
@@ -234,51 +269,90 @@ class ReportBenchmark:
         response = self.agent.common_chat(usr_prompt=prompt)
         return response
 
-    def generate_benchmark_item(self, visualization=False):
-        # Build both GTs and then run all benchmark evaluations.
-        fact_extraction_result = self.run_fact_extraction()
-        final_parsed_data = []
-        for section in fact_extraction_result:
-            parsed_data = self.parse_tagged_data_to_table(section)
-            final_parsed_data.append(parsed_data)
+    def process_window_content(self, content, max_retries=10):
+        """处理单个窗口内容,如果结果为空则重试"""
+        for attempt in range(max_retries):
+            try:
+                result = self.process_section(content)
+                if result:
+                    parsed_data = self.parse_tagged_data_to_table(result)
+                    if parsed_data:  # 如果解析出的数据不为空
+                        return parsed_data
+                print(f"Attempt {attempt + 1}: Empty result, retrying...")
+            except Exception as e:
+                print(f"Attempt {attempt + 1} failed with error: {e}")
+        return []  # 如果所有尝试都失败,返回空列表
 
-        if visualization:
-            # Merge all parsed data into single list
-            merged_data = []
-            for parsed_data in final_parsed_data:
-                merged_data.extend(parsed_data)
-            # Create DataFrame and export CSV
-            df = pd.DataFrame(merged_data)
-            csv_file = "visualization.csv"
-            df.to_csv(csv_file, index=False)
-            print("Visualization DataFrame:")
-            print(df)
+    def generate_benchmark_item(self, use_cache=True):
+        """添加缓存支持的基准测试项生成方法"""
+        if use_cache:
+            cached_results = self._load_from_cache()
+            if cached_results is not None:
+                print("Loading results from cache...")
+                return cached_results
+        
+        # 原有的生成逻辑
+        results = []
+        windows = self.sliding_window_pairing()
+        
+        # 准备抽取任务的输入
+        window_contents = []
+        window_paths = []
+        for window in windows:
+            window_contents.append(window["merged_section_window_content"])
+            window_paths.append(window["section_window_path_text"])
+        
+        # 组合抽取结果和路径信息
+        final_results = []
+        for path, content in zip(window_paths, window_contents):
+            parsed_data = self.process_window_content(content)
+            if parsed_data:
+                final_results.append({
+                    "path": path,
+                    "merged_section_window_content": content,
+                    "extracted_facts": parsed_data
+                })
+        
+        # 保存结果到缓存
+        if use_cache:
+            self._save_to_cache(final_results)
+            
+        return final_results
 
-        return {
-            "title": self.breadth_gt.get("title", ""),
-            "breadth_gt": self.breadth_gt,
-            "fact_extraction": final_parsed_data,
-        }
+    def process_section(self, section_text):
+        """将原来run_fact_extraction中的process_section逻辑移到单独的方法"""
+        @retry(stop=stop_after_attempt(10), wait=wait_fixed(1), reraise=True)
+        def attempt():
+            template_str = self.agent.load_template("fact_extraction.txt")
+            data = {
+                "wiki_text": section_text,
+                "UserQuery": self.user_query,
+            }
+            prompt = self.agent.render_template(template_str, data)
+            response = self.agent.common_chat(usr_prompt=prompt)
+            if not isinstance(response, list):
+                if not response.strip():
+                    raise Exception("Empty response received from common_chat")
+                try:
+                    candidate = json.loads(response)
+                    print(candidate)
+                    if isinstance(candidate, list):
+                        return candidate
+                except Exception as e:
+                    raise Exception("Section response conversion failed") from e
+                raise Exception("Section response is not a list")
+            return response
+
+        try:
+            return attempt()
+        except Exception as e:
+            print(
+                f"Warning: Failed to process section after 10 attempts. Skipping this section. Error: {e}"
+            )
+            return None
 
     def parse_tagged_data_to_table(self, entries, csv_path=None):
-        """
-        Parse a list of strings with tagged data and convert them into a table.
-
-        Each entry in the list is expected to contain:
-        - A question enclosed between </question> and </question>
-        - A format description enclosed between </constrained_format> and </constrained_format>
-        - An answer enclosed in </answer> and </answer>
-
-        Parameters:
-            entries (list of str): List of strings with tagged content.
-            csv_path (str): Optional file path to save CSV.
-
-        Returns:
-            list of dict: List of dictionaries with parsed data.
-        """
-
         parsed_data = []
-
         for entry in entries:
             # Extract question
             question_match = re.search(r"</question>(.*?)</question>", entry)
@@ -294,18 +368,12 @@ class ReportBenchmark:
             answer_match = re.search(r"</answer>(.*?)</answer>", entry)
             answer = answer_match.group(1).strip() if answer_match else ""
 
-            # Append to parsed data
-            parsed_data.append(
-                {"Question": question, "Format": format_desc, "Answer": answer}
-            )
-
-        # Save to CSV if path is provided and ends with '.csv'
-        if csv_path and csv_path.endswith(".csv"):
-            # Create DataFrame
-            df = pd.DataFrame(parsed_data)
-            df.to_csv(csv_path, index=False)
-            print(f"Table saved to {csv_path}")
-            return df
+            # 验证answer中是否包含\boxed{...}格式的内容
+            boxed_match = re.search(r"\\boxed{([^}]+)}", answer)
+            if boxed_match:  # 只有当匹配到boxed内容时才添加到结果中
+                parsed_data.append(
+                    {"question": question, "format": format_desc, "answer": answer}
+                )
 
         return parsed_data
 
@@ -319,11 +387,11 @@ class ReportBenchmark:
 
 # %%
 if __name__ == "__main__":
-    json_file = "./wiki_data/2024_Syrian_opposition_offensives.json"
+    json_file = "/workspaces/CriticSearch/src/criticsearch/reportbench/wiki_data/2024_Syrian_opposition_offensives.json"
     benchmark = ReportBenchmark(json_file)
     # print(benchmark.section_content_pairs)
     print(json.dumps(benchmark.sliding_window_pairing(max_token_length=800), indent=2))
-    # results = benchmark.generate_benchmark_item(visualization=True)
-    # print("Benchmark Item curation Results:")
-    # print(results)
+    results = benchmark.generate_benchmark_item(use_cache=True)
+    print("Benchmark Item curation Results:")
+    print(json.dumps(results, indent=2))
 # %%

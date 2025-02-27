@@ -1,0 +1,584 @@
+2025-02-27 05:48:00.768 | SUCCESS  | criticsearch.log:set_logger_level_from_config:92 - Log level set to INFO!
+2025-02-27 05:48:00.769 | SUCCESS  | criticsearch.main:main:243 - Starting the conversation with task: Write a report about 2024_Syrian_opposition_offensives event
+2025-02-27 05:48:00.769 | SUCCESS  | criticsearch.log:colorize_message:130 - 
+==================== ITERATION 1 ====================
+
+2025-02-27 05:48:01.391 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST https://aihubmix.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-02-27 05:48:04.723 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST https://aihubmix.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-02-27 05:48:08.033 | INFO     | httpx._client:_send_single_request:1740 - HTTP Request: POST https://api.tavily.com/search "HTTP/2 200 OK"
+2025-02-27 05:48:08.035 | INFO     | criticsearch.tools.search_adapter.search_aggregator:_search_single_query:48 - 
+Query: Syrian opposition groups strategy 2024
+Search Results:
+--------------------------------------------------
+[1]:
+TITLE: In Aleppo Countryside, the Opposition Turns the Tables on the Syrian ...
+URL: https://themedialine.org/video/in-aleppo-countryside-the-opposition-turns-the-tables-on-the-syrian-regime/
+CONTENT: 11/28/2024 . For the first time in years, Syrian opposition groups have launched a significant military operation against regime forces, indicating a potential strategy shift for the diminished opposition. The Aleppo countryside in Syria is witnessing a new military development as Syrian opposition factions and allied groups launched a surprise
+--------------------------------------------------
+[2]:
+TITLE: 2024 Syrian opposition offensives - Wikipedia
+URL: https://en.wikipedia.org/wiki/2024_Syrian_opposition_offensives
+CONTENT: On 27 November 2024, a coalition of Syrian opposition groups called the Military Operations Command[38] led by Hay'at Tahrir al-Sham (HTS) and allied Turkish-backed groups[39][40][41] in the Syrian National Army (SNA) launched an offensive against the pro-government Syrian Arab Army (SAA) forces in Idlib, Aleppo and Hama Governorates in Syria. In the evening of 6 December 2024, Southern Front forces captured the regional capital of Suwayda, in southern Syria, following pro-government forces withdrawal from the city.[123][124] Concurrently, SDF captured the provincial capital of Deir ez-Zor from pro-government forces, which also left the town of Palmyra in central Homs region.[125][126] By midnight, opposition forces in the southern Daraa Governorate captured its capital Daraa, as well as 90% of the province, as pro-government forces withdrew towards the capital Damascus.[46] Meanwhile, the Syrian Free Army, a different rebel group backed by the United States took control of Palmyra in an offensive launched from the al-Tanf "deconfliction zone".[127]
+--------------------------------------------------
+[3]:
+TITLE: A blueprint for bringing about a new Syria - Atlantic Council
+URL: https://www.atlanticcouncil.org/blogs/new-atlanticist/a-blueprint-for-bringing-about-a-new-syria/
+CONTENT: For a reconstruction strategy in Syria to be effective, all parties must adopt a unified approach that is clear-eyed about the country's new leaders. ... 2024 Print this page ... to bring together Syrian political opposition groups for talks on a new vision for Syria and on creating conditions for the implementation of United Nations Security
+--------------------------------------------------
+[4]:
+TITLE: Southern Syria offensive (2024) - Wikipedia
+URL: https://en.wikipedia.org/wiki/Southern_Syria_offensive_(2024)
+CONTENT: Beginning on 29 November 2024, rebel groups commenced operations against Syrian government installations across the southern region, with particular focus on the Daraa and As-Suwayda governorates. According to the Syrian Observatory for Human Rights (SOHR), unidentified combatants fired upon government-loyalist Syrian Armed Forces (SAF) military personnel near Om Shama Town in the eastern region of Suwayda Governorate, resulting in the death of an SAF first lieutenant from Tartus and the wounding of two additional service members.[13] On 30 November, another SAF first lieutenant and three Bedouin tribe members were shot to death by opposing combatants, according to SOHR.[14] SOHR also said a local armed group commander was killed by gunfire in Tafas in western Daraa, while another was wounded.[15] On 30 November 2024, the Syrian Armed Forces implemented a significant military deployment to Daraa, a strategic city in southern Syria.
+--------------------------------------------------
+[5]:
+TITLE: Syrian Rebel Advances: November 2024 Strategic Gains and Implications
+URL: https://genesysdefense.com/intl/advancements-and-strategic-shifts-syrian-rebel-operations-in-november-2024/
+CONTENT: After an in-depth interview with Dr. Adib Enayati, the esteemed director of the Genesys Defense Special Intelligence and Warfare Studies Unit (GDSIWSU), we were provided with a detailed and insightful analysis of the recent advancements made by Syrian rebel factions. Key players include the Syrian National Army (SNA), the Kurdish-led Syrian Democratic Forces (SDF), and Islamist groups like Hayat Tahrir al-Sham (HTS). Syrian National Army (SNA): Operating primarily in northern Syria, the SNA is backed by Turkey and serves as its main proxy force in the region. Syrian Democratic Forces (SDF): Dominated by the Kurdish YPG, the SDF controls large areas of northeastern Syria. The recent gains underscore the rebels’ ability to reassert control in key regions despite ongoing pressures from both Assad-aligned forces and external powers such as Russia.
+--------------------------------------------------
+[6]:
+TITLE: How ISIS May Respond to HTS's Takeover: Rivalries, Strategy, and Future ...
+URL: https://smallwarsjournal.com/2025/01/08/how-isis-may-respond-to-htss-takeover/
+CONTENT: As of October 2024, ISIS conducted 237 attacks in Dayr ar Zawr, 83 in Homs, and 51 in Ar Raqqah. Remarkably, ISIS was active in seven of Syria's 12 provinces in 2024, further reinforcing the group's sustained presence and operational capacity across the region. Figure 3: Locations of ISIS Attacks, January 2018 to October 2024
+--------------------------------------------------
+[7]:
+TITLE: What Syria's Opposition Resurgence Means for Ankara
+URL: https://www.wilsoncenter.org/article/what-syrias-opposition-resurgence-means-ankara
+CONTENT: Ankara’s Syria strategy intertwines with HTS-led opposition offensives against Assad, aiming to weaken Kurdish groups, facilitate refugee returns, and solidify Turkey’s regional role.
+--------------------------------------------------
+[8]:
+TITLE: Syria's Post-Assad Era: Transitional Strategies, Conflict, and ...
+URL: https://americancenter.org/2024/12/12/syrias-post-assad-era/
+CONTENT: Syrian Opposition Flag Raised at Embassy in Moscow; In Moscow, the Syrian opposition flag was raised at the Syrian embassy following the fall of Bashar al-Assad's regime. An embassy representative confirmed to TASS that operations resumed "under a new flag." Assad reportedly fled to Moscow shortly after a swift rebel offensive ended his
+--------------------------------------------------
+[9]:
+TITLE: Syria in Transition: Charting a New Path for Regional Stability and US ...
+URL: https://ncusar.org/aa/2025/01/syria-in-transition-charting-a-new-path-for-regional-stability-and-us-policy/
+CONTENT: Syria in Transition: Charting a New Path for Regional Stability and US Policy — National Council Analyses and Assessments The following analysis evaluates the latest developments in Syria, emphasizing the United States’ evolving policy, the implications of Assad’s removal, the emergent complexities within the opposition, and the broader geopolitical currents shaping Syria’s future. Together, these interconnected challenges demand a nuanced and strategic approach from U.S. policy in a post-Assad Syria. In determining its policies for a post-Assad Syria, the U.S. must reconsider the Caesar Act and other sanctions. As Syria navigates a post-conflict phase, U.S. policy should adapt by pairing adjusted sanctions with proactive diplomatic initiatives aimed at facilitating reconstruction, refugee return, and broader international engagement to foster stability.
+--------------------------------------------------
+[10]:
+TITLE: New, Comprehensive Approach Key to Address Syria's Political ...
+URL: https://press.un.org/en/2024/sc15680.doc.htm
+CONTENT: Piecemeal measures to tackle Syria's interlocking political, economic and humanitarian challenges cannot bring stability to the country and the region, the United Nations mediator for Syria told the Security Council today, calling for a new, comprehensive approach that addresses the full range of issues with the warring parties.
+--------------------------------------------------
+2025-02-27 05:48:08.184 | INFO     | httpx._client:_send_single_request:1740 - HTTP Request: POST https://api.tavily.com/search "HTTP/2 200 OK"
+2025-02-27 05:48:08.185 | INFO     | criticsearch.tools.search_adapter.search_aggregator:_search_single_query:48 - 
+Query: Turkey and Russia dynamics Syria 2024
+Search Results:
+--------------------------------------------------
+[1]:
+TITLE: Russia, Turkey, Iran gather in Qatar to discuss Syria's shifting power ...
+URL: https://www.kurdistan24.net/en/story/814043
+CONTENT: Russia, Turkey, Iran gather in Qatar to discuss Syria's shifting power dynamics. The trio has been heavily involved in Syria, and ever since the Astana peace talks began in 2017 to end the civil war, their influence has grown. ... Dec. 7, 2024. ERBIL (Kurdistan24) - The Foreign Ministers of Russia, Turkey, and Iran are set to meet in Doha on
+--------------------------------------------------
+[2]:
+TITLE: Developments In Syria: Regional Dynamics And Implications For Turkey ...
+URL: https://www.eurasiareview.com/09122024-developments-in-syria-regional-dynamics-and-implications-for-turkey-oped/
+CONTENT: December 9, 2024 December 9, 2024 Haluk Direskeneli 0 Comments By Haluk Direskeneli Recent political and military developments in Syria suggest a potential shift in regional power dynamics.
+--------------------------------------------------
+[3]:
+TITLE: Russia and Turkey Discuss Regional Stability, Energy, and Syria's ...
+URL: https://www.kurdistan24.net/en/story/826539/russia-and-turkey-discuss-regional-stability-energy-and-syrias-territorial-integrity
+CONTENT: ERBIL (Kurdistan24) - Russian Foreign Minister Sergey Lavrov met with his Turkish counterpart Hakan Fidan in Ankara on Monday, to discuss key regional and international issues, with a particular focus on Syria's territorial integrity and broader geopolitical concerns. Following the meeting, Minister Fidan held a joint press conference with his counterpart Lavrov, stating that Turkey and
+--------------------------------------------------
+[4]:
+TITLE: Russia, Turkey struggle to realign strategy for post-al Assad Syria ...
+URL: https://www.indiatoday.in/world/story/russia-turkey-struggle-to-realign-strategy-for-post-al-assad-syria-glbg-2649978-2024-12-15
+CONTENT: News World Russia, Turkey struggle to realign strategy for post-al Assad Syria Russia, Turkey struggle to realign strategy for post-al Assad Syria The fall of Assad's regime has shifted Syria's conflict dynamics, with Turkey realigning strategies, Russia facing military challenges, and regional stability threatened by factional and sectarian
+--------------------------------------------------
+[5]:
+TITLE: After Assad: Turkey's Rise and Iran's Decline in Syria
+URL: https://www.jurist.org/commentary/2024/12/after-assad-turkeys-rise-and-irans-decline-in-syria/
+CONTENT: After Assad: Turkey's Rise and Iran's Decline in Syria - JURIST - Commentary - Legal News & Commentary After Assad: Turkey’s Rise and Iran’s Decline in Syria The author, an independent Middle East analyst, argues that the sudden fall of Assad's regime in late 2024 has fundamentally reshaped Syria's political landscape, creating a dangerous power vacuum... The fall of the Assad regime is more than the collapse of one leader, but an event which dislocates the state’s centralized authority and could turn Syria into a failed state. The fall of Assad has fundamentally weakened Iran’s leading role in Syria under his rule. The fall of Assad’s regime dealt a significant blow to Iran’s so-called “axis of resistance,” a network of allies and proxies intended to oppose Israeli and Western influence in the Middle East.
+--------------------------------------------------
+[6]:
+TITLE: The Fall of the Assad Regime: Regional and International Power Shifts ...
+URL: https://www.swp-berlin.org/en/publication/the-fall-of-the-assad-regime-regional-and-international-power-shifts
+CONTENT: At the same time, Iran gained political influence within Syria's military and security apparatus. On the diplomatic front, the Islamic Republic participated in the Astana Format, along­side Russia and Turkey. Despite such intensive involvement, Iran was unable to prevent the collapse of the Syrian regime at the end of 2024.
+--------------------------------------------------
+[7]:
+TITLE: Turkey has emerged as a winner in Syria but must now use its influence ...
+URL: https://www.chathamhouse.org/2024/12/turkey-has-emerged-winner-syria-must-now-use-its-influence-help-build-peace
+CONTENT: Turkey shares its longest land border with Syria, over 900 km. Syria is therefore not merely a foreign policy issue for Turkey but also a domestic one. While Turkey has shaped the course of the Syrian conflict, the Syrian conflict has in turn shaped the dynamics of Turkish domestic politics and international relations for more than a decade.
+--------------------------------------------------
+[8]:
+TITLE: Turkey and Russia Engage in Delicate Maneuvers over Syria After Assad's ...
+URL: https://www.military.com/daily-news/2024/12/20/turkey-and-russia-engage-delicate-maneuvers-over-syria-after-assads-downfall.html
+CONTENT: The rapid downfall of Syrian leader Bashar Assad has touched off a new round of delicate geopolitical maneuvering between Russia's Vladimir Putin and Turkey's Recep Tayyip Erdogan.. With the dust
+--------------------------------------------------
+[9]:
+TITLE: After Assad's Collapse: How Turkey Handles Proxies And Kurdish Dynamics ...
+URL: https://www.forbes.com/sites/guneyyildiz/2024/12/11/after-assads-collapse-how-turkey-handles-proxies-and-kurdish-dynamics-in-syria/
+CONTENT: Recalibrating Turkey’s Role in Syria: Proxies, Kurds & Influence After Assad’s Collapse: How Turkey Handles Proxies And Kurdish Dynamics In Syria Unlike its decisive role during the Nagorno-Karabakh war, where Turkey provided both the strategic military mind and critical equipment to Azerbaijani forces against Armenian troops, Ankara did not take the driving seat in Syria. [+] Ankara’s approach to Kurdish dynamics may define its role in the emerging order. Turkey's approach to Syria, historically filtered through the lens of curtailing Kurdish influence along its borders, has shaped its strategic positioning. Does Turkey accommodate HTS’s rise, acknowledge Kurdish realities, and carve out a constructive role that secures both influence and stability? Moving swiftly—accepting HTS’s ascendancy, negotiating pragmatic terms with Kurdish elements—might signal adaptability and secure Turkey’s seat at the table.
+--------------------------------------------------
+[10]:
+TITLE: Turkey and the Transition to a Post-Assad Regime in Syria
+URL: https://arabcenterdc.org/resource/turkey-and-the-transition-to-a-post-assad-regime-in-syria/
+CONTENT: In the first phase (2011-2016), Turkey was an active supporter of the uprising in Syria and its primary goal was the overthrow of the Assad regime. Among the various armed groups, HTS currently holds the upper hand, and the relationship between HTS and Turkey is likely to play a pivotal role in shaping Syria’s future, as well as Turkey’s influence in the region. Turkey’s support for HTS has ensured the latter’s survival and facilitated its transformation into a quasi-state actor, solidifying Ankara’s influence in Syria’s future. However, Turkey’s relations with other armed groups, particularly the SNA and SDF, could complicate Syria’s transition in the post-Assad era.
+--------------------------------------------------
+2025-02-27 05:48:08.213 | INFO     | httpx._client:_send_single_request:1740 - HTTP Request: POST https://api.tavily.com/search "HTTP/2 200 OK"
+2025-02-27 05:48:08.215 | INFO     | criticsearch.tools.search_adapter.search_aggregator:_search_single_query:48 - 
+Query: Geopolitical analysis Middle East 2024
+Search Results:
+--------------------------------------------------
+[1]:
+TITLE: The key issues that will define Middle East politics in 2024
+URL: https://chs-doha.org/en/Insights/Pages/The-key-issues-that-will-define-Middle-East-politics-in-2024.aspx
+CONTENT: This year has been a turbulent and eventful one for the Middle East, marked by geopolitical shifts, escalating conflicts and tragic disasters. ... 28 Dec 2024. Analysis: Why have Pakistan's ties with the Afghan Taliban turned frigid? 9 Dec 2024. Syria: We need new ways of delivering aid following collapse of Assad regime.
+--------------------------------------------------
+[2]:
+TITLE: Shifting sands: Navigating the new geopolitical landscape in 2024
+URL: https://orfme.org/expert-speak/shifting-sands-navigating-the-new-geopolitical-landscape-in-2024/
+CONTENT: However, the potential normalisation of Armenia-Azerbaijan relations in the upcoming year might offer a rare positive development in geopolitics, beneficial for global trade routes, particularly the International North South Transport Corridor (INSTC) via Iran and Central Asia to Russia given that the India-Middle East-Europe Corridor (IMEC) project was put on hold because of the military tensions in the Gulf region following the Israel-Hamas conflict and the disruption of the global choke point Bab-al-Mandeb in the Red Sea. Additionally, the possibility of China and Russia opening a third front in the Indo-Pacific region to challenge American influence and credibility, especially before the United States (US) presidential election, is high.
+--------------------------------------------------
+[3]:
+TITLE: Live Discussion: Understanding the Middle East - Geopolitical Futures
+URL: https://geopoliticalfutures.com/live-discussion-understanding-the-middle-east/
+CONTENT: Why have current conflicts in the Middle East played out the way they have and what is on the horizon, for better or for worse? ... Daily Geopolitical Analysis Annual Geopolitical Forecasts; Forecast Insights ... Analysis Geopolitical Futures-December 30, 2024. Turkey vs. Iran vs. the US. Analysis Kamran Bokhari-December 30, 2024.
+--------------------------------------------------
+[4]:
+TITLE: Key political trends to watch in the Middle East in 2024 - The New Arab
+URL: https://www.newarab.com/analysis/key-political-trends-watch-middle-east-2024
+CONTENT: Syria's regional reintegration. The Syrian government led by President Bashar al-Assad made huge inroads in terms of its rehabilitation in the Middle East and North Africa last year. Damascus officially regained full-fledged Arab League membership with Assad himself travelling to three GCC states - Oman, the UAE, and Saudi Arabia.It will be important to see how this trend plays out in 2024.
+--------------------------------------------------
+[5]:
+TITLE: The key issues that will define Middle East politics in 2024
+URL: https://www.middleeasteye.net/opinion/middle-east-politics-key-issues-define-2024
+CONTENT: Thirdly, the economic landscape in the Middle East and North Africa (Mena) region in 2024 is set to be heavily influenced by the adverse spillover effects of the Gaza crisis.
+--------------------------------------------------
+[6]:
+TITLE: The Politics of 2024: the view from Asia, Americas, Middle East and ...
+URL: https://www.global-counsel.com/insights/report/politics-2024-view-asia-americas-middle-east-and-europe
+CONTENT: Most of the fair-weather assumptions for the global economy in 2024 are based on a calculus that disruptive tensions in the Middle East and elsewhere are containable. The complex realities of building a modern global distribution system that works with the politics and policy of curated interdependence driving capitals is a now a first order
+--------------------------------------------------
+[7]:
+TITLE: 2024: A year in the Middle East - Atlantic Council
+URL: https://www.atlanticcouncil.org/blogs/menasource/2024-a-year-in-the-middle-east/
+CONTENT: Conflict Crisis Management Economy & Business Iran Iraq Israel Lebanon Libya Middle East North Africa Politics & Diplomacy Saudi Arabia Security & Defense Syria The Gulf Yemen The strikes, which represented the first offensive airstrikes by the global coalition formed to protect shipping in the Red Sea, came after months of Houthi attacks on ships headed towards or from Israel, as the Houthis have pledged solidarity to Hamas since the outbreak of the Gaza War. The goal of the strikes, writes Kirsten Fontenrose, a nonresident senior fellow at the Scowcroft Middle East Security Initiative, was to “reduce the group’s ability to destabilize the region, threaten global shipping, endanger Israel and surrounding countries with poorly planned strikes, and protect civilians on land and at sea.” Conflict Crisis Management Economy & Business Iran Iraq Israel Lebanon Libya Middle East North Africa Politics & Diplomacy Saudi Arabia Security & Defense Syria The Gulf Yemen
+--------------------------------------------------
+[8]:
+TITLE: Middle East Geopolitical Report: Strategic Risks and Business ...
+URL: https://www.criticalexpertisesolutions.com/post/blog-middle-east-geopolitical-report-2024
+CONTENT: The Middle East, historically a region of complex alliances and strategic rivalries, is undergoing rapid geopolitical transformation. Recent shifts in U.S. foreign policy under President Donald Trump, combined with the expanding influence of China and Russia, have prompted regional powers like Saudi Arabia, Iran, and Turkey to adapt their strategies in response to a reshaped global power
+--------------------------------------------------
+[9]:
+TITLE: What next for the Middle East? 10 experts give their analysis - BBC
+URL: https://www.bbc.com/news/articles/clylzx1xz2yo
+CONTENT: What they say they’re doing is removing the threat of Hezbollah to protect civilians in Northern Israel who live in sovereign territory and need to return after being displaced for a year as a result of ongoing rocket fire from Hezbollah, who joined the fight with Hamas after October 7. For the past 20 years, Iran and its proxies (Hamas and Hezbollah) on one side and Israel on the other have held each other to a draw, meaning there was mutual deterrence. Does the spreading of conflict make it harder for Israel to achieve its aims in Gaza? Hamas says it will postpone hostage release, blaming Israel ----------------------------------------------------------- 4 hrs ago Middle East
+--------------------------------------------------
+[10]:
+TITLE: Middle East Tensions: Reshaping Geopolitics and Impact on Global Supply ...
+URL: https://quointelligence.eu/2024/05/middle-east-tensions-analysis/
+CONTENT: Increased Polarization Of The Geopolitical Landscape: The ongoing tensions in the Middle East have contributed to fuel the polarization of the geopolitical landscape, with Iran, Russia, and China often showing a united front. Russia and China see this crisis as an opportunity to drive a wedge between the West and the rest of the world.
+--------------------------------------------------
+2025-02-27 05:48:08.300 | INFO     | httpx._client:_send_single_request:1740 - HTTP Request: POST https://api.tavily.com/search "HTTP/2 200 OK"
+2025-02-27 05:48:08.301 | INFO     | criticsearch.tools.search_adapter.search_aggregator:_search_single_query:48 - 
+Query: Iran regional pressure and role in Syria 2024
+Search Results:
+--------------------------------------------------
+[1]:
+TITLE: Iran is the Biggest Regional Loser of Assad's Fall
+URL: https://iranprimer.usip.org/blog/2024/dec/12/iran-biggest-regional-loser-assad’s-fall
+CONTENT: Dec. 8, 2024: "The Ministry of Foreign Affairs of the Islamic Republic of Iran, considering recent developments in Syria, reiterates Iran's principled stance on respecting Syria's unity, national sovereignty, and territorial integrity, emphasizing that determining Syria's future and making decisions about its destiny are solely the
+--------------------------------------------------
+[2]:
+TITLE: Iran and Syria After Assad: Caution and Anticipation
+URL: https://worldpolicyhub.com/iran-and-syria-after-assad-caution-and-anticipation/
+CONTENT: In December 2024, in a record time that astonished both Iranians and others in the region and the world, the Baath regime in Syria fell. This change significantly impacts Iran and its allies in the region; Syria has allied with Iran since the 1980s, making it the sole partner for Iran in the Arab world which strived to balance the threats posed by Iraq, and later by the U.S. and Israel.
+--------------------------------------------------
+[3]:
+TITLE: Syria is growing to be an increasing concern for Iran - The Jerusalem Post
+URL: https://www.jpost.com/middle-east/article-831597
+CONTENT: The IRGC's role as Iran's external arm ensures that Syria remains central to Iran's regional ambitions. Missing friends Over the course of 2024, Khamenei has lost some of his closest allies.
+--------------------------------------------------
+[4]:
+TITLE: After Assad: Turkey's Rise and Iran's Decline in Syria
+URL: https://www.jurist.org/commentary/2024/12/after-assad-turkeys-rise-and-irans-decline-in-syria/
+CONTENT: After Assad: Turkey's Rise and Iran's Decline in Syria - JURIST - Commentary - Legal News & Commentary After Assad: Turkey’s Rise and Iran’s Decline in Syria The author, an independent Middle East analyst, argues that the sudden fall of Assad's regime in late 2024 has fundamentally reshaped Syria's political landscape, creating a dangerous power vacuum... The fall of the Assad regime is more than the collapse of one leader, but an event which dislocates the state’s centralized authority and could turn Syria into a failed state. The fall of Assad has fundamentally weakened Iran’s leading role in Syria under his rule. The fall of Assad’s regime dealt a significant blow to Iran’s so-called “axis of resistance,” a network of allies and proxies intended to oppose Israeli and Western influence in the Middle East.
+--------------------------------------------------
+[5]:
+TITLE: Eyeing Regional Powers, Syria Is Freezing Iran Out
+URL: https://www.rferl.org/a/syria-iran-saudi-rival-influence-russia/33303191.html
+CONTENT: Eyeing Regional Powers, Syria Is Freezing Iran Out ... As of October 2024, Iran has just over 182 kilograms of uranium enriched to up to 60 percent. ... Trump's memo orders the U.S. Treasury
+--------------------------------------------------
+[6]:
+TITLE: Iran and Syria bolster alliance amid regional tensions and global shifts
+URL: https://www.fdd.org/analysis/op_eds/2024/11/19/iran-and-syria-bolster-alliance-amid-regional-tensions-and-global-shifts/
+CONTENT: Iran is also preparing to face a new round of maximum pressure when the Trump administration comes into office, though Iran's foreign minister said this pressure would not work. The Syrian envoy said that Damascus opposes Israel's "strikes on Palestine, Lebanon, Syria, and the Iranian diplomatic mission in Damascus."
+--------------------------------------------------
+[7]:
+TITLE: Mounting Pressure on Iran with Waning Influence of Regional Proxies
+URL: https://americancenter.org/2024/12/31/mounting-pressure-on-iran/
+CONTENT: Iran's Secretary of the Supreme National Security Council, Ali Akbar Ahmadian, stated that a "new resistance" would emerge in Syria to confront Israel following the fall of President Bashar al-Assad, according to Iranian news agency IRNA. Ahmadian said, "With the occupation of Syrian land by the Zionist entity, a new resistance has been
+--------------------------------------------------
+[8]:
+TITLE: Iran-Syria Relations Amid Regional Reset Dynamics
+URL: https://mecouncil.org/publication_chapters/iran-syria-relations-amid-regional-reset-dynamics/
+CONTENT: The core objective of this chapter is to explore the ramifications of these regional reset trends on Iran-Syria relations. Its central argument maintains that, while Assad's burgeoning ties with Arab states afford Syria more autonomy from Iran, they do not necessarily equate to diminished Iranian influence in Syria, particularly in the military and security realms.
+--------------------------------------------------
+[9]:
+TITLE: Beyond proxies: Iran's deeper strategy in Syria and Lebanon
+URL: https://ecfr.eu/publication/beyond-proxies-irans-deeper-strategy-in-syria-and-lebanon/
+CONTENT: There is a grave risk that this escalates further in Lebanon and Syria - where Iran wields powerful influence - and spirals into a full-blown regional war. The intensifying conflict in Syria and Lebanon is the result of Israel's escalating response since Hamas's attacks on 7 October and Iran's "forward-defence" strategy, which
+--------------------------------------------------
+[10]:
+TITLE: Why Iranian Entrenchment in Southern Syria Worries Neighboring ...
+URL: https://carnegieendowment.org/research/2024/03/why-iranian-entrenchment-in-southern-syria-worries-neighboring-countries?lang=en&center=india
+CONTENT: The border region is especially important for being close to Israel. The highlands of Quneitra, overseeing the occupied Golan and bordering Lebanon, give Iran a pressure point against Israel, a main rival of Tehran whose security priorities have greatly defined the region's security framework.
+--------------------------------------------------
+2025-02-27 05:48:08.519 | INFO     | httpx._client:_send_single_request:1740 - HTTP Request: POST https://api.tavily.com/search "HTTP/2 200 OK"
+2025-02-27 05:48:08.520 | INFO     | criticsearch.tools.search_adapter.search_aggregator:_search_single_query:48 - 
+Query: Economic and political condition of Assad government 2024
+Search Results:
+--------------------------------------------------
+[1]:
+TITLE: The Fall of the Al-Assad Regime: Milestones & 2024 Collapse
+URL: https://ponderwall.com/index.php/2024/12/08/assad-syria-collapse/
+CONTENT: Meanwhile, the Syrian economy had collapsed, and millions of Syrians were displaced or living in dire conditions. The Collapse of the Assad Regime (2024) By December 8, 2024, the Assad regime finally came to a definitive end after a long period of internal and external instability. Key Factors Leading to the Collapse:
+--------------------------------------------------
+[2]:
+TITLE: After Assad Vol. 1: An overview of Syria's complex transition — CA-SYR
+URL: https://ca-syr.org/report/after-assad-vol1
+CONTENT: In the month after Bashar al-Assad's regime collapsed in early December 2024, Syria's future has rapidly transformed in a sudden onset transitional phase that presents both opportunities and formidable challenges. ... economic, and political infrastructure necessitate immediate comprehensive reforms and sustained international assistance
+--------------------------------------------------
+[3]:
+TITLE: Long, hard road to de-weaponizing Syria's economy - Asia Times
+URL: https://asiatimes.com/2024/12/long-hard-road-to-de-weaponizing-syrias-economy/
+CONTENT: The collapse of the Syrian government led by Bashar al-Assad on December 8, 2024, marked a historic moment in the Middle East. It still remains to be fully understood how the rebel coalition — a diverse assembly of political and ideological groups backed by regional powers — swiftly overpowered government forces.
+--------------------------------------------------
+[4]:
+TITLE: Syria after Assad 2024/25: Consequences and next steps
+URL: https://commonslibrary.parliament.uk/research-briefings/cbp-10161/
+CONTENT: In December 2024, the Russian Foreign Ministry announced that President Bashar al-Assad, who had governed Syria since 2000, had resigned and he had been offered asylum in Russia.Russian media say he is now in the country.. The announcement follows the rapid collapse of the Assad government's military forces in Syria in the wake of an offensive from Hayat Tahrir al-Sham (HTS) and other
+--------------------------------------------------
+[5]:
+TITLE: The Fall of Assad: What Syria's 2024 Regime Change Means for ... - Medium
+URL: https://medium.com/@penningtonaria/the-fall-of-assad-what-syrias-2024-regime-change-means-for-global-politics-95eebeaed80a
+CONTENT: Syria's regime change in December 2024 marks a pivotal shift in global politics. Explore the fall of Assad, its causes, and the implications for the Middle East and beyond.
+--------------------------------------------------
+[6]:
+TITLE: Fall of Assad: insights from PeaceRep Syria research
+URL: https://peacerep.org/2024/12/10/fall-of-assad-insights-from-peacerep-syria-research/
+CONTENT: While the UN-led peace process promoted an ideal of long-term conflict termination, the guarantors implemented short-term conflict stabilisation and endurance of the authoritarian regime of Bashar al-Assad - eluding UN accountability standards for human rights violations, particularly at the local level (Beaujouan, 2024). Syria's economic
+--------------------------------------------------
+[7]:
+TITLE: What Comes Next? Unpacking the Post-Assad Transition in Syria
+URL: https://timep.org/2025/01/21/what-comes-next-unpacking-the-post-assad-transition-in-syria/
+CONTENT: In a monumental event that has wide-reaching implications for the entire Middle East and North Africa (MENA) region and the whole world, on December 8, 2024, Bashar al-Assad's brutal regime was toppled from power in Syria. Over a ten-day period, a coalition of armed opposition groups, prominent among them Hayat Tahrir al-Sham (HTS), overtook key […]
+--------------------------------------------------
+[8]:
+TITLE: PDF
+URL: https://researchbriefings.files.parliament.uk/documents/CBP-10161/CBP-10161.pdf
+CONTENT: rapid collapse of the Assad government's military forces in Syria in the wake of an offensive from Hayat Tahrir al-Sham (HTS) and other opposition groups, including the Turkish-backed Syrian National Army (SNA), that was launched in November 2024 and culminated in the capture of Damascus in early December.
+--------------------------------------------------
+[9]:
+TITLE: Syria: Freedom in the World 2024 Country Report | Freedom House
+URL: https://freedomhouse.org/country/syria/freedom-world/2024
+CONTENT: In May 2021, President Bashar al-Assad won a fourth seven-year term, with the government reporting that he received 95.1 percent of the vote. Balloting was conducted under highly repressive conditions and only in government-controlled areas. The millions of Syrians living abroad largely refrained from voting.
+--------------------------------------------------
+[10]:
+TITLE: Networked authoritarianism and economic resilience in Syria - Brookings
+URL: https://www.brookings.edu/articles/networked-authoritarianism-and-economic-resilience-in-syria/
+CONTENT: Through close analysis of micro-data on company formation in Syria and publicly available government statements and news articles compiled by the Observatory of Political and Economic Networks (OPEN),1 it is now clear that Assad is engineering changes in the informal economic networks that have long underpinned the country’s political economy. In shoring up the economic bases of Assad’s power, these networks, among other factors, help to explain how, despite Syria’s spiraling economic crisis and the impact of sanctions, the regime is able to sustain a rejectionist, give-no-quarter approach, whether in talks around the terms of normalization with neighbors or in relation to the concessions associated with a political settlement of the Syrian conflict along lines envisioned in U.N. Security Council Resolution 2254.
+--------------------------------------------------
+2025-02-27 05:48:08.541 | INFO     | httpx._client:_send_single_request:1740 - HTTP Request: POST https://api.tavily.com/search "HTTP/2 200 OK"
+2025-02-27 05:48:08.542 | INFO     | criticsearch.tools.search_adapter.search_aggregator:_search_single_query:48 - 
+Query: Expert views on Syrian conflict 2024
+Search Results:
+--------------------------------------------------
+[1]:
+TITLE: Syria's Frozen Conflict Heats Up - United States Institute of Peace
+URL: https://www.usip.org/publications/2024/12/syrias-frozen-conflict-heats
+CONTENT: In 2024, the United Nations assessed that 16.7 million Syrians needed humanitarian assistance, the highest level since the outbreak of conflict in 2011. Syria's dire economic situation has persisted, marked by a deepening economic contraction. The government has struggled to provide the most basic essential services — like electricity
+--------------------------------------------------
+[2]:
+TITLE: Syria and the Levant | Chatham House - Chatham House - International ...
+URL: https://www.chathamhouse.org/regions/middle-east-and-north-africa/syria-and-levant
+CONTENT: Research focuses on the regional implications of Syria's 2024 revolution - and foreign and domestic policy in Lebanon and Jordan. ... View regions A-Z Events. Back to main menu. Events. Events. ... Expert comment Syria's conflict was never going to stay frozen. A new push for a lasting peace is needed
+--------------------------------------------------
+[3]:
+TITLE: Report of the Commission of Inquiry on Syrian Arab Republic to the 57th ...
+URL: https://www.ohchr.org/en/hr-bodies/hrc/iici-syria/report-coi-syria-september2024
+CONTENT: UN Commission warns Syrian war is intensifying amid continuing patterns of war crimes and fear of large-scale regional conflict 10 September 2024 ... Conduct of Hostilities and Incidents and Intensity in Northern Syrian Arab Republic, January - June 2024 (Click the image to view the map in detail. Permission to use with credit to: United
+--------------------------------------------------
+[4]:
+TITLE: What's happening in Syria? A simple guide | CNN
+URL: https://www.cnn.com/2024/11/30/middleeast/syrian-civil-war-reignited-explainer-intl/index.html
+CONTENT: Africa Americas Asia Australia China Europe India Middle East United Kingdom Follow CNN CNN10 About CNN Syrian rebel vows to clear country after attack in Aleppo Syria’s civil war is back in the spotlight after a new rebel coalition launched a surprise attack, sweeping into the country’s second largest city, Aleppo. Enter your email to sign up for CNN's "Meanwhile in the Middle East" Newsletter. Sign up for CNN's Meanwhile in the Middle East newsletter. Analysts told CNN that the Syrian rebels are using a vacuum left by the group to advance in Syria. More from CNN Syrian rebels launch major attack on regime forces in Aleppo province Nov 27, 2024 CNN10 About CNN Follow CNN
+--------------------------------------------------
+[5]:
+TITLE: 2024 Syrian opposition offensives - Wikipedia
+URL: https://en.wikipedia.org/wiki/2024_Syrian_opposition_offensives
+CONTENT: On 27 November 2024, a coalition of Syrian opposition groups called the Military Operations Command[38] led by Hay'at Tahrir al-Sham (HTS) and allied Turkish-backed groups[39][40][41] in the Syrian National Army (SNA) launched an offensive against the pro-government Syrian Arab Army (SAA) forces in Idlib, Aleppo and Hama Governorates in Syria. In the evening of 6 December 2024, Southern Front forces captured the regional capital of Suwayda, in southern Syria, following pro-government forces withdrawal from the city.[123][124] Concurrently, SDF captured the provincial capital of Deir ez-Zor from pro-government forces, which also left the town of Palmyra in central Homs region.[125][126] By midnight, opposition forces in the southern Daraa Governorate captured its capital Daraa, as well as 90% of the province, as pro-government forces withdrew towards the capital Damascus.[46] Meanwhile, the Syrian Free Army, a different rebel group backed by the United States took control of Palmyra in an offensive launched from the al-Tanf "deconfliction zone".[127]
+--------------------------------------------------
+[6]:
+TITLE: Fallout from Syria: Q&A with RAND Experts | RAND - RAND Corporation
+URL: https://www.rand.org/pubs/commentary/2024/12/fallout-from-syria-q-and-a-with-rand-experts.html
+CONTENT: The rapid collapse of the 50-year rule of the Assad family December 7 ended a brutal regime in Syria, but also precipitated bombings and attacks by Israel, the United States, and Turkey, where each is worried about what might happen in a power vacuum. Assad's downfall puts the future of Russia's military bases there in play and HTS has explicitly stated that it wants Syria to stop being a “playground for Iranian ambitions.” As to why they didn't get involved, a lot of it comes down to both Russia and Iran being tied down by the war in Ukraine and war in the broader Middle East.
+--------------------------------------------------
+[7]:
+TITLE: Syria's conflict was never going to stay frozen. A new push for a ...
+URL: https://www.chathamhouse.org/2024/12/syrias-conflict-was-never-going-stay-frozen-new-push-lasting-peace-needed
+CONTENT: Their commitment - o r lack thereof - to fostering a political solution will determine whether Syria can move toward peace or remain trapped in endless war. To advance the political process, the international community - led by key players such as the US, EU and UK - must renew its commitment to United Nations Security Council
+--------------------------------------------------
+[8]:
+TITLE: What's Next for Syria, the Region, and the World?
+URL: https://www.fpri.org/article/2024/12/whats-next-for-syria-the-region-and-the-world/
+CONTENT: In many ways, the war over Syria's future has just begun. Mohammed Soliman. Syria stands at the threshold of an unprecedented moment, one whose consequences ripple far beyond its borders. The Assad regime, long sustained by Russian and Iranian support, has finally crumbled under the weight of its failures.
+--------------------------------------------------
+[9]:
+TITLE: The Current Situation in Syria - United States Institute of Peace
+URL: https://www.usip.org/publications/2025/02/current-situation-syria
+CONTENT: The Current Situation in Syria | United States Institute of Peace Experts Regions Issue Areas Education & Training Events About Publications Projects Grants & Fellowships Visit Connect Press Blog Search for experts, projects, publications, courses, and more. The U.S. Institute of Peace has engaged on Syria since 2011, informing U.S. policymakers, convening the congressionally mandated and bipartisan Syria Study Group in 2019 and providing objective analysis on all facets of the Syrian conflict. USIP was also involved on the ground in Syria from 2015 to 2019, helping local leaders engage in outcome-oriented dialogues to promote peace in their communities as well as facilitating the return of Syrians displaced by conflict. After Assad’s Fall, Gulf States See Risks and Rewards in Syria
+--------------------------------------------------
+[10]:
+TITLE: PDF
+URL: https://phr.org/wp-content/uploads/2024/05/PHR-Syria-Expert-Report-HRC-May-2024-EN.pdf
+CONTENT: Human Rights Committee with an expert view on widespread and systematic attacks against Syria's health care system, including the extent to which Russian forces engaged in such attacks following Russia's formal intervention in the conflict in Syria in October 2015 and their impact
+--------------------------------------------------
+2025-02-27 05:48:08.544 | INFO     | httpx._client:_send_single_request:1740 - HTTP Request: POST https://api.tavily.com/search "HTTP/2 200 OK"
+2025-02-27 05:48:08.545 | INFO     | criticsearch.tools.search_adapter.search_aggregator:_search_single_query:48 - 
+Query: Impact of Hezbollah-Israel conflict on Syria 2023-2024
+Search Results:
+--------------------------------------------------
+[1]:
+TITLE: Hezbollah and Israel: From the brink of all-out war to a fragile ...
+URL: https://www.unav.edu/en/web/global-affairs/hezbollah-and-israel-from-the-brink-of-all-out-war-to-a-fragile-ceasefire
+CONTENT: A reignition of tensions. Prior to the initiation of Operation 'Northern Arrows' by Israel in September 2024, indications already suggested a transformation in the course of the conflict. From October 7, 2023, to August 18, 2024, the occurrence of violent incidents associated with the Israel-Hezbollah conflict varied between 150 and 250 per week, pointing to a consistent increase in intensity.
+--------------------------------------------------
+[2]:
+TITLE: PDF
+URL: https://researchbriefings.files.parliament.uk/documents/CBP-10108/CBP-10108.pdf
+CONTENT: 6 Commons Library Research Briefing, 12 December 2024 1 2023/24 Israel-Hezbollah conflict 1.1 Hezbollah-Israel attacks, October 2023 to September 2024 ... It has also fought in Syria in support of Bashar al-Assad in the country's civil war, to whom Iran has also provided military and financial support. Hezbollah's ties with Hamas were
+--------------------------------------------------
+[3]:
+TITLE: Israel-Hezbollah conflict (2023-2024) - Wikipedia
+URL: https://en.wikipedia.org/wiki/2023-24_Israel-Hezbollah_conflict
+CONTENT: Israel-Hezbollah conflict (2023-present) ... and Hezbollah's absence in Syria to launch the 2024 Syrian opposition offensive on 27 November 2024 to overrun Syria's government-held territories. [474] ... blamed Hezbollah for attacking Israel and said that it harmed Lebanon while having no impact on Israel's Gaza offensive. [559] Public
+--------------------------------------------------
+[4]:
+TITLE: The Coming Conflict with Hezbollah - CSIS
+URL: https://www.csis.org/analysis/coming-conflict-hezbollah
+CONTENT: Western analysts praised Hezbollah’s efficacy in the 2006 war with Israel, and its forces have only since grown more effective.[58] Hezbollah’s combat experience in Syria has given its troops experience in ground combat that few regional militaries possess, forcing them to learn how to conduct offensive operations and exposing them to the tactics, techniques, and procedures of the Russian military.[59] Hezbollah members have also repeatedly displayed a willingness to accept decisive engagement and fight to the last soldier—attitudes that will only be increased by the desire to defend their homes from an Israeli offensive.[60]
+In short, the Hezbollah that Israel would face if violence were to escalate to major ground operations is more capable than in 2006. During the war in Iraq, Iran’s Islamic Revolutionary Guard Corps–Quds Force—which aids Hezbollah—built infrared triggers, explosive circuits, and other EFP components in Iran and smuggled them across the border in Iraq to be used against U.S. forces.[48] Hezbollah could also conduct attacks on Israeli forces using tunnel bombs, which were used in Iraq and Syria to literally undermine fortified positions, or improvised rocket-assisted munitions, which Hezbollah used.[49] These IED capabilities, combined with Hezbollah’s ATGMs, would allow the group to harass and disrupt the advance of Israeli ground forces in Lebanon.
+ A Conversation with U.S. Ambassador to the United Nations Linda Thomas-Greenfield on U.S. Diplomacy in the Pacific Islands
+Press Briefing: Japanese State Visit and Trilateral Leaders’ Summit
+About Menu
+About CSIS
+submenu
+a-d
+e-m
+n-z
+Executive Ed Navigation
+The Coming Conflict with Hezbollah
+Photo: Anwar Amro/AFP/Getty Images
+Table of Contents
+Table of Contents
+Brief
+by
+Seth G. Jones,
+Daniel Byman,
+Alexander Palmer,
+and
+Riley McCabe
+Published March 21, 2024
+Available Downloads
+ First, the security situation has dramatically worsened in recent months for several reasons: the October 7 attacks profoundly increased Israeli insecurity; the displacement of over 150,000 civilians on both sides of the Israel-Lebanon border has created growing pressure, particularly in Israel, to alter the security situation so that civilians can return; Hezbollah and Iranian-linked groups in Lebanon and Syria continue to stockpile stand-off weapons that can hit Israel; and Hezbollah continues to violate UN Security Council Resolution (UNSCR) 1701. In the wake of the 2006 war, Hezbollah continued to build on the strengths of this approach, decentralizing its command and control and reorganizing to force the IDF into more urbanized terrain where its fighters can take advantage of concealed, fortified positions.[23]
+Hezbollah’s experience fighting in support of Bashar al-Assad in Syria for the past decade has given it access to capabilities and competencies used by conventional armies.
+--------------------------------------------------
+[5]:
+TITLE: Timeline of the Israel-Hezbollah conflict (2023-present)
+URL: https://en.wikipedia.org/wiki/Timeline_of_the_Israel–Hezbollah_conflict_(2023–present)
+CONTENT: 2 24 November 2023 - 1 January 2024. 3 2 January - 31 March 2024. 4 1 April - 26 July 2024. 5 27 July 2024 - 16 September 2024. 6 17 September - 26 November. 7 27 November - present. ... This is a chronological timeline of the Israel-Hezbollah conflict since October 2023. The detailed timelines are split into different articles
+--------------------------------------------------
+[6]:
+TITLE: A Storm of Conflict: Analyzing the Israel-Hezbollah Conflict Post ...
+URL: https://www.setav.org/en/focus/a-storm-of-conflict-analyzing-the-israel-hezbollah-conflict-post-october-2023
+CONTENT: Following this event, the Middle East experienced a significant escalation in regional conflicts, particularly involving Hezbollah, a Lebanese group with close ties to Iran. Following this event, the Middle East experienced a significant escalation in regional conflicts, particularly involving Hezbollah, a Lebanese group with close ties to Iran. Hezbollah's attack on Shebaa Farms on October 8, 2023, marked a significant escalation in the Israel-Lebanon conflict; by targeting Israeli radar sites and military installations, Hezbollah demonstrated its operational readiness. Hezbollah's sustained actions, including anti-tank missile attacks and rocket fire on northern Israeli towns, aimed to maintain continuous pressure on Israel, disrupt its operational capabilities, and signal Hezbollah's resilience in a prolonged conflict.
+--------------------------------------------------
+[7]:
+TITLE: Israel-Hezbollah conflict (2023-2024) - Wikipedia
+URL: https://en.wikipedia.org/wiki/Israel–Hezbollah_conflict_(2023–2024)
+CONTENT: On 19 September, the IDF said that it started carrying out airstrikes against Hezbollah to destroy its capabilities in southern Lebanon while heavy bombing was reported in Deir Qanoun En Nahr.[412] The IDF also said that it killed two Lebanese militants attempting to infiltrate the border and plant an explosive at an IDF post.[413] Two Israeli soldiers were killed and nine others were injured in Hezbollah attacks in the vicinity of the Lebanese border.[414][415] Three rockets launched by Hezbollah to Metula caused fires and damaged electric infrastructure.[416] The IDF said that its jets struck more than a hundred Hezbollah rocket launchers and other Hezbollah sites in its heaviest air strikes since the Israel-Hezbollah conflict started in October 2023.[417][411] An Israeli strike in al-Haniyeh wounded four people.[418] The Lebanese National News Agency reported that Israeli airstrikes targeted Mahmoudieh, Ksar al-Aroush, and Birket Jabbour.[417]
+--------------------------------------------------
+[8]:
+TITLE: 2023-2024 Israel-Hezbollah conflict - The Times of Israel
+URL: https://www.timesofisrael.com/topic/2023-2024-israel-hezbollah-conflict/
+CONTENT: News from Israel, the Middle East and the Jewish World ... 2023-2024 Israel-Hezbollah conflict. ... Growth in 2024 exceeded central bank and Finance Ministry forecasts as government expenditure on
+--------------------------------------------------
+[9]:
+TITLE: Potential Impacts of Israel-Hezbollah Escalations on Syria
+URL: https://ca-syr.org/report/potential-impacts-israel-hezbollah-escalations-on-syria
+CONTENT: Lebanon's higher living costs may force some families to flee to Syria, though not projected to approach levels seen during the 2006 War between Hezbollah and Israel. Lebanese displacement into Syria could cause competition with host communities over scarce resources, and be unwelcome due to the historical effects of the Syrian conflict on
+--------------------------------------------------
+[10]:
+TITLE: Costs of Israel-Hezbollah conflict on Lebanon, Israel | Reuters
+URL: https://www.reuters.com/world/middle-east/costs-israel-hezbollah-conflict-lebanon-israel-2024-11-26/
+CONTENT: At least 3,768 people have been killed in Lebanon and 15,699 wounded since October 2023, according to Lebanon's health ministry as of Nov. 24. ... by 5.7% in 2024, compared to a pre-conflict
+--------------------------------------------------
+2025-02-27 05:48:08.552 | INFO     | httpx._client:_send_single_request:1740 - HTTP Request: POST https://api.tavily.com/search "HTTP/2 200 OK"
+2025-02-27 05:48:08.553 | INFO     | criticsearch.tools.search_adapter.search_aggregator:_search_single_query:48 - 
+Query: Turkey's influence in Syrian conflict 2024
+Search Results:
+--------------------------------------------------
+[1]:
+TITLE: Turkey races ahead of U.S. in push for Syria influence
+URL: https://www.japantimes.co.jp/news/2024/12/14/world/politics/turkey-push-syria-influence/
+CONTENT: Turkey races ahead of U.S. in push for Syria influence. ... 2024. Turkey is asserting itself as the main player in the shaping of Syria's future, sending a top official to Damascus and
+--------------------------------------------------
+[2]:
+TITLE: How Turkey Won the Syrian Civil War - Foreign Affairs
+URL: https://www.foreignaffairs.com/turkey/how-turkey-won-syrian-civil-war
+CONTENT: December 11, 2024 . Syrians celebrating in Istanbul, ... All this has given Turkey influence over HTS. In October, ... Critically, the Syrian conflict also turned Turkey's already fraught relations with the United States into a strategic nightmare. The U.S. decision in 2014 to airdrop weapons to the Syrian Kurdish People's Protection Units
+--------------------------------------------------
+[3]:
+TITLE: Turkey has emerged as a winner in Syria but must now use its influence ...
+URL: https://www.chathamhouse.org/2024/12/turkey-has-emerged-winner-syria-must-now-use-its-influence-help-build-peace
+CONTENT: For a long time, Russia skilfully used Syria and Turkey's vulnerabilities there to influence Ankara's policy choices elsewhere. Image — People hold a banner featuring Turkish President Recep Tayyip Erdogan as members of the Syrian community and supporters celebrate the fall of Syrian president Bashar al-Assad, in Istanbul on 8 December 2024.
+--------------------------------------------------
+[4]:
+TITLE: Turkey Looks to Gain Influence in Syria With Offer to Rebuild Military ...
+URL: https://www.businessinsider.com/turkey-influence-syria-rebuild-military-2024-12?op=1
+CONTENT: Turkey's offer to rebuild the Syria military is an opening to displace Russian and Iranian power ... 2024-12-31T20:20:56Z ... Turkey may have an opportunity to extend its influence in Syria by
+--------------------------------------------------
+[5]:
+TITLE: Rebel offensive boosts Turkey's influence in Syria - Financial Times
+URL: https://www.ft.com/content/6221f4e9-9a7a-4f3f-87c5-9311833f5467
+CONTENT: Rebel offensive boosts Turkey's influence in Syria on ... December 3 2024. ... a director at the Middle East Institute in Washington and author of a book on Turkey's role in the Syrian war.
+--------------------------------------------------
+[6]:
+TITLE: After Assad: Turkey's Rise and Iran's Decline in Syria
+URL: https://www.jurist.org/commentary/2024/12/after-assad-turkeys-rise-and-irans-decline-in-syria/
+CONTENT: After Assad: Turkey's Rise and Iran's Decline in Syria - JURIST - Commentary - Legal News & Commentary After Assad: Turkey’s Rise and Iran’s Decline in Syria The author, an independent Middle East analyst, argues that the sudden fall of Assad's regime in late 2024 has fundamentally reshaped Syria's political landscape, creating a dangerous power vacuum... The fall of the Assad regime is more than the collapse of one leader, but an event which dislocates the state’s centralized authority and could turn Syria into a failed state. The fall of Assad has fundamentally weakened Iran’s leading role in Syria under his rule. The fall of Assad’s regime dealt a significant blow to Iran’s so-called “axis of resistance,” a network of allies and proxies intended to oppose Israeli and Western influence in the Middle East.
+--------------------------------------------------
+[7]:
+TITLE: Reconsidering Turkey's Influence on the Syrian Conflict
+URL: https://www.rusi.org/explore-our-research/publications/commentary/reconsidering-turkeys-influence-syrian-conflict
+CONTENT: Unlike the US – which shifted its focus to fighting radical Islamist groups – and Arab states increasingly preoccupied with their own regime security, Turkey maintained its anti-Assad policies and sustained support to the rebel groups including the SNA, its main proxy force. The Astana peace process initiated in 2017 between Russia, Turkey and Iran established four de-escalation zones across Syria including the Idlib province bordering Turkey, where Ankara secured military observation points. Some reports suggest that Turkey was informed of the presence of an attack plan by HTS six months ago, but Ankara did not endorse it, fearing that such a move would re-escalate the war between the regime and rebel groups and lead to a growing refugee flow from Syria.
+--------------------------------------------------
+[8]:
+TITLE: Turkey is expected to play a major role in shaping the new Syria
+URL: https://www.npr.org/2024/12/16/nx-s1-5226793/turkey-is-expected-to-play-a-major-role-in-shaping-the-new-syria
+CONTENT: Turkey is set to have significant influence in Syria after Turkish-backed rebels defeated the Assad regime. We look at what Turkey's goals are in the region and what challenges it may face.
+--------------------------------------------------
+[9]:
+TITLE: Turkey expected to play a major role in Syria following fall of the ...
+URL: https://www.npr.org/2024/12/27/nx-s1-5238277/turkey-expected-to-play-a-major-role-in-syria-following-fall-of-the-assad-regime
+CONTENT: Turkey expected to play a major role in Syria following fall of the Assad regime : NPR For more on Syria's future and Turkey's influence, we turn now to NPR's Hadeel Al-Shalchi in Damascus and NPR's Fatma Tanis in Istanbul. Turkey funded some of the rebel factions that Hayat Tahrir al-Sham, or HTS, led to topple the regime and has strategic ambitions in Syria, which I know Fatma will be getting into. TANIS: Turkey wants a stable, secure, neutral Syria so that the 3 million Syrian refugees it's hosting can go back home. MCCAMMON: Now, Hadeel, as Syria tries to reestablish relationships with the Arab world, its other Middle Eastern neighbor, Israel, is watching very closely. MCCAMMON: That's NPR's Fatma Tanis in Istanbul and NPR's Hadeel Al-Shalchi in Damascus.
+--------------------------------------------------
+[10]:
+TITLE: 2024 Syrian opposition offensives - Wikipedia
+URL: https://en.wikipedia.org/wiki/2024_Syrian_opposition_offensives
+CONTENT: On 27 November 2024, a coalition of Syrian opposition groups called the Military Operations Command[38] led by Hay'at Tahrir al-Sham (HTS) and allied Turkish-backed groups[39][40][41] in the Syrian National Army (SNA) launched an offensive against the pro-government Syrian Arab Army (SAA) forces in Idlib, Aleppo and Hama Governorates in Syria. In the evening of 6 December 2024, Southern Front forces captured the regional capital of Suwayda, in southern Syria, following pro-government forces withdrawal from the city.[123][124] Concurrently, SDF captured the provincial capital of Deir ez-Zor from pro-government forces, which also left the town of Palmyra in central Homs region.[125][126] By midnight, opposition forces in the southern Daraa Governorate captured its capital Daraa, as well as 90% of the province, as pro-government forces withdrew towards the capital Damascus.[46] Meanwhile, the Syrian Free Army, a different rebel group backed by the United States took control of Palmyra in an offensive launched from the al-Tanf "deconfliction zone".[127]
+--------------------------------------------------
+2025-02-27 05:48:09.063 | INFO     | httpx._client:_send_single_request:1740 - HTTP Request: POST https://api.tavily.com/search "HTTP/2 200 OK"
+2025-02-27 05:48:09.064 | INFO     | criticsearch.tools.search_adapter.search_aggregator:_search_single_query:48 - 
+Query: Hezbollah's role and recent events 2024
+Search Results:
+--------------------------------------------------
+[1]:
+TITLE: The history of conflict between Hezbollah and Israel
+URL: https://www.aljazeera.com/news/2024/9/18/hezbollah-and-israel-a-timeline-of-conflict
+CONTENT: Hezbollah played a role in what was regarded as one of the most dangerous points of the conflict after Israel was blamed for striking Iran's consular building in Damascus on April 1, 2024.
+--------------------------------------------------
+[2]:
+TITLE: What's next for Hezbollah and the 'Axis of Resistance'? - dw.com
+URL: https://www.dw.com/en/whats-next-for-hezbollah-and-the-axis-of-resistance/a-70376887
+CONTENT: 10/01/2024 October 1, 2024. After the assassination of their leader, some experts have suggested Hezbollah is paralyzed and its role among pro-Iran, anti-Israel militias in the region compromised.
+--------------------------------------------------
+[3]:
+TITLE: Hezbollah and the Axis of Resistance in 2024 - Brookings
+URL: https://www.brookings.edu/articles/hezbollah-and-the-axis-of-resistance-in-2024/
+CONTENT: Hezbollah's arsenal of missiles and rockets has grown from 15,000 in 2006 to over 130,000 today. Every city and town in Israel is at risk. Every city and town in Israel is at risk.
+--------------------------------------------------
+[4]:
+TITLE: New Hezbollah chief vows continued resistance amid historic funeral ...
+URL: https://www.jpost.com/middle-east/article-843530
+CONTENT: In essence, Hamas wagged the Hezbollah dog and Hezbollah got stuck firing a few rockets a day at Israel.Until Israel turned the tables on the group in mid-September 2024.
+--------------------------------------------------
+[5]:
+TITLE: Hezbollah's Evolving Role in Lebanese Politics: Implications and Future ...
+URL: https://www.heartgaza.com/featured/hezbollahs-evolving-role-in-lebanese-politics-implications-and-future-outlook/
+CONTENT: In recent years, Hezbollah has continued to play a significant and complex role in Lebanon and broader Middle Eastern politics. The organization, which originated in the early 1980s primarily as a paramilitary group, has since entrenched itself deeply within the political fabric of Lebanon, presenting new challenges and dynamics for both domestic and international policy. […]
+--------------------------------------------------
+[6]:
+TITLE: Understanding Hezbollah's Evolving Role in Lebanon's Political ...
+URL: https://www.heartgaza.com/featured/understanding-hezbollahs-evolving-role-in-lebanons-political-landscape/
+CONTENT: In recent years, Hezbollah, the Lebanon-based Shiite Islamist political party and militant group, has played an increasingly complex role in Lebanese politics and regional dynamics. Formed in the 1980s during Lebanon's civil war, Hezbollah has grown from a militia group into a powerful political entity, influencing Lebanon's political scene significantly. Hezbollah, labeled a terrorist
+--------------------------------------------------
+[7]:
+TITLE: Hezbollah's Evolving Role in Lebanese Politics: Challenges and ...
+URL: https://www.heartgaza.com/featured/hezbollahs-evolving-role-in-lebanese-politics-challenges-and-perspectives/
+CONTENT: In recent years, Hezbollah, a Shiite Islamist political party and militant group based in Lebanon, has increasingly influenced the country's political landscape. This article delves into Hezbollah's evolving role within Lebanese politics, its impact on the nation's stability, and the broader implications for regional peace, particularly in relation to Israel. Founded in the 1980s
+--------------------------------------------------
+[8]:
+TITLE: The Future of Hezbollah after the Ceasefire in Lebanon
+URL: https://rasanah-iiis.org/english/monitoring-and-translation/reports/the-future-of-hezbollah-after-the-ceasefire-in-lebanon/
+CONTENT: The Future of Hezbollah after the Ceasefire in Lebanon | International Institute for Iranian Studies After 13 months of fighting between Israel and Hezbollah in Lebanon, the agreement requires Hezbollah to withdraw from southern Lebanon and tasks the LAF with dismantling all non-state military infrastructure, preventing Hezbollah’s rearmament, and assuming primary responsibility for security in the region. The ceasefire agreement between Israel and Hezbollah includes an initial two-month ceasefire, during which Israeli forces would withdraw from Lebanon, and Hezbollah would cease its armed presence in the southern border region south of the Litani River. Prolonged economic hardship in Lebanon, combined with growing domestic discontent and international pressure, could weaken Hezbollah’s influence over time, forcing it to recalibrate its role in Lebanese and regional politics.
+--------------------------------------------------
+[9]:
+TITLE: "Hezbollah's Evolving Political Role in Lebanon: Challenges and ...
+URL: https://www.heartgaza.com/featured/hezbollahs-evolving-political-role-in-lebanon-challenges-and-developments-in-2023/
+CONTENT: In the intricate tapestry of Lebanese politics, Hezbollah has long been a pivotal, if controversial, player. As of 2023, this organization continues to adapt and redefine its role within the national framework and regional geopolitics, balancing its identity between a militant group and a legitimate political party. This evolution comes at a crucial time when […]
+--------------------------------------------------
+[10]:
+TITLE: Hezbollah's Likely Demise and Lebanon's Uncertain Future
+URL: https://arabcenterdc.org/resource/hezbollahs-likely-demise-and-lebanons-uncertain-future/
+CONTENT: Israel's approval of a US-brokered ceasefire with Hezbollah set the stage for an end to fourteen months of fighting between the two parties, ushering in the potential for a new phase in Lebanon's governance without proxy Iranian influence. In turn, Hezbollah's agreeing to a cessation of hostilities underscored the setback it incurred along with its backer Iran whose regional strategy […]
+--------------------------------------------------
+2025-02-27 05:48:09.298 | INFO     | httpx._client:_send_single_request:1740 - HTTP Request: POST https://api.tavily.com/search "HTTP/2 200 OK"
+2025-02-27 05:48:09.299 | INFO     | criticsearch.tools.search_adapter.search_aggregator:_search_single_query:48 - 
+Query: Russia's military focus on Ukraine in 2024
+Search Results:
+--------------------------------------------------
+[1]:
+TITLE: Russia Has Failed to Break Ukraine | Institute for the Study of War
+URL: https://www.understandingwar.org/backgrounder/russia-has-failed-break-ukraine
+CONTENT: Russia's 2024 Military Campaigns. Russian forces seized the theater-wide initiative following the culmination of the Ukrainian counteroffensive in late 2023 and held it throughout 2024. Russian forces began several offensive operations with the intent of breaking Ukraine: a renewed offensive on the Kharkiv-Luhansk axis in Winter 2023-2024 and
+--------------------------------------------------
+[2]:
+TITLE: Russian Military Objectives and Capacity in Ukraine Through 2024
+URL: https://www.rusi.org/explore-our-research/publications/commentary/russian-military-objectives-and-capacity-ukraine-through-2024
+CONTENT: In terms of Russian industry's capacity to support ongoing operations, Russia has significantly mobilised its defence industry, increasing shifts and expanding production lines at existing facilities as well as bringing previously mothballed plants back online. However, if Ukraine's partners continue to provide sufficient ammunition and training support to the AFU to enable the blunting of Russian attacks in 2024, then Russia is unlikely to achieve significant gains in 2025. Adopting an approach that aims to ensure Ukraine's resistance through 2025 not only undermines the Kremlin's theory of victory but also provides sufficient time to establish a rational mobilisation and training process for the AFU such that it can begin to qualitatively outmatch Russian forces, even if the latter continue to increase in overall size.
+--------------------------------------------------
+[3]:
+TITLE: Russian Advances in Ukraine Grew Seven-Fold in 2024, Data Shows
+URL: https://thedefensepost.com/2025/01/01/russia-2024-advances-ukraine/
+CONTENT: Russia advanced by almost 4,000 square kilometers (1,500 miles) in Ukraine in 2024, seven times more than in 2023, an AFP analysis of data from the Institute for the Study of War showed Tuesday.. The data highlights the pressure Ukraine faces as it enters 2025, with Moscow pouring resources into its nearly three-year invasion and uncertainty hanging over future US aid for Kyiv under a Donald
+--------------------------------------------------
+[4]:
+TITLE: Russian Offensive Campaign Assessment, March 7, 2024
+URL: https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-march-7-2024
+CONTENT: Senior Russian officials continue efforts to portray the West as an existential threat to Russia to justify Russia's long term war effort and to deter further Western military aid provisions to Ukraine. Russian Security Council Secretary Nikolai Patrushev accused the West and NATO of preparing for direct military confrontations with Russia
+--------------------------------------------------
+[5]:
+TITLE: To defeat Putin in a long war, Ukraine must switch to active defense in ...
+URL: https://www.atlanticcouncil.org/blogs/ukrainealert/paving-the-way-for-putins-defeat-ukraine-must-prioritize-defense-in-2024/
+CONTENT: To defeat Putin in a long war, Ukraine must switch to active defense in 2024 - Atlantic Council Conflict Defense Policy Defense Technologies Drones Maritime Security Missile Defense Russia Security Partnerships Ukraine If this military aid is forthcoming, Ukraine will be in a position to implement a strategy of active defense throughout the coming year, while also preparing for future offensives. UkraineAlert Jan 2, 2024 #### Ukraine needs urgent air defense aid as Putin launches bombing campaign By Peter Dickinson As Russia launches a long-awaited new bombing campaign against Ukrainian cities, fears are mounting that deadlock over continued US and EU military aid may soon leave Ukraine facing critical air defense shortages, writes Peter Dickinson. Conflict Defense Policy Defense Technologies Drones Maritime Security Missile Defense Russia Security Partnerships Ukraine
+--------------------------------------------------
+[6]:
+TITLE: What Russia's momentum in Ukraine means for the war in 2024 - IISS
+URL: https://www.iiss.org/online-analysis/military-balance/2024/03/what-russias-momentum-in-ukraine-means-for-the-war-in-2024/
+CONTENT: IISS publications reflect the authoritative analysis of the International Institute for Strategic Studies on global political risk and military conflict. Military Balance+ ----------------- Military Balance+ | The online defence database from the IISS, delivering authoritative and searchable defence data and insights into military capabilities, policy priorities and commercial opportunities in more than 170 countries. That means that over the coming year Russia will probably be able to generate sufficient missiles and drones to maintain its recent level of pressure on Ukraine’s air defences, attack its defence industry and attempt to erode Ukrainian civilian and military moral. Military Balance Blog Closing the gap: China homes in on US Navy VLS advantage -------------------------------------------------------- By Johannes R.
+--------------------------------------------------
+[7]:
+TITLE: May 16, 2024 - Russia's war in Ukraine | CNN
+URL: https://www.cnn.com/europe/live-news/russia-ukraine-war-news-05-16-24-intl-hnk/index.html
+CONTENT: NATO believes Russian troops don't have the numbers necessary for a "strategic" breakthrough in Ukraine's Kharkiv region, a senior commander of the military alliance said on Thursday
+--------------------------------------------------
+[8]:
+TITLE: Russia's war on Ukraine: Moscow's pressure points and US strategic ...
+URL: https://www.atlanticcouncil.org/content-series/russia-tomorrow/moscows-pressure-points-and-us-strategic-opportunities/
+CONTENT: Russia came into the war believing “the Ukrainian government would retreat or be betrayed by its own population, that resistance would swiftly collapse, and that Russian troops would be welcomed as liberators.” In both Chechnya (1994) and Ukraine, Russian political leadership failed to understand their adversary or appreciate their own limitations. A US-led strategy that focuses on military and economic aid to Ukraine denying Russia export revenue, unflinchingly enforcing technological embargos, and reaching out to the Russian population to change their view of the war and encourage emigration needs to be formulated, issued, and vigorously implemented. Russia Tomorrow May 23, 2024 #### Oil, gas, and war: The effect of sanctions on the Russian energy industry By Vladimir Milov A new Atlantic Council report explores the effect of sanctions on Russia’s energy industry.
+--------------------------------------------------
+[9]:
+TITLE: Tactical Developments During the Third Year of the Russo-Ukrainian War
+URL: https://www.rusi.org/explore-our-research/publications/special-resources/tactical-developments-during-third-year-russo-ukrainian-war
+CONTENT: The purpose of this report is to survey tactical developments during 2024 that characterise the fighting at time of publication and to highlight areas where military–technical assistance to Ukraine can be improved and where NATO militaries should adapt to keep pace with the threat. Subscribe to the Military Sciences NewsletterStay up to date with the latest publications and events from the Military Sciences Research Group ### Dr Jack Watling Senior Research Fellow, Land Warfare Military Sciences View profile  ### Nick Reynolds Research Fellow, Land Warfare Military Sciences View profile   ### Dr Jack Watling Senior Research Fellow, Land Warfare Military Sciences View profile  ### Nick Reynolds Research Fellow, Land Warfare Military Sciences View profile  
+--------------------------------------------------
+[10]:
+TITLE: Kursk offensive: As Ukraine's incursion into Russia enters third month ...
+URL: https://edition.cnn.com/2024/10/12/europe/ukraine-kursk-russia-incursion-putin-intl/index.html
+CONTENT: Rather than focus resources on liberating their own territory, the Russian military has expanded its assaults on multiple fronts in Ukraine, including in key areas of Kharkiv, Donetsk and
+--------------------------------------------------
+2025-02-27 05:48:09.300 | SUCCESS  | criticsearch.tools.search_adapter.models:ser_model:81 - Serialization completed. Total results: 100, Unique results: 96, Duplicates removed: 4.
+2025-02-27 05:48:15.260 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST https://aihubmix.com/v1/chat/completions "HTTP/1.1 200 OK"
