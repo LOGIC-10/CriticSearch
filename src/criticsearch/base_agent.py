@@ -95,6 +95,34 @@ class BaseAgent:
         template = Template(template_str)
         return template.render(**data)
 
+    def chat_with_template(self, template_name: str, template_data: dict, model: str = None) -> str:
+        """Unified helper method to handle template rendering and chat calling
+        
+        Args:
+            template_name: Name of template file
+            template_data: Data to render template with
+            model: Optional model override
+            
+        Returns:
+            Chat response content
+        """
+        template = self.load_template(template_name)
+        rendered_prompt = self.render_template(template, template_data)
+        return self.common_chat(
+            usr_prompt=rendered_prompt,
+            model=model or settings.default_model
+        )
+
+    def chat_with_tools(self, template_name: str, template_data: dict, tools: List, model: str = None) -> ChatCompletionMessage:
+        """Helper method for chat with tools"""
+        template = self.load_template(template_name)
+        rendered_prompt = self.render_template(template, template_data) 
+        return self.common_chat(
+            usr_prompt=rendered_prompt,
+            tools=tools,
+            model=model or settings.default_model
+        )
+
     @overload
     def common_chat(
         self, usr_prompt: List, tools: None = None
@@ -158,6 +186,52 @@ class BaseAgent:
         agent_confidence_response = self.common_chat(usr_prompt=rendered_prompt)
 
         return agent_confidence_response
+    
+    def web_scrape_results(self, search_results: str) -> str | None:
+        """Extract web content from search results using web scraper
+        
+        Args:
+            search_results: Initial search results to scrape from
+            
+        Returns:
+            Scraped web content or None if scraping failed
+        """
+        web_scraper_prompt = self.load_template("web_scraper.txt")
+        web_scraper_rendered_prompt = self.render_template(
+            web_scraper_prompt,
+            {
+                "user_question": self.user_question,
+                "initial_search_results": search_results,
+            },
+        )
+
+        # Interact with the model for web scraping
+        web_scraper_response = self.common_chat(
+            usr_prompt=web_scraper_rendered_prompt,
+            tools=self.content_scraper_schema, 
+        )
+
+        # If no tool calls, return the response immediately
+        if web_scraper_response.tool_calls is None:
+            return web_scraper_response.content
+
+        BaseAgent.conversation_manager.append_tool_call_to_history(
+            web_scraper_response.tool_calls
+        )
+
+        final_web_scraper_results = ""
+
+        for tool_call in web_scraper_response.tool_calls:
+            urls = json.loads(tool_call.function.arguments).get("urls", [])
+            web_scraper_results = asyncio.run(self.content_scraper.scrape(urls=urls))
+            BaseAgent.conversation_manager.append_tool_call_result_to_history(
+                tool_call_id=tool_call.id,
+                name="scrape", 
+                content=web_scraper_results,
+            )
+            final_web_scraper_results += web_scraper_results
+
+        return final_web_scraper_results
 
     def search_and_browse(self, rendered_prompt) -> str | None:
         search_with_tool_response = self.common_chat(
@@ -193,46 +267,7 @@ class BaseAgent:
 
             final_search_results += f"{search_results}"
 
-        web_scraper_prompt = self.load_template("web_scraper.txt")
-        web_scraper_rendered_prompt = self.render_template(
-            web_scraper_prompt,
-            {
-                "user_question": self.user_question,
-                "initial_search_results": final_search_results,
-            },
-        )
-
-
-        # Interact with the model for web scraping
-        web_scraper_response = self.common_chat(
-            usr_prompt=web_scraper_rendered_prompt,
-            tools=self.content_scraper_schema, 
-        )
-
-        # If no tool calls, return the response immediately
-        if web_scraper_response.tool_calls is None:
-            return web_scraper_response.content
-
-        BaseAgent.conversation_manager.append_tool_call_to_history(
-            web_scraper_response.tool_calls
-        )
-
-        final_web_scraper_results = ""
-
-        for tool_call in web_scraper_response.tool_calls:
-            urls = json.loads(tool_call.function.arguments).get("urls", [])
-
-            web_scraper_results = asyncio.run(self.content_scraper.scrape(urls=urls))
-
-            BaseAgent.conversation_manager.append_tool_call_result_to_history(
-                tool_call_id=tool_call.id,
-                name="scrape",
-                content=web_scraper_results,  # type: ignore
-            )
-
-            final_web_scraper_results += web_scraper_results  # type: ignore
-
-        return final_web_scraper_results
+        return self.web_scrape_results(final_search_results)
 
     def receive_task(self, task):
         """
