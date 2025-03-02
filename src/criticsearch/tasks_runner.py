@@ -1,6 +1,7 @@
 from pathlib import Path
 
 from .base_agent import BaseAgent
+from .config import settings
 from .main import process_single_task
 
 
@@ -22,14 +23,15 @@ def execute_multiple_tasks(
         # Execute a single task
         process_single_task(task, max_iterations)
 
-        # Log conversation history after each task
-        conversation_data = BaseAgent.conversation_manager.model_dump(
-            context={"sharegpt": True}
-        )
-        BaseAgent.conversation_manager.write(
-            data=conversation_data,
-            path=output_file,
-        )
+        if settings.save_sharegpt:
+            # TODO: When dealing with multiple tasks, we need to save different conversation histories to different files.
+            conversation_data = BaseAgent.conversation_manager.model_dump(
+                context={"sharegpt": True}
+            )
+            BaseAgent.conversation_manager.write(
+                data=conversation_data,
+                path=output_file,
+            )
 
 
 def start_task_execution():
@@ -40,9 +42,11 @@ def start_task_execution():
         "Write a report about 2024_Syrian_opposition_offensives event",
     ]
     MAX_ITERATION = 2
-
-    # Execute multiple tasks with the specified number of iterations
-    execute_multiple_tasks(tasks, MAX_ITERATION)
+    try:
+        # Execute multiple tasks with the specified number of iterations
+        execute_multiple_tasks(tasks, MAX_ITERATION)
+    except KeyboardInterrupt:
+        print("Execution interrupted by the user.")
 
 
 if __name__ == "__main__":

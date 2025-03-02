@@ -53,7 +53,7 @@ if __name__ == "__main__":
     printer = RichPrinter()
 
     # 使用默认样式打印标题
-    printer.rule("Chapter 1")
+    printer.rule("Section Content")
 
     # 打印普通日志消息
     printer.print("This is a normal message.")

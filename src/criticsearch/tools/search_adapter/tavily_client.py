@@ -10,6 +10,7 @@ from tenacity import (
     wait_random,
 )
 
+from ...config import settings
 from ...rich_output import printer
 from .base_search_client import BaseSearchClient
 from .exceptions import InvalidAPIKeyError, RatelimitException, UsageLimitExceededError
@@ -40,7 +41,7 @@ class TavilyClient(BaseSearchClient):
         search_depth: Literal["basic", "advanced"] = "basic",
         topic: Literal["general", "news"] = "general",
         days: int = 7,
-        max_results: int = 1,
+        max_results: int = getattr(settings, "max_results", 10) or 10,
     ) -> SearchResponse:
         """
         异步搜索方法

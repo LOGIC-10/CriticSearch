@@ -357,7 +357,7 @@ def process_single_task(task, max_iterations):
                     if retry_count == max_retries:
                         printer.print(
                             "Failed to extract valid queries after maximum retries",
-                            style="red",
+                            style="red, bold",
                         )
                         continue  # 跳过当���section,处理下一个
 
@@ -411,7 +411,7 @@ def process_single_task(task, max_iterations):
                     )
 
                     # 保存到一个json文件
-                    with open("conversation_data.json", "w") as f:
+                    with open("conversation_data.json", "w", encoding="utf-8") as f:
                         json.dump(conversation_data, f, indent=4, ensure_ascii=False)
 
                 exit(1)

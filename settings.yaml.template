@@ -1,5 +1,5 @@
 models:
-  # NOTE: You should at least set a gpt-4o key.
+  # NOTE: Ensure you provide at least a GPT-4o API key.
   gpt-4o:
     api_key: 
     base_url: 
@@ -13,5 +13,6 @@ search_engine:
     api_key: 
 
 default_model: gpt-4o
-log_level: info
 max_retries: 5
+save_sharegpt: false
+max_results: 10 # Default number of results returned by the search engine

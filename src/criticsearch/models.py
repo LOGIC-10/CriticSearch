@@ -13,6 +13,7 @@ from pydantic import (
     model_serializer,
 )
 
+from .config import settings
 from .rich_output import printer
 
 
@@ -37,7 +38,7 @@ class ConversationManager(BaseModel):
         super().__init__(**data)
         if self.delete_on_init and self.save_path.exists():
             try:
-                self.save_path.unlink()  # Delete the file if it exists
+                self.save_path.unlink(missing_ok=True)  # Delete the file if it exists
                 printer.log(f"Deleted existing file: {self.save_path}")
             except Exception:
                 printer.print_exception(f"Failed to delete file {self.save_path}")
@@ -146,9 +147,10 @@ class ConversationManager(BaseModel):
 
     def _auto_save(self):
         """Auto save after each update if save_path is set"""
-        self.write(
-            path=self.save_path, data=self.history[-1].model_dump(exclude_none=True)
-        )
+        if settings.save_sharegpt:
+            self.write(
+                path=self.save_path, data=self.history[-1].model_dump(exclude_none=True)
+            )
 
     def append_to_history(
         self,
@@ -161,8 +163,6 @@ class ConversationManager(BaseModel):
         """
         self.history.append(HistoryItem(role=role, content=content, **kwargs))
         self._auto_save()
-
-        # logger.info(f"Current history:\n{self.model_dump()}")
 
     def append_tool_call_to_history(
         self,
