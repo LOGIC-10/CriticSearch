@@ -1,8 +1,8 @@
 from pathlib import Path
 
-from .base_agent import BaseAgent
-from .config import settings
-from .main import process_single_task
+from criticsearch.base_agent import BaseAgent
+from criticsearch.config import settings
+from criticsearch.main import process_single_task
 
 
 def execute_multiple_tasks(
