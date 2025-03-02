@@ -27,20 +27,46 @@ def count_tokens(text: str, model: str = "gpt-4o") -> int:
 
 def extract_queries_from_response(response_text: str) -> list:
     """
-    从响应文本中提取查询列表
+    从响应文本中提取查询列表，支持多种格式
     
     Args:
-        response_text: 包含<\queries>[...]<\queries>格式的响应文本
+        response_text: 响应文本，支持以下格式：
+            - <\queries>[query1, query2]<\queries>
+            - <\queries>List[str] = [query1, query2]<\queries>
+            - <\queries> [query1, query2] <\queries>
         
     Returns:
         list: 提取的查询列表,如果未找到则返回空列表
     """
-    queries_pattern = r'<\\queries>\[(.*?)\]<\\queries>'
-    queries_match = re.search(queries_pattern, response_text, re.DOTALL)
-    if queries_match:
-        queries_str = queries_match.group(1)
-        # 将字符串转换为Python列表
-        return [q.strip().strip('"\'') for q in queries_str.split(',')]
+    # 预处理文本
+    response_text = response_text.strip()
+    
+    # 匹配两种可能的格式
+    patterns = [
+        # 匹配 List[str] = [...] 格式
+        r'queries>(?:\s*List\[str\]\s*=)?\s*\[(.*?)\](?:</queries>|<)',
+        # 匹配普通数组格式
+        r'queries>\s*\[(.*?)\](?:</queries>|<)'
+    ]
+    
+    for pattern in patterns:
+        match = re.search(pattern, response_text, re.DOTALL | re.IGNORECASE)
+        if match:
+            queries_str = match.group(1)
+            # 处理查询列表
+            queries = []
+            # 使用正则表达式分割，考虑引号内的逗号
+            parts = re.findall(r'"([^"]*?)"|\'([^\']*?)\'|([^,]+)', queries_str)
+            for part in parts:
+                # part是一个元组，包含三个捕获组，取非空的那个
+                query = next((p.strip() for p in part if p.strip()), '')
+                if query:
+                    # 清理引号和多余空格
+                    query = query.strip('"\'').strip()
+                    if query:
+                        queries.append(query)
+            return queries
+            
     return []
 
 def extract_thought_from_response(response_text: str) -> str:
@@ -53,7 +79,7 @@ def extract_thought_from_response(response_text: str) -> str:
     Returns:
         str: 提取的thought内容,如果未找到则返回空字符串
     """
-    thought_pattern = r'<\\thought>(.*?)<\\thought>'
+    thought_pattern = r'thought>(.*?)<'
     thought_match = re.search(thought_pattern, response_text, re.DOTALL)
     if thought_match:
         return thought_match.group(1).strip()
@@ -69,7 +95,7 @@ def extract_answer_from_response(response_text: str) -> str:
     Returns:
         str: 提取的answer内容,如果未找到则返回空字符串
     """
-    answer_pattern = r'<\\answer>(.*?)<\\answer>'
+    answer_pattern = r'answer>(.*?)<'
     answer_match = re.search(answer_pattern, response_text, re.DOTALL)
     if answer_match:
         return answer_match.group(1).strip()
@@ -86,7 +112,7 @@ def extract_citations(text: str) -> set:
         set: 提取的URL集合,如果未找到则返回空集合
     """
     citations = set()
-    pattern = r'<\\citation>(.*?)<\\citation>'
+    pattern = r'citation>(.*?)<'
     matches = re.findall(pattern, text)
     if matches:
         citations.update(matches)

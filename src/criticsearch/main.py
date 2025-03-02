@@ -229,7 +229,7 @@ def main(TASK, MAX_ITERATION):
 
     json_file = "/workspaces/CriticSearch/src/criticsearch/reportbench/wiki_data/2024_Syrian_opposition_offensives.json"
     benchmark = ReportBenchmark(json_file)
-    outline = benchmark.generate_benchmark_item()
+    outline = benchmark.generate_benchmark_item(max_window_tokens=200)
 
     conversation_data = [
         {
@@ -325,6 +325,7 @@ def main(TASK, MAX_ITERATION):
                             break
                         
                         logger.warning(f"Attempt {retry_count + 1}: Invalid or empty queries, retrying...")
+                        print(search_thought_and_queries)
                         # 重新生成��索思维和查询
                         search_thought_and_queries = common_agent.chat_with_template(
                             "guided_search_thought.txt",
@@ -388,9 +389,9 @@ def main(TASK, MAX_ITERATION):
 
 
 
-                # 保存到一个json文件
-                with open("conversation_data.json", "w") as f:
-                    json.dump(conversation_data, f, indent=4, ensure_ascii=False)
+                    # 保存到一个json文件
+                    with open("conversation_data.json", "w") as f:
+                        json.dump(conversation_data, f, indent=4, ensure_ascii=False)
 
 
                 exit(1)

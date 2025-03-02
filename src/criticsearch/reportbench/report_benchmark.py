@@ -283,7 +283,7 @@ class ReportBenchmark:
                 print(f"Attempt {attempt + 1} failed with error: {e}")
         return []  # 如果所有尝试都失败,返回空列表
 
-    def generate_benchmark_item(self, use_cache=True):
+    def generate_benchmark_item(self, use_cache=True, max_window_tokens=300):
         """添加缓存支持的基准测试项生成方法"""
         if use_cache:
             cached_results = self._load_from_cache()
@@ -293,7 +293,7 @@ class ReportBenchmark:
         
         # 原有的生成逻辑
         results = []
-        windows = self.sliding_window_pairing()
+        windows = self.sliding_window_pairing(max_token_length=max_window_tokens)
         
         # 准备抽取任务的输入
         window_contents = []
