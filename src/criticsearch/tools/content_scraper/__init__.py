@@ -1,7 +1,7 @@
 from typing import List
 
 from criticsearch.config import settings
-from criticsearch.log import logger
+from criticsearch.rich_output import printer
 
 from .fallback_web_scraper import FallbackWebScraper
 from .models import ScrapedData, ScrapedDataList
@@ -27,8 +27,11 @@ class ContentScraper:
         # Check for errors or failed results in the Tavily response
         if "error" in tavily_results:
             # If Tavily extraction fails, fall back to custom web scraping
-            logger.error(f"Tavily API extraction failed: {tavily_results.get('error')}")
-            logger.info(
+            printer.log(
+                f"Tavily API extraction failed: {tavily_results.get('error')}",
+                style="bold red",
+            )
+            printer.log(
                 "Tavily API extraction failed, falling back to custom scraping..."
             )
             final_results = await FallbackWebScraper.scrape(urls)
@@ -53,7 +56,7 @@ class ContentScraper:
 
             # If Tavily has failed results, log them and proceed with fallback
             if failed_results:
-                logger.warning(f"Some URLs failed in Tavily extraction.")
+                printer.log(f"Some URLs failed in Tavily extraction.")
                 failed_urls = [result.get("url") for result in failed_results]
                 failed_results = await FallbackWebScraper.scrape(failed_urls)
 

@@ -1,7 +1,6 @@
 from typing import Callable, Dict, List
 
-from loguru import logger
-
+from ..rich_output import printer
 from .models import Tool
 
 
@@ -46,7 +45,7 @@ class ToolRegistry:
                 self._tools[func_name] = Tool.create_schema_from_function(
                     target_function
                 )
-                logger.debug(
+                printer.log(
                     f"Created tool schema for: {func_name}, schema: {self._tools[func_name]}"
                 )
 
