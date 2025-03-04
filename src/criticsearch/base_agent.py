@@ -9,11 +9,11 @@ import yaml
 
 # from jinja2 import Environment, FileSystemLoader
 from jinja2 import Template
-from loguru import logger
 
 from .config import settings
 from .llm_service import ChatCompletionMessage, call_llm
 from .models import ConversationManager
+from .rich_output import printer
 from .tools import ContentScraper, SearchAggregator, ToolRegistry
 
 
@@ -95,32 +95,35 @@ class BaseAgent:
         template = Template(template_str)
         return template.render(**data)
 
-    def chat_with_template(self, template_name: str, template_data: dict, model: str = None) -> str:
+    def chat_with_template(
+        self, template_name: str, template_data: dict, model: str = None
+    ) -> str:
         """Unified helper method to handle template rendering and chat calling
-        
+
         Args:
             template_name: Name of template file
             template_data: Data to render template with
             model: Optional model override
-            
+
         Returns:
             Chat response content
         """
         template = self.load_template(template_name)
         rendered_prompt = self.render_template(template, template_data)
         return self.common_chat(
-            usr_prompt=rendered_prompt,
-            model=model or settings.default_model
+            usr_prompt=rendered_prompt, model=model or settings.default_model
         )
 
-    def chat_with_tools(self, template_name: str, template_data: dict, tools: List, model: str = None) -> ChatCompletionMessage:
+    def chat_with_tools(
+        self, template_name: str, template_data: dict, tools: List, model: str = None
+    ) -> ChatCompletionMessage:
         """Helper method for chat with tools"""
         template = self.load_template(template_name)
-        rendered_prompt = self.render_template(template, template_data) 
+        rendered_prompt = self.render_template(template, template_data)
         return self.common_chat(
             usr_prompt=rendered_prompt,
             tools=tools,
-            model=model or settings.default_model
+            model=model or settings.default_model,
         )
 
     @overload
@@ -147,9 +150,6 @@ class BaseAgent:
             config=settings,
             tools=tools,
         )
-
-        # logger.info(f"usr_prompt:\n{usr_prompt}")
-        # logger.info(f"llm_response:\n{llm_response}")
 
         if tools is not None:
             return llm_response
@@ -186,13 +186,13 @@ class BaseAgent:
         agent_confidence_response = self.common_chat(usr_prompt=rendered_prompt)
 
         return agent_confidence_response
-    
+
     def web_scrape_results(self, search_results: str) -> str | None:
         """Extract web content from search results using web scraper
-        
+
         Args:
             search_results: Initial search results to scrape from
-            
+
         Returns:
             Scraped web content or None if scraping failed
         """
@@ -208,7 +208,7 @@ class BaseAgent:
         # Interact with the model for web scraping
         web_scraper_response = self.common_chat(
             usr_prompt=web_scraper_rendered_prompt,
-            tools=self.content_scraper_schema, 
+            tools=self.content_scraper_schema,
         )
 
         # If no tool calls, return the response immediately
@@ -226,7 +226,7 @@ class BaseAgent:
             web_scraper_results = asyncio.run(self.content_scraper.scrape(urls=urls))
             BaseAgent.conversation_manager.append_tool_call_result_to_history(
                 tool_call_id=tool_call.id,
-                name="scrape", 
+                name="scrape",
                 content=web_scraper_results,
             )
             final_web_scraper_results += web_scraper_results
@@ -238,7 +238,7 @@ class BaseAgent:
             usr_prompt=rendered_prompt, tools=self.search_aggregator_schema
         )
 
-        logger.info(f"search_with_tool_response:\n{search_with_tool_response}")
+        printer.log(f"search_with_tool_response:\n{search_with_tool_response}")
 
         # If no tool calls, return the response immediately
         if search_with_tool_response.tool_calls is None:
@@ -294,10 +294,8 @@ class BaseAgent:
         except yaml.YAMLError as exc:
             print(f"Invalid YAML content: {exc}")
             return None
-        
-        
-    def extract_and_validate_json(self, model_response):
 
+    def extract_and_validate_json(self, model_response):
         # Try to extract JSON data wrapped in ```json``` blocks
         # and return the parsed JSON content
         match = re.search(r"```json\n([\s\S]*?)\n```", model_response, re.DOTALL)
@@ -309,7 +307,7 @@ class BaseAgent:
         try:
             parsed_json = json.loads(json_content)
             return parsed_json
-        
+
         except json.JSONDecodeError as exc:
             print(f"Invalid JSON content: {exc}")
             return None

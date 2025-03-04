@@ -1,11 +1,9 @@
 # critic_search/tools/search_adapter/models.py
-from datetime import datetime
-from typing import Dict, List, Optional
+from typing import List, Optional
 
 from pydantic import BaseModel, Field, model_serializer
-from sqlmodel import Field, SQLModel
 
-from criticsearch.log import logger
+from criticsearch.rich_output import printer
 
 
 class SearchResult(BaseModel):
@@ -23,14 +21,14 @@ class SearchResponse(BaseModel):
     def ser_model(self) -> str:
         if self.error_message:
             formatted_response = (
-                f"\nQuery: {self.query}\nError: {self.error_message}\n" + "-" * 50
+                f"Query: {self.query}\nError: {self.error_message}\n" + "-" * 50
             )
         elif self.results == []:
             formatted_response = (
-                f"\nQuery: {self.query}\nError: No results found." + "-" * 50
+                f"Query: {self.query}\nError: No results found." + "-" * 50
             )
         else:
-            formatted_response = f"\nQuery: {self.query}\nSearch Results:\n" + "-" * 50
+            formatted_response = f"Query: {self.query}\nSearch Results:\n" + "-" * 50
             for i, res in enumerate(self.results, 1):
                 formatted_response += (
                     f"\n[{i}]:\nTITLE: {res.title}\nURL: {res.url}\nCONTENT: {res.content}\n"
@@ -59,7 +57,7 @@ class SearchResponseList(BaseModel):
 
         for response in self.responses:
             if response.error_message:
-                logger.debug(
+                printer.log(
                     f"Skipping serialize query '{response.query}' due to error: {response.error_message}"
                 )
                 continue  # 跳过有 error_message 的响应
@@ -78,10 +76,11 @@ class SearchResponseList(BaseModel):
 
         # 打印提示信息
         duplicates_removed = total_results - unique_results_count
-        logger.success(
+        printer.log(
             f"Serialization completed. Total results: {total_results}, "
             f"Unique results: {unique_results_count}, "
-            f"Duplicates removed: {duplicates_removed}."
+            f"Duplicates removed: {duplicates_removed}.",
+            style="bold green",
         )
 
         return result_str

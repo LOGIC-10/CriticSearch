@@ -2,7 +2,6 @@
 from typing import Literal
 
 import httpx
-from loguru import logger
 from tenacity import (
     retry,
     retry_if_exception_type,
@@ -11,6 +10,8 @@ from tenacity import (
     wait_random,
 )
 
+from ...config import settings
+from ...rich_output import printer
 from .base_search_client import BaseSearchClient
 from .exceptions import InvalidAPIKeyError, RatelimitException, UsageLimitExceededError
 from .models import SearchResponse
@@ -40,13 +41,11 @@ class TavilyClient(BaseSearchClient):
         search_depth: Literal["basic", "advanced"] = "basic",
         topic: Literal["general", "news"] = "general",
         days: int = 7,
-        max_results: int = 10,
+        max_results: int = getattr(settings, "max_results", 10) or 10,
     ) -> SearchResponse:
         """
         异步搜索方法
         """
-
-        logger.debug(f"Attempting to use engine 'Tavily' for query '{query}'. ")
 
         # 发起异步请求
         data = {
@@ -72,10 +71,11 @@ class TavilyClient(BaseSearchClient):
                     raise UsageLimitExceededError(detail)  # 抛出后直接传播，不被捕获
             except UsageLimitExceededError:
                 raise  # 直接传播 UsageLimitExceededError，避免被后续捕获
-            except Exception as e:
+            except Exception:
                 # 捕获其他异常并记录日志
-                logger.error(f"Failed to process 429 response: {e}")
-                logger.error(f"Response content: {response.text}")
+                printer.print_exception(
+                    f"Failed to process 429 response. Response: {response.text}"
+                )
                 raise RatelimitException()  # 抛出通用限流异常
 
             raise RatelimitException()

@@ -42,5 +42,5 @@ pip install -r requirements.txt
 2. Run command.
 
 ```python
-criticsearch "How will the introduction of central bank digital currencies (CBDCs) impact the traditional banking system and financial stability in the next five years?" --max-iterations 5
+criticsearch
 ```

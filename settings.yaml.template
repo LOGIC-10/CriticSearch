@@ -1,0 +1,18 @@
+models:
+  # NOTE: Ensure you provide at least a GPT-4o API key.
+  gpt-4o:
+    api_key: 
+    base_url: 
+    max_tokens: 
+
+tavily:
+  api_key: 
+
+search_engine:
+  bing:
+    api_key: 
+
+default_model: gpt-4o
+max_retries: 5
+save_sharegpt: false
+max_results: 10 # Default number of results returned by the search engine
