@@ -1,43 +1,29 @@
 ## ClassDef SearchAggregator
-**SearchAggregator**: The function of SearchAggregator is to aggregate and execute search queries across multiple search engines while handling various error conditions and API limitations.
+**SearchAggregator**: The function of SearchAggregator is to manage and execute search queries across multiple search engines.
 
-**attributes**:
-- clients: A dictionary holding instances of different search engine clients, such as TavilyClient and BingClient, which are used to execute search queries.
-- available_clients: A set that tracks the search engines that are currently available for use, excluding any that are marked as unavailable due to errors or limitations.
+**attributes**: The attributes of this Class.
+· clients: A dictionary that holds instances of search engine clients, specifically TavilyClient and BingClient, keyed by their respective engine names.  
+· available_clients: A set that contains the names of currently available search engines that can be used for querying.
 
-**Code Description**:  
-The `SearchAggregator` class is responsible for managing multiple search engines and executing queries across them. Upon initialization, it checks for API keys for both Tavily and Bing search engines from the settings. If valid keys are found, it initializes corresponding clients for these engines and stores them in the `clients` attribute. The `available_clients` set is then populated with the keys (names) of the initialized clients. 
+**Code Description**: The SearchAggregator class is designed to facilitate searching through multiple search engines by managing their respective clients. Upon initialization, the class checks for the presence of API keys for Tavily and Bing. If the keys are available, it creates instances of TavilyClient and BingClient and stores them in the clients dictionary. The available_clients set is initialized to keep track of which search engines are currently available for use.
 
-The class includes the following key methods:
+The class provides two main functionalities: marking a search engine as unavailable and performing searches. The `mark_engine_unavailable` method allows the user to remove a search engine from the available_clients set if it encounters issues during a search operation. This is particularly useful for handling errors such as invalid API keys or usage limits being exceeded.
 
-- `mark_engine_unavailable(engine: str)`: This method marks a specified search engine as unavailable by removing it from the `available_clients` set. This is used when an error or limitation (such as an invalid API key, retry limit reached, or usage limit exceeded) occurs with a particular search engine.
-  
-- `_search_single_query(query: str, engines: List[str])`: This asynchronous method attempts to search a given query across the provided list of search engines. For each engine, it checks if the engine is available and then tries to perform the search. If the search is successful, the result is returned. If an exception occurs, the engine is marked as unavailable, and the method moves on to the next engine in the list. Various exceptions are handled, including `RetryError`, `InvalidAPIKeyError`, and `UsageLimitExceededError`.
+The `_search_single_query` method is an asynchronous function that attempts to execute a search query against the specified engines. It iterates through the provided list of engines, checking if they are available. If an engine is available, it calls its search method and logs the result. If an error occurs, it logs the error and marks the engine as unavailable. If all specified engines fail, it returns a SearchResponse indicating that no available search engines could handle the query.
 
-- `search(query: List[str])`: This is the primary method that allows the user to perform searches using a list of queries. It first checks if there are any available search engines. If none are available, it raises an exception. It then creates asynchronous tasks for each query and executes them concurrently. The method returns the aggregated search results as a list of responses.
+The `search` method allows users to perform searches using a list of queries. It gathers the available engines and creates tasks for concurrent execution of searches for each query. The results are awaited and returned as a SearchResponseList, which encapsulates the responses from the search engines.
 
-The `SearchAggregator` class is used in other components of the project to facilitate search functionality. For instance, in `BaseAgent`, it is instantiated and its search method is called to perform searches with specific queries. This enables the broader application to conduct searches in a robust and fault-tolerant manner by leveraging multiple search engines. Additionally, in the main entry point (`src/criticsearch/tools/search_adapter/__main__.py/main`), an asynchronous search is triggered, and the results are printed.
+The SearchAggregator class is utilized in the BaseAgent class, where an instance of SearchAggregator is created to manage search queries. This integration allows the BaseAgent to leverage the capabilities of multiple search engines, enhancing its ability to gather information. Additionally, the SearchAggregator is instantiated in the process_single_task function, where it is used to execute search queries based on user tasks.
 
-**Note**:  
-- Ensure that valid API keys for the search engines (Tavily and Bing) are provided in the settings, as the functionality depends on these keys to initialize the respective clients.
-- The `search` method handles multiple queries simultaneously, making it efficient in handling concurrent searches.
-- If all search engines are marked unavailable, the method returns a `SearchResponse` indicating the failure to execute the search, along with an appropriate error message.
-  
-**Output Example**:
-A possible return value of the `search` method might look like this:
+**Note**: When using the SearchAggregator, ensure that the necessary API keys for the search engines are configured correctly in the settings. Additionally, be aware that if all search engines become unavailable, the search operation will fail, and an appropriate error message will be returned.
 
+**Output Example**: A possible appearance of the code's return value after executing a search query could look like this:
 ```json
 {
   "responses": [
     {
       "query": "Who is Leo Messi?",
-      "results": [
-        {
-          "title": "Lionel Messi - Wikipedia",
-          "url": "https://en.wikipedia.org/wiki/Lionel_Messi",
-          "snippet": "Lionel Andrés Messi is an Argentine professional footballer widely regarded as one of the greatest players of all time."
-        }
-      ]
+      "error_message": "Search failed: No available search engines for this query."
     }
   ]
 }
@@ -75,27 +61,29 @@ In terms of its usage, this function is typically called within error-handling b
 - It is important to note that this function does not handle the re-inclusion of the engine once it has been marked as unavailable; this would need to be managed separately if required.
 ***
 ### FunctionDef _search_single_query(self, query, engines)
-**_search_single_query**: The function of _search_single_query is to perform an asynchronous search query using specified search engines and return the results encapsulated in a SearchResponse object.
+**_search_single_query**: The function of _search_single_query is to execute a search query against multiple search engines and return the results encapsulated in a SearchResponse object.
 
 **parameters**: The parameters of this Function.
-· query: str - A string representing the user's search query. This parameter cannot be empty.
-· engines: List[str] - A list of search engine names that are available for performing the search.
+· query: str - A string representing the search query to be executed.  
+· engines: List[str] - A list of search engine names that are available for executing the query.
 
-**Code Description**: The `_search_single_query` function is an asynchronous method designed to execute a search query against a list of specified search engines. It iterates through each engine in the provided `engines` list and checks if the engine is available in the `available_clients` collection. If the engine is available, it attempts to call the asynchronous `search` method of the corresponding client.
+**Code Description**: The _search_single_query function is an asynchronous method designed to perform a search operation using a specified query across multiple search engines. It iterates through the provided list of engines, checking if each engine is available for use. If an engine is found to be available, the function attempts to execute the search by calling the search method of the corresponding client for that engine.
 
-The function handles various exceptions that may arise during the search process:
-- If a `RetryError` occurs, it logs a warning indicating that the engine has failed after multiple retries and marks the engine as unavailable using the `mark_engine_unavailable` method.
-- If an `InvalidAPIKeyError` is raised, it logs an error message indicating that the search engine's API key is invalid and marks the engine as unavailable.
-- If a `UsageLimitExceededError` is encountered, it logs a warning about the usage limit being exceeded and marks the engine as unavailable.
-- For any other exceptions, it logs the exception details and marks the engine as unavailable.
+Upon calling the search method, the function awaits the result. If the search is successful, it logs the result using the printer.log method and returns the result encapsulated in a SearchResponse object. The logging provides visibility into the search results, which can be useful for debugging and monitoring purposes.
 
-If all specified search engines are unavailable, the function logs an error message and returns a `SearchResponse` object containing the original query and an error message indicating that no available search engines could fulfill the request.
+In the event of an error during the search operation, the function handles several specific exceptions:
+- RetryError: Indicates that the search engine failed after multiple retry attempts. The engine is marked as unavailable using the mark_engine_unavailable method.
+- InvalidAPIKeyError: Raised when the API key used for the search is invalid. The engine is also marked as unavailable in this case.
+- UsageLimitExceededError: This exception is raised when the search engine has exceeded its usage limits. The engine is marked as unavailable as well.
+- General Exception: Any other unexpected errors are caught, and the function logs the exception details using the printer.print_exception method, marking the engine as unavailable.
 
-This function is called by the `search` method of the `SearchAggregator` class. The `search` method gathers a list of currently available search engines and creates tasks for concurrent execution of `_search_single_query` for each query in the provided list. The results from these tasks are then collected and returned as a structured response.
+If all specified search engines are found to be unavailable after iterating through the list, the function logs a message indicating that no available search engines could be used for the query. It then returns a SearchResponse object containing the original query and an error message stating that the search failed due to the unavailability of search engines.
 
-**Note**: It is essential to ensure that the engines passed to this function are valid and that the `available_clients` collection is properly maintained to reflect the current state of search engines. The function does not handle the re-inclusion of engines marked as unavailable; this must be managed separately if required.
+The _search_single_query function is called by the search method within the SearchAggregator class. The search method is responsible for executing multiple search queries concurrently by creating tasks for each query and utilizing the asyncio.gather function to run them. This design allows for efficient handling of multiple queries, leveraging the asynchronous capabilities of the underlying framework.
 
-**Output Example**: A possible return value of the `_search_single_query` function could be a `SearchResponse` object structured as follows:
+**Note**: It is important to ensure that the engines parameter contains valid search engine names that are currently available. The function relies on proper exception handling to manage errors effectively, ensuring that any issues encountered during the search process are logged and handled gracefully.
+
+**Output Example**: A possible return value of the _search_single_query function could be structured as follows:
 ```python
 SearchResponse(
     query="latest technology news",
@@ -105,49 +93,49 @@ SearchResponse(
     ],
     error_message=None
 )
-```
+``` 
+This output illustrates a successful search response containing the original query, a list of search results, and no error messages.
 ***
 ### FunctionDef search(self, query)
-**search**: The function of search is to perform a search using the provided query and return the results as a serialized response.
+**search**: The function of search is to perform a search using the provided query, supporting various search techniques through special syntax.
 
 **parameters**: The parameters of this Function.
-· query: List[str] - A list of search queries that the user wants to search for.
+· query: List[str] - A list of search queries to be executed.
 
-**Code Description**: The `search` method is an asynchronous function designed to execute multiple search queries concurrently using available search engines. It takes a list of search queries as input and returns a serialized string representation of the search results.
+**Code Description**: The search function is an asynchronous method within the SearchAggregator class that facilitates searching across multiple search engines based on the provided list of queries. The function begins by retrieving the currently available search engines from the instance's available_clients attribute. If no engines are available, it raises a ValueError, indicating that the search cannot proceed.
 
-The method begins by retrieving the list of currently available search engines from the `available_clients` attribute. If there are no available engines, it raises a `ValueError`, indicating that the search cannot be performed. This ensures that the function does not attempt to execute a search when there are no resources to handle it.
+To execute the search, the function creates a list of tasks, where each task corresponds to a single search query. These tasks are generated by calling the _search_single_query method, which is responsible for executing a search against the available engines. The search_single_query method is called for each query in the provided list, allowing for concurrent execution of searches.
 
-Next, the method creates a list of tasks, where each task corresponds to a single search query. This is done by calling the `_search_single_query` method for each query in the provided list, passing the list of available engines to it. The `_search_single_query` method is responsible for executing the search against each engine and returning the results encapsulated in a `SearchResponse` object.
+Once the tasks are created, the function uses the asyncio.gather method to run all tasks concurrently and await their results. This approach enhances efficiency by allowing multiple searches to be processed simultaneously rather than sequentially.
 
-Once the tasks are created, the method uses the `gather` function from the `asyncio` library to execute all the search tasks concurrently. This allows for efficient handling of multiple queries, as it does not block the execution while waiting for each individual search to complete.
+After gathering the responses from all search tasks, the function constructs a SearchResponseList object, which encapsulates the results of the searches. This object is then serialized and returned as a string representation, providing a structured output of the search results.
 
-After all tasks are executed, the method collects the responses and constructs an instance of `SearchResponseList`, which is designed to hold and serialize the search results. The `model_dump()` method of `SearchResponseList` is called to generate a formatted string representation of the results, ensuring that any duplicate content across the responses is removed.
+The search method is called by various components within the project, including the search_and_browse method in the BaseAgent class. This method utilizes the search function to perform searches based on user prompts and integrates the results into a broader workflow that may involve web scraping and content generation.
 
-The `search` method is called by various components in the project, including the `search_and_browse` method in the `BaseAgent` class and the `main` function in the `__main__.py` module. In `search_and_browse`, it is invoked to handle user prompts for search queries, while in `main`, it demonstrates a simple use case of performing a search for a specific query.
+**Note**: It is essential to ensure that the query parameter contains valid search terms and that the available_clients attribute is populated with active search engines. Proper error handling is implemented to manage cases where no engines are available, ensuring that the function fails gracefully.
 
-**Note**: It is important to ensure that the search engines are properly configured and available before calling this method. The method handles the serialization of results, ensuring that duplicates are filtered out, which enhances the relevance of the returned data.
-
-**Output Example**: A possible return value of the `search` function could be a serialized string representing the search results, structured as follows:
-```
+**Output Example**: A possible return value of the search function could be structured as follows:
+```json
 {
-  "results": [
+  "responses": [
     {
-      "title": "Introduction to Python",
-      "url": "https://example.com/python",
-      "content": "Python is a high-level programming language."
-    },
-    {
-      "title": "Python Tutorials",
-      "url": "https://example.com/tutorials",
-      "content": "Learn Python programming with these tutorials."
+      "query": "latest technology news",
+      "results": [
+        {
+          "title": "Tech Innovations",
+          "url": "https://example.com/tech-innovations",
+          "content": "Explore the latest in technology."
+        },
+        {
+          "title": "Gadget Reviews",
+          "url": "https://example.com/gadget-reviews",
+          "content": "Read reviews on the newest gadgets."
+        }
+      ],
+      "error_message": null
     }
-  ],
-  "summary": {
-    "total_results": 5,
-    "unique_results": 3,
-    "duplicates_removed": 2
-  }
+  ]
 }
 ``` 
-This output illustrates the results of the search queries, including a summary of the total results and the number of unique results returned.
+This output illustrates a successful search response containing the original query, a list of search results, and no error messages.
 ***

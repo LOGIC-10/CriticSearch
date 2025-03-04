@@ -1,7 +1,16 @@
 {
-  "doc_version": "1ee411a973fc68893ad232b0fb1d7d020d0dfa34",
+  "doc_version": "30eae24bbbf053def98f21e350e711085c1a4fbd",
   "in_generation_process": false,
   "fake_file_reflection": {},
   "jump_files": [],
-  "deleted_items_from_older_meta": []
+  "deleted_items_from_older_meta": [
+    [
+      "src/criticsearch/main.py/main",
+      "_function"
+    ],
+    [
+      "src/criticsearch/tasks_runner.py/run_tasks",
+      "_function"
+    ]
+  ]
 }
