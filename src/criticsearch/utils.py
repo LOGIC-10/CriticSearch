@@ -31,9 +31,9 @@ def extract_queries_from_response(response_text: str) -> list:
     
     Args:
         response_text: 响应文本，支持以下格式：
-            - <\queries>[query1, query2]<\queries>
-            - <\queries>List[str] = [query1, query2]<\queries>
-            - <\queries> [query1, query2] <\queries>
+            - <queries>[query1, query2]</queries>
+            - <queries>List[str] = [query1, query2]</queries>
+            - <queries> [query1, query2] </queries>
         
     Returns:
         list: 提取的查询列表,如果未找到则返回空列表
@@ -43,10 +43,10 @@ def extract_queries_from_response(response_text: str) -> list:
     
     # 匹配两种可能的格式
     patterns = [
-        # 匹配 List[str] = [...] 格式
-        r'queries>(?:\s*List\[str\]\s*=)?\s*\[(.*?)\](?:</queries>|<)',
-        # 匹配普通数组格式
-        r'queries>\s*\[(.*?)\](?:</queries>|<)'
+        # 匹配 <queries>List[str] = [...] </queries> 格式
+        r'<queries>\s*List\[str\]\s*=\s*\[(.*?)\]\s*</queries>',
+        # 匹配 <queries>[...] </queries> 格式
+        r'<queries>\s*\[(.*?)\]\s*</queries>'
     ]
     
     for pattern in patterns:
@@ -74,13 +74,13 @@ def extract_thought_from_response(response_text: str) -> str:
     从响应文本中提取thought内容
     
     Args:
-        response_text: 包含<\thought>...<\thought>格式的响应文本
+        response_text: 包含<thought>...</thought>格式的响应文本
         
     Returns:
         str: 提取的thought内容,如果未找到则返回空字符串
     """
-    thought_pattern = r'thought>(.*?)<'
-    thought_match = re.search(thought_pattern, response_text, re.DOTALL)
+    thought_pattern = r'<thought>(.*?)</thought>'
+    thought_match = re.search(thought_pattern, response_text, re.DOTALL | re.IGNORECASE)
     if thought_match:
         return thought_match.group(1).strip()
     return ""
@@ -90,13 +90,13 @@ def extract_answer_from_response(response_text: str) -> str:
     从响应文本中提取answer内容
     
     Args:
-        response_text: 包含<\answer>...<\answer>格式的响应文本
+        response_text: 包含<answer>...</answer>格式的响应文本
         
     Returns:
         str: 提取的answer内容,如果未找到则返回空字符串
     """
-    answer_pattern = r'answer>(.*?)<'
-    answer_match = re.search(answer_pattern, response_text, re.DOTALL)
+    answer_pattern = r'<answer>(.*?)</answer>'
+    answer_match = re.search(answer_pattern, response_text, re.DOTALL | re.IGNORECASE)
     if answer_match:
         return answer_match.group(1).strip()
     return ""
@@ -106,16 +106,16 @@ def extract_citations(text: str) -> set:
     从文本中提取所有引用的URLs并去重
     
     Args:
-        text: 包含<\citation>URL<\citation>格式的文本
+        text: 包含<citation>URL</citation>格式的文本
         
     Returns:
         set: 提取的URL集合,如果未找到则返回空集合
     """
     citations = set()
-    pattern = r'citation>(.*?)<'
-    matches = re.findall(pattern, text)
+    pattern = r'<citation>(.*?)</citation>'
+    matches = re.findall(pattern, text, re.DOTALL | re.IGNORECASE)
     if matches:
-        citations.update(matches)
+        citations.update(match.strip() for match in matches)
     return citations
 
 if __name__ == "__main__":
