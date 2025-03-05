@@ -202,3 +202,5 @@ settings.yaml
 conversation_history*.jsonl
 output.txt
 cache/
+*/cache/
+*/conversation_history*.jsonl

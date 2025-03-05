@@ -16,6 +16,8 @@ from .utils import (
     extract_answer_from_response,
     extract_queries_from_response,
     extract_thought_from_response,
+    extract_citations,
+    extract_actions,
 )
 
 
@@ -37,17 +39,17 @@ def flatten_outline(section, depth=1, path=None):
     return flat
 
 
-def generate_content_for_section(common_agent, section, task):
+def generate_content_for_section(agent: BaseAgent, section, task):
     # 保持 prompt 不变，仅生成单层章节内容，不递归
     title = section.get("title")
     search_query = f"generate some search queries about '{title}' under the background of this TOPIC/TASK: '{task}'."
-    search_results = common_agent.search_and_browse(search_query)
+    search_results = agent.search_and_browse(search_query)
     prompt = (
         f"Using the following search results:\n\n{search_results}\n\n"
         f"Write one or several detailed paragraphs with data and facts in a logical way about '{title}' under the background of this TOPIC/TASK: '{task}', formatted in pure text, without summary sentences."
         f"Please make sure you are always obeying and using '<\cite>The url link that you used for supporting the previous statement<\cite>' format in every sentence that you are using data from the web."
     )
-    paragraph = common_agent.common_chat(usr_prompt=prompt)
+    paragraph = agent.chat(usr_prompt=prompt)
     printer.rule(f"Generated content for '{title}'")
     printer.print(paragraph)
     return paragraph
@@ -90,14 +92,6 @@ def reconstruct_markdown(outline, flat_contents):
         result += helper(section, [outline.get("title")] if "title" in outline else [])
 
     return result
-
-
-def extract_citations(text):
-    """从文本中提取引用的URLs"""
-    citations = []
-    pattern = r"<cite>(.*?)<\/cite>"
-    matches = re.findall(pattern, text)
-    return matches
 
 
 def create_document_structure(outline_json, flat_contents):
@@ -224,12 +218,104 @@ def parse_markdown_to_structure(markdown_text):
 
     return document
 
+##### 分割线，上面的无关函数全部需要移动到utils.py中 #####
+
+def _model_action_decision(
+    agent: BaseAgent,
+    search_results: str,
+    task: str,  
+    current_section: str,   
+):
+    decision = agent.chat_with_template("model_action_decision.txt", {
+        "search_results": search_results, 
+        "task": task, 
+        "current_section": current_section
+    })
+    thought = extract_thought_from_response(decision)
+    actions = extract_actions(decision)
+    action = next(iter(actions)) if actions else ""
+
+    printer.rule("Model Decision")
+    printer.print(decision)
+
+    if action == "SEARCH":
+        queries = extract_queries_from_response(decision)
+        return thought, action, queries
+    elif action == "BROWSE":
+        urls = extract_citations(decision)
+        return thought, action, urls
+    elif action == "START_WRITING":
+        return thought, action, None
+
+
+def _action_router(
+    agent: BaseAgent,
+    search_results: str,    
+    task: str,
+    current_section: str,
+    iteration: int,
+    agent_report: str,
+    guide_line: str,
+    detailed_web_results: str,
+):
+    # 获取模型的行动决策
+    thought, action, data = _model_action_decision(agent, search_results, task, current_section)
+
+    # 根据不同的行动类型进行处理
+    if action == "SEARCH":
+        # 执行新的搜索
+        new_search_results = asyncio.run(agent.search_aggregator.search(data))
+        agent.training_data.append({"from": "agent", "thought": thought, "action": action, "action_content": data, "action_result": new_search_results[:200]})
+        # 递归调用自身处理新的搜索结果让模型决定下一步的行动
+        return _action_router(
+            agent, new_search_results, task, current_section,
+            iteration, agent_report, guide_line, detailed_web_results
+        )
+        
+    elif action == "BROWSE":
+        # 执行网页爬取
+        web_scraper_results = asyncio.run(
+            agent.content_scraper.scrape(urls=data)
+        )
+        agent.training_data.append({"from": "agent", "thought": thought, "action": action, "action_content": data, "action_result": web_scraper_results[:200]})
+        # 递归调用自身处理爬取结果让模型决定下一步的行动
+        return _action_router(
+            agent, web_scraper_results, task, current_section,
+            iteration, agent_report, guide_line, web_scraper_results
+        )
+        
+    elif action == "START_WRITING":
+        # 生成最终的内容
+        section_content = agent.chat_with_template(
+            "guided_generation_thought.txt",
+            {
+                "task": task,
+                "context": "There is no previous context since this is the first section at the beginning of the article, only the user's question exists"
+                if iteration == 0
+                else f"Previous report content written by you is:\n\n{agent_report}",
+                "guidline": guide_line,
+                "search_result": detailed_web_results,
+            }
+        )
+
+        writing_thought = extract_thought_from_response(section_content)
+        writing_content = extract_answer_from_response(section_content)
+
+        printer.rule("Generated Section Content")
+        printer.print(section_content)
+        agent.training_data.append({"from": "agent", "thought": writing_thought+'\n\n'+thought, "action": action, "action_content": writing_content, "citation": extract_citations(section_content)})
+
+        return writing_content
+
 
 def process_single_task(task, max_iterations):
     # Initialize agents
-    common_agent = BaseAgent()
-    search_agg = SearchAggregator()
-    verifier = ReportVerifier(common_agent)
+    agent = BaseAgent()
+    agent.training_data = [
+        {"from": "user", "value": task},
+    ]
+    search_agg = agent.search_aggregator
+    verifier = ReportVerifier(agent)
 
     package_name = "criticsearch.reportbench.wiki_data"
     file_name = "2024_Syrian_opposition_offensives.json"
@@ -243,7 +329,7 @@ def process_single_task(task, max_iterations):
     conversation_data = [{"from": "huamn", "value": task}]
 
     # initialize the task
-    common_agent.user_question = task
+    agent.user_question = task
 
     printer.log(f"Starting the conversation with task: \n{task}")
 
@@ -255,169 +341,69 @@ def process_single_task(task, max_iterations):
         if iteration == 0:
             # Initialize search_results as None
             search_results = None
-
-            # Model confidence check - yellow
-            agent_confident = common_agent.chat_with_template(
-                "agent_confidence.txt", {"user_question": task}
-            )
-            agent_confident_yaml = common_agent.extract_and_validate_yaml(
-                agent_confident
-            )
+            agent_confident = agent.chat_with_template("agent_confidence.txt", {"user_question": task})
+            agent_confident_yaml = agent.extract_and_validate_yaml(agent_confident)
 
             if agent_confident_yaml is None:
-                printer.log(
-                    "Failed to extract valid YAML content. Defaulting to 'false'."
-                )
+                printer.log("Failed to extract valid YAML content. Defaulting to 'false'.")
                 agent_confident = False
             else:
                 agent_confident_dict = yaml.safe_load(agent_confident_yaml)
-                agent_confident = (
-                    agent_confident_dict.get("confidence", "true").lower() == "true"
-                )
+                agent_confident = agent_confident_dict.get("confidence", "true").lower() == "true"
 
             if agent_confident:
-                # 使用chat_with_template替换direct chat
-                common_agent_answer = common_agent.chat_with_template(
-                    "direct_response.txt", {"task": task}
-                )
+                agent_answer = agent.chat_with_template("direct_response.txt", {"task": task})
             else:
                 agent_report_sections = []
 
-                for item in outline:
+                for item in outline: # 遵循给定的GT wiki的内容进行滑动窗口大小的section生成
                     section_path = item["path"]
                     merged_section_content = item["merged_section_window_content"]
                     extracted_facts = item["extracted_facts"]
 
-                    angent_report = "\n".join(agent_report_sections)
+                    agent_report = "\n".join(agent_report_sections)
 
-                    search_thought_and_queries = common_agent.chat_with_template(
+                    search_thought_and_queries = agent.chat_with_template(
                         "guided_search_thought.txt",
                         {
                             "task": task,
                             "context": "There is no previous context since this is the first section at the beginning of the article, only the user's question exists"
                             if iteration == 0
-                            else f"Previous text written by the Agent is:\n\n{angent_report}",
+                            else f"Previous text written by the Agent is:\n\n{agent_report}",
                             "GroundTruth": merged_section_content,
                         },
                     )
 
-                    # 提取thought内容
-                    thought_content = extract_thought_from_response(
-                        search_thought_and_queries
-                    )
-                    if thought_content:
-                        printer.print(f"Extracted thought process: {thought_content}")
-                    else:
-                        printer.print(
-                            "No thought process found in the response", style="yellow"
-                        )
-
-                    # 提取查询列表,最多尝试5次
-                    max_retries = 5
-                    retry_count = 0
-                    queries_list = None
-
-                    while retry_count < max_retries:
-                        queries_list = extract_queries_from_response(
-                            search_thought_and_queries
-                        )
-                        if (
-                            queries_list
-                            and isinstance(queries_list, list)
-                            and len(queries_list) > 0
-                        ):
-                            printer.print(f"Extracted queries: {queries_list}")
-                            conversation_data.append(
-                                {
-                                    "from": "agent",
-                                    "thougth": thought_content,
-                                    "search": queries_list,
-                                }
-                            )
-                            break
-
-                        printer.log(
-                            f"Attempt {retry_count + 1}: Invalid or empty queries, retrying...",
-                            style="yellow",
-                        )
-                        printer.print(search_thought_and_queries)
-                        # 重新生成��索思维和查询
-                        search_thought_and_queries = common_agent.chat_with_template(
-                            "guided_search_thought.txt",
-                            {
-                                "task": task,
-                                "context": "There is no previous context since this is the first section at the beginning of the article, only the user's question exists"
-                                if iteration == 0
-                                else f"Previous text written by the Agent is:\n\n{angent_report}",
-                                "GroundTruth": merged_section_content,
-                            },
-                        )
-                        retry_count += 1
-
-                    if retry_count == max_retries:
-                        printer.print(
-                            "Failed to extract valid queries after maximum retries",
-                            style="red, bold",
-                        )
-                        continue  # 跳过当���section,处理下一个
-
+                    thought_content = extract_thought_from_response(search_thought_and_queries)
+                    queries_list = extract_queries_from_response(search_thought_and_queries)
                     printer.print(search_thought_and_queries)
                     search_results = asyncio.run(search_agg.search(queries_list))
-                    detailed_web_results = common_agent.web_scrape_results(
-                        search_results
-                    )
+                    agent.training_data.append({"from": "agent", "thought": thought_content, "action": "SEARCH", "action_content": queries_list, "action_result": search_results[:200]})
+                    # detailed_web_results = agent.web_scrape_results(search_results)
 
-                    # 生成section内容
-                    section_content = common_agent.chat_with_template(
-                        "guided_generation_thought.txt",
-                        {
-                            "task": task,
-                            "context": "There is no previous context since this is the first section at the beginning of the article, only the user's question exists"
-                            if iteration == 0
-                            else f"Previous report content written by you is:\n\n{angent_report}",
-                            "guidline": section_path,
-                            "search_result": detailed_web_results,
-                        },
-                    )
+                    ## 从这里开始我们提供了详细的网页信息，由模型决定下一步的行动
+                    ## 模型会根据上一次的搜索结果，决定下一步的行动
+                    answer_content = _action_router(agent, search_results, task, section_path, iteration, agent_report, section_path, search_results)
 
-                    printer.rule("Section Content")
-                    printer.print(section_content)
-
-                    # 分别提取thought和answer，citation
-                    thought_content = extract_thought_from_response(section_content)
-                    answer_content = extract_answer_from_response(section_content)
-                    citations = extract_citations(answer_content)
 
                     # 将生成的内容添加到agent_report_sections
                     agent_report_sections.append(answer_content)
 
-                    conversation_data.append(
-                        {
-                            "from": "agent",
-                            "thougth": thought_content,
-                            "answer": answer_content,
-                            "citations": citations,
-                        }
-                    )
-
                     # 使用verifier进行factual QA验证
                     accuracy = verifier.verify_section(answer_content, extracted_facts)
-                    conversation_data.append(
-                        {
-                            "from": "verifier",
-                            "accuracy": accuracy,
-                            "section": section_path,
-                        }
-                    )
+                    agent.training_data.append({"from": "verifier", "section": section_path, "accuracy": accuracy})
 
-                    # 保存到一个json文件
-                    with open("conversation_data.json", "w", encoding="utf-8") as f:
-                        json.dump(conversation_data, f, indent=4, ensure_ascii=False)
 
+                # 拼接完整的report
+                agent_answer = "\n".join(agent_report_sections)
+                agent.training_data.append({"from": "agent", "final_report": agent_answer})
+                # 保存到一个json文件
+                with open("conversation_data.json", "w", encoding="utf-8") as f:
+                    json.dump(agent.training_data, f, indent=4, ensure_ascii=False)
                 exit(1)
 
                 # verify the outline is a json string
-                outline_json = common_agent.extract_and_validate_json(outline)
+                outline_json = agent.extract_and_validate_json(outline)
 
                 # Flatten the outline to get all sections at all levels
                 flat_sections = flatten_outline(outline_json)
@@ -427,7 +413,7 @@ def process_single_task(task, max_iterations):
                     future_to_section = {
                         executor.submit(
                             generate_content_for_section,
-                            common_agent,
+                            agent,
                             item["section"],
                             task,
                         ): item
@@ -447,38 +433,38 @@ def process_single_task(task, max_iterations):
                             )
 
                 # Reconstruct the markdown with proper hierarchy
-                common_agent_answer = reconstruct_markdown(outline_json, flat_contents)
+                agent_answer = reconstruct_markdown(outline_json, flat_contents)
                 printer.log(
-                    common_agent_answer
+                    agent_answer
                 )  # 这里是第一次生成的report,还没有polish
 
-                # 用deepseek润色一下得到正式的version1 report
-                polish_prompt = common_agent.load_template("polish_first_version.txt")
-                polish_rendered_prompt = common_agent.render_template(
+                # 用deepseek润色一下到正式的version1 report
+                polish_prompt = agent.load_template("polish_first_version.txt")
+                polish_rendered_prompt = agent.render_template(
                     polish_prompt,
                     {
                         "task": task,
-                        "report": common_agent_answer,
+                        "report": agent_answer,
                     },
                 )
-                common_agent_answer = common_agent.chat_with_template(
+                agent_answer = agent.chat_with_template(
                     "polish_first_version.txt",
                     {
                         "task": task,
-                        "report": common_agent_answer,
+                        "report": agent_answer,
                     },
                     model="gpt-4o",
                 )
                 printer.log(
-                    common_agent_answer
+                    agent_answer
                 )  # 这里是第一次生成的正式的polished report
                 # 保存到一个md
                 with open("first_version_report.md", "w") as f:
-                    f.write(common_agent_answer)
+                    f.write(agent_answer)
 
                 # Polish后从markdown解析出文档结构
-                document_structure = parse_markdown_to_structure(common_agent_answer)
-                common_agent.document_structure = document_structure
+                document_structure = parse_markdown_to_structure(agent_answer)
+                agent.document_structure = document_structure
 
                 # 保存到一个json文件
                 with open("document_structure.json", "w") as f:
@@ -486,11 +472,11 @@ def process_single_task(task, max_iterations):
 
         else:
             # 替换update answer调用
-            common_agent_answer = common_agent.chat_with_template(
+            agent_answer = agent.chat_with_template(
                 "agent_update_answer.txt",
                 {
                     "query": task,
-                    "previous_answer": common_agent_answer,
+                    "previous_answer": agent_answer,
                     "search_results": web_result_markdown_text,
                     "critic_feedback": critic_agent_response,
                 },
@@ -498,14 +484,14 @@ def process_single_task(task, max_iterations):
 
         # ========================== #
         ## 这里在if-else结构之外 ##
-        printer.rule(f"COMMON AGENT ANSWER")
-        printer.log(common_agent_answer)
+        printer.rule(f"AGENT ANSWER")
+        printer.log(agent_answer)
 
         critic_agent = CriticAgent()
         critic_agent.receive_task(task)
-        critic_agent.receive_agent_answer(common_agent_answer)
+        critic_agent.receive_agent_answer(agent_answer)
         critic_agent_response = critic_agent.chat_with_template(
-            "critic_evaluation.txt", {"task": task, "answer": common_agent_answer}
+            "critic_evaluation.txt", {"task": task, "answer": agent_answer}
         )
         printer.rule(f"CRITIC_AGENT_RESPONSE")
         printer.log(critic_agent_response)
@@ -513,44 +499,44 @@ def process_single_task(task, max_iterations):
         if yaml.safe_load(critic_agent_response).get("Stop", {}).lower() == "true":
             printer.rule(f"[red]TOTAL ITERATIONS: {iteration + 1}")
             printer.rule(f"ALL SEARCH QUERIES")
-            printer.log(common_agent.queryDB)
+            printer.log(agent.queryDB)
             printer.rule(f"[red]FINAL ANSWER")
-            printer.log(common_agent_answer)
+            printer.log(agent_answer)
 
-            return f"\n{common_agent_answer}\n"
+            return f"\n{agent_answer}\n"
 
         # 根据critic的建议再执行一次搜索和爬虫操作
         # 先构建rendered_prompt
         reflection_data = {
             "user_question": task,
-            "previous_answer": common_agent_answer,
+            "previous_answer": agent_answer,
             "user_feedback": critic_agent_response,
-            "search_history": common_agent.queryDB,
+            "search_history": agent.queryDB,
         }
-        search_again_prompt = common_agent.render_template(
-            common_agent.load_template("planner_agent_with_reflection.txt"),
+        search_again_prompt = agent.render_template(
+            agent.load_template("planner_agent_with_reflection.txt"),
             reflection_data,
         )
         try:
-            web_result_markdown_text = common_agent.search_and_browse(
+            web_result_markdown_text = agent.search_and_browse(
                 search_again_prompt
             )
         except:
             printer.rule(f"[red]TOTAL ITERATIONS: {iteration + 1}")
             printer.rule(f"ALL SEARCH QUERIES")
-            printer.log(common_agent.queryDB)
+            printer.log(agent.queryDB)
             printer.rule(f"[red]FINAL ANSWER")
-            printer.log(common_agent_answer)
+            printer.log(agent_answer)
 
             # we run out of searches for now, so we force the agent to give a final answer:
-            return f"\n{common_agent_answer}\n"
+            return f"\n{agent_answer}\n"
 
         # Check if reached max iterations
         if iteration == max_iterations - 1:
             printer.rule(f"[red]TOTAL ITERATIONS: {iteration + 1}")
             printer.rule(f"ALL SEARCH QUERIES")
-            printer.log(common_agent.queryDB)
+            printer.log(agent.queryDB)
             printer.rule(f"[red]FINAL ANSWER")
-            printer.log(common_agent_answer)
+            printer.log(agent_answer)
 
-            return f"\n{common_agent_answer}\n"
+            return f"\n{agent_answer}\n"

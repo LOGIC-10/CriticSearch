@@ -21,8 +21,11 @@ class BaseAgent:
     # Class-level attributes, shared across all instances
     queryDB = set()  # A set to store queries
     tool_registry = ToolRegistry()  # Registry for tools
+    search_aggregator = SearchAggregator()
     user_question = ""
+    training_data = []
     conversation_manager = ConversationManager()
+    memo = set()  # A set to store the gist extracted from the search results
 
     def __init__(self):
         base_dir = os.path.dirname(
@@ -110,7 +113,7 @@ class BaseAgent:
         """
         template = self.load_template(template_name)
         rendered_prompt = self.render_template(template, template_data)
-        return self.common_chat(
+        return self.chat(
             usr_prompt=rendered_prompt, model=model or settings.default_model
         )
 
@@ -120,24 +123,24 @@ class BaseAgent:
         """Helper method for chat with tools"""
         template = self.load_template(template_name)
         rendered_prompt = self.render_template(template, template_data)
-        return self.common_chat(
+        return self.chat(
             usr_prompt=rendered_prompt,
             tools=tools,
             model=model or settings.default_model,
         )
 
     @overload
-    def common_chat(
+    def chat(
         self, usr_prompt: List, tools: None = None
     ) -> ChatCompletionMessage: ...
 
     @overload
-    def common_chat(self, usr_prompt: str, tools: List) -> ChatCompletionMessage: ...
+    def chat(self, usr_prompt: str, tools: List) -> ChatCompletionMessage: ...
 
     @overload
-    def common_chat(self, usr_prompt: str, tools: None = None) -> str: ...
+    def chat(self, usr_prompt: str, tools: None = None) -> str: ...
 
-    def common_chat(
+    def chat(
         self,
         usr_prompt: str | List,
         tools: Optional[List] = None,
@@ -171,7 +174,7 @@ class BaseAgent:
         agent_update_answer_prompt = self.load_template("agent_update_answer.txt")
         rendered_prompt = self.render_template(agent_update_answer_prompt, data)
 
-        agent_update_answer_response = self.common_chat(usr_prompt=rendered_prompt)
+        agent_update_answer_response = self.chat(usr_prompt=rendered_prompt)
 
         return agent_update_answer_response
 
@@ -183,7 +186,7 @@ class BaseAgent:
         agent_confidence_prompt = self.load_template("agent_confidence.txt")
 
         rendered_prompt = self.render_template(agent_confidence_prompt, data)
-        agent_confidence_response = self.common_chat(usr_prompt=rendered_prompt)
+        agent_confidence_response = self.chat(usr_prompt=rendered_prompt)
 
         return agent_confidence_response
 
@@ -206,7 +209,7 @@ class BaseAgent:
         )
 
         # Interact with the model for web scraping
-        web_scraper_response = self.common_chat(
+        web_scraper_response = self.chat(
             usr_prompt=web_scraper_rendered_prompt,
             tools=self.content_scraper_schema,
         )
@@ -234,7 +237,7 @@ class BaseAgent:
         return final_web_scraper_results
 
     def search_and_browse(self, rendered_prompt) -> str | None:
-        search_with_tool_response = self.common_chat(
+        search_with_tool_response = self.chat(
             usr_prompt=rendered_prompt, tools=self.search_aggregator_schema
         )
 

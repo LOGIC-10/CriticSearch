@@ -1,3 +1,5 @@
+import ast
+import json
 import tiktoken
 import re
 
@@ -26,18 +28,6 @@ def count_tokens(text: str, model: str = "gpt-4o") -> int:
     return len(encoding.encode(text))
 
 def extract_queries_from_response(response_text: str) -> list:
-    """
-    从响应文本中提取查询列表，支持多种格式
-    
-    Args:
-        response_text: 响应文本，支持以下格式：
-            - <queries>[query1, query2]</queries>
-            - <queries>List[str] = [query1, query2]</queries>
-            - <queries> [query1, query2] </queries>
-        
-    Returns:
-        list: 提取的查询列表,如果未找到则返回空列表
-    """
     # 预处理文本
     response_text = response_text.strip()
     
@@ -101,22 +91,49 @@ def extract_answer_from_response(response_text: str) -> str:
         return answer_match.group(1).strip()
     return ""
 
-def extract_citations(text: str) -> set:
+def extract_citations(text: str) -> list:
     """
     从文本中提取所有引用的URLs并去重
+    优先使用ast.literal_eval，如果失败则尝试使用json.loads
     
     Args:
         text: 包含<citation>URL</citation>格式的文本
         
     Returns:
-        set: 提取的URL集合,如果未找到则返回空集合
+        list: 提取的URL列表,如果未找到则返回空列表
     """
-    citations = set()
     pattern = r'<citation>(.*?)</citation>'
     matches = re.findall(pattern, text, re.DOTALL | re.IGNORECASE)
     if matches:
-        citations.update(match.strip() for match in matches)
-    return citations
+        cleaned = matches[0].replace('\n', '').strip()
+        try:
+            return ast.literal_eval(cleaned)
+        except (SyntaxError, ValueError):
+            # 如果ast.literal_eval失败，尝试使用json.loads
+            try:
+                cleaned = cleaned.replace("'", '"')
+                return json.loads(cleaned)
+            except json.JSONDecodeError:
+                return []
+    return []
+
+
+def extract_actions(text: str) -> set:
+    """
+    从文本中提取所有actions并去重
+    
+    Args:
+        text: 包含<action>...</action>格式的文本
+        
+    Returns:
+        set: 提取的action集合,如果未找到则返回空集合
+    """
+    actions = set()
+    pattern = r'<action>(.*?)</action>'
+    matches = re.findall(pattern, text, re.DOTALL | re.IGNORECASE)
+    if matches:
+        actions.update(match.strip() for match in matches)
+    return actions
 
 if __name__ == "__main__":
 

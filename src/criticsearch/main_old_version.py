@@ -49,7 +49,7 @@ def main(TASK, MAX_ITERATION):
 
             if agent_confident:
                 # When confident, only get the answer
-                common_agent_answer = common_agent.common_chat(usr_prompt=TASK)
+                common_agent_answer = common_agent.chat(usr_prompt=TASK)
             else:
                 # When not confident, start searching information
                 data = {
@@ -78,7 +78,7 @@ def main(TASK, MAX_ITERATION):
                     },
                 )
 
-                common_agent_answer = common_agent.common_chat(
+                common_agent_answer = common_agent.chat(
                     usr_prompt=rag_based_answer_prompt,
                 )
 

@@ -258,7 +258,7 @@ def main(TASK, MAX_ITERATION):
 
             if agent_confident:
                 # When confident, only get the answer
-                common_agent_answer = common_agent.common_chat(usr_prompt=TASK)
+                common_agent_answer = common_agent.chat(usr_prompt=TASK)
             else:
                 # When not confident, get both answer and search results
                 # 并且第一次全面的搜索后的结果用来构建一个report的结构
@@ -290,7 +290,7 @@ def main(TASK, MAX_ITERATION):
                     },
                 )
 
-                outline = common_agent.common_chat(
+                outline = common_agent.chat(
                     usr_prompt=outline_prompt,
                 )
 
@@ -330,7 +330,7 @@ def main(TASK, MAX_ITERATION):
                         "report": common_agent_answer,
                     },
                 )
-                common_agent_answer = common_agent.common_chat(
+                common_agent_answer = common_agent.chat(
                     usr_prompt=polish_rendered_prompt,
                     model="gpt-4o"
                 )

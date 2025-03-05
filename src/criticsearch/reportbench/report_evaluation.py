@@ -16,7 +16,7 @@ class ReportEvaluation:
             "Query": self.report_benchmark.user_query,
         }
         prompt = self.report_benchmark.agent.render_template(template_str, data)
-        response = self.report_benchmark.agent.common_chat(usr_prompt=prompt)
+        response = self.report_benchmark.agent.chat(usr_prompt=prompt)
         return response
 
     def evaluate_breadth(self):
@@ -35,7 +35,7 @@ class ReportEvaluation:
             "DepthGT": self.student_report,
         }
         prompt = self.report_benchmark.agent.render_template(template_str, data)
-        response = self.report_benchmark.agent.common_chat(usr_prompt=prompt)
+        response = self.report_benchmark.agent.chat(usr_prompt=prompt)
         return response
 
     def extract_student_tree_structure(self):
@@ -43,7 +43,7 @@ class ReportEvaluation:
         template_str = self.report_benchmark.agent.load_template("student_tree_extraction.txt")
         data = {"StudentReport": self.student_report}
         prompt = self.report_benchmark.agent.render_template(template_str, data)
-        response = self.report_benchmark.agent.common_chat(usr_prompt=prompt)
+        response = self.report_benchmark.agent.chat(usr_prompt=prompt)
         return json.loads(response)
     
     def evaluate_depth(self):

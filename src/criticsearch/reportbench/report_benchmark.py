@@ -6,7 +6,7 @@
 import json
 import re
 from concurrent.futures import ThreadPoolExecutor
-
+from criticsearch.rich_output import printer
 import pandas as pd
 from tenacity import retry, stop_after_attempt, wait_fixed
 from criticsearch.base_agent import BaseAgent
@@ -228,7 +228,7 @@ class ReportBenchmark:
                     "UserQuery": self.user_query,
                 }
                 prompt = self.agent.render_template(template_str, data)
-                response = self.agent.common_chat(usr_prompt=prompt)
+                response = self.agent.chat(usr_prompt=prompt)
                 if not isinstance(response, list):
                     if not response.strip():
                         raise Exception("Empty response received from common_chat")
@@ -266,7 +266,7 @@ class ReportBenchmark:
             "DepthGT": self.depth_gt,
         }
         prompt = self.agent.render_template(template_str, data)
-        response = self.agent.common_chat(usr_prompt=prompt)
+        response = self.agent.chat(usr_prompt=prompt)
         return response
 
     def process_window_content(self, content, max_retries=10):
@@ -288,7 +288,7 @@ class ReportBenchmark:
         if use_cache:
             cached_results = self._load_from_cache()
             if cached_results is not None:
-                print("Loading results from cache...")
+                printer.print("Loading results from cache...")
                 return cached_results
         
         # 原有的生成逻辑
@@ -329,13 +329,13 @@ class ReportBenchmark:
                 "UserQuery": self.user_query,
             }
             prompt = self.agent.render_template(template_str, data)
-            response = self.agent.common_chat(usr_prompt=prompt)
+            response = self.agent.chat(usr_prompt=prompt)
             if not isinstance(response, list):
                 if not response.strip():
-                    raise Exception("Empty response received from common_chat")
+                    raise Exception("Empty response received from chat")
                 try:
                     candidate = json.loads(response)
-                    print(candidate)
+                    printer.print(candidate)
                     if isinstance(candidate, list):
                         return candidate
                 except Exception as e:
