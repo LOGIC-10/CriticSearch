@@ -117,6 +117,33 @@ def extract_citations(text: str) -> list:
                 return []
     return []
 
+def extract_notes(response_text: str) -> list:
+    """
+    从响应文本中提取notes列表
+    
+    Args:
+        response_text: 包含<answer>[<note>...</note>]</answer>格式的响应文本
+        
+    Returns:
+        list: 提取的notes列表,如果未找到则返回空列表
+    """
+    # 只匹配格式完整的note内容
+    note_pattern = r'<note>(.*?)</note>'
+    matches = re.findall(note_pattern, response_text, re.DOTALL | re.IGNORECASE)
+    valid_notes = []
+    
+    for note in matches:
+        note = note.strip()
+        # 验证笔记格式的完整性
+        if (
+            note 
+            and "<citation>" in note 
+            and "</citation>" in note
+            and note.count("<citation>") == note.count("</citation>")
+        ):
+            valid_notes.append(note)
+            
+    return valid_notes
 
 def extract_actions(text: str) -> set:
     """

@@ -15,7 +15,7 @@ from .llm_service import ChatCompletionMessage, call_llm
 from .models import ConversationManager
 from .rich_output import printer
 from .tools import ContentScraper, SearchAggregator, ToolRegistry
-
+from .utils import *
 
 class BaseAgent:
     # Class-level attributes, shared across all instances
@@ -271,24 +271,13 @@ class BaseAgent:
             final_search_results += f"{search_results}"
 
         return self.web_scrape_results(final_search_results)
-
-    def receive_task(self, task):
-        """
-        接收原始任务。
-        """
-        self.original_task = task
-
+    
     def extract_and_validate_yaml(self, model_response):
-        # 正则表达式匹配包裹在```yaml```之间的内容
-        import re
-
         match = re.search(r"```yaml\n([\s\S]*?)\n```", model_response, re.DOTALL)
-
         if not match:
             return None  # 如果没有找到匹配的内容，返回None
 
         model_response = match.group(1).strip()
-
         try:
             # 尝试解析YAML内容
             parsed_yaml = yaml.safe_load(model_response)
@@ -297,6 +286,14 @@ class BaseAgent:
         except yaml.YAMLError as exc:
             print(f"Invalid YAML content: {exc}")
             return None
+
+    def receive_task(self, task):
+        """
+        接收原始任务。
+        """
+        self.original_task = task
+
+
 
     def extract_and_validate_json(self, model_response):
         # Try to extract JSON data wrapped in ```json``` blocks
@@ -314,3 +311,16 @@ class BaseAgent:
         except json.JSONDecodeError as exc:
             print(f"Invalid JSON content: {exc}")
             return None
+
+    def taking_notes(self, web_results):
+        """从搜索结果中提取信息并记录。"""
+        result = self.chat_with_template(
+            template_name="taking_notes.txt",
+            template_data={"search_result": web_results, "TASK": self.original_task, "previous_notes": self.memo},
+        )
+        notes = extract_notes(result)
+        if isinstance(notes, list):
+            # 先转换成集合进行自动去重，然后更新到memo中
+            new_notes = set(notes)  # 使用set自动去重
+            self.memo.update(new_notes)
+

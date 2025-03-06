@@ -312,8 +312,9 @@ def process_single_task(task, max_iterations):
     # Initialize agents
     agent = BaseAgent()
     agent.training_data = [
-        {"from": "user", "value": task},
+        {"from": "human", "value": task},
     ]
+    agent.memo = set()
     search_agg = agent.search_aggregator
     verifier = ReportVerifier(agent)
 
@@ -325,8 +326,6 @@ def process_single_task(task, max_iterations):
 
     benchmark = ReportBenchmark(json_file)
     outline = benchmark.generate_benchmark_item(max_window_tokens=200)
-
-    conversation_data = [{"from": "huamn", "value": task}]
 
     # initialize the task
     agent.user_question = task
