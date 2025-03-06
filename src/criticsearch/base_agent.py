@@ -319,8 +319,14 @@ class BaseAgent:
             template_data={"search_result": web_results, "TASK": self.original_task, "previous_notes": self.memo},
         )
         notes = extract_notes(result)
-        if isinstance(notes, list):
+        if isinstance(notes, list) and notes:
             # 先转换成集合进行自动去重，然后更新到memo中
             new_notes = set(notes)  # 使用set自动去重
+            printer.rule("New notes"); printer.print(new_notes)
             self.memo.update(new_notes)
+            return list(new_notes)
+        else:
+            printer.print("No new notes.")
+            return []   
+
 

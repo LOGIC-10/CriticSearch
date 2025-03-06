@@ -256,7 +256,7 @@ def _action_router(
     iteration: int,
     agent_report: str,
     guide_line: str,
-    detailed_web_results: str,
+    detailed_web_results: str = "",
 ):
     # 获取模型的行动决策
     thought, action, data = _model_action_decision(agent, search_results, task, current_section)
@@ -266,22 +266,25 @@ def _action_router(
         # 执行新的搜索
         new_search_results = asyncio.run(agent.search_aggregator.search(data))
         agent.training_data.append({"from": "agent", "thought": thought, "action": action, "action_content": data, "action_result": new_search_results[:200]})
+
+        ## 让模型记笔记
+        new_notes = agent.taking_notes(new_search_results); agent.training_data.append({"from": "agent", "action": "TAKING_NOTES", "action_content": new_notes})
         # 递归调用自身处理新的搜索结果让模型决定下一步的行动
-        return _action_router(
-            agent, new_search_results, task, current_section,
-            iteration, agent_report, guide_line, detailed_web_results
-        )
+        return _action_router(agent, new_search_results, task, current_section,iteration, agent_report, guide_line, detailed_web_results)
         
     elif action == "BROWSE":
         # 执行网页爬取
         web_scraper_results = asyncio.run(
             agent.content_scraper.scrape(urls=data)
         )
+        detailed_web_results+='\n\n'+web_scraper_results # 防止出现连续的browsing， 要把之前的browsing结果保存下来
         agent.training_data.append({"from": "agent", "thought": thought, "action": action, "action_content": data, "action_result": web_scraper_results[:200]})
+        ## 让模型记笔记
+        new_notes = agent.taking_notes(web_scraper_results); agent.training_data.append({"from": "agent", "action": "TAKING_NOTES", "action_content": new_notes})
         # 递归调用自身处理爬取结果让模型决定下一步的行动
         return _action_router(
-            agent, web_scraper_results, task, current_section,
-            iteration, agent_report, guide_line, web_scraper_results
+            agent, search_results + '\n\n' + web_scraper_results, task, current_section,
+            iteration, agent_report, guide_line, detailed_web_results
         )
         
     elif action == "START_WRITING":
@@ -295,6 +298,7 @@ def _action_router(
                 else f"Previous report content written by you is:\n\n{agent_report}",
                 "guidline": guide_line,
                 "search_result": detailed_web_results,
+                "memo": agent.memo, # 每次模型写新的内容的时候都会可以看到之前所有的笔记
             }
         )
 
@@ -311,6 +315,7 @@ def _action_router(
 def process_single_task(task, max_iterations):
     # Initialize agents
     agent = BaseAgent()
+    agent.receive_task(task)
     agent.training_data = [
         {"from": "human", "value": task},
     ]
@@ -379,6 +384,7 @@ def process_single_task(task, max_iterations):
                     search_results = asyncio.run(search_agg.search(queries_list))
                     agent.training_data.append({"from": "agent", "thought": thought_content, "action": "SEARCH", "action_content": queries_list, "action_result": search_results[:200]})
                     # detailed_web_results = agent.web_scrape_results(search_results)
+                    new_notes = agent.taking_notes(search_results); agent.training_data.append({"from": "agent", "action": "TAKING_NOTES", "action_content": new_notes})
 
                     ## 从这里开始我们提供了详细的网页信息，由模型决定下一步的行动
                     ## 模型会根据上一次的搜索结果，决定下一步的行动
@@ -395,7 +401,7 @@ def process_single_task(task, max_iterations):
 
                 # 拼接完整的report
                 agent_answer = "\n".join(agent_report_sections)
-                agent.training_data.append({"from": "agent", "final_report": agent_answer})
+                agent.training_data.append({"from": "agent", "final_report": agent_answer, "citation": extract_citations(agent_answer)})
                 # 保存到一个json文件
                 with open("conversation_data.json", "w", encoding="utf-8") as f:
                     json.dump(agent.training_data, f, indent=4, ensure_ascii=False)

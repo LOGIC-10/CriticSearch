@@ -126,6 +126,10 @@ def extract_notes(response_text: str) -> list:
         
     Returns:
         list: 提取的notes列表,如果未找到则返回空列表
+        要求返回的格式是：[
+            "First note content with <citation>http://example1.com</citation>",
+            "Second note content with <citation>http://example2.com</citation>"
+        ]
     """
     # 只匹配格式完整的note内容
     note_pattern = r'<note>(.*?)</note>'

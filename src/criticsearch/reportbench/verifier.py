@@ -62,6 +62,9 @@ class ReportVerifier:
         return text
 
     def _check_answer(self, model_answer: str, ground_truth: str) -> tuple:
+        if model_answer is None:
+            return False, 0.0
+        
         pattern = r'\\boxed{(.*?)}'
         model_boxed = re.findall(pattern, model_answer)
         ground_truth_boxed = re.findall(pattern, ground_truth)

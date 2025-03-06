@@ -40,6 +40,7 @@ def start_task_execution():
     """
     tasks = [
         "Write a report about 2024_Syrian_opposition_offensives event",
+        # "撰写一份关于2024年叙利亚反对派进攻事件的报告，要求报告全文完全使用中文",
     ]
     MAX_ITERATION = 2
     try:
