@@ -40,6 +40,18 @@ class SearchResponse(BaseModel):
 class SearchResponseList(BaseModel):
     responses: List[SearchResponse] = Field(default_factory=list)
 
+    def _is_wiki_url(self, url: str) -> bool:
+        """检查URL是否为维基百科或wiki相关网站"""
+        wiki_domains = [
+            "wikipedia.org",
+            "wiki.",
+            "fandom.com",
+            "wikimedia.org",
+            "wiktionary.org"
+        ]
+        return any(domain in url.lower() for domain in wiki_domains)
+    
+
     @model_serializer
     def ser_model(self) -> str:
         """
@@ -53,6 +65,7 @@ class SearchResponseList(BaseModel):
         global_seen_contents = set()  # 全局去重逻辑
         total_results = 0
         unique_results_count = 0
+        filtered_wiki_count = 0
         result_str = ""
 
         for response in self.responses:
@@ -65,6 +78,12 @@ class SearchResponseList(BaseModel):
             unique_results = []
             for res in response.results:
                 total_results += 1
+
+                # 过滤wiki页面
+                if self._is_wiki_url(res.url):
+                    filtered_wiki_count += 1
+                    continue
+
                 if res.content not in global_seen_contents:
                     global_seen_contents.add(res.content)
                     unique_results.append(res)
@@ -79,7 +98,8 @@ class SearchResponseList(BaseModel):
         printer.log(
             f"Serialization completed. Total results: {total_results}, "
             f"Unique results: {unique_results_count}, "
-            f"Duplicates removed: {duplicates_removed}.",
+            f"Duplicates removed: {duplicates_removed},"
+            f"Wiki pages filtered: {filtered_wiki_count}.",
             style="bold green",
         )
 
