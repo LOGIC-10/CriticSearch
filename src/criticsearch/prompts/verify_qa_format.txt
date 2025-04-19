@@ -1,0 +1,15 @@
+You are a strict QA format validator. Please verify if the following question-answer pair meets the required format constraints. What you need to specifically verify is whether the given standard ground truth answer meets the format requirements, or whether the format requirements for the standard answer are unreasonable. As long as the answer does not meet the format requirements or the format requirements are unreasonable for the answer, meaning there is a mismatch between the two, it should be considered an error.
+
+Please verify if the following Q&A pair meets the required format constraints.
+
+Question: {{question}}
+Format Constraint: {{format}}
+Answer: {{answer}}
+
+Please return "true" or "false" with a reason in the following JSON format:
+```json
+{
+    "result": true/false, # "true" if the answer meets the format requirements or the format requirement is reasonable for the GT answer, "false" otherwise
+    "reason": "explanation in English"
+}
+```

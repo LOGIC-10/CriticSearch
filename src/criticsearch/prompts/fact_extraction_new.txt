@@ -8,21 +8,21 @@ Each paragraph provided is independent and should be analyzed in relation to the
 ### **Formatting Requirements:**
 For each extracted question, you must adhere to the following structured format:
 
-1. **Question:** Enclosed within `</question>` tags.
-2. **Constraint Format:** Specifies the required answer format, enclosed within `</constrained_format>` tags.
-3. **Answer:** Enclosed within `</answer>` tags, with the core verifiable value wrapped in `\boxed{}`.
+1. **Question:** Enclosed within `<question></question>` tags.
+2. **Constraint Format:** Specifies the required answer format, enclosed within `<constrained_format></constrained_format>` tags.
+3. **Answer:** Enclosed within `<answer></answer>` tags, with the core verifiable value wrapped in `\\boxed{}`.
 
 ---
 
 ### **Example Output Format:**
 ```json
 [
-  "</question>How many alarms are there on Maui?</question></constrained_format>answer in pure number</constrained_format></answer>There are \boxed{80} alarms</answer>",
-  "</question>Who were the local authorities waiting for to send specialists?</question></constrained_format>answer in pure English capital words</constrained_format></answer>\boxed{FEMA}</answer>",
-  "</question>On what date was the death toll recorded at 67?</question></constrained_format>answer with a date in mm-dd-yyyy format</constrained_format></answer>\boxed{08-11-2023}</answer>"
-  "</question>What is the name of the emergency alarm system in Hawaii?</question></constrained_format>answer in 3 words</constrained_format></answer>The system is called \boxed{Integrated Outdoor Alarm}</answer>",
-  "</question>How long did local authorities wait for FEMA specialists?</question></constrained_format>answer in pure number with time unit</constrained_format></answer>\boxed{3 days}</answer>",
-  "</question>Which U.S. state has the largest integrated outdoor alarm system?</question></constrained_format>answer in a U.S. state name</constrained_format></answer>\boxed{Hawaii}</answer>"
+  "<question>How many alarms are there on Maui?</question><constrained_format>answer in pure number</constrained_format><answer>There are \\boxed{80} alarms</answer>",
+  "<question>Who were the local authorities waiting for to send specialists?</question><constrained_format>answer in pure English capital words</constrained_format><answer>\\boxed{FEMA}</answer>",
+  "<question>On what date was the death toll recorded at 67?</question><constrained_format>answer with a date in mm-dd-yyyy format</constrained_format><answer>\\boxed{08-11-2023}</answer>"
+  "<question>What is the name of the emergency alarm system in Hawaii?</question><constrained_format>answer in 3 words</constrained_format><answer>The system is called \\boxed{Integrated Outdoor Alarm}</answer>",
+  "<question>How long did local authorities wait for FEMA specialists?</question><constrained_format>answer in pure number with time unit</constrained_format><answer>\\boxed{3 days}</answer>",
+  "<question>Which U.S. state has the largest integrated outdoor alarm system?</question><constrained_format>answer in a U.S. state name</constrained_format><answer>\\boxed{Hawaii}</answer>"
 ]
 
 ---
@@ -55,8 +55,8 @@ Paragraph:
 **Output**
 Extracted Questions:
 [
-  "</question> ... </question></constrained_format> ... </constrained_format></answer> ... </answer>",
-  "</question> ..."
+  "<question> ... </question><constrained_format> ... </constrained_format><answer> ... </answer>",
+  "<question> ..."
   "..."
 ]
 
@@ -78,7 +78,7 @@ Why? The answer could be subjective and difficult to verify with a single value.
 ### **Final Instructions:**
 - If a paragraph has no uniquely verifiable information, directly return NONE.
 - Ensure the question directly relates to the article topic and query.
-- Maintain answer format consistency, wrapping core responses in \boxed{}.
+- Maintain answer format consistency, wrapping core responses in \\boxed{}.
 Now, let’s begin! Please process the following:
 
 

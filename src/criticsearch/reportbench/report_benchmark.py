@@ -5,7 +5,10 @@
 # %%
 import json
 import re
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, as_completed
+import traceback
+from typing import Any, Optional
+from criticsearch import utils
 from criticsearch.rich_output import printer
 import pandas as pd
 from tenacity import retry, stop_after_attempt, wait_fixed
@@ -18,9 +21,15 @@ from criticsearch.reportbench.extract_ground_truth import (
 )
 
 from criticsearch.utils import count_tokens
+from criticsearch.utils import extract_and_validate_json
+from criticsearch.utils import (
+    extract_tag_content,
+    extract_answer_from_response,
+    extract_boxed_content,
+)
 import os
-import hashlib
 from pathlib import Path
+import hashlib
 
 # %% [markdown]
 # ## ReportBenchmark Class Definition
@@ -59,17 +68,25 @@ class ReportBenchmark:
         content = f"{self.json_path}_{self.user_query}"
         return hashlib.md5(content.encode()).hexdigest()
 
-    def _load_from_cache(self):
-        """从缓存加载结果"""
+    def _load_from_cache(self) -> Optional[Any]:
+        """Load results from cache if available and non-empty."""
         cache_file = self.cache_dir / f"{self._get_cache_key()}.json"
-        if cache_file.exists():
-            with open(cache_file, 'r', encoding='utf-8') as f:
-                return json.load(f)
-        return None
+        if not cache_file.exists() or cache_file.stat().st_size == 0:
+            printer.print(f"Cache file {cache_file} is missing or empty.")
+            return None
+        with cache_file.open('r', encoding='utf-8') as f:
+            data = json.load(f)
+        # 如果缓存内容是空列表，也视为无效
+        if isinstance(data, list) and not data:
+            printer.print(f"Cache file {cache_file} contains an empty list.")
+            return None
+        return data
 
-    def _save_to_cache(self, results):
-        """保存结果到缓存"""
+    def _save_to_cache(self, results: Any) -> None:
+        """Save results to cache."""
         cache_file = self.cache_dir / f"{self._get_cache_key()}.json"
+        with cache_file.open('w', encoding='utf-8') as f:
+            json.dump(results, f, ensure_ascii=False, indent=2)
         with open(cache_file, 'w', encoding='utf-8') as f:
             json.dump(results, f, ensure_ascii=False, indent=2)
 
@@ -212,50 +229,6 @@ class ReportBenchmark:
         
         return windows
 
-    def run_fact_extraction(self):
-        """
-        使用 self.sections 中的每个 markdown 文本调用 fact_extraction，
-        并行执行，返回一个包含各 section 响应的列表。
-        如果对某个 section 10 次尝试后都失败，则发出警告并跳过该 section。
-        """
-
-        def process_section(section_text):
-            @retry(stop=stop_after_attempt(10), wait=wait_fixed(1), reraise=True)
-            def attempt():
-                template_str = self.agent.load_template("fact_extraction.txt")
-                data = {
-                    "wiki_text": section_text,
-                    "UserQuery": self.user_query,
-                }
-                prompt = self.agent.render_template(template_str, data)
-                response = self.agent.chat(usr_prompt=prompt)
-                if not isinstance(response, list):
-                    if not response.strip():
-                        raise Exception("Empty response received from common_chat")
-                    try:
-                        candidate = json.loads(response)
-                        print(candidate)
-                        if isinstance(candidate, list):
-                            return candidate
-                    except Exception as e:
-                        raise Exception("Section response conversion failed") from e
-                    raise Exception("Section response is not a list")
-                return response
-
-            try:
-                return attempt()
-            except Exception as e:
-                print(
-                    f"Warning: Failed to process section after 10 attempts. Skipping this section. Error: {e}"
-                )
-                return None
-
-        with ThreadPoolExecutor() as executor:
-            raw_results = list(executor.map(process_section, self.sections))
-        # Filter out any sections that failed after 10 attempts
-        results = [result for result in raw_results if result is not None]
-        return results  # 返回 List[List[str]]，每个元素是一个 section 的 fact extraction 结果
-
     def run_factualqa(self):
         # Load and render a template "factual_qa.txt" for FactualQA evaluation.
         # Pass Query, BreadthGT (converted to JSON string) and DepthGT.
@@ -269,19 +242,105 @@ class ReportBenchmark:
         response = self.agent.chat(usr_prompt=prompt)
         return response
 
+    def process_section_with_models(self, section_text: str, models: list) -> list:
+        """使用多个模型并行处理同一段文本"""
+
+        def process_with_model(model: str):
+            try:
+                template_str = self.agent.load_template("fact_extraction_new.txt")
+                data = {
+                    "wiki_text": section_text,
+                    "UserQuery": self.user_query,
+                }
+                prompt = self.agent.render_template(template_str, data)
+                response = self.agent.chat(usr_prompt=prompt, model=model)
+
+                printer.print(f"Model: {model}")
+                printer.print("Response:")
+                printer.print(response)
+
+                if not isinstance(response, list):
+                    if not response.strip():
+                        return None
+                    try:
+                        candidate = extract_and_validate_json(response)
+                        if isinstance(candidate, list):
+                            parsed_data = self.parse_tagged_data_to_table(candidate)
+                            return {"model": model, "data": parsed_data}
+                    except Exception:
+                        printer.print(f"[ERROR] Failed to parse JSON response: {response}")
+                        return None
+                return {"model": model, "data": self.parse_tagged_data_to_table(response)}
+            except Exception as e:
+                # 打印完整 traceback
+                printer.print(f"[ERROR] model={model} exception:\n{traceback.format_exc()}")
+                return None
+
+        results = []
+        with ThreadPoolExecutor(max_workers=50) as executor:
+            # submit + as_completed，方便捕获每个 future 的异常
+            futures = {executor.submit(process_with_model, m): m for m in models}
+            for fut in as_completed(futures):
+                model = futures[fut]
+                try:
+                    res = fut.result()  # 这里会抛出未被捕获的异常
+                    results.append(res)
+                except Exception as e:
+                    printer.print(f"[ERROR] task for {model} failed: {e}")
+
+        # 过滤掉 None
+        results = [r for r in results if r is not None]
+
+        # 对每个结果进行格式验证
+        verified_results = []
+        for result in results:
+            verified_data = []
+            for item in result["data"]:
+                print(f"\n\nVerifying item: {item}\n\n")
+                if self.verify_qa_format(item):
+                    verified_data.append(item)
+            if verified_data:
+                result["data"] = verified_data
+                verified_results.append(result)
+
+        # 聚合并去重
+        return self.aggregate_model_results(verified_results)
+
+    def aggregate_model_results(self, results: list) -> list:
+        """聚合多个模型的结果并去重"""
+        seen_items = set()
+        unique_results = []
+        
+        for result in results:
+            for item in result["data"]:
+                # 创建问题和答案的组合哈希值
+                item_hash = hashlib.md5(
+                    f"{item['question'].strip().lower()}_{item['answer'].strip().lower()}".encode()
+                ).hexdigest()
+                
+                if item_hash not in seen_items:
+                    seen_items.add(item_hash)
+                    item["source_model"] = result["model"]  # 添加来源模型信息
+                    unique_results.append(item)
+        
+        return unique_results
+
     def process_window_content(self, content, max_retries=10):
-        """处理单个窗口内容,如果结果为空则重试"""
+        """修改现有的处理方法以使用多模型"""
+        # 从settings中直接获取extract_models配置
+        from criticsearch.config import settings
+        models = settings.extract_models if hasattr(settings, 'extract_models') else ["gpt-4o"]
+        
         for attempt in range(max_retries):
             try:
-                result = self.process_section(content)
-                if result:
-                    parsed_data = self.parse_tagged_data_to_table(result)
-                    if parsed_data:  # 如果解析出的数据不为空
-                        return parsed_data
-                print(f"Attempt {attempt + 1}: Empty result, retrying...")
-            except Exception as e:
-                print(f"Attempt {attempt + 1} failed with error: {e}")
-        return []  # 如果所有尝试都失败,返回空列表
+                # 使用多个模型并行处理
+                results = self.process_section_with_models(content, models)
+                if results:  # 如果有结果则返回
+                    return results
+            except Exception:
+                continue
+        
+        return []  # 如果所有尝试都失败则返回空列表
 
     def generate_benchmark_item(self, use_cache=True, max_window_tokens=300):
         """添加缓存支持的基准测试项生成方法"""
@@ -298,7 +357,7 @@ class ReportBenchmark:
         # 准备抽取任务的输入
         window_contents = []
         window_paths = []
-        for window in windows:
+        for window in windows:  
             window_contents.append(window["merged_section_window_content"])
             window_paths.append(window["section_window_path_text"])
         
@@ -319,62 +378,46 @@ class ReportBenchmark:
             
         return final_results
 
-    def process_section(self, section_text):
-        """将原来run_fact_extraction中的process_section逻辑移到单独的方法"""
-        @retry(stop=stop_after_attempt(10), wait=wait_fixed(1), reraise=True)
-        def attempt():
-            template_str = self.agent.load_template("fact_extraction.txt")
-            data = {
-                "wiki_text": section_text,
-                "UserQuery": self.user_query,
-            }
-            prompt = self.agent.render_template(template_str, data)
-            response = self.agent.chat(usr_prompt=prompt)
-            if not isinstance(response, list):
-                if not response.strip():
-                    raise Exception("Empty response received from chat")
-                try:
-                    candidate = json.loads(response)
-                    printer.print(candidate)
-                    if isinstance(candidate, list):
-                        return candidate
-                except Exception as e:
-                    raise Exception("Section response conversion failed") from e
-                raise Exception("Section response is not a list")
-            return response
-
+    def verify_qa_format(self, item: dict) -> bool:
+        """验证问答对是否符合格式约束"""
+        data = {
+            "question": item["question"],
+            "format": item["format"],
+            "answer": utils.extract_boxed_content(item["answer"]),
+        }
         try:
-            return attempt()
+            response = self.agent.chat_with_template("verify_qa_format.txt", data, model="gpt-4o", check_prompt=False)
+            result = extract_and_validate_json(response)
+            printer.print(f"\nVerification Result: \n{result}\n")
+            if result["result"] == True:
+                printer.log(f"Verification passed")
+                return True
+            else:
+                # 打印出验证失败的情况
+                printer.print_exception(f"Verification failed: The answer is: {item['answer']}, fail reason is: {result['reason']}")
+                return False
+            
         except Exception as e:
-            print(
-                f"Warning: Failed to process section after 10 attempts. Skipping this section. Error: {e}"
-            )
-            return None
+            printer.print(f"Error during the validation and verification: {str(e)}")
+            return False
 
     def parse_tagged_data_to_table(self, entries, csv_path=None):
+        """解析模型返回的数据并添加来源模型字段"""
         parsed_data = []
         for entry in entries:
-            # Extract question
-            question_match = re.search(r"</question>(.*?)</question>", entry)
-            question = question_match.group(1).strip() if question_match else ""
-
-            # Extract format description
-            format_match = re.search(
-                r"</constrained_format>(.*?)</constrained_format>", entry
-            )
-            format_desc = format_match.group(1).strip() if format_match else ""
-
-            # Extract answer
-            answer_match = re.search(r"</answer>(.*?)</answer>", entry)
-            answer = answer_match.group(1).strip() if answer_match else ""
-
-            # 验证answer中是否包含\boxed{...}格式的内容
-            boxed_match = re.search(r"\\boxed{([^}]+)}", answer)
-            if boxed_match:  # 只有当匹配到boxed内容时才添加到结果中
-                parsed_data.append(
-                    {"question": question, "format": format_desc, "answer": answer}
-                )
-
+            # 使用通用方法提取 question 和 format
+            q = extract_tag_content(entry, "question")
+            fmt = extract_tag_content(entry, "constrained_format")
+            # 提取 answer 并解析 boxed 内容
+            raw_ans = extract_answer_from_response(entry)
+            ans = extract_boxed_content(raw_ans)
+            if q and fmt and ans:
+                parsed_data.append({
+                    "question": q,
+                    "format": fmt,
+                    "answer": ans,
+                    "source_model": None,  # aggregate_model_results 会填充
+                })
         return parsed_data
 
     def verify_extraction_meaningful(self):
@@ -387,7 +430,7 @@ class ReportBenchmark:
 
 # %%
 if __name__ == "__main__":
-    json_file = "/workspaces/CriticSearch/src/criticsearch/reportbench/wiki_data/2024_Syrian_opposition_offensives.json"
+    json_file = "/workspaces/CriticSearch/src/criticsearch/reportbench/wiki_data/2024_European_floods.json"
     benchmark = ReportBenchmark(json_file)
     # print(benchmark.section_content_pairs)
     print(json.dumps(benchmark.sliding_window_pairing(max_token_length=800), indent=2))

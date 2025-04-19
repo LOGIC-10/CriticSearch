@@ -2,6 +2,8 @@ import ast
 import json
 import tiktoken
 import re
+from .rich_output import printer
+
 
 def count_tokens(text: str, model: str = "gpt-4o") -> int:
     """
@@ -91,6 +93,19 @@ def extract_answer_from_response(response_text: str) -> str:
         return answer_match.group(1).strip()
     return ""
 
+# 和上面的函数配合使用，上面是提取answer，下面是提取answer中的boxed内容
+def extract_boxed_content(answer: str) -> str:
+    """从答案中提取 boxed 内容
+    
+    Args:
+        answer (str): 包含 boxed 内容的答案字符串，但是不包含answer的标签
+    
+    Returns:
+        str: boxed中的内容,如果没有找到则返回原始答案
+    """
+    boxed_match = re.search(r"\\boxed{([^}]+)}", answer)
+    return boxed_match.group(1).strip() if boxed_match else answer
+
 def extract_citations(text: str) -> list:
     """
     从文本中提取所有引用的URLs并去重
@@ -165,6 +180,44 @@ def extract_actions(text: str) -> set:
     if matches:
         actions.update(match.strip() for match in matches)
     return actions
+
+def extract_tag_content(text: str, tag: str) -> str:
+    """
+    通用的 <tag>…</tag> 提取函数
+    
+    Args:
+        text: 包含指定标签的文本
+        tag: 标签名称 (如 "question", "answer")
+        
+    Returns:
+        str: 提取的标签内容，如果未找到则返回空字符串
+    """
+    pattern = rf'<{tag}>(.*?)</{tag}>'
+    m = re.search(pattern, text, re.DOTALL | re.IGNORECASE)
+    return m.group(1).strip() if m else ""
+
+def extract_and_validate_json(model_response: str):
+    """
+    Extract JSON content from a model response, whether it's wrapped in ```json``` fences
+    or is just raw JSON text. Return the parsed object or None on failure.
+    """
+    # 1. Try to strip out any ```json``` fences (or ``` any-language ```)
+    fence_pattern = r"```(?:json)?\s*([\s\S]*?)\s*```"
+    m = re.search(fence_pattern, model_response, re.DOTALL | re.IGNORECASE)
+    payload = m.group(1) if m else model_response
+    payload = payload.strip()
+
+    # 2. Attempt to parse as JSON
+    try:
+        return json.loads(payload)
+    except json.JSONDecodeError:
+        # 3. Fallback: remove any stray backticks and retry
+        cleaned = payload.replace("```", "").strip()
+        try:
+            return json.loads(cleaned)
+        except json.JSONDecodeError as exc:
+            printer.print_exception(f"Invalid JSON content after cleanup: {exc}\n\n Original model content: {model_response}")
+            return None
 
 if __name__ == "__main__":
 

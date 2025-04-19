@@ -32,6 +32,7 @@ class BaseAgent:
             os.path.abspath(__file__)
         )  # Directory of the current script
         self.prompts_dir = os.path.join(base_dir, "prompts")
+        self.config = settings  # 添加配置访问支持
         # self.env = Environment(loader=FileSystemLoader(self.prompts_dir))
 
         # 对于citationDB,应该是一个字典，key是query，value是内容和来源
@@ -99,7 +100,7 @@ class BaseAgent:
         return template.render(**data)
 
     def chat_with_template(
-        self, template_name: str, template_data: dict, model: str = None
+        self, template_name: str, template_data: dict, model: str = None, check_prompt: bool = False,
     ) -> str:
         """Unified helper method to handle template rendering and chat calling
 
@@ -113,6 +114,10 @@ class BaseAgent:
         """
         template = self.load_template(template_name)
         rendered_prompt = self.render_template(template, template_data)
+
+        if check_prompt:
+            printer.log(f"Full Rendered Prompt:\n{rendered_prompt}")
+            
         return self.chat(
             usr_prompt=rendered_prompt, model=model or settings.default_model
         )
@@ -293,8 +298,6 @@ class BaseAgent:
         """
         self.original_task = task
 
-
-
     def extract_and_validate_json(self, model_response):
         # Try to extract JSON data wrapped in ```json``` blocks
         # and return the parsed JSON content
@@ -305,7 +308,7 @@ class BaseAgent:
             json_content = model_response.strip()
 
         try:
-            parsed_json = json.loads(json_content)
+            parsed_json = json.loads(json_content, encoding="utf-8")
             return parsed_json
 
         except json.JSONDecodeError as exc:
@@ -327,6 +330,6 @@ class BaseAgent:
             return list(new_notes)
         else:
             printer.print("No new notes.")
-            return []   
+            return []
 
 
