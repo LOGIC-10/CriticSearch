@@ -361,6 +361,8 @@ class ReverseUpgradeWorkflow:
                 retries += 1
                 printer.rule(f"Level {level+1} Update Attempt {retries}")
                 method, queries = self.method_choice(current.question, current.answer)
+                # 随机化一下方法，以后看表现调整
+                method = random.choice([method, "simple abstraction"])
                 updated = await self.query_update(method, queries, current)
                 passed = await self.multi_verify(updated)
                 if not passed:  # 验证失败（模型能回答）
@@ -401,6 +403,67 @@ def random_domain():
     domains = ["TV shows & movies", "Other", "Science & technology", "Art", "History", "Sports", "Music", "Video games", "Geography", "Politics"]
     return random.choice(domains)
 
+def evaluate(
+    json_file: Path = Path("trace_data.json"),
+    use_cache: bool = True,
+    cache_file: Path | None = None,
+):
+    """
+    Evaluate level-5 items in a JSON trace.
+    - json_file: 待评估的 trace JSON 路径
+    - use_cache: 是否启用缓存
+    - cache_file: 缓存文件路径，默认与 json_file 同目录，名为 "<stem>_eval_cache.json"
+    """
+    if cache_file is None:
+        cache_file = json_file.parent / f"{json_file.stem}_eval_cache.json"
+    # 加载或初始化缓存：{question_norm: bool}
+    if use_cache and cache_file.exists():
+        with open(cache_file, "r", encoding="utf-8") as f:
+            cache = json.load(f)
+    else:
+        cache = {}
+
+    # 读取所有记录
+    with open(json_file, "r", encoding="utf-8") as f:
+        records = json.load(f)
+
+    # 筛选 level==5
+    items = [r for r in records if r.get("level") == 5]
+    total = len(items)
+    for rec in items:
+        q = rec["question"]
+        ans_true = rec["answer"]
+        key = q.strip().lower()
+        if use_cache and key in cache:
+            continue
+        # 构造Prompt并调用LLM
+        prompt = (
+            f"{FORMAT_INSTRUCTION}\nPlease answer the following question and return it strictly in the \\\boxed{{...}} format.\nQuestion: {q}"
+        )
+        resp = agent.chat(prompt, model="gpt-4o-search-preview")
+        printer.log(f"Question:{key}", style="bold yellow")
+        printer.print(f"GT Answer: {ans_true}", style="bold yellow")
+        ans_pred = extract_boxed(resp)
+        printer.print(f"Model Answer: {ans_pred}", style="bold yellow")
+        # 标准化比较并去除标点符号
+        ans_pred_norm = "".join(c for c in ans_pred.strip().lower() if c.isalnum() or c.isspace())
+        ans_true_norm = "".join(c for c in ans_true.strip().lower() if c.isalnum() or c.isspace())
+        ok = ans_pred_norm == ans_true_norm
+        cache[key] = ok
+
+    # 保存缓存
+    if use_cache:
+        with open(cache_file, "w", encoding="utf-8") as f:
+            json.dump(cache, f, ensure_ascii=False, indent=2)
+
+    # 统计准确率
+    correct = sum(cache.get(it["question"].strip().lower(), False) for it in items)
+    acc = correct / total if total else 0.0
+    printer.rule("Evaluation Results")
+    printer.print(f"Total level-5 items: {total}", style="bold")
+    printer.print(f"Correct predictions: {correct}", style="bold")
+    printer.print(f"Accuracy: {acc:.4%}", style="bold green")
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--out", type=Path, default=Path("trace_data.json"))
@@ -409,12 +472,19 @@ def main():
     parser.add_argument("--batch", type=int, default=1, help="批量运行次数，>1 则追加写入同一文件")
     parser.add_argument("--concurrency", type=int, default=1, help="最大并行并发数")
     parser.add_argument("--model", type=str, default=None, help="LLM model name to use")
+    parser.add_argument("--evaluate", action="store_true", help="只运行 evaluate()，输出 level-5 测试结果并退出")
+
     args = parser.parse_args()
 
     # 支持通过命令行覆盖默认模型
     if args.model:
         global GPT_MODEL
         GPT_MODEL = args.model
+
+    # 如果指定 --evaluate，则调用 evaluate 并退出
+    if args.evaluate:
+        evaluate(json_file=args.out, use_cache=True)
+        return
 
     # 单次执行
     if args.batch <= 1:
@@ -471,7 +541,11 @@ if __name__ == "__main__":
 
 """
 %%%
+## 跑数据
 python -m criticsearch.abstract_substitution.abs_exp_1 --out trace_data.json --batch 20 --concurrency 20
 python -m criticsearch.abstract_substitution.abs_exp_1 --out trace_data.json --batch 20 --concurrency 20 --model gpt-4o
 python -m criticsearch.abstract_substitution.abs_exp_1 --out trace_data.json --max_level 3 --max_tries 2 --batch 2 --concurrency 3
+
+## 评估
+python -m criticsearch.abstract_substitution.abs_exp_1 --out trace_data.json --evaluate
 """

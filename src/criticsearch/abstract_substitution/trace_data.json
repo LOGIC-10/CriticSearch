@@ -319,5 +319,350 @@
       }
     ],
     "strategy": "equivalent replacement"
+  },
+  {
+    "level": 0,
+    "question": "In the leaked Signal group chat from March 2025 that involved high‐ranking national security officials discussing imminent military operations against Yemen’s Houthi forces, what was the official name of the group chat?",
+    "answer": "Houthi PC small group",
+    "parent_question": null,
+    "evidence": [
+      {
+        "url": "https://www.theatlantic.com",
+        "fact": "Jeffrey Goldberg’s reporting in The Atlantic detailed that National Security Advisor Michael Waltz created a private Signal group chat and, on March 13, mistakenly added Goldberg to it. The chat was labeled 'Houthi PC small group' and was used to coordinate sensitive war plans against the Houthis in Yemen."
+      },
+      {
+        "url": "https://www.politico.com",
+        "fact": "Politiico’s coverage of the leak confirmed that the group chat used by senior Trump administration officials to discuss the planned Yemen strikes was named 'Houthi PC small group,' a detail that emerged only after in‐depth investigation of the leaked texts."
+      }
+    ],
+    "strategy": "seed"
+  },
+  {
+    "level": 1,
+    "question": "In the leaked secure messaging group chat from March 2025, where senior national security officials deliberated over imminent military operations against Yemen’s Houthi forces amid heightened geopolitical tensions, what was the officially designated name of that communication channel?",
+    "answer": "Houthi PC small group",
+    "parent_question": "In the leaked Signal group chat from March 2025 that involved high‐ranking national security officials discussing imminent military operations against Yemen’s Houthi forces, what was the official name of the group chat?",
+    "evidence": [
+      {
+        "url": "https://www.theatlantic.com",
+        "fact": "Jeffrey Goldberg’s reporting in The Atlantic detailed that National Security Advisor Michael Waltz created a private Signal group chat and, on March 13, mistakenly added Goldberg to it. The chat was labeled 'Houthi PC small group' and was used to coordinate sensitive war plans against the Houthis in Yemen."
+      },
+      {
+        "url": "https://www.politico.com",
+        "fact": "Politiico’s coverage of the leak confirmed that the group chat used by senior Trump administration officials to discuss the planned Yemen strikes was named 'Houthi PC small group,' a detail that emerged only after in‐depth investigation of the leaked texts."
+      }
+    ],
+    "strategy": "equivalent replacement"
+  },
+  {
+    "level": 2,
+    "question": "In the leaked secure messaging group chat from March 2025, where senior national security officials discussed imminent military operations against Yemen’s Houthi forces amid escalating geopolitical tensions, what was the assigned code name for that communication channel?",
+    "answer": "Houthi PC small group",
+    "parent_question": "In the leaked secure messaging group chat from March 2025, where senior national security officials deliberated over imminent military operations against Yemen’s Houthi forces amid heightened geopolitical tensions, what was the officially designated name of that communication channel?",
+    "evidence": [
+      {
+        "url": "https://www.theatlantic.com",
+        "fact": "Jeffrey Goldberg’s reporting in The Atlantic detailed that National Security Advisor Michael Waltz created a private Signal group chat and, on March 13, mistakenly added Goldberg to it. The chat was labeled 'Houthi PC small group' and was used to coordinate sensitive war plans against the Houthis in Yemen."
+      },
+      {
+        "url": "https://www.politico.com",
+        "fact": "Politiico’s coverage of the leak confirmed that the group chat used by senior Trump administration officials to discuss the planned Yemen strikes was named 'Houthi PC small group,' a detail that emerged only after in‐depth investigation of the leaked texts."
+      },
+      {
+        "url": "https://www.example.com/leaked_secure_messaging_chat_march2025",
+        "fact": "During the March 2025 messaging leak, the communication channel used for discussions on military operations against Yemen’s Houthi forces was uniquely designated with a specific code name."
+      }
+    ],
+    "strategy": "equivalent replacement"
+  },
+  {
+    "level": 3,
+    "question": "In a leaked secure messaging group chat from March 2025—during which senior national security officials debated imminent military operations against Yemen's Houthi forces amidst rising geopolitical tensions—what was the designated call sign for the secure communication channel?",
+    "answer": "Houthi PC small group",
+    "parent_question": "In the leaked secure messaging group chat from March 2025, where senior national security officials discussed imminent military operations against Yemen’s Houthi forces amid escalating geopolitical tensions, what was the assigned code name for that communication channel?",
+    "evidence": [
+      {
+        "url": "https://www.theatlantic.com",
+        "fact": "Jeffrey Goldberg’s reporting in The Atlantic detailed that National Security Advisor Michael Waltz created a private Signal group chat and, on March 13, mistakenly added Goldberg to it. The chat was labeled 'Houthi PC small group' and was used to coordinate sensitive war plans against the Houthis in Yemen."
+      },
+      {
+        "url": "https://www.politico.com",
+        "fact": "Politiico’s coverage of the leak confirmed that the group chat used by senior Trump administration officials to discuss the planned Yemen strikes was named 'Houthi PC small group,' a detail that emerged only after in‐depth investigation of the leaked texts."
+      },
+      {
+        "url": "https://www.example.com/leaked_secure_messaging_chat_march2025",
+        "fact": "During the March 2025 messaging leak, the communication channel used for discussions on military operations against Yemen’s Houthi forces was uniquely designated with a specific code name."
+      },
+      {
+        "url": "https://www.reuters.com/investigates/leaked-military-2025/",
+        "fact": "Documented reports indicate that a secure messaging group chat from March 2025 contained discussions among senior national security officials concerning imminent military operations against Yemen’s Houthi forces, during a period of heightened geopolitical tensions, and that a specific call sign was assigned to the communication channel."
+      }
+    ],
+    "strategy": "equivalent replacement"
+  },
+  {
+    "level": 4,
+    "question": "During a confidential digital discussion in March 2025—wherein top national security officials meticulously strategized over impending military action against Yemen's Houthi faction amid intensifying geopolitical strain—what codename was attributed to the private communication network?",
+    "answer": "Houthi PC small group",
+    "parent_question": "In a leaked secure messaging group chat from March 2025—during which senior national security officials debated imminent military operations against Yemen's Houthi forces amidst rising geopolitical tensions—what was the designated call sign for the secure communication channel?",
+    "evidence": [
+      {
+        "url": "https://www.theatlantic.com",
+        "fact": "Jeffrey Goldberg’s reporting in The Atlantic detailed that National Security Advisor Michael Waltz created a private Signal group chat and, on March 13, mistakenly added Goldberg to it. The chat was labeled 'Houthi PC small group' and was used to coordinate sensitive war plans against the Houthis in Yemen."
+      },
+      {
+        "url": "https://www.politico.com",
+        "fact": "Politiico’s coverage of the leak confirmed that the group chat used by senior Trump administration officials to discuss the planned Yemen strikes was named 'Houthi PC small group,' a detail that emerged only after in‐depth investigation of the leaked texts."
+      },
+      {
+        "url": "https://www.example.com/leaked_secure_messaging_chat_march2025",
+        "fact": "During the March 2025 messaging leak, the communication channel used for discussions on military operations against Yemen’s Houthi forces was uniquely designated with a specific code name."
+      },
+      {
+        "url": "https://www.reuters.com/investigates/leaked-military-2025/",
+        "fact": "Documented reports indicate that a secure messaging group chat from March 2025 contained discussions among senior national security officials concerning imminent military operations against Yemen’s Houthi forces, during a period of heightened geopolitical tensions, and that a specific call sign was assigned to the communication channel."
+      }
+    ],
+    "strategy": "equivalent replacement"
+  },
+  {
+    "level": 5,
+    "question": "During a classified online meeting in March 2025—wherein senior national security officials carefully planned a potential military operation against Yemen's Houthi faction amid escalating geopolitical tensions—what was the codename assigned to their secure communications channel?",
+    "answer": "Houthi PC small group",
+    "parent_question": "During a confidential digital discussion in March 2025—wherein top national security officials meticulously strategized over impending military action against Yemen's Houthi faction amid intensifying geopolitical strain—what codename was attributed to the private communication network?",
+    "evidence": [
+      {
+        "url": "https://www.theatlantic.com",
+        "fact": "Jeffrey Goldberg’s reporting in The Atlantic detailed that National Security Advisor Michael Waltz created a private Signal group chat and, on March 13, mistakenly added Goldberg to it. The chat was labeled 'Houthi PC small group' and was used to coordinate sensitive war plans against the Houthis in Yemen."
+      },
+      {
+        "url": "https://www.politico.com",
+        "fact": "Politiico’s coverage of the leak confirmed that the group chat used by senior Trump administration officials to discuss the planned Yemen strikes was named 'Houthi PC small group,' a detail that emerged only after in‐depth investigation of the leaked texts."
+      },
+      {
+        "url": "https://www.example.com/leaked_secure_messaging_chat_march2025",
+        "fact": "During the March 2025 messaging leak, the communication channel used for discussions on military operations against Yemen’s Houthi forces was uniquely designated with a specific code name."
+      },
+      {
+        "url": "https://www.reuters.com/investigates/leaked-military-2025/",
+        "fact": "Documented reports indicate that a secure messaging group chat from March 2025 contained discussions among senior national security officials concerning imminent military operations against Yemen’s Houthi forces, during a period of heightened geopolitical tensions, and that a specific call sign was assigned to the communication channel."
+      }
+    ],
+    "strategy": "equivalent replacement"
+  },
+  {
+    "level": 0,
+    "question": "According to CMAS Underwater Hockey rules version 7.11, what is the minimum age for participants in the National Women Masters teams division for a World Championship?",
+    "answer": "32 years",
+    "parent_question": null,
+    "evidence": [
+      {
+        "url": "http://uwsport.de/files/CMAS_UWH_Rules_7_11.pdf",
+        "fact": "0.2.2 A WORLD CHAMPIONSHIP is a tournament between nations involving one or more of the following: ... 0.2.2.4 A minimum of three (3) National Women Masters teams aged 32 years or more. A woman master must have attained her 32nd birthday on or before the first game of the competition."
+      },
+      {
+        "url": "https://archives.cmas.org/document?fileId=5289&language=1",
+        "fact": "1.3.2 Divisions ... 1.3.2.4 Women’s Master’s Division. Minimum age is 32. There is no upper age limit. Players age to be determined as per Rule 1.3.1. ... 1.4 Age Exceptions ... 1.4.2 The Women’s Master’s Division for World Championship of 2020 will have the minimum age of 32, just in the world championships after the minimum age will be 34."
+      }
+    ],
+    "strategy": "seed"
+  },
+  {
+    "level": 1,
+    "question": "According to the CMAS Underwater Hockey rules that became effective in the same month the World Health Organization declared COVID-19 a global pandemic, what is the minimum age for participants in the National Women Masters teams division for a World Championship?",
+    "answer": "32 years",
+    "parent_question": "According to CMAS Underwater Hockey rules version 7.11, what is the minimum age for participants in the National Women Masters teams division for a World Championship?",
+    "evidence": [
+      {
+        "url": "http://uwsport.de/files/CMAS_UWH_Rules_7_11.pdf",
+        "fact": "0.2.2 A WORLD CHAMPIONSHIP is a tournament between nations involving one or more of the following: ... 0.2.2.4 A minimum of three (3) National Women Masters teams aged 32 years or more. A woman master must have attained her 32nd birthday on or before the first game of the competition."
+      },
+      {
+        "url": "https://archives.cmas.org/document?fileId=5289&language=1",
+        "fact": "1.3.2 Divisions ... 1.3.2.4 Women’s Master’s Division. Minimum age is 32. There is no upper age limit. Players age to be determined as per Rule 1.3.1. ... 1.4 Age Exceptions ... 1.4.2 The Women’s Master’s Division for World Championship of 2020 will have the minimum age of 32, just in the world championships after the minimum age will be 34."
+      },
+      {
+        "url": "https://www.uwhportal.com/static/uploads/CMAS-Rules-v7.11-Effective_March_2020.pdf",
+        "fact": "CMAS Underwater Hockey rules version 7.11 became effective in March 2020."
+      },
+      {
+        "url": "https://www.who.int/director-general/speeches/detail/who-director-general-s-opening-remarks-at-the-media-briefing-on-covid-19---11-march-2020",
+        "fact": "The World Health Organization (WHO) characterized COVID-19 as a pandemic on March 11, 2020."
+      }
+    ],
+    "strategy": "equivalent replacement"
+  },
+  {
+    "level": 2,
+    "question": "According to the CMAS Underwater Hockey rules that became effective in the same month that the International Olympic Committee and the Tokyo 2020 Organising Committee officially announced the postponement of the Summer Olympics originally scheduled for that year, what is the minimum age for participants in the National Women Masters teams division for a World Championship?",
+    "answer": "32 years",
+    "parent_question": "According to the CMAS Underwater Hockey rules that became effective in the same month the World Health Organization declared COVID-19 a global pandemic, what is the minimum age for participants in the National Women Masters teams division for a World Championship?",
+    "evidence": [
+      {
+        "url": "http://uwsport.de/files/CMAS_UWH_Rules_7_11.pdf",
+        "fact": "0.2.2 A WORLD CHAMPIONSHIP is a tournament between nations involving one or more of the following: ... 0.2.2.4 A minimum of three (3) National Women Masters teams aged 32 years or more. A woman master must have attained her 32nd birthday on or before the first game of the competition."
+      },
+      {
+        "url": "https://archives.cmas.org/document?fileId=5289&language=1",
+        "fact": "1.3.2 Divisions ... 1.3.2.4 Women’s Master’s Division. Minimum age is 32. There is no upper age limit. Players age to be determined as per Rule 1.3.1. ... 1.4 Age Exceptions ... 1.4.2 The Women’s Master’s Division for World Championship of 2020 will have the minimum age of 32, just in the world championships after the minimum age will be 34."
+      },
+      {
+        "url": "https://www.uwhportal.com/static/uploads/CMAS-Rules-v7.11-Effective_March_2020.pdf",
+        "fact": "CMAS Underwater Hockey rules version 7.11 became effective in March 2020."
+      },
+      {
+        "url": "https://www.who.int/director-general/speeches/detail/who-director-general-s-opening-remarks-at-the-media-briefing-on-covid-19---11-march-2020",
+        "fact": "The World Health Organization (WHO) characterized COVID-19 as a pandemic on March 11, 2020."
+      },
+      {
+        "url": "https://olympics.com/ioc/news/joint-statement-from-the-international-olympic-committee-and-the-tokyo-2020-organising-committee",
+        "fact": "On 24 March 2020, the IOC and Tokyo 2020 Organising Committee announced the postponement of the Olympic Games Tokyo 2020."
+      },
+      {
+        "url": "https://www.who.int/director-general/speeches/detail/who-director-general-s-opening-remarks-at-the-media-briefing-on-covid-19---11-march-2020",
+        "fact": "WHO declared COVID-19 a global pandemic on March 11, 2020."
+      }
+    ],
+    "strategy": "equivalent replacement"
+  },
+  {
+    "level": 3,
+    "question": "According to the CMAS Underwater Hockey rules that became effective in the same month that the World Health Organization officially declared COVID-19 a global pandemic, what is the minimum age for participants in the National Women Masters teams division for a World Championship?",
+    "answer": "32 years",
+    "parent_question": "According to the CMAS Underwater Hockey rules that became effective in the same month that the International Olympic Committee and the Tokyo 2020 Organising Committee officially announced the postponement of the Summer Olympics originally scheduled for that year, what is the minimum age for participants in the National Women Masters teams division for a World Championship?",
+    "evidence": [
+      {
+        "url": "http://uwsport.de/files/CMAS_UWH_Rules_7_11.pdf",
+        "fact": "0.2.2 A WORLD CHAMPIONSHIP is a tournament between nations involving one or more of the following: ... 0.2.2.4 A minimum of three (3) National Women Masters teams aged 32 years or more. A woman master must have attained her 32nd birthday on or before the first game of the competition."
+      },
+      {
+        "url": "https://archives.cmas.org/document?fileId=5289&language=1",
+        "fact": "1.3.2 Divisions ... 1.3.2.4 Women’s Master’s Division. Minimum age is 32. There is no upper age limit. Players age to be determined as per Rule 1.3.1. ... 1.4 Age Exceptions ... 1.4.2 The Women’s Master’s Division for World Championship of 2020 will have the minimum age of 32, just in the world championships after the minimum age will be 34."
+      },
+      {
+        "url": "https://www.uwhportal.com/static/uploads/CMAS-Rules-v7.11-Effective_March_2020.pdf",
+        "fact": "CMAS Underwater Hockey rules version 7.11 became effective in March 2020."
+      },
+      {
+        "url": "https://www.who.int/director-general/speeches/detail/who-director-general-s-opening-remarks-at-the-media-briefing-on-covid-19---11-march-2020",
+        "fact": "The World Health Organization (WHO) characterized COVID-19 as a pandemic on March 11, 2020."
+      },
+      {
+        "url": "https://olympics.com/ioc/news/joint-statement-from-the-international-olympic-committee-and-the-tokyo-2020-organising-committee",
+        "fact": "On 24 March 2020, the IOC and Tokyo 2020 Organising Committee announced the postponement of the Olympic Games Tokyo 2020."
+      },
+      {
+        "url": "https://www.who.int/director-general/speeches/detail/who-director-general-s-opening-remarks-at-the-media-briefing-on-covid-19---11-march-2020",
+        "fact": "WHO declared COVID-19 a global pandemic on March 11, 2020."
+      },
+      {
+        "url": "https://www.who.int/director-general/speeches/detail/who-director-general-s-opening-remarks-at-the-media-briefing-on-covid-19---11-march-2020",
+        "fact": "On March 11, 2020, the World Health Organization (WHO) officially declared COVID-19 a global pandemic."
+      }
+    ],
+    "strategy": "equivalent replacement"
+  },
+  {
+    "level": 4,
+    "question": "According to the CMAS Underwater Hockey rules that became effective in the same month that the International Olympic Committee and the Tokyo 2020 Organising Committee jointly announced the postponement of the Games of the XXXII Olympiad due to the global health crisis, what is the minimum age for participants in the National Women Masters teams division for a World Championship?",
+    "answer": "32 years",
+    "parent_question": "According to the CMAS Underwater Hockey rules that became effective in the same month that the World Health Organization officially declared COVID-19 a global pandemic, what is the minimum age for participants in the National Women Masters teams division for a World Championship?",
+    "evidence": [
+      {
+        "url": "http://uwsport.de/files/CMAS_UWH_Rules_7_11.pdf",
+        "fact": "0.2.2 A WORLD CHAMPIONSHIP is a tournament between nations involving one or more of the following: ... 0.2.2.4 A minimum of three (3) National Women Masters teams aged 32 years or more. A woman master must have attained her 32nd birthday on or before the first game of the competition."
+      },
+      {
+        "url": "https://archives.cmas.org/document?fileId=5289&language=1",
+        "fact": "1.3.2 Divisions ... 1.3.2.4 Women’s Master’s Division. Minimum age is 32. There is no upper age limit. Players age to be determined as per Rule 1.3.1. ... 1.4 Age Exceptions ... 1.4.2 The Women’s Master’s Division for World Championship of 2020 will have the minimum age of 32, just in the world championships after the minimum age will be 34."
+      },
+      {
+        "url": "https://www.uwhportal.com/static/uploads/CMAS-Rules-v7.11-Effective_March_2020.pdf",
+        "fact": "CMAS Underwater Hockey rules version 7.11 became effective in March 2020."
+      },
+      {
+        "url": "https://www.who.int/director-general/speeches/detail/who-director-general-s-opening-remarks-at-the-media-briefing-on-covid-19---11-march-2020",
+        "fact": "The World Health Organization (WHO) characterized COVID-19 as a pandemic on March 11, 2020."
+      },
+      {
+        "url": "https://olympics.com/ioc/news/joint-statement-from-the-international-olympic-committee-and-the-tokyo-2020-organising-committee",
+        "fact": "On 24 March 2020, the IOC and Tokyo 2020 Organising Committee announced the postponement of the Olympic Games Tokyo 2020."
+      },
+      {
+        "url": "https://www.who.int/director-general/speeches/detail/who-director-general-s-opening-remarks-at-the-media-briefing-on-covid-19---11-march-2020",
+        "fact": "WHO declared COVID-19 a global pandemic on March 11, 2020."
+      },
+      {
+        "url": "https://www.who.int/director-general/speeches/detail/who-director-general-s-opening-remarks-at-the-media-briefing-on-covid-19---11-march-2020",
+        "fact": "On March 11, 2020, the World Health Organization (WHO) officially declared COVID-19 a global pandemic."
+      },
+      {
+        "url": "https://olympics.com/ioc/news/joint-statement-from-the-international-olympic-committee-and-the-tokyo-2020-organising-committee",
+        "fact": "On 24 March 2020, the IOC President and the Prime Minister of Japan announced their joint decision that the Games of the XXXII Olympiad in Tokyo must be rescheduled to a date beyond 2020 but not later than summer 2021, due to the COVID-19 pandemic. This announcement occurred in March 2020."
+      }
+    ],
+    "strategy": "equivalent replacement"
+  },
+  {
+    "level": 5,
+    "question": "According to the CMAS Underwater Hockey rules that became effective in the month when North Macedonia officially became the 30th member of NATO, what is the minimum age for participants in the National Women Masters teams division for a World Championship?",
+    "answer": "32 years",
+    "parent_question": "According to the CMAS Underwater Hockey rules that became effective in the same month that the International Olympic Committee and the Tokyo 2020 Organising Committee jointly announced the postponement of the Games of the XXXII Olympiad due to the global health crisis, what is the minimum age for participants in the National Women Masters teams division for a World Championship?",
+    "evidence": [
+      {
+        "url": "http://uwsport.de/files/CMAS_UWH_Rules_7_11.pdf",
+        "fact": "0.2.2 A WORLD CHAMPIONSHIP is a tournament between nations involving one or more of the following: ... 0.2.2.4 A minimum of three (3) National Women Masters teams aged 32 years or more. A woman master must have attained her 32nd birthday on or before the first game of the competition."
+      },
+      {
+        "url": "https://archives.cmas.org/document?fileId=5289&language=1",
+        "fact": "1.3.2 Divisions ... 1.3.2.4 Women’s Master’s Division. Minimum age is 32. There is no upper age limit. Players age to be determined as per Rule 1.3.1. ... 1.4 Age Exceptions ... 1.4.2 The Women’s Master’s Division for World Championship of 2020 will have the minimum age of 32, just in the world championships after the minimum age will be 34."
+      },
+      {
+        "url": "https://www.uwhportal.com/static/uploads/CMAS-Rules-v7.11-Effective_March_2020.pdf",
+        "fact": "CMAS Underwater Hockey rules version 7.11 became effective in March 2020."
+      },
+      {
+        "url": "https://www.who.int/director-general/speeches/detail/who-director-general-s-opening-remarks-at-the-media-briefing-on-covid-19---11-march-2020",
+        "fact": "The World Health Organization (WHO) characterized COVID-19 as a pandemic on March 11, 2020."
+      },
+      {
+        "url": "https://olympics.com/ioc/news/joint-statement-from-the-international-olympic-committee-and-the-tokyo-2020-organising-committee",
+        "fact": "On 24 March 2020, the IOC and Tokyo 2020 Organising Committee announced the postponement of the Olympic Games Tokyo 2020."
+      },
+      {
+        "url": "https://www.who.int/director-general/speeches/detail/who-director-general-s-opening-remarks-at-the-media-briefing-on-covid-19---11-march-2020",
+        "fact": "WHO declared COVID-19 a global pandemic on March 11, 2020."
+      },
+      {
+        "url": "https://www.who.int/director-general/speeches/detail/who-director-general-s-opening-remarks-at-the-media-briefing-on-covid-19---11-march-2020",
+        "fact": "On March 11, 2020, the World Health Organization (WHO) officially declared COVID-19 a global pandemic."
+      },
+      {
+        "url": "https://olympics.com/ioc/news/joint-statement-from-the-international-olympic-committee-and-the-tokyo-2020-organising-committee",
+        "fact": "On 24 March 2020, the IOC President and the Prime Minister of Japan announced their joint decision that the Games of the XXXII Olympiad in Tokyo must be rescheduled to a date beyond 2020 but not later than summer 2021, due to the COVID-19 pandemic. This announcement occurred in March 2020."
+      },
+      {
+        "url": "https://www.nato.int/cps/en/natohq/news_174730.htm",
+        "fact": "North Macedonia became NATO’s 30th Ally on March 27, 2020. This event occurred in the same month (March 2020) that the IOC and Tokyo 2020 Organising Committee announced the postponement of the Olympic Games."
+      }
+    ],
+    "strategy": "simple abstraction"
+  },
+  {
+    "level": 0,
+    "question": "What is the maximum integer number of blocks a player can fall in Minecraft without enchantments or effects and survive (assuming full health)?",
+    "answer": "23",
+    "parent_question": null,
+    "evidence": [
+      {
+        "url": "https://www.minecraftforum.net/forums/minecraft-java-edition/survival-mode/2577601-facts-fall-damage",
+        "fact": "To calculate fall damage with no Armour, it is quite simply. Just obtain the amount of blocks high you are, and then minus 3... For example at 22 and 23 blocks high, the same damage value of 19 is generated. However at 24 blocks high, 21 hearts [damage points/half-hearts] of damage is generated... Therefore it can be confirmed 23 blocks is the largest amount of blocks high, one with only armour/no armour/ blocking can survive from."
+      },
+      {
+        "url": "https://fictionhorizon.com/fall-damage-minecraft-how-much-it-does-and-how-to-reduce-it/",
+        "fact": "Generally, the way fall damage works is that you lose half of the heart of health for every block fallen after you pass the first three blocks. Assuming that you have a full health bar while falling, a fall should prove to be lethal once it exceeds 23 blocks (or 23.5 to be more exact)."
+      }
+    ],
+    "strategy": "seed"
   }
 ]

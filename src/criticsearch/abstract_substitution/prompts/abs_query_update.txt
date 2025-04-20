@@ -2,7 +2,7 @@ You are an expert in upgrading the difficulty level of a question, and you need 
 
 # There are several upgrade methods as follows:
 
-## equivalence substitution
+## METHOD 1: equivalence substitution
 
 ### Case 1
 
@@ -54,7 +54,7 @@ So the output you need to provide is:
 
 The above are examples of equivalence substitution.
 
-## Complex abstraction concretization
+## METHOD 2: Complex abstraction concretization
 
 If you abstract a certain entity into something with numerous possibilities or a very open range, you need to provide additional information. The additional information you provide can be listed as points, such as for the entity "Berya," if you replace it directly with "a game character," the possibilities are too many, so you would add information, turning it into "a female game character, with 1) a fierce expression, 2) pink-white hair." Or for "Einstein," if you directly replace it with "a scientist," the possibilities are too many, so you would add information, turning it into "a scientist, who 1) is a physicist, 2) won the Nobel Prize in XXXX year," and 3) was born in 1879.
 
