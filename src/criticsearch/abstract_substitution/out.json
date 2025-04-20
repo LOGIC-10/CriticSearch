@@ -264,5 +264,283 @@
       }
     ],
     "strategy": "equivalence substitution"
+  },
+  {
+    "level": 0,
+    "question": "What is the etymological origin of the term 'Pyx' used in the name of the UK's coin-checking ceremony, the Trial of the Pyx?",
+    "answer": "From the Greek 'pyxis', meaning boxwood receptacle.",
+    "parent_question": null,
+    "evidence": [
+      {
+        "url": "https://www.royalmint.com/discover/uk-coins/trial-of-the-pyx/",
+        "fact": "The Trial of the Pyx is a judicial ceremony that dates back to the twelfth century, and possibly even earlier. Its purpose is to ensure that newly minted coins from the Royal Mint conform to their required dimension, weight and fineness, established in the relevant Coinage Act or Royal Proclamation. The name Pyx refers to the chests in which the coins are stored (from the Greek pyxis, boxwood receptacle). A jury of Liverymen of the Worshipful Company of Goldsmiths assays the coins, operating independently of The Royal Mint and the Treasury."
+      },
+      {
+        "url": "https://www.goldsmiths-centre.org/news/news-trial-pyx-explained/",
+        "fact": "Trial of the Pyx: what does it mean? Trial originates from the Norman French word triel, meaning ascertainment of quality by testing. Pyx is derived from the Greek word pyxis, meaning box or chest. Traditionally, this refers to the boxwood chests used to transport the coins selected for testing. The Trial of the Pyx is therefore the testing of the coins placed in the Pyx chests."
+      }
+    ],
+    "strategy": "seed"
+  },
+  {
+    "level": 1,
+    "question": "What is the etymological origin of the term 'Pyx', which features in the name of the ancient UK coin-checking ceremony over which Sir Isaac Newton presided in 1699 whilst serving as Master of the Mint?",
+    "answer": "From the Greek 'pyxis', meaning boxwood receptacle.",
+    "parent_question": "What is the etymological origin of the term 'Pyx' used in the name of the UK's coin-checking ceremony, the Trial of the Pyx?",
+    "evidence": [
+      {
+        "url": "https://www.royalmint.com/discover/uk-coins/trial-of-the-pyx/",
+        "fact": "The Trial of the Pyx is a judicial ceremony that dates back to the twelfth century, and possibly even earlier. Its purpose is to ensure that newly minted coins from the Royal Mint conform to their required dimension, weight and fineness, established in the relevant Coinage Act or Royal Proclamation. The name Pyx refers to the chests in which the coins are stored (from the Greek pyxis, boxwood receptacle). A jury of Liverymen of the Worshipful Company of Goldsmiths assays the coins, operating independently of The Royal Mint and the Treasury."
+      },
+      {
+        "url": "https://www.goldsmiths-centre.org/news/news-trial-pyx-explained/",
+        "fact": "Trial of the Pyx: what does it mean? Trial originates from the Norman French word triel, meaning ascertainment of quality by testing. Pyx is derived from the Greek word pyxis, meaning box or chest. Traditionally, this refers to the boxwood chests used to transport the coins selected for testing. The Trial of the Pyx is therefore the testing of the coins placed in the Pyx chests."
+      },
+      {
+        "url": "https://www.royalmintmuseum.org.uk/journal/people/sir-isaac-newton/",
+        "fact": "Newton also presided over the Trial of the Pyx in 1699, the year he officially became Master of the Mint."
+      },
+      {
+        "url": "https://www.royalmint.com/stories/collect/the-trial-of-the-pyx/",
+        "fact": "The Trial of the Pyx is the United Kingdom's oldest judicial procedure...During the Trial, a jury... confirm that the nation’s coinage meets the standards... The term 'Pyx' refers to the chests in which the sample coins were traditionally transported."
+      }
+    ],
+    "strategy": "equivalence substitution"
+  },
+  {
+    "level": 2,
+    "question": "What is the etymological origin of the term 'Pyx', which features in the name of the ancient UK coin-checking ceremony over which the author of *Philosophiæ Naturalis Principia Mathematica* presided in the year the Treaty of Karlowitz was signed, whilst serving as Master of the Mint?",
+    "answer": "From the Greek 'pyxis', meaning boxwood receptacle.",
+    "parent_question": "What is the etymological origin of the term 'Pyx', which features in the name of the ancient UK coin-checking ceremony over which Sir Isaac Newton presided in 1699 whilst serving as Master of the Mint?",
+    "evidence": [
+      {
+        "url": "https://www.royalmint.com/discover/uk-coins/trial-of-the-pyx/",
+        "fact": "The Trial of the Pyx is a judicial ceremony that dates back to the twelfth century, and possibly even earlier. Its purpose is to ensure that newly minted coins from the Royal Mint conform to their required dimension, weight and fineness, established in the relevant Coinage Act or Royal Proclamation. The name Pyx refers to the chests in which the coins are stored (from the Greek pyxis, boxwood receptacle). A jury of Liverymen of the Worshipful Company of Goldsmiths assays the coins, operating independently of The Royal Mint and the Treasury."
+      },
+      {
+        "url": "https://www.goldsmiths-centre.org/news/news-trial-pyx-explained/",
+        "fact": "Trial of the Pyx: what does it mean? Trial originates from the Norman French word triel, meaning ascertainment of quality by testing. Pyx is derived from the Greek word pyxis, meaning box or chest. Traditionally, this refers to the boxwood chests used to transport the coins selected for testing. The Trial of the Pyx is therefore the testing of the coins placed in the Pyx chests."
+      },
+      {
+        "url": "https://www.royalmintmuseum.org.uk/journal/people/sir-isaac-newton/",
+        "fact": "Newton also presided over the Trial of the Pyx in 1699, the year he officially became Master of the Mint."
+      },
+      {
+        "url": "https://www.royalmint.com/stories/collect/the-trial-of-the-pyx/",
+        "fact": "The Trial of the Pyx is the United Kingdom's oldest judicial procedure...During the Trial, a jury... confirm that the nation’s coinage meets the standards... The term 'Pyx' refers to the chests in which the sample coins were traditionally transported."
+      },
+      {
+        "url": "https://www.britannica.com/biography/Isaac-Newton",
+        "fact": "Sir Isaac Newton's famous monograph Philosophiæ Naturalis Principia Mathematica (Mathematical Principles of Natural Philosophy) was published in 1687."
+      },
+      {
+        "url": "https://www.britannica.com/event/Treaty-of-Karlowitz",
+        "fact": "The Treaty of Karlowitz, a peace settlement ending hostilities between the Ottoman Empire and the Holy League (Austria, Poland, Venice, and Russia), was signed on January 26, 1699."
+      },
+      {
+        "url": "https://royalmintmuseum.org.uk/journal/people/sir-isaac-newton/",
+        "fact": "In 1699 Newton was promoted to the position of Master of the Mint."
+      },
+      {
+        "url": "https://www.royalmint.com/discover/uk-coins/trial-of-the-pyx/",
+        "fact": "Sir Isaac Newton, himself presided over the trials [Trial of the Pyx] during his time as Master of the Mint."
+      }
+    ],
+    "strategy": "equivalence substitution"
+  },
+  {
+    "level": 3,
+    "question": "What is the etymological origin of the term 'Pyx', which features in the name of the ancient UK coin-checking ceremony over which the author of *Philosophiæ Naturalis Principia Mathematica* presided in the year Pierre Le Moyne d'Iberville established the first European settlement in the lower Mississippi River valley at Fort Maurepas, whilst serving as Master of the Mint?",
+    "answer": "From the Greek 'pyxis', meaning boxwood receptacle.",
+    "parent_question": "What is the etymological origin of the term 'Pyx', which features in the name of the ancient UK coin-checking ceremony over which the author of *Philosophiæ Naturalis Principia Mathematica* presided in the year the Treaty of Karlowitz was signed, whilst serving as Master of the Mint?",
+    "evidence": [
+      {
+        "url": "https://www.royalmint.com/discover/uk-coins/trial-of-the-pyx/",
+        "fact": "The Trial of the Pyx is a judicial ceremony that dates back to the twelfth century, and possibly even earlier. Its purpose is to ensure that newly minted coins from the Royal Mint conform to their required dimension, weight and fineness, established in the relevant Coinage Act or Royal Proclamation. The name Pyx refers to the chests in which the coins are stored (from the Greek pyxis, boxwood receptacle). A jury of Liverymen of the Worshipful Company of Goldsmiths assays the coins, operating independently of The Royal Mint and the Treasury."
+      },
+      {
+        "url": "https://www.goldsmiths-centre.org/news/news-trial-pyx-explained/",
+        "fact": "Trial of the Pyx: what does it mean? Trial originates from the Norman French word triel, meaning ascertainment of quality by testing. Pyx is derived from the Greek word pyxis, meaning box or chest. Traditionally, this refers to the boxwood chests used to transport the coins selected for testing. The Trial of the Pyx is therefore the testing of the coins placed in the Pyx chests."
+      },
+      {
+        "url": "https://www.royalmintmuseum.org.uk/journal/people/sir-isaac-newton/",
+        "fact": "Newton also presided over the Trial of the Pyx in 1699, the year he officially became Master of the Mint."
+      },
+      {
+        "url": "https://www.royalmint.com/stories/collect/the-trial-of-the-pyx/",
+        "fact": "The Trial of the Pyx is the United Kingdom's oldest judicial procedure...During the Trial, a jury... confirm that the nation’s coinage meets the standards... The term 'Pyx' refers to the chests in which the sample coins were traditionally transported."
+      },
+      {
+        "url": "https://www.britannica.com/biography/Isaac-Newton",
+        "fact": "Sir Isaac Newton's famous monograph Philosophiæ Naturalis Principia Mathematica (Mathematical Principles of Natural Philosophy) was published in 1687."
+      },
+      {
+        "url": "https://www.britannica.com/event/Treaty-of-Karlowitz",
+        "fact": "The Treaty of Karlowitz, a peace settlement ending hostilities between the Ottoman Empire and the Holy League (Austria, Poland, Venice, and Russia), was signed on January 26, 1699."
+      },
+      {
+        "url": "https://royalmintmuseum.org.uk/journal/people/sir-isaac-newton/",
+        "fact": "In 1699 Newton was promoted to the position of Master of the Mint."
+      },
+      {
+        "url": "https://www.royalmint.com/discover/uk-coins/trial-of-the-pyx/",
+        "fact": "Sir Isaac Newton, himself presided over the trials [Trial of the Pyx] during his time as Master of the Mint."
+      },
+      {
+        "url": "https://www.britannica.com/event/Treaty-of-Karlowitz",
+        "fact": "The Treaty of Karlowitz was signed on January 26, 1699, concluding the war between the Ottoman Empire and the Holy League."
+      },
+      {
+        "url": "https://www.mississippiencyclopedia.org/entries/fort-maurepas/",
+        "fact": "Pierre Le Moyne d’Iberville selected a site on the eastern shore of Biloxi Bay and began building Fort Maurepas on 8 April 1699. This established the first European settlement in the lower Mississippi River valley."
+      },
+      {
+        "url": "https://www.britannica.com/biography/Isaac-Newton/Warden-of-the-Mint",
+        "fact": "Isaac Newton, author of Philosophiæ Naturalis Principia Mathematica, was appointed Master of the Mint late in 1699."
+      }
+    ],
+    "strategy": "equivalence substitution"
+  },
+  {
+    "level": 4,
+    "question": "What is the etymological origin of the term 'Pyx', which features in the name of the ancient UK coin-checking ceremony over which the author of *Philosophiæ Naturalis Principia Mathematica* presided in the year the Treaty of Karlowitz concluded the Great Turkish War, whilst serving as Master of the Mint?",
+    "answer": "From the Greek 'pyxis', meaning boxwood receptacle.",
+    "parent_question": "What is the etymological origin of the term 'Pyx', which features in the name of the ancient UK coin-checking ceremony over which the author of *Philosophiæ Naturalis Principia Mathematica* presided in the year Pierre Le Moyne d'Iberville established the first European settlement in the lower Mississippi River valley at Fort Maurepas, whilst serving as Master of the Mint?",
+    "evidence": [
+      {
+        "url": "https://www.royalmint.com/discover/uk-coins/trial-of-the-pyx/",
+        "fact": "The Trial of the Pyx is a judicial ceremony that dates back to the twelfth century, and possibly even earlier. Its purpose is to ensure that newly minted coins from the Royal Mint conform to their required dimension, weight and fineness, established in the relevant Coinage Act or Royal Proclamation. The name Pyx refers to the chests in which the coins are stored (from the Greek pyxis, boxwood receptacle). A jury of Liverymen of the Worshipful Company of Goldsmiths assays the coins, operating independently of The Royal Mint and the Treasury."
+      },
+      {
+        "url": "https://www.goldsmiths-centre.org/news/news-trial-pyx-explained/",
+        "fact": "Trial of the Pyx: what does it mean? Trial originates from the Norman French word triel, meaning ascertainment of quality by testing. Pyx is derived from the Greek word pyxis, meaning box or chest. Traditionally, this refers to the boxwood chests used to transport the coins selected for testing. The Trial of the Pyx is therefore the testing of the coins placed in the Pyx chests."
+      },
+      {
+        "url": "https://www.royalmintmuseum.org.uk/journal/people/sir-isaac-newton/",
+        "fact": "Newton also presided over the Trial of the Pyx in 1699, the year he officially became Master of the Mint."
+      },
+      {
+        "url": "https://www.royalmint.com/stories/collect/the-trial-of-the-pyx/",
+        "fact": "The Trial of the Pyx is the United Kingdom's oldest judicial procedure...During the Trial, a jury... confirm that the nation’s coinage meets the standards... The term 'Pyx' refers to the chests in which the sample coins were traditionally transported."
+      },
+      {
+        "url": "https://www.britannica.com/biography/Isaac-Newton",
+        "fact": "Sir Isaac Newton's famous monograph Philosophiæ Naturalis Principia Mathematica (Mathematical Principles of Natural Philosophy) was published in 1687."
+      },
+      {
+        "url": "https://www.britannica.com/event/Treaty-of-Karlowitz",
+        "fact": "The Treaty of Karlowitz, a peace settlement ending hostilities between the Ottoman Empire and the Holy League (Austria, Poland, Venice, and Russia), was signed on January 26, 1699."
+      },
+      {
+        "url": "https://royalmintmuseum.org.uk/journal/people/sir-isaac-newton/",
+        "fact": "In 1699 Newton was promoted to the position of Master of the Mint."
+      },
+      {
+        "url": "https://www.royalmint.com/discover/uk-coins/trial-of-the-pyx/",
+        "fact": "Sir Isaac Newton, himself presided over the trials [Trial of the Pyx] during his time as Master of the Mint."
+      },
+      {
+        "url": "https://www.britannica.com/event/Treaty-of-Karlowitz",
+        "fact": "The Treaty of Karlowitz was signed on January 26, 1699, concluding the war between the Ottoman Empire and the Holy League."
+      },
+      {
+        "url": "https://www.mississippiencyclopedia.org/entries/fort-maurepas/",
+        "fact": "Pierre Le Moyne d’Iberville selected a site on the eastern shore of Biloxi Bay and began building Fort Maurepas on 8 April 1699. This established the first European settlement in the lower Mississippi River valley."
+      },
+      {
+        "url": "https://www.britannica.com/biography/Isaac-Newton/Warden-of-the-Mint",
+        "fact": "Isaac Newton, author of Philosophiæ Naturalis Principia Mathematica, was appointed Master of the Mint late in 1699."
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Fort_Maurepas",
+        "fact": "Fort Maurepas, the first European settlement in the lower Mississippi River valley, was established by Pierre Le Moyne d'Iberville in April 1699. This confirms the year referenced in the original question."
+      },
+      {
+        "url": "https://www.britannica.com/event/Treaty-of-Carlowitz",
+        "fact": "The Treaty of Karlowitz was signed on January 26, 1699, concluding the Great Turkish War (hostilities 1683–99) between the Ottoman Empire and the Holy League. This provides a unique event occurring in the same year, 1699."
+      },
+      {
+        "url": "https://www.royalmintmuseum.org.uk/journal/people/sir-isaac-newton/",
+        "fact": "Isaac Newton (author of *Philosophiæ Naturalis Principia Mathematica*) was appointed Warden of the Mint in 1696 and promoted to the senior post of Master of the Mint in 1699."
+      }
+    ],
+    "strategy": "equivalence substitution"
+  },
+  {
+    "level": 5,
+    "question": "What is the etymological origin of the term 'Pyx', which features in the name of the ancient UK coin-checking ceremony over which an English physicist and mathematician, who 1) was born in the calendar year 1642 (Old Style), the same year Galileo Galilei died, and 2) served as Warden of the Mint immediately prior to becoming Master, presided in the year the Treaty of Karlowitz concluded the Great Turkish War, whilst serving as Master of the Mint?",
+    "answer": "From the Greek 'pyxis', meaning boxwood receptacle.",
+    "parent_question": "What is the etymological origin of the term 'Pyx', which features in the name of the ancient UK coin-checking ceremony over which the author of *Philosophiæ Naturalis Principia Mathematica* presided in the year the Treaty of Karlowitz concluded the Great Turkish War, whilst serving as Master of the Mint?",
+    "evidence": [
+      {
+        "url": "https://www.royalmint.com/discover/uk-coins/trial-of-the-pyx/",
+        "fact": "The Trial of the Pyx is a judicial ceremony that dates back to the twelfth century, and possibly even earlier. Its purpose is to ensure that newly minted coins from the Royal Mint conform to their required dimension, weight and fineness, established in the relevant Coinage Act or Royal Proclamation. The name Pyx refers to the chests in which the coins are stored (from the Greek pyxis, boxwood receptacle). A jury of Liverymen of the Worshipful Company of Goldsmiths assays the coins, operating independently of The Royal Mint and the Treasury."
+      },
+      {
+        "url": "https://www.goldsmiths-centre.org/news/news-trial-pyx-explained/",
+        "fact": "Trial of the Pyx: what does it mean? Trial originates from the Norman French word triel, meaning ascertainment of quality by testing. Pyx is derived from the Greek word pyxis, meaning box or chest. Traditionally, this refers to the boxwood chests used to transport the coins selected for testing. The Trial of the Pyx is therefore the testing of the coins placed in the Pyx chests."
+      },
+      {
+        "url": "https://www.royalmintmuseum.org.uk/journal/people/sir-isaac-newton/",
+        "fact": "Newton also presided over the Trial of the Pyx in 1699, the year he officially became Master of the Mint."
+      },
+      {
+        "url": "https://www.royalmint.com/stories/collect/the-trial-of-the-pyx/",
+        "fact": "The Trial of the Pyx is the United Kingdom's oldest judicial procedure...During the Trial, a jury... confirm that the nation’s coinage meets the standards... The term 'Pyx' refers to the chests in which the sample coins were traditionally transported."
+      },
+      {
+        "url": "https://www.britannica.com/biography/Isaac-Newton",
+        "fact": "Sir Isaac Newton's famous monograph Philosophiæ Naturalis Principia Mathematica (Mathematical Principles of Natural Philosophy) was published in 1687."
+      },
+      {
+        "url": "https://www.britannica.com/event/Treaty-of-Karlowitz",
+        "fact": "The Treaty of Karlowitz, a peace settlement ending hostilities between the Ottoman Empire and the Holy League (Austria, Poland, Venice, and Russia), was signed on January 26, 1699."
+      },
+      {
+        "url": "https://royalmintmuseum.org.uk/journal/people/sir-isaac-newton/",
+        "fact": "In 1699 Newton was promoted to the position of Master of the Mint."
+      },
+      {
+        "url": "https://www.royalmint.com/discover/uk-coins/trial-of-the-pyx/",
+        "fact": "Sir Isaac Newton, himself presided over the trials [Trial of the Pyx] during his time as Master of the Mint."
+      },
+      {
+        "url": "https://www.britannica.com/event/Treaty-of-Karlowitz",
+        "fact": "The Treaty of Karlowitz was signed on January 26, 1699, concluding the war between the Ottoman Empire and the Holy League."
+      },
+      {
+        "url": "https://www.mississippiencyclopedia.org/entries/fort-maurepas/",
+        "fact": "Pierre Le Moyne d’Iberville selected a site on the eastern shore of Biloxi Bay and began building Fort Maurepas on 8 April 1699. This established the first European settlement in the lower Mississippi River valley."
+      },
+      {
+        "url": "https://www.britannica.com/biography/Isaac-Newton/Warden-of-the-Mint",
+        "fact": "Isaac Newton, author of Philosophiæ Naturalis Principia Mathematica, was appointed Master of the Mint late in 1699."
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Fort_Maurepas",
+        "fact": "Fort Maurepas, the first European settlement in the lower Mississippi River valley, was established by Pierre Le Moyne d'Iberville in April 1699. This confirms the year referenced in the original question."
+      },
+      {
+        "url": "https://www.britannica.com/event/Treaty-of-Carlowitz",
+        "fact": "The Treaty of Karlowitz was signed on January 26, 1699, concluding the Great Turkish War (hostilities 1683–99) between the Ottoman Empire and the Holy League. This provides a unique event occurring in the same year, 1699."
+      },
+      {
+        "url": "https://www.royalmintmuseum.org.uk/journal/people/sir-isaac-newton/",
+        "fact": "Isaac Newton (author of *Philosophiæ Naturalis Principia Mathematica*) was appointed Warden of the Mint in 1696 and promoted to the senior post of Master of the Mint in 1699."
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Isaac_Newton",
+        "fact": "Isaac Newton was born on 25 December 1642 (Old Style)."
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Galileo_Galilei",
+        "fact": "Galileo Galilei died on 8 January 1642 (New Style), which falls within the same calendar year 1642."
+      },
+      {
+        "url": "https://www.royalmintmuseum.org.uk/journal/people/isaac-newton/",
+        "fact": "Isaac Newton served as Warden of the Mint from 1696 to 1699, immediately before becoming Master of the Mint in 1699."
+      }
+    ],
+    "strategy": "complex abstraction concretization"
   }
 ]

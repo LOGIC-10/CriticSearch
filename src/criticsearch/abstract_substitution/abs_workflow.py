@@ -560,31 +560,33 @@ def main():
     parser.add_argument("--evaluate", action="store_true", help="只运行 evaluate()，输出 level-5 测试结果并退出")
     parser.add_argument("--gptsearch", action="store_true", help="运行 GPT-Search 专用流程")
 
-
     args = parser.parse_args()
 
-    # 支持通过命令行覆盖默认模型
     if args.model:
         global GPT_MODEL
         GPT_MODEL = args.model
 
-    # 如果指定 --evaluate，则调用 evaluate 并退出
+    # evaluate 分支
     if args.evaluate:
         evaluate(json_file=args.out, use_cache=True)
         return
 
-    if args.gptsearch:
-            wf = ReverseUpgradeWorkflow(max_level=args.max_level, max_tries=args.max_tries)
-            # 调用 gpt_search_run 而不是 run
+    # 单次 gptsearch
+    if args.gptsearch and args.batch <= 1:
+        wf = ReverseUpgradeWorkflow(max_level=args.max_level, max_tries=args.max_tries)
+        try:
             asyncio.run(wf.gpt_search_run())
             wf.save(args.out)
             print(f"Saved {len(wf.items)} items to {args.out}")
-            return
-    
-    # 单次执行
+        except Exception as e:
+            logger.exception("Error in single gptsearch run")
+            printer.print(f"Error during single gptsearch run: {e}", style="bold red")
+        return
+
+    # 单次普通 run
     if args.batch <= 1:
+        wf = ReverseUpgradeWorkflow(max_level=args.max_level, max_tries=args.max_tries)
         try:
-            wf = ReverseUpgradeWorkflow(max_level=args.max_level, max_tries=args.max_tries)
             asyncio.run(wf.run())
             wf.save(args.out)
             print(f"Saved {len(wf.items)} items to {args.out}")
@@ -593,39 +595,30 @@ def main():
             printer.print(f"Error during single run: {e}", style="bold red")
         return
 
-    # 批量并行执行并追加
+    # 批量并行执行
     async def _batch():
-
-        # 2. 并发控制信号量
         sem = asyncio.Semaphore(args.concurrency)
 
-        # 3. 定义单次运行任务
         async def run_one(idx: int):
             async with sem:
+                printer.rule(f"Batch Run {idx+1}/{args.batch}")
+                wf = ReverseUpgradeWorkflow(max_level=args.max_level, max_tries=args.max_tries)
                 try:
-                    printer.rule(f"Batch Run {idx+1}/{args.batch}")
-                    wf = ReverseUpgradeWorkflow(max_level=args.max_level, max_tries=args.max_tries)
-                    await wf.run()
-                    # 完成一次运行后立即读-插入-写回
-                    items = [it.to_dict() for it in wf.items]
-                    with file_lock:
-                        # 读取现有数据列表，文件不存在时视为空
-                        try:
-                            with open(args.out, "r", encoding="utf-8") as f:
-                                existing = json.load(f)
-                        except FileNotFoundError:
-                            existing = []
-                        existing.extend(items)
-                        with open(args.out, "w", encoding="utf-8") as f:
-                            json.dump(existing, f, ensure_ascii=False, indent=2)
-                    printer.print(f"Batch saved {len(items)} items; total now {len(existing)}", style="bold green")
-                    return items
+                    # 根据标志选择流程
+                    if args.gptsearch:
+                        await wf.gpt_search_run()
+                    else:
+                        await wf.run()
+                    # 统一保存
+                    wf.save(args.out)
+                    count = len(wf.items)
+                    printer.print(f"Batch[{idx+1}]: saved {count} items.", style="bold green")
+                    return [it.to_dict() for it in wf.items]
                 except Exception as e:
                     logger.exception(f"Error in batch run {idx+1}")
                     printer.print(f"Error in batch run {idx+1}: {e}", style="bold red")
                     return []
 
-        # 4. 提交所有任务并等待完成
         await asyncio.gather(*(run_one(i) for i in range(args.batch)))
         printer.print(f"Completed {args.batch} runs; file at {args.out}", style="bold green")
 
@@ -641,6 +634,9 @@ python -m criticsearch.abstract_substitution.abs_workflow --out trace_data.json 
 python -m criticsearch.abstract_substitution.abs_workflow --out trace_data.json --batch 20 --concurrency 20 --model gpt-4o
 python -m criticsearch.abstract_substitution.abs_workflow --out trace_data.json --max_level 3 --max_tries 2 --batch 2 --concurrency 3
 
+## 跑数据--使用 GPT-Search workflow
+python -m criticsearch.abstract_substitution.abs_workflow --batch 20 --concurrency 20 --gptsearch
 ## 评估
 python -m criticsearch.abstract_substitution.abs_workflow --out trace_data.json --evaluate
+
 """
