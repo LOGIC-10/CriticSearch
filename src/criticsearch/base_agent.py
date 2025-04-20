@@ -69,14 +69,18 @@ class BaseAgent:
 
         self.repeat_turns = 10
 
-    def load_template(self, filename):
+    def load_template(self, filename, root_folder=None):
         """
         Loads a template file from the prompts directory.
 
         :param filename: The name of the template file to load.
         :return: The content of the file as a string.
         """
-        filepath = os.path.join(self.prompts_dir, filename)
+        if root_folder:
+            # If a root folder is provided, use it to construct the file path
+            filepath = os.path.join(root_folder, filename)
+        else:
+            filepath = os.path.join(self.prompts_dir, filename)
 
         # Ensure the file exists
         if not os.path.exists(filepath):
@@ -100,7 +104,7 @@ class BaseAgent:
         return template.render(**data)
 
     def chat_with_template(
-        self, template_name: str, template_data: dict, model: str = None, check_prompt: bool = False,
+        self, template_name: str, template_data: dict, model: str = None, check_prompt: bool = False, root_folder: str = None,
     ) -> str:
         """Unified helper method to handle template rendering and chat calling
 
@@ -112,7 +116,7 @@ class BaseAgent:
         Returns:
             Chat response content
         """
-        template = self.load_template(template_name)
+        template = self.load_template(template_name, root_folder=root_folder)
         rendered_prompt = self.render_template(template, template_data)
 
         if check_prompt:

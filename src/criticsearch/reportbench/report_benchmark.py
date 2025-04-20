@@ -388,17 +388,17 @@ class ReportBenchmark:
         try:
             response = self.agent.chat_with_template("verify_qa_format.txt", data, model="gpt-4o", check_prompt=False)
             result = extract_and_validate_json(response)
-            printer.print(f"\nVerification Result: \n{result}\n")
+            printer.log(f"\nVerification Result: \n{result}\n")
             if result["result"] == True:
                 printer.log(f"Verification passed")
                 return True
             else:
                 # 打印出验证失败的情况
-                printer.print_exception(f"Verification failed: The answer is: {item['answer']}, fail reason is: {result['reason']}")
+                printer.log(f"Verification failed: The answer is: {item['answer']}, fail reason is: {result['reason']}")
                 return False
             
         except Exception as e:
-            printer.print(f"Error during the validation and verification: {str(e)}")
+            printer.print_exception(f"Error during the validation and verification: {str(e)}")
             return False
 
     def parse_tagged_data_to_table(self, entries, csv_path=None):
@@ -430,7 +430,7 @@ class ReportBenchmark:
 
 # %%
 if __name__ == "__main__":
-    json_file = "/workspaces/CriticSearch/src/criticsearch/reportbench/wiki_data/2024_European_floods.json"
+    json_file = "/workspaces/CriticSearch/src/criticsearch/reportbench/wiki_data/2024_Syrian_opposition_offensives.json"
     benchmark = ReportBenchmark(json_file)
     # print(benchmark.section_content_pairs)
     print(json.dumps(benchmark.sliding_window_pairing(max_token_length=800), indent=2))
