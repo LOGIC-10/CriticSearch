@@ -664,5 +664,35 @@
       }
     ],
     "strategy": "seed"
+  },
+  {
+    "level": 0,
+    "question": "In which 1988 TV movie featuring a prominent Marvel character did the recurring dual generator prop (Modern Props #2571) notably appear?",
+    "answer": "The Incredible Hulk Returns",
+    "parent_question": null,
+    "evidence": [
+      {
+        "url": "https://scifi.stackexchange.com/questions/30/what-is-the-prop-used-in-many-sci-fi-movies",
+        "fact": "This prop has been used in many Sci-Fi projects including Star Trek, The Incredible Hulk Returns (1988 TV movie), V (the old one), The Last Starfighter, Buck Rogers and oddly enough in AIRPLANE II: The Sequel with William Shatner who would again encounter it in Star Trek V: The Final Frontier which William Shatner directed and starred in! ... \"Modern Props designed and fabricated dual medical / lab / control room generator with rotating neon lights inside an acrylic tube; light-controlled panel with knobs and buttons.\" (It can be rented from ModernProps.com for $775 for the first week, in case you want to be in on the joke.)"
+      }
+    ],
+    "strategy": "seed"
+  },
+  {
+    "level": 0,
+    "question": "The cover art for Amon Düül II's Yeti album features a photograph of which deceased sound man associated with the band?",
+    "answer": "Wolfgang Krischke",
+    "parent_question": null,
+    "evidence": [
+      {
+        "url": "https://en.wikipedia.org/wiki/Yeti_(album)",
+        "fact": "The cover was designed by the band's organist, Falk Rogner, and features a collage depicting the Grim Reaper (German: Der Sensenmann), made from a photograph of Wolfgang Krischke. Krischke, who had worked with the band as a sound man, had died of hypothermia while under the effects of LSD. Rogner said: \"When he died I thought that the photo would be a perfect tribute to his memory. He never managed to find his way into Amon Düül properly when he was alive, so maybe his image as 'Der Sensenmann' will work as a strange cover image and he could be remembered as a magical person.\""
+      },
+      {
+        "url": "https://www.progarchives.com/album.asp?id=4691",
+        "fact": "About the cover art, the man in a dress with a scythe is a sound engineer of the band, Wolfgang Krischke. A few months after he was photographed, he died due to a LSD overdose. The German krautrockers paid him tribute by putting his picture on the cover. (Excerpt from user review section on page)"
+      }
+    ],
+    "strategy": "seed"
   }
 ]

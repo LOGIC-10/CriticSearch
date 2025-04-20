@@ -1,0 +1,268 @@
+[
+  {
+    "level": 0,
+    "question": "What specific type of interconnect fabric is used to connect the Grace CPU Superchips within the NVIDIA Grace Hopper Superchip?",
+    "answer": "NVLink-C2C",
+    "parent_question": null,
+    "evidence": [
+      {
+        "url": "https://resources.nvidia.com/en-us-grace-cpu/grace-hopper-superchip-whitepaper",
+        "fact": "The NVIDIA Grace Hopper Superchip architecture combines the NVIDIA Hopper GPU with the NVIDIA Grace CPU in a single package, connected by the high-bandwidth, memory-coherent NVIDIA NVLink®-C2C interconnect. [...] Within the Grace CPU Superchip, the two CPU chips are connected over NVLink-C2C."
+      },
+      {
+        "url": "https://www.servethehome.com/nvidia-grace-cpu-superchip-details-emerge-for-arm-era/",
+        "fact": "Perhaps the biggest feature is the chip-to-chip interconnect. NVIDIA connects the two Grace CPU dies using its NVLink-C2C interconnect. This provides 900GB/s of bidirectional bandwidth between the two CPU complexes."
+      }
+    ],
+    "strategy": "seed"
+  },
+  {
+    "level": 1,
+    "question": "Within a specific integrated chip system developed by a major graphics processing unit company, what type of interconnect fabric is used to link the two chips that form its central processing unit component? This system is notable because 1) it is named, in part, after a pioneering American computer scientist and United States Navy rear admiral, and 2) its CPU component features a total of 144 cores based on the Arm v9 instruction set architecture.",
+    "answer": "NVLink-C2C",
+    "parent_question": "What specific type of interconnect fabric is used to connect the Grace CPU Superchips within the NVIDIA Grace Hopper Superchip?",
+    "evidence": [
+      {
+        "url": "https://resources.nvidia.com/en-us-grace-cpu/grace-hopper-superchip-whitepaper",
+        "fact": "The NVIDIA Grace Hopper Superchip architecture combines the NVIDIA Hopper GPU with the NVIDIA Grace CPU in a single package, connected by the high-bandwidth, memory-coherent NVIDIA NVLink®-C2C interconnect. [...] Within the Grace CPU Superchip, the two CPU chips are connected over NVLink-C2C."
+      },
+      {
+        "url": "https://www.servethehome.com/nvidia-grace-cpu-superchip-details-emerge-for-arm-era/",
+        "fact": "Perhaps the biggest feature is the chip-to-chip interconnect. NVIDIA connects the two Grace CPU dies using its NVLink-C2C interconnect. This provides 900GB/s of bidirectional bandwidth between the two CPU complexes."
+      },
+      {
+        "url": "https://www.nvidia.com/en-us/data-center/grace-hopper-superchip/",
+        "fact": "The NVIDIA Grace Hopper™ Superchip, named for the computer science pioneer Grace Hopper, combines the NVIDIA Grace™ CPU and Hopper™ GPU to serve giant-scale AI and HPC applications."
+      },
+      {
+        "url": "https://www.britannica.com/biography/Grace-Hopper",
+        "fact": "Grace Hopper was a pioneering American computer scientist and United States Navy rear admiral."
+      },
+      {
+        "url": "https://www.nvidia.com/en-us/data-center/grace-cpu-superchip/",
+        "fact": "The NVIDIA Grace CPU Superchip comprises two CPU chips connected coherently... delivering 144 Arm® Neoverse V2 cores per CPU Superchip for the highest single-threaded performance. (Arm Neoverse V2 uses the Armv9 ISA)."
+      }
+    ],
+    "strategy": "complex abstraction concretization"
+  },
+  {
+    "level": 2,
+    "question": "Within a specific integrated chip system developed by a major graphics processing unit company, what type of interconnect fabric is used to link the two chips that form its central processing unit component? This system is notable because 1) it is named, in part, after the computer scientist who led the team that created the first operational compiler, and 2) its CPU component features a total of 144 cores based on the Arm v9 instruction set architecture.",
+    "answer": "NVLink-C2C",
+    "parent_question": "Within a specific integrated chip system developed by a major graphics processing unit company, what type of interconnect fabric is used to link the two chips that form its central processing unit component? This system is notable because 1) it is named, in part, after a pioneering American computer scientist and United States Navy rear admiral, and 2) its CPU component features a total of 144 cores based on the Arm v9 instruction set architecture.",
+    "evidence": [
+      {
+        "url": "https://resources.nvidia.com/en-us-grace-cpu/grace-hopper-superchip-whitepaper",
+        "fact": "The NVIDIA Grace Hopper Superchip architecture combines the NVIDIA Hopper GPU with the NVIDIA Grace CPU in a single package, connected by the high-bandwidth, memory-coherent NVIDIA NVLink®-C2C interconnect. [...] Within the Grace CPU Superchip, the two CPU chips are connected over NVLink-C2C."
+      },
+      {
+        "url": "https://www.servethehome.com/nvidia-grace-cpu-superchip-details-emerge-for-arm-era/",
+        "fact": "Perhaps the biggest feature is the chip-to-chip interconnect. NVIDIA connects the two Grace CPU dies using its NVLink-C2C interconnect. This provides 900GB/s of bidirectional bandwidth between the two CPU complexes."
+      },
+      {
+        "url": "https://www.nvidia.com/en-us/data-center/grace-hopper-superchip/",
+        "fact": "The NVIDIA Grace Hopper™ Superchip, named for the computer science pioneer Grace Hopper, combines the NVIDIA Grace™ CPU and Hopper™ GPU to serve giant-scale AI and HPC applications."
+      },
+      {
+        "url": "https://www.britannica.com/biography/Grace-Hopper",
+        "fact": "Grace Hopper was a pioneering American computer scientist and United States Navy rear admiral."
+      },
+      {
+        "url": "https://www.nvidia.com/en-us/data-center/grace-cpu-superchip/",
+        "fact": "The NVIDIA Grace CPU Superchip comprises two CPU chips connected coherently... delivering 144 Arm® Neoverse V2 cores per CPU Superchip for the highest single-threaded performance. (Arm Neoverse V2 uses the Armv9 ISA)."
+      },
+      {
+        "url": "https://www.computerhistory.org/pioneering-women/hopper/",
+        "fact": "Grace Hopper [...] led the team that created the first operational compiler, a program that translates programmer-friendly instructions into the zeros and ones that computers understand. This achievement was instrumental in making computers more accessible beyond the scientific and military communities."
+      },
+      {
+        "url": "https://www.nvidia.com/en-us/data-center/grace-cpu-superchip/",
+        "fact": "The NVIDIA Grace CPU Superchip is composed of two CPU chips connected coherently over NVLink-C2C... The Grace CPU Superchip packs 144 Arm® v9 CPU cores..."
+      },
+      {
+        "url": "https://nvidianews.nvidia.com/news/nvidia-announces-grace-cpu-superchip",
+        "fact": "Named after Grace Hopper, a pioneering U.S. computer scientist..."
+      }
+    ],
+    "strategy": "equivalence substitution"
+  },
+  {
+    "level": 3,
+    "question": "Within an integrated chip system developed by a prominent designer of graphics processing units, what type of interconnect fabric is used to link the two chips forming its central processing unit? This system is notable as 1) it is partly named after the computer scientist posthumously awarded the Presidential Medal of Freedom in 2016, and 2) its CPU component consumes approximately 500 watts of power.",
+    "answer": "NVLink-C2C",
+    "parent_question": "Within a specific integrated chip system developed by a major graphics processing unit company, what type of interconnect fabric is used to link the two chips that form its central processing unit component? This system is notable because 1) it is named, in part, after the computer scientist who led the team that created the first operational compiler, and 2) its CPU component features a total of 144 cores based on the Arm v9 instruction set architecture.",
+    "evidence": [
+      {
+        "url": "https://resources.nvidia.com/en-us-grace-cpu/grace-hopper-superchip-whitepaper",
+        "fact": "The NVIDIA Grace Hopper Superchip architecture combines the NVIDIA Hopper GPU with the NVIDIA Grace CPU in a single package, connected by the high-bandwidth, memory-coherent NVIDIA NVLink®-C2C interconnect. [...] Within the Grace CPU Superchip, the two CPU chips are connected over NVLink-C2C."
+      },
+      {
+        "url": "https://www.servethehome.com/nvidia-grace-cpu-superchip-details-emerge-for-arm-era/",
+        "fact": "Perhaps the biggest feature is the chip-to-chip interconnect. NVIDIA connects the two Grace CPU dies using its NVLink-C2C interconnect. This provides 900GB/s of bidirectional bandwidth between the two CPU complexes."
+      },
+      {
+        "url": "https://www.nvidia.com/en-us/data-center/grace-hopper-superchip/",
+        "fact": "The NVIDIA Grace Hopper™ Superchip, named for the computer science pioneer Grace Hopper, combines the NVIDIA Grace™ CPU and Hopper™ GPU to serve giant-scale AI and HPC applications."
+      },
+      {
+        "url": "https://www.britannica.com/biography/Grace-Hopper",
+        "fact": "Grace Hopper was a pioneering American computer scientist and United States Navy rear admiral."
+      },
+      {
+        "url": "https://www.nvidia.com/en-us/data-center/grace-cpu-superchip/",
+        "fact": "The NVIDIA Grace CPU Superchip comprises two CPU chips connected coherently... delivering 144 Arm® Neoverse V2 cores per CPU Superchip for the highest single-threaded performance. (Arm Neoverse V2 uses the Armv9 ISA)."
+      },
+      {
+        "url": "https://www.computerhistory.org/pioneering-women/hopper/",
+        "fact": "Grace Hopper [...] led the team that created the first operational compiler, a program that translates programmer-friendly instructions into the zeros and ones that computers understand. This achievement was instrumental in making computers more accessible beyond the scientific and military communities."
+      },
+      {
+        "url": "https://www.nvidia.com/en-us/data-center/grace-cpu-superchip/",
+        "fact": "The NVIDIA Grace CPU Superchip is composed of two CPU chips connected coherently over NVLink-C2C... The Grace CPU Superchip packs 144 Arm® v9 CPU cores..."
+      },
+      {
+        "url": "https://nvidianews.nvidia.com/news/nvidia-announces-grace-cpu-superchip",
+        "fact": "Named after Grace Hopper, a pioneering U.S. computer scientist..."
+      },
+      {
+        "url": "https://obamawhitehouse.archives.gov/the-press-office/2016/11/16/president-obama-names-recipients-presidential-medal-freedom",
+        "fact": "Grace Hopper was posthumously awarded the Presidential Medal of Freedom in 2016. The NVIDIA Grace Superchip is named after her."
+      },
+      {
+        "url": "https://www.nvidia.com/en-us/data-center/grace-cpu-superchip/",
+        "fact": "The NVIDIA Grace CPU Superchip, which forms the CPU component mentioned and consists of two linked CPU chips, has a Thermal Design Power (TDP) of 500W."
+      }
+    ],
+    "strategy": "equivalence substitution"
+  },
+  {
+    "level": 4,
+    "question": "Within an integrated chip system developed by a prominent designer of graphics processing units, what type of interconnect fabric is used to link the two chips forming its central processing unit? This system is notable as 1) it is partly named after a pioneering American computer scientist who i) achieved the rank of Rear Admiral (Lower Half) in the U.S. Navy Reserve upon her retirement, ii) developed the A-0 System, widely recognized as the first compiler for an electronic computer, and iii) has the U.S. Navy Arleigh Burke-class guided missile destroyer designated DDG-70 named in her honor, and 2) its CPU component consumes approximately 500 watts of power.",
+    "answer": "NVLink-C2C",
+    "parent_question": "Within an integrated chip system developed by a prominent designer of graphics processing units, what type of interconnect fabric is used to link the two chips forming its central processing unit? This system is notable as 1) it is partly named after the computer scientist posthumously awarded the Presidential Medal of Freedom in 2016, and 2) its CPU component consumes approximately 500 watts of power.",
+    "evidence": [
+      {
+        "url": "https://resources.nvidia.com/en-us-grace-cpu/grace-hopper-superchip-whitepaper",
+        "fact": "The NVIDIA Grace Hopper Superchip architecture combines the NVIDIA Hopper GPU with the NVIDIA Grace CPU in a single package, connected by the high-bandwidth, memory-coherent NVIDIA NVLink®-C2C interconnect. [...] Within the Grace CPU Superchip, the two CPU chips are connected over NVLink-C2C."
+      },
+      {
+        "url": "https://www.servethehome.com/nvidia-grace-cpu-superchip-details-emerge-for-arm-era/",
+        "fact": "Perhaps the biggest feature is the chip-to-chip interconnect. NVIDIA connects the two Grace CPU dies using its NVLink-C2C interconnect. This provides 900GB/s of bidirectional bandwidth between the two CPU complexes."
+      },
+      {
+        "url": "https://www.nvidia.com/en-us/data-center/grace-hopper-superchip/",
+        "fact": "The NVIDIA Grace Hopper™ Superchip, named for the computer science pioneer Grace Hopper, combines the NVIDIA Grace™ CPU and Hopper™ GPU to serve giant-scale AI and HPC applications."
+      },
+      {
+        "url": "https://www.britannica.com/biography/Grace-Hopper",
+        "fact": "Grace Hopper was a pioneering American computer scientist and United States Navy rear admiral."
+      },
+      {
+        "url": "https://www.nvidia.com/en-us/data-center/grace-cpu-superchip/",
+        "fact": "The NVIDIA Grace CPU Superchip comprises two CPU chips connected coherently... delivering 144 Arm® Neoverse V2 cores per CPU Superchip for the highest single-threaded performance. (Arm Neoverse V2 uses the Armv9 ISA)."
+      },
+      {
+        "url": "https://www.computerhistory.org/pioneering-women/hopper/",
+        "fact": "Grace Hopper [...] led the team that created the first operational compiler, a program that translates programmer-friendly instructions into the zeros and ones that computers understand. This achievement was instrumental in making computers more accessible beyond the scientific and military communities."
+      },
+      {
+        "url": "https://www.nvidia.com/en-us/data-center/grace-cpu-superchip/",
+        "fact": "The NVIDIA Grace CPU Superchip is composed of two CPU chips connected coherently over NVLink-C2C... The Grace CPU Superchip packs 144 Arm® v9 CPU cores..."
+      },
+      {
+        "url": "https://nvidianews.nvidia.com/news/nvidia-announces-grace-cpu-superchip",
+        "fact": "Named after Grace Hopper, a pioneering U.S. computer scientist..."
+      },
+      {
+        "url": "https://obamawhitehouse.archives.gov/the-press-office/2016/11/16/president-obama-names-recipients-presidential-medal-freedom",
+        "fact": "Grace Hopper was posthumously awarded the Presidential Medal of Freedom in 2016. The NVIDIA Grace Superchip is named after her."
+      },
+      {
+        "url": "https://www.nvidia.com/en-us/data-center/grace-cpu-superchip/",
+        "fact": "The NVIDIA Grace CPU Superchip, which forms the CPU component mentioned and consists of two linked CPU chips, has a Thermal Design Power (TDP) of 500W."
+      },
+      {
+        "url": "https://www.history.navy.mil/browse-by-topic/people/trailblazers/grace-hopper.html",
+        "fact": "Grace Hopper was promoted to rear admiral (lower half) on the retired list by presidential appointment."
+      },
+      {
+        "url": "https://lemelson.mit.edu/resources/grace-hopper",
+        "fact": "In 1952, Hopper and her team developed the first compiler for computer language, called A-0 System, which translated mathematical code into machine-readable code—a crucial step toward creating modern programming languages."
+      },
+      {
+        "url": "https://www.navsea.navy.mil/Home/Team-Ships/PEO-Ships/DDG-51/USS-Hopper/",
+        "fact": "USS Hopper (DDG 70) is an Arleigh Burke-class guided missile destroyer, named for Rear Admiral Grace Hopper."
+      }
+    ],
+    "strategy": "complex abstraction concretization"
+  },
+  {
+    "level": 5,
+    "question": "Within an integrated chip system developed by a company headquartered in Santa Clara, California, notable for completing its acquisition of a major high-performance networking technology firm on April 27, 2020, what type of interconnect fabric is used to link the two chips forming its central processing unit? This system is notable as 1) it is partly named after a pioneering American computer scientist who i) achieved the rank of Rear Admiral (Lower Half) in the U.S. Navy Reserve upon her retirement, ii) developed the A-0 System, widely recognized as the first compiler for an electronic computer, and iii) has the U.S. Navy Arleigh Burke-class guided missile destroyer designated DDG-70 named in her honor, and 2) its CPU component consumes approximately 500 watts of power.",
+    "answer": "NVLink-C2C",
+    "parent_question": "Within an integrated chip system developed by a prominent designer of graphics processing units, what type of interconnect fabric is used to link the two chips forming its central processing unit? This system is notable as 1) it is partly named after a pioneering American computer scientist who i) achieved the rank of Rear Admiral (Lower Half) in the U.S. Navy Reserve upon her retirement, ii) developed the A-0 System, widely recognized as the first compiler for an electronic computer, and iii) has the U.S. Navy Arleigh Burke-class guided missile destroyer designated DDG-70 named in her honor, and 2) its CPU component consumes approximately 500 watts of power.",
+    "evidence": [
+      {
+        "url": "https://resources.nvidia.com/en-us-grace-cpu/grace-hopper-superchip-whitepaper",
+        "fact": "The NVIDIA Grace Hopper Superchip architecture combines the NVIDIA Hopper GPU with the NVIDIA Grace CPU in a single package, connected by the high-bandwidth, memory-coherent NVIDIA NVLink®-C2C interconnect. [...] Within the Grace CPU Superchip, the two CPU chips are connected over NVLink-C2C."
+      },
+      {
+        "url": "https://www.servethehome.com/nvidia-grace-cpu-superchip-details-emerge-for-arm-era/",
+        "fact": "Perhaps the biggest feature is the chip-to-chip interconnect. NVIDIA connects the two Grace CPU dies using its NVLink-C2C interconnect. This provides 900GB/s of bidirectional bandwidth between the two CPU complexes."
+      },
+      {
+        "url": "https://www.nvidia.com/en-us/data-center/grace-hopper-superchip/",
+        "fact": "The NVIDIA Grace Hopper™ Superchip, named for the computer science pioneer Grace Hopper, combines the NVIDIA Grace™ CPU and Hopper™ GPU to serve giant-scale AI and HPC applications."
+      },
+      {
+        "url": "https://www.britannica.com/biography/Grace-Hopper",
+        "fact": "Grace Hopper was a pioneering American computer scientist and United States Navy rear admiral."
+      },
+      {
+        "url": "https://www.nvidia.com/en-us/data-center/grace-cpu-superchip/",
+        "fact": "The NVIDIA Grace CPU Superchip comprises two CPU chips connected coherently... delivering 144 Arm® Neoverse V2 cores per CPU Superchip for the highest single-threaded performance. (Arm Neoverse V2 uses the Armv9 ISA)."
+      },
+      {
+        "url": "https://www.computerhistory.org/pioneering-women/hopper/",
+        "fact": "Grace Hopper [...] led the team that created the first operational compiler, a program that translates programmer-friendly instructions into the zeros and ones that computers understand. This achievement was instrumental in making computers more accessible beyond the scientific and military communities."
+      },
+      {
+        "url": "https://www.nvidia.com/en-us/data-center/grace-cpu-superchip/",
+        "fact": "The NVIDIA Grace CPU Superchip is composed of two CPU chips connected coherently over NVLink-C2C... The Grace CPU Superchip packs 144 Arm® v9 CPU cores..."
+      },
+      {
+        "url": "https://nvidianews.nvidia.com/news/nvidia-announces-grace-cpu-superchip",
+        "fact": "Named after Grace Hopper, a pioneering U.S. computer scientist..."
+      },
+      {
+        "url": "https://obamawhitehouse.archives.gov/the-press-office/2016/11/16/president-obama-names-recipients-presidential-medal-freedom",
+        "fact": "Grace Hopper was posthumously awarded the Presidential Medal of Freedom in 2016. The NVIDIA Grace Superchip is named after her."
+      },
+      {
+        "url": "https://www.nvidia.com/en-us/data-center/grace-cpu-superchip/",
+        "fact": "The NVIDIA Grace CPU Superchip, which forms the CPU component mentioned and consists of two linked CPU chips, has a Thermal Design Power (TDP) of 500W."
+      },
+      {
+        "url": "https://www.history.navy.mil/browse-by-topic/people/trailblazers/grace-hopper.html",
+        "fact": "Grace Hopper was promoted to rear admiral (lower half) on the retired list by presidential appointment."
+      },
+      {
+        "url": "https://lemelson.mit.edu/resources/grace-hopper",
+        "fact": "In 1952, Hopper and her team developed the first compiler for computer language, called A-0 System, which translated mathematical code into machine-readable code—a crucial step toward creating modern programming languages."
+      },
+      {
+        "url": "https://www.navsea.navy.mil/Home/Team-Ships/PEO-Ships/DDG-51/USS-Hopper/",
+        "fact": "USS Hopper (DDG 70) is an Arleigh Burke-class guided missile destroyer, named for Rear Admiral Grace Hopper."
+      },
+      {
+        "url": "https://nvidianews.nvidia.com/news/nvidia-completes-acquisition-of-mellanox-creating-major-force-for-high-performance-computing",
+        "fact": "NVIDIA completed its acquisition of Mellanox Technologies, Ltd. on April 27, 2020. Mellanox was a leading supplier of high-performance networking technology."
+      },
+      {
+        "url": "https://www.nvidia.com/en-us/contact/",
+        "fact": "NVIDIA Corporation's headquarters is located at 2788 San Tomas Expressway, Santa Clara, CA 95051."
+      }
+    ],
+    "strategy": "equivalence substitution"
+  }
+]

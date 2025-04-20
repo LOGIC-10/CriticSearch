@@ -3,7 +3,7 @@
 Generates multi‑level reverse‑upgrade benchmark questions.
 
 Usage:
-    python -m criticsearch.abstract_substitution.abs_exp_1 --out <output_file.json> --max_level <max_level> --max_tries <max_tries>
+    python -m criticsearch.abstract_substitution.abs_workflow --out <output_file.json> --max_level <max_level> --max_tries <max_tries>
 Dependencies:
     pip install openai httpx beautifulsoup4
 """
@@ -57,7 +57,7 @@ agent = BaseAgent()
 # 新增日志配置
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
-fh = logging.FileHandler('abs_exp_1.log', encoding='utf-8')
+fh = logging.FileHandler('abs_workflow.log', encoding='utf-8')
 fh.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
 logger.addHandler(fh)
 
@@ -378,91 +378,6 @@ class ReverseUpgradeWorkflow:
 
         printer.rule("Workflow End")
 
-    async def gpt_search_generate_seed(self, domain) -> QAItem:
-        """Stub for GPT Search seed generation."""
-        # TODO: 实现 GPT Search 专用的 seed 生成逻辑
-        resp = agent.chat_with_template(template_name="gpt_search_seed.txt", root_folder=PROMPT_ROOT_FOLDER, template_data={"domain": domain})
-        json_resp = extract_and_validate_json(resp)
-        if not json_resp:
-            raise RuntimeError("GPT-Search seed generation failed")
-        
-        return QAItem(
-                level=0,
-                question=json_resp["seed"]["question"].strip(),
-                answer=json_resp["seed"]["answer"].strip(),
-                parent_question=None,
-                evidence=json_resp["seed"].get("evidence", []),
-                strategy="seed",
-            )
-
-    async def gpt_search_query_update(self, seed: QAItem) -> QAItem:
-        """Stub for GPT Search query update."""
-        # TODO: 实现 GPT Search 专用的 query update 逻辑
-
-        resp = agent.chat_with_template(
-            template_name="gpt_search_Q_update.txt",
-            template_data={"question": seed.question, "answer": seed.answer},
-            root_folder=PROMPT_ROOT_FOLDER,
-        )
-
-        json_resp = extract_and_validate_json(extract_tag_content(resp, "data"))
-        if not json_resp:
-            raise RuntimeError("GPT-Search query update failed")
-        
-        # 提取出update之后的question
-        updated_question = json_resp["updated_question"].strip()
-        updated_evidence = json_resp.get("updated_evidence", [])
-        method = json_resp.get("method", "None")
-        printer.rule("GPT-Search Query Update Output")
-        printer.print(pretty_json(json_resp), style="bold green")
-        printer.rule("GPT-Search Query Update Evidence")
-        printer.print(pretty_json(updated_evidence), style="bold green")
-        # 记录更新后的 QAItem
-        updated = QAItem(
-            level=seed.level + 1,
-            question=updated_question,
-            answer=seed.answer,
-            parent_question=seed.question,
-            evidence=seed.evidence + updated_evidence,
-            strategy=method,
-        )
-
-        return updated
-
-    async def gpt_search_run(self):
-        GPT_MODEL = "gpt-4o-search-preview"
-        printer.rule(f"GPT Search Workflow Start with {GPT_MODEL}")
-        # 第一步：Seed 生成
-        seed = await self.gpt_search_generate_seed()
-        self.items.append(seed)
-        current = seed
-
-        # 按照 max_level 和 max_tries 进行多级问题升级
-        for level in range(self.max_level):
-            retries = 0
-            while retries < self.max_tries:
-                retries += 1
-                printer.rule(f"GPT-Search Level {level+1} Update Attempt {retries}")
-                # 使用 GPT Search 专用的 query update
-                updated = await self.gpt_search_query_update(current)
-                # 多重校验
-                passed = await self.multi_verify(updated)
-                if not passed:
-                    printer.print("GPT-Search: 多重校验未通过（模型能回答），重试 query_update …", style="bold red")
-                    continue
-                printer.print("GPT-Search: 多重校验通过（模型无法回答），记录更新后的 QAItem", style="bold green")
-                self.items.append(updated)
-                current = updated
-                break
-            else:
-                printer.print(
-                    f"GPT-Search stopped at level {current.level}; no valid update after {self.max_tries} tries.",
-                    style="bold red",
-                )
-                return
-
-        printer.rule("GPT-Search Workflow End")
-
     def save(self, path: Path):
         printer.rule("Saving Results")
         with file_lock:
@@ -483,6 +398,91 @@ class ReverseUpgradeWorkflow:
         raw = m.group(1) if m else text
         raw = raw.strip("`\n ")
         return json.loads(raw)
+
+    # 恢复 GPT-Search 专用的 Seed 生成
+    async def gpt_search_generate_seed(self, domain) -> QAItem:
+        """Stub for GPT Search seed generation."""
+        # TODO: 实现 GPT Search 专用的 seed 生成逻辑
+        resp = agent.chat_with_template(
+            template_name="gpt_search_seed.txt",
+            root_folder=PROMPT_ROOT_FOLDER,
+            template_data={"domain": domain},
+        )
+        printer.rule("GPT-Search Seed Generation Output")
+        printer.print(resp, style="bold green")
+        
+        json_resp = extract_and_validate_json(resp)
+        if not json_resp:
+            raise RuntimeError("GPT-Search seed generation failed")
+        return QAItem(
+            level=0,
+            question=json_resp["seed"]["question"].strip(),
+            answer=json_resp["seed"]["answer"].strip(),
+            parent_question=None,
+            evidence=json_resp["seed"].get("evidence", []),
+            strategy="seed",
+        )
+
+    # 恢复 GPT-Search 专用的 Query 更新
+    async def gpt_search_query_update(self, seed: QAItem) -> QAItem:
+        """Stub for GPT Search query update."""
+        # TODO: 实现 GPT Search 专用的 query update 逻辑
+        resp = agent.chat_with_template(
+            template_name="gpt_search_Q_update.txt",
+            template_data={"question": seed.question, "answer": seed.answer},
+            root_folder=PROMPT_ROOT_FOLDER,
+        )
+        json_resp = extract_and_validate_json(extract_tag_content(resp, "data"))
+        if not json_resp:
+            raise RuntimeError("GPT-Search query update failed")
+        updated_question = json_resp["updated_question"].strip()
+        updated_evidence = json_resp.get("updated_evidence", [])
+        method = json_resp.get("method", "None")
+        printer.rule("GPT-Search Query Update Output")
+        printer.print(pretty_json(json_resp), style="bold green")
+        printer.rule("GPT-Search Query Update Evidence")
+        printer.print(pretty_json(updated_evidence), style="bold green")
+        return QAItem(
+            level=seed.level + 1,
+            question=updated_question,
+            answer=seed.answer,
+            parent_question=seed.question,
+            evidence=seed.evidence + updated_evidence,
+            strategy=method,
+        )
+
+    # 恢复 GPT-Search 主流程入口
+    async def gpt_search_run(self):
+        GPT_MODEL = "gpt-4o-search-preview"
+        printer.rule(f"GPT-Search Workflow Start with {GPT_MODEL}")
+        # 第一步：Seed 生成
+        seed = await self.gpt_search_generate_seed(self.random_domain())
+        self.items.append(seed)
+        current = seed
+
+        # 按照 max_level 和 max_tries 进行多级问题升级
+        for level in range(self.max_level):
+            retries = 0
+            while retries < self.max_tries:
+                retries += 1
+                printer.rule(f"GPT-Search Level {level+1} Update Attempt {retries}")
+                updated = await self.gpt_search_query_update(current)
+                passed = await self.multi_verify(updated)
+                if not passed:
+                    printer.print("GPT-Search: 多重校验未通过（模型能回答），重试 query_update …", style="bold red")
+                    continue
+                printer.print("GPT-Search: 多重校验通过（模型无法回答），记录更新后的 QAItem", style="bold green")
+                self.items.append(updated)
+                current = updated
+                break
+            else:
+                printer.print(
+                    f"GPT-Search stopped at level {current.level}; no valid update after {self.max_tries} tries.",
+                    style="bold red",
+                )
+                return
+
+        printer.rule("GPT-Search Workflow End")
 
 def random_domain():
     domains = ["TV shows & movies", "Other", "Science & technology", "Art", "History", "Sports", "Music", "Video games", "Geography", "Politics"]
@@ -558,6 +558,8 @@ def main():
     parser.add_argument("--concurrency", type=int, default=1, help="最大并行并发数")
     parser.add_argument("--model", type=str, default=None, help="LLM model name to use")
     parser.add_argument("--evaluate", action="store_true", help="只运行 evaluate()，输出 level-5 测试结果并退出")
+    parser.add_argument("--gptsearch", action="store_true", help="运行 GPT-Search 专用流程")
+
 
     args = parser.parse_args()
 
@@ -571,6 +573,14 @@ def main():
         evaluate(json_file=args.out, use_cache=True)
         return
 
+    if args.gptsearch:
+            wf = ReverseUpgradeWorkflow(max_level=args.max_level, max_tries=args.max_tries)
+            # 调用 gpt_search_run 而不是 run
+            asyncio.run(wf.gpt_search_run())
+            wf.save(args.out)
+            print(f"Saved {len(wf.items)} items to {args.out}")
+            return
+    
     # 单次执行
     if args.batch <= 1:
         try:
@@ -627,10 +637,10 @@ if __name__ == "__main__":
 """
 %%%
 ## 跑数据
-python -m criticsearch.abstract_substitution.abs_exp_1 --out trace_data.json --batch 20 --concurrency 20
-python -m criticsearch.abstract_substitution.abs_exp_1 --out trace_data.json --batch 20 --concurrency 20 --model gpt-4o
-python -m criticsearch.abstract_substitution.abs_exp_1 --out trace_data.json --max_level 3 --max_tries 2 --batch 2 --concurrency 3
+python -m criticsearch.abstract_substitution.abs_workflow --out trace_data.json --batch 20 --concurrency 20
+python -m criticsearch.abstract_substitution.abs_workflow --out trace_data.json --batch 20 --concurrency 20 --model gpt-4o
+python -m criticsearch.abstract_substitution.abs_workflow --out trace_data.json --max_level 3 --max_tries 2 --batch 2 --concurrency 3
 
 ## 评估
-python -m criticsearch.abstract_substitution.abs_exp_1 --out trace_data.json --evaluate
+python -m criticsearch.abstract_substitution.abs_workflow --out trace_data.json --evaluate
 """
