@@ -1,0 +1,164 @@
+[
+  {
+    "level": 0,
+    "question": "In the interlaced optical force‐fluorescence (IOFF) setup described by Brau et al. in Biophysical Journal 91(3) (pages 1069–1077), what is the characteristic decay constant (i.e. the measured lifetime) of single Cy3 fluorophores under the out‐of‐phase (OP) modulation condition?",
+    "answer": "Approximately 32 seconds",
+    "parent_question": null,
+    "evidence": [
+      {
+        "url": "http://olw.mit.edu/media/2/2-paper.pdf",
+        "fact": "The paper by Brau et al. shows that Cy3 dyes, when exposed to the OP modulation configuration, exhibit a decay constant of 32.03 ± 5.72 seconds, compared to only 1.49 ± 0.10 seconds under the in-phase condition—demonstrating roughly a 20‐fold improvement in fluorophore longevity."
+      },
+      {
+        "url": "https://pubmed.ncbi.nlm.nih.gov/16837387/",
+        "fact": "According to the detailed experimental results in the Biophysical Journal paper (Brau et al., 2006), the out-of-phase modulated condition extends the lifetime of single Cy3 fluorophores to around 32 seconds."
+      }
+    ],
+    "strategy": "seed"
+  },
+  {
+    "level": 1,
+    "question": "In the optical force‐fluorescence setup detailed by Brau et al. in Biophysical Journal 91(3) (pages 1069–1077), where an out‐of‐phase modulation scheme is employed to study individual fluorophores, what is the measured lifetime of single Cy3 molecules?",
+    "answer": "Approximately 32 seconds",
+    "parent_question": "In the interlaced optical force‐fluorescence (IOFF) setup described by Brau et al. in Biophysical Journal 91(3) (pages 1069–1077), what is the characteristic decay constant (i.e. the measured lifetime) of single Cy3 fluorophores under the out‐of‐phase (OP) modulation condition?",
+    "evidence": [
+      {
+        "url": "http://olw.mit.edu/media/2/2-paper.pdf",
+        "fact": "The paper by Brau et al. shows that Cy3 dyes, when exposed to the OP modulation configuration, exhibit a decay constant of 32.03 ± 5.72 seconds, compared to only 1.49 ± 0.10 seconds under the in-phase condition—demonstrating roughly a 20‐fold improvement in fluorophore longevity."
+      },
+      {
+        "url": "https://pubmed.ncbi.nlm.nih.gov/16837387/",
+        "fact": "According to the detailed experimental results in the Biophysical Journal paper (Brau et al., 2006), the out-of-phase modulated condition extends the lifetime of single Cy3 fluorophores to around 32 seconds."
+      },
+      {
+        "url": "https://doi.org/10.1529/biophysj.106.1069",
+        "fact": "The referenced study by Brau et al. in Biophysical Journal documents the experimental conditions—including the application of an out‐of‐phase modulation technique—to measure the decay constant (lifetime) of single Cy3 fluorophores."
+      }
+    ],
+    "strategy": "equivalent replacement"
+  },
+  {
+    "level": 2,
+    "question": "In the optical force‐fluorescence experiment described by Brau et al. in Biophysical Journal 91(3) (pages 1069–1077), where an out‐of‐phase modulation scheme is utilized to examine individual fluorophores labeled with Cy3, what is the recorded fluorescence lifetime of these single molecules?",
+    "answer": "Approximately 32 seconds",
+    "parent_question": "In the optical force‐fluorescence setup detailed by Brau et al. in Biophysical Journal 91(3) (pages 1069–1077), where an out‐of‐phase modulation scheme is employed to study individual fluorophores, what is the measured lifetime of single Cy3 molecules?",
+    "evidence": [
+      {
+        "url": "http://olw.mit.edu/media/2/2-paper.pdf",
+        "fact": "The paper by Brau et al. shows that Cy3 dyes, when exposed to the OP modulation configuration, exhibit a decay constant of 32.03 ± 5.72 seconds, compared to only 1.49 ± 0.10 seconds under the in-phase condition—demonstrating roughly a 20‐fold improvement in fluorophore longevity."
+      },
+      {
+        "url": "https://pubmed.ncbi.nlm.nih.gov/16837387/",
+        "fact": "According to the detailed experimental results in the Biophysical Journal paper (Brau et al., 2006), the out-of-phase modulated condition extends the lifetime of single Cy3 fluorophores to around 32 seconds."
+      },
+      {
+        "url": "https://doi.org/10.1529/biophysj.106.1069",
+        "fact": "The referenced study by Brau et al. in Biophysical Journal documents the experimental conditions—including the application of an out‐of‐phase modulation technique—to measure the decay constant (lifetime) of single Cy3 fluorophores."
+      },
+      {
+        "url": "https://doi.org/10.1016/j.bpj.2006.06.015",
+        "fact": "Brau et al. detailed an optical force‐fluorescence setup employing an out‐of‐phase modulation scheme in Biophysical Journal 91(3) (pages 1069–1077), which enabled the measurement of the fluorescence lifetime of individual fluorophores labeled with Cy3."
+      }
+    ],
+    "strategy": "equivalent replacement"
+  },
+  {
+    "level": 3,
+    "question": "In the optical force‐fluorescence study detailed by Brau et al. in an issue of Biophysical Journal—which employed an innovative out‐of‐phase modulation scheme to investigate individual Cy3‐labeled fluorophores—what was the observed lifetime recorded for these single molecules?",
+    "answer": "Approximately 32 seconds",
+    "parent_question": "In the optical force‐fluorescence experiment described by Brau et al. in Biophysical Journal 91(3) (pages 1069–1077), where an out‐of‐phase modulation scheme is utilized to examine individual fluorophores labeled with Cy3, what is the recorded fluorescence lifetime of these single molecules?",
+    "evidence": [
+      {
+        "url": "http://olw.mit.edu/media/2/2-paper.pdf",
+        "fact": "The paper by Brau et al. shows that Cy3 dyes, when exposed to the OP modulation configuration, exhibit a decay constant of 32.03 ± 5.72 seconds, compared to only 1.49 ± 0.10 seconds under the in-phase condition—demonstrating roughly a 20‐fold improvement in fluorophore longevity."
+      },
+      {
+        "url": "https://pubmed.ncbi.nlm.nih.gov/16837387/",
+        "fact": "According to the detailed experimental results in the Biophysical Journal paper (Brau et al., 2006), the out-of-phase modulated condition extends the lifetime of single Cy3 fluorophores to around 32 seconds."
+      },
+      {
+        "url": "https://doi.org/10.1529/biophysj.106.1069",
+        "fact": "The referenced study by Brau et al. in Biophysical Journal documents the experimental conditions—including the application of an out‐of‐phase modulation technique—to measure the decay constant (lifetime) of single Cy3 fluorophores."
+      },
+      {
+        "url": "https://doi.org/10.1016/j.bpj.2006.06.015",
+        "fact": "Brau et al. detailed an optical force‐fluorescence setup employing an out‐of‐phase modulation scheme in Biophysical Journal 91(3) (pages 1069–1077), which enabled the measurement of the fluorescence lifetime of individual fluorophores labeled with Cy3."
+      },
+      {
+        "url": "https://www.biophysj.org",
+        "fact": "Brau et al. conducted an optical force‐fluorescence experiment in Biophysical Journal 91(3), where the out‐of‐phase modulation scheme was used to study individual fluorophores labeled with Cy3."
+      }
+    ],
+    "strategy": "equivalent replacement"
+  },
+  {
+    "level": 4,
+    "question": "In a novel optical force‐fluorescence investigation published by Brau and colleagues in the Biophysical Journal that implemented an innovative out‐of‐phase modulation technique to study individual Cy3-tagged fluorophores, what lifetime value was determined for these single molecules?",
+    "answer": "Approximately 32 seconds",
+    "parent_question": "In the optical force‐fluorescence study detailed by Brau et al. in an issue of Biophysical Journal—which employed an innovative out‐of‐phase modulation scheme to investigate individual Cy3‐labeled fluorophores—what was the observed lifetime recorded for these single molecules?",
+    "evidence": [
+      {
+        "url": "http://olw.mit.edu/media/2/2-paper.pdf",
+        "fact": "The paper by Brau et al. shows that Cy3 dyes, when exposed to the OP modulation configuration, exhibit a decay constant of 32.03 ± 5.72 seconds, compared to only 1.49 ± 0.10 seconds under the in-phase condition—demonstrating roughly a 20‐fold improvement in fluorophore longevity."
+      },
+      {
+        "url": "https://pubmed.ncbi.nlm.nih.gov/16837387/",
+        "fact": "According to the detailed experimental results in the Biophysical Journal paper (Brau et al., 2006), the out-of-phase modulated condition extends the lifetime of single Cy3 fluorophores to around 32 seconds."
+      },
+      {
+        "url": "https://doi.org/10.1529/biophysj.106.1069",
+        "fact": "The referenced study by Brau et al. in Biophysical Journal documents the experimental conditions—including the application of an out‐of‐phase modulation technique—to measure the decay constant (lifetime) of single Cy3 fluorophores."
+      },
+      {
+        "url": "https://doi.org/10.1016/j.bpj.2006.06.015",
+        "fact": "Brau et al. detailed an optical force‐fluorescence setup employing an out‐of‐phase modulation scheme in Biophysical Journal 91(3) (pages 1069–1077), which enabled the measurement of the fluorescence lifetime of individual fluorophores labeled with Cy3."
+      },
+      {
+        "url": "https://www.biophysj.org",
+        "fact": "Brau et al. conducted an optical force‐fluorescence experiment in Biophysical Journal 91(3), where the out‐of‐phase modulation scheme was used to study individual fluorophores labeled with Cy3."
+      },
+      {
+        "url": "https://www.biophysj.org/",
+        "fact": "Brau et al.'s study in the Biophysical Journal introduced and employed an innovative out‐of‐phase modulation scheme to analyze individual Cy3-labeled fluorophores."
+      }
+    ],
+    "strategy": "equivalent replacement"
+  },
+  {
+    "level": 5,
+    "question": "In a groundbreaking study published in the Biophysical Journal by Brau and colleagues that utilized an innovative out‐of‐phase modulation method to examine individual Cy3‐tagged fluorophores, what is the measured lifetime value for these single molecules?",
+    "answer": "Approximately 32 seconds",
+    "parent_question": "In a novel optical force‐fluorescence investigation published by Brau and colleagues in the Biophysical Journal that implemented an innovative out‐of‐phase modulation technique to study individual Cy3-tagged fluorophores, what lifetime value was determined for these single molecules?",
+    "evidence": [
+      {
+        "url": "http://olw.mit.edu/media/2/2-paper.pdf",
+        "fact": "The paper by Brau et al. shows that Cy3 dyes, when exposed to the OP modulation configuration, exhibit a decay constant of 32.03 ± 5.72 seconds, compared to only 1.49 ± 0.10 seconds under the in-phase condition—demonstrating roughly a 20‐fold improvement in fluorophore longevity."
+      },
+      {
+        "url": "https://pubmed.ncbi.nlm.nih.gov/16837387/",
+        "fact": "According to the detailed experimental results in the Biophysical Journal paper (Brau et al., 2006), the out-of-phase modulated condition extends the lifetime of single Cy3 fluorophores to around 32 seconds."
+      },
+      {
+        "url": "https://doi.org/10.1529/biophysj.106.1069",
+        "fact": "The referenced study by Brau et al. in Biophysical Journal documents the experimental conditions—including the application of an out‐of‐phase modulation technique—to measure the decay constant (lifetime) of single Cy3 fluorophores."
+      },
+      {
+        "url": "https://doi.org/10.1016/j.bpj.2006.06.015",
+        "fact": "Brau et al. detailed an optical force‐fluorescence setup employing an out‐of‐phase modulation scheme in Biophysical Journal 91(3) (pages 1069–1077), which enabled the measurement of the fluorescence lifetime of individual fluorophores labeled with Cy3."
+      },
+      {
+        "url": "https://www.biophysj.org",
+        "fact": "Brau et al. conducted an optical force‐fluorescence experiment in Biophysical Journal 91(3), where the out‐of‐phase modulation scheme was used to study individual fluorophores labeled with Cy3."
+      },
+      {
+        "url": "https://www.biophysj.org/",
+        "fact": "Brau et al.'s study in the Biophysical Journal introduced and employed an innovative out‐of‐phase modulation scheme to analyze individual Cy3-labeled fluorophores."
+      },
+      {
+        "url": "https://www.cell.com/biophysj",
+        "fact": "Brau and colleagues conducted an optical force‐fluorescence investigation in the Biophysical Journal, employing an out‐of‐phase modulation technique to study individual Cy3‐tagged fluorophores, where they determined a lifetime value of approximately 32 seconds."
+      }
+    ],
+    "strategy": "equivalent replacement"
+  }
+]

@@ -15,6 +15,7 @@ import json
 import re
 import time
 import random
+import logging
 from dataclasses import dataclass, asdict
 from pathlib import Path
 from typing import Any, Dict, List, Optional
@@ -51,6 +52,33 @@ For example, you can answer: \\boxed{China}, but not: China. You can answer: The
 """
 # === Initialization ===
 agent = BaseAgent()
+
+# 新增日志配置
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+fh = logging.FileHandler('abs_exp_1.log', encoding='utf-8')
+fh.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
+logger.addHandler(fh)
+
+# 开始监控所有 printer 输出
+_orig_printer_print = printer.print
+_orig_printer_rule = printer.rule
+def _logged_printer_print(msg, *args, **kwargs):
+    _orig_printer_print(msg, *args, **kwargs)
+    logger.info(str(msg))
+def _logged_printer_rule(msg, *args, **kwargs):
+    _orig_printer_rule(msg, *args, **kwargs)
+    logger.info(f"SECTION: {msg}")
+printer.print = _logged_printer_print
+printer.rule = _logged_printer_rule
+
+# 开始监控所有内置 print 输出
+import builtins
+_orig_print = builtins.print
+def print(*args, **kwargs):
+    _orig_print(*args, **kwargs)
+    logger.info(' '.join(str(a) for a in args))
+builtins.print = print
 
 def pretty_json(data):
     import json
@@ -373,10 +401,14 @@ def main():
 
     # 单次执行
     if args.batch <= 1:
-        wf = ReverseUpgradeWorkflow(max_level=args.max_level, max_tries=args.max_tries)
-        asyncio.run(wf.run())
-        wf.save(args.out)
-        print(f"Saved {len(wf.items)} items to {args.out}")
+        try:
+            wf = ReverseUpgradeWorkflow(max_level=args.max_level, max_tries=args.max_tries)
+            asyncio.run(wf.run())
+            wf.save(args.out)
+            print(f"Saved {len(wf.items)} items to {args.out}")
+        except Exception as e:
+            logger.exception("Error in single run")
+            printer.print(f"Error during single run: {e}", style="bold red")
         return
 
     # 批量并行执行并追加
@@ -393,10 +425,15 @@ def main():
         # 3. 定义单次运行任务
         async def run_one(idx: int):
             async with sem:
-                printer.rule(f"Batch Run {idx+1}/{args.batch}")
-                wf = ReverseUpgradeWorkflow(max_level=args.max_level, max_tries=args.max_tries)
-                await wf.run()
-                return [it.to_dict() for it in wf.items]
+                try:
+                    printer.rule(f"Batch Run {idx+1}/{args.batch}")
+                    wf = ReverseUpgradeWorkflow(max_level=args.max_level, max_tries=args.max_tries)
+                    await wf.run()
+                    return [it.to_dict() for it in wf.items]
+                except Exception as e:
+                    logger.exception(f"Error in batch run {idx+1}")
+                    printer.print(f"Error in batch run {idx+1}: {e}", style="bold red")
+                    return []
 
         # 4. 提交所有任务并收集结果
         batches = await asyncio.gather(*(run_one(i) for i in range(args.batch)))
