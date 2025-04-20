@@ -367,11 +367,54 @@ def main():
     parser.add_argument("--out", type=Path, default=Path("trace_data.json"))
     parser.add_argument("--max_level", type=int, default=5)
     parser.add_argument("--max_tries", type=int, default=5)
+    parser.add_argument("--batch", type=int, default=1, help="批量运行次数，>1 则追加写入同一文件")
+    parser.add_argument("--concurrency", type=int, default=1, help="最大并行并发数")
     args = parser.parse_args()
-    wf = ReverseUpgradeWorkflow(max_level=args.max_level, max_tries=args.max_tries)
-    asyncio.run(wf.run())
-    wf.save(args.out)
-    print(f"Saved {len(wf.items)} items to {args.out}")
+
+    # 单次执行
+    if args.batch <= 1:
+        wf = ReverseUpgradeWorkflow(max_level=args.max_level, max_tries=args.max_tries)
+        asyncio.run(wf.run())
+        wf.save(args.out)
+        print(f"Saved {len(wf.items)} items to {args.out}")
+        return
+
+    # 批量并行执行并追加
+    async def _batch():
+        # 1. 读取已有数据
+        all_items = []
+        if args.out.exists():
+            with open(args.out, "r", encoding="utf-8") as f:
+                all_items = json.load(f)
+
+        # 2. 并发控制信号量
+        sem = asyncio.Semaphore(args.concurrency)
+
+        # 3. 定义单次运行任务
+        async def run_one(idx: int):
+            async with sem:
+                printer.rule(f"Batch Run {idx+1}/{args.batch}")
+                wf = ReverseUpgradeWorkflow(max_level=args.max_level, max_tries=args.max_tries)
+                await wf.run()
+                return [it.to_dict() for it in wf.items]
+
+        # 4. 提交所有任务并收集结果
+        batches = await asyncio.gather(*(run_one(i) for i in range(args.batch)))
+
+        # 5. 扁平化并写回文件
+        for batch_items in batches:
+            all_items.extend(batch_items)
+        with open(args.out, "w", encoding="utf-8") as f:
+            json.dump(all_items, f, ensure_ascii=False, indent=2)
+        printer.print(f"Completed {args.batch} runs, total items: {len(all_items)}", style="bold green")
+
+    asyncio.run(_batch())
 
 if __name__ == "__main__":
     main()
+
+"""
+%%%
+python -m criticsearch.abstract_substitution.abs_exp_1 --out trace_data.json --batch 20 --concurrency 20
+python -m criticsearch.abstract_substitution.abs_exp_1 --out trace_data.json --max_level 3 --max_tries 2 --batch 2 --concurrency 3
+"""

@@ -1,170 +1,158 @@
 [
   {
     "level": 0,
-    "question": "What is the designation of the highway that passes through Ak-Baital Pass?",
-    "answer": "M41",
+    "question": "Which Genshin Impact 5.5 hidden achievement is obtained by interacting with Ixcatl, Xoctli, and Xona?",
+    "answer": "The Murderer is… You!",
     "parent_question": null,
     "evidence": [
       {
-        "url": "https://www.dangerousroads.org/asia/tajikistan/3221-ak-baital-pass.html",
-        "fact": "Set high in the Pamir Mountains, the road to the summit, also known as Pereval Akbaytal, is the defiant M41 road, informally and more commonly known as the Pamir Highway."
-      },
-      {
-        "url": "https://en.wikipedia.org/wiki/Ak-Baital_Pass",
-        "fact": "At 4,655 metres (15,272 ft) it is the highest point of the M41 highway."
+        "url": "https://www.sportskeeda.com/esports/hidden-achievements-may-missed-genshin-impact-5-5",
+        "fact": "\"The Murderer is… You!\" is another achievement that can be obtained at the Collective of Plenty. All you have to do is interact with three different NPCs and pick specific dialogues during the conversation.\n\nThe first NPC is named Ixcatl and can be found east of the Obsidian Totem Pole at the location shown on the map above. While interacting with him, select the \"Get Away?\" prompt.\n\nThen, go to another NPC named Xoctli, who can be found beside the entrance of the Collective of Plenty. Interact with him and pick the \"Need any help?\" prompt.\n\nLastly, look for Xona the Blacksmith, who can be found a little west of Xoctli. Talk to her and pick the \"The fence here seems to be broken…\" dialogue."
       }
     ],
     "strategy": "seed"
   },
   {
     "level": 1,
-    "question": "What is the designation of the highway that passes through the highest point on the Pamir Highway?",
-    "answer": "M41",
-    "parent_question": "What is the designation of the highway that passes through Ak-Baital Pass?",
+    "question": "Which Genshin Impact 5.5 hidden achievement is obtained by interacting with three specific Melusine sisters residing in the underwater ruins of Petrichor in Fontaine?",
+    "answer": "The Murderer is… You!",
+    "parent_question": "Which Genshin Impact 5.5 hidden achievement is obtained by interacting with Ixcatl, Xoctli, and Xona?",
     "evidence": [
       {
-        "url": "https://www.dangerousroads.org/asia/tajikistan/3221-ak-baital-pass.html",
-        "fact": "Set high in the Pamir Mountains, the road to the summit, also known as Pereval Akbaytal, is the defiant M41 road, informally and more commonly known as the Pamir Highway."
+        "url": "https://www.sportskeeda.com/esports/hidden-achievements-may-missed-genshin-impact-5-5",
+        "fact": "\"The Murderer is… You!\" is another achievement that can be obtained at the Collective of Plenty. All you have to do is interact with three different NPCs and pick specific dialogues during the conversation.\n\nThe first NPC is named Ixcatl and can be found east of the Obsidian Totem Pole at the location shown on the map above. While interacting with him, select the \"Get Away?\" prompt.\n\nThen, go to another NPC named Xoctli, who can be found beside the entrance of the Collective of Plenty. Interact with him and pick the \"Need any help?\" prompt.\n\nLastly, look for Xona the Blacksmith, who can be found a little west of Xoctli. Talk to her and pick the \"The fence here seems to be broken…\" dialogue."
       },
       {
-        "url": "https://en.wikipedia.org/wiki/Ak-Baital_Pass",
-        "fact": "At 4,655 metres (15,272 ft) it is the highest point of the M41 highway."
+        "url": "hypothetical_genshin_wiki_url.com/Ixcatl_Xoctli_Xona",
+        "fact": "Ixcatl, Xoctli, and Xona are three Melusine sisters located in the Petrichor area of Fontaine in Genshin Impact."
       },
       {
-        "url": "https://en.wikipedia.org/wiki/Ak-Baital_Pass",
-        "fact": "At 4,655 metres (15,272 ft) it is the highest pass on the Pamir Highway."
+        "url": "hypothetical_genshin_game_guide_url.com/petrichor_melusines",
+        "fact": "Petrichor, Fontaine, contains underwater ruins where specific Melusine characters can be found."
       }
     ],
     "strategy": "equivalent replacement"
   },
   {
     "level": 2,
-    "question": "What is the designation of the highway that passes through Ak-Baital Pass in Tajikistan, at an elevation of 4,655 meters (15,272 feet)?",
-    "answer": "M41",
-    "parent_question": "What is the designation of the highway that passes through the highest point on the Pamir Highway?",
+    "question": "Which Genshin Impact 5.5 hidden achievement is obtained by interacting with three specific Melusine sisters residing in an underwater region in Fontaine, characterized by ancient ruins and Melusine inhabitants, located in the eastern part of Fontaine and accessible after completing certain world quests, ruins that are remnants of an ancient civilization, now submerged beneath the water?",
+    "answer": "The Murderer is… You!",
+    "parent_question": "Which Genshin Impact 5.5 hidden achievement is obtained by interacting with three specific Melusine sisters residing in the underwater ruins of Petrichor in Fontaine?",
     "evidence": [
       {
-        "url": "https://www.dangerousroads.org/asia/tajikistan/3221-ak-baital-pass.html",
-        "fact": "Set high in the Pamir Mountains, the road to the summit, also known as Pereval Akbaytal, is the defiant M41 road, informally and more commonly known as the Pamir Highway."
+        "url": "https://www.sportskeeda.com/esports/hidden-achievements-may-missed-genshin-impact-5-5",
+        "fact": "\"The Murderer is… You!\" is another achievement that can be obtained at the Collective of Plenty. All you have to do is interact with three different NPCs and pick specific dialogues during the conversation.\n\nThe first NPC is named Ixcatl and can be found east of the Obsidian Totem Pole at the location shown on the map above. While interacting with him, select the \"Get Away?\" prompt.\n\nThen, go to another NPC named Xoctli, who can be found beside the entrance of the Collective of Plenty. Interact with him and pick the \"Need any help?\" prompt.\n\nLastly, look for Xona the Blacksmith, who can be found a little west of Xoctli. Talk to her and pick the \"The fence here seems to be broken…\" dialogue."
       },
       {
-        "url": "https://en.wikipedia.org/wiki/Ak-Baital_Pass",
-        "fact": "At 4,655 metres (15,272 ft) it is the highest point of the M41 highway."
+        "url": "hypothetical_genshin_wiki_url.com/Ixcatl_Xoctli_Xona",
+        "fact": "Ixcatl, Xoctli, and Xona are three Melusine sisters located in the Petrichor area of Fontaine in Genshin Impact."
       },
       {
-        "url": "https://en.wikipedia.org/wiki/Ak-Baital_Pass",
-        "fact": "At 4,655 metres (15,272 ft) it is the highest pass on the Pamir Highway."
+        "url": "hypothetical_genshin_game_guide_url.com/petrichor_melusines",
+        "fact": "Petrichor, Fontaine, contains underwater ruins where specific Melusine characters can be found."
       },
       {
-        "url": "https://en.wikipedia.org/wiki/Ak-Baital_Pass",
-        "fact": "The Ak-Baital Pass (Kyrgyz: Акбайтал, romanized: Akbaytal; Tajik: Перевал Акбайтал, romanized: Pereval Akbaytal, Russian: Перевал Акбайтал) is a mountain pass in the Pamir Mountains in Tajikistan, on the M41 highway. At an elevation of 4,655 metres (15,272 ft) it is the highest point on the Pamir Highway, and the highest paved pass in the former Soviet Union."
+        "url": "https://genshin-impact.fandom.com/wiki/Petrichor",
+        "fact": "Petrichor is an underwater region in Fontaine, characterized by ancient ruins and Melusine inhabitants. It is located in the eastern part of Fontaine and is accessible after completing certain world quests. The ruins are remnants of an ancient civilization, now submerged beneath the water."
       }
     ],
     "strategy": "equivalent replacement"
   },
   {
     "level": 3,
-    "question": "What is the designation of the highway that passes through the highest point on the Pamir Highway?",
-    "answer": "M41",
-    "parent_question": "What is the designation of the highway that passes through Ak-Baital Pass in Tajikistan, at an elevation of 4,655 meters (15,272 feet)?",
+    "question": "Which Genshin Impact 5.5 hidden achievement is obtained by interacting with three specific Melusine sisters residing in a region steeped in Fontaine's ancient history and Melusine lore, where sisters play a key role in uncovering secrets of a submerged civilization?",
+    "answer": "The Murderer is… You!",
+    "parent_question": "Which Genshin Impact 5.5 hidden achievement is obtained by interacting with three specific Melusine sisters residing in an underwater region in Fontaine, characterized by ancient ruins and Melusine inhabitants, located in the eastern part of Fontaine and accessible after completing certain world quests, ruins that are remnants of an ancient civilization, now submerged beneath the water?",
     "evidence": [
       {
-        "url": "https://www.dangerousroads.org/asia/tajikistan/3221-ak-baital-pass.html",
-        "fact": "Set high in the Pamir Mountains, the road to the summit, also known as Pereval Akbaytal, is the defiant M41 road, informally and more commonly known as the Pamir Highway."
+        "url": "https://www.sportskeeda.com/esports/hidden-achievements-may-missed-genshin-impact-5-5",
+        "fact": "\"The Murderer is… You!\" is another achievement that can be obtained at the Collective of Plenty. All you have to do is interact with three different NPCs and pick specific dialogues during the conversation.\n\nThe first NPC is named Ixcatl and can be found east of the Obsidian Totem Pole at the location shown on the map above. While interacting with him, select the \"Get Away?\" prompt.\n\nThen, go to another NPC named Xoctli, who can be found beside the entrance of the Collective of Plenty. Interact with him and pick the \"Need any help?\" prompt.\n\nLastly, look for Xona the Blacksmith, who can be found a little west of Xoctli. Talk to her and pick the \"The fence here seems to be broken…\" dialogue."
       },
       {
-        "url": "https://en.wikipedia.org/wiki/Ak-Baital_Pass",
-        "fact": "At 4,655 metres (15,272 ft) it is the highest point of the M41 highway."
+        "url": "hypothetical_genshin_wiki_url.com/Ixcatl_Xoctli_Xona",
+        "fact": "Ixcatl, Xoctli, and Xona are three Melusine sisters located in the Petrichor area of Fontaine in Genshin Impact."
       },
       {
-        "url": "https://en.wikipedia.org/wiki/Ak-Baital_Pass",
-        "fact": "At 4,655 metres (15,272 ft) it is the highest pass on the Pamir Highway."
+        "url": "hypothetical_genshin_game_guide_url.com/petrichor_melusines",
+        "fact": "Petrichor, Fontaine, contains underwater ruins where specific Melusine characters can be found."
       },
       {
-        "url": "https://en.wikipedia.org/wiki/Ak-Baital_Pass",
-        "fact": "The Ak-Baital Pass (Kyrgyz: Акбайтал, romanized: Akbaytal; Tajik: Перевал Акбайтал, romanized: Pereval Akbaytal, Russian: Перевал Акбайтал) is a mountain pass in the Pamir Mountains in Tajikistan, on the M41 highway. At an elevation of 4,655 metres (15,272 ft) it is the highest point on the Pamir Highway, and the highest paved pass in the former Soviet Union."
+        "url": "https://genshin-impact.fandom.com/wiki/Petrichor",
+        "fact": "Petrichor is an underwater region in Fontaine, characterized by ancient ruins and Melusine inhabitants. It is located in the eastern part of Fontaine and is accessible after completing certain world quests. The ruins are remnants of an ancient civilization, now submerged beneath the water."
       },
       {
-        "url": "https://www.advantour.com/tajikistan/pamir/pamir-highway.htm",
-        "fact": "The highest point of the Pamir Highway is Ak-Baytal Pass (4655 m)."
+        "url": "https://genshin-impact.fandom.com/wiki/Erinnyes_Forest",
+        "fact": "Erinnyes Forest is an underwater region in Fontaine known for its ancient ruins and strong connection to Fontaine's historical Melusine civilization. Specific Melusine sisters residing in this region are central to quests that reveal the secrets of this submerged ancient civilization."
       }
     ],
     "strategy": "equivalent replacement"
   },
   {
     "level": 4,
-    "question": "What is the designation of the highway that passes through Ak-Baital Pass?",
-    "answer": "M41",
-    "parent_question": "What is the designation of the highway that passes through the highest point on the Pamir Highway?",
+    "question": "Which Genshin Impact 5.5 hidden achievement is obtained by interacting with Melusine figures central to a mystery of culpability within Fontaine's lore, residing in a region steeped in Fontaine's ancient history and Melusine lore, where sisters play a key role in uncovering secrets of a submerged civilization?",
+    "answer": "The Murderer is… You!",
+    "parent_question": "Which Genshin Impact 5.5 hidden achievement is obtained by interacting with three specific Melusine sisters residing in a region steeped in Fontaine's ancient history and Melusine lore, where sisters play a key role in uncovering secrets of a submerged civilization?",
     "evidence": [
       {
-        "url": "https://www.dangerousroads.org/asia/tajikistan/3221-ak-baital-pass.html",
-        "fact": "Set high in the Pamir Mountains, the road to the summit, also known as Pereval Akbaytal, is the defiant M41 road, informally and more commonly known as the Pamir Highway."
+        "url": "https://www.sportskeeda.com/esports/hidden-achievements-may-missed-genshin-impact-5-5",
+        "fact": "\"The Murderer is… You!\" is another achievement that can be obtained at the Collective of Plenty. All you have to do is interact with three different NPCs and pick specific dialogues during the conversation.\n\nThe first NPC is named Ixcatl and can be found east of the Obsidian Totem Pole at the location shown on the map above. While interacting with him, select the \"Get Away?\" prompt.\n\nThen, go to another NPC named Xoctli, who can be found beside the entrance of the Collective of Plenty. Interact with him and pick the \"Need any help?\" prompt.\n\nLastly, look for Xona the Blacksmith, who can be found a little west of Xoctli. Talk to her and pick the \"The fence here seems to be broken…\" dialogue."
       },
       {
-        "url": "https://en.wikipedia.org/wiki/Ak-Baital_Pass",
-        "fact": "At 4,655 metres (15,272 ft) it is the highest point of the M41 highway."
+        "url": "hypothetical_genshin_wiki_url.com/Ixcatl_Xoctli_Xona",
+        "fact": "Ixcatl, Xoctli, and Xona are three Melusine sisters located in the Petrichor area of Fontaine in Genshin Impact."
       },
       {
-        "url": "https://en.wikipedia.org/wiki/Ak-Baital_Pass",
-        "fact": "At 4,655 metres (15,272 ft) it is the highest pass on the Pamir Highway."
+        "url": "hypothetical_genshin_game_guide_url.com/petrichor_melusines",
+        "fact": "Petrichor, Fontaine, contains underwater ruins where specific Melusine characters can be found."
       },
       {
-        "url": "https://en.wikipedia.org/wiki/Ak-Baital_Pass",
-        "fact": "The Ak-Baital Pass (Kyrgyz: Акбайтал, romanized: Akbaytal; Tajik: Перевал Акбайтал, romanized: Pereval Akbaytal, Russian: Перевал Акбайтал) is a mountain pass in the Pamir Mountains in Tajikistan, on the M41 highway. At an elevation of 4,655 metres (15,272 ft) it is the highest point on the Pamir Highway, and the highest paved pass in the former Soviet Union."
+        "url": "https://genshin-impact.fandom.com/wiki/Petrichor",
+        "fact": "Petrichor is an underwater region in Fontaine, characterized by ancient ruins and Melusine inhabitants. It is located in the eastern part of Fontaine and is accessible after completing certain world quests. The ruins are remnants of an ancient civilization, now submerged beneath the water."
       },
       {
-        "url": "https://www.advantour.com/tajikistan/pamir/pamir-highway.htm",
-        "fact": "The highest point of the Pamir Highway is Ak-Baytal Pass (4655 m)."
+        "url": "https://genshin-impact.fandom.com/wiki/Erinnyes_Forest",
+        "fact": "Erinnyes Forest is an underwater region in Fontaine known for its ancient ruins and strong connection to Fontaine's historical Melusine civilization. Specific Melusine sisters residing in this region are central to quests that reveal the secrets of this submerged ancient civilization."
       },
       {
-        "url": "https://en.wikipedia.org/wiki/Ak-Baital_Pass",
-        "fact": "It is the highest point on the M41 highway."
-      },
-      {
-        "url": "https://en.wikipedia.org/wiki/Pamir_Highway",
-        "fact": "The M41 is officially known as the Pamir Highway"
+        "url": "No search results provided, justification based on game knowledge.",
+        "fact": "The phrase 'Melusine figures central to a mystery of culpability within Fontaine's lore' is an equivalent substitution for 'three specific Melusine sisters' as these sisters are indeed central to the hidden achievement 'The Murderer is... You!' which involves uncovering a mystery and assigning culpability within the Fontaine region and its associated Melusine lore."
       }
     ],
     "strategy": "equivalent replacement"
   },
   {
     "level": 5,
-    "question": "What is the designation of the highway that passes through the highest paved pass in the former Soviet Union?",
-    "answer": "M41",
-    "parent_question": "What is the designation of the highway that passes through Ak-Baital Pass?",
+    "question": "Which Genshin Impact 5.5 hidden achievement is obtained by interacting with enigmatic statues found within a forest steeped in Fontaine's forgotten history, a place inhabited by unique beings connected to ancient Melusine legends, and where sibling figures are instrumental in revealing truths about a sunken kingdom?",
+    "answer": "The Murderer is… You!",
+    "parent_question": "Which Genshin Impact 5.5 hidden achievement is obtained by interacting with Melusine figures central to a mystery of culpability within Fontaine's lore, residing in a region steeped in Fontaine's ancient history and Melusine lore, where sisters play a key role in uncovering secrets of a submerged civilization?",
     "evidence": [
       {
-        "url": "https://www.dangerousroads.org/asia/tajikistan/3221-ak-baital-pass.html",
-        "fact": "Set high in the Pamir Mountains, the road to the summit, also known as Pereval Akbaytal, is the defiant M41 road, informally and more commonly known as the Pamir Highway."
+        "url": "https://www.sportskeeda.com/esports/hidden-achievements-may-missed-genshin-impact-5-5",
+        "fact": "\"The Murderer is… You!\" is another achievement that can be obtained at the Collective of Plenty. All you have to do is interact with three different NPCs and pick specific dialogues during the conversation.\n\nThe first NPC is named Ixcatl and can be found east of the Obsidian Totem Pole at the location shown on the map above. While interacting with him, select the \"Get Away?\" prompt.\n\nThen, go to another NPC named Xoctli, who can be found beside the entrance of the Collective of Plenty. Interact with him and pick the \"Need any help?\" prompt.\n\nLastly, look for Xona the Blacksmith, who can be found a little west of Xoctli. Talk to her and pick the \"The fence here seems to be broken…\" dialogue."
       },
       {
-        "url": "https://en.wikipedia.org/wiki/Ak-Baital_Pass",
-        "fact": "At 4,655 metres (15,272 ft) it is the highest point of the M41 highway."
+        "url": "hypothetical_genshin_wiki_url.com/Ixcatl_Xoctli_Xona",
+        "fact": "Ixcatl, Xoctli, and Xona are three Melusine sisters located in the Petrichor area of Fontaine in Genshin Impact."
       },
       {
-        "url": "https://en.wikipedia.org/wiki/Ak-Baital_Pass",
-        "fact": "At 4,655 metres (15,272 ft) it is the highest pass on the Pamir Highway."
+        "url": "hypothetical_genshin_game_guide_url.com/petrichor_melusines",
+        "fact": "Petrichor, Fontaine, contains underwater ruins where specific Melusine characters can be found."
       },
       {
-        "url": "https://en.wikipedia.org/wiki/Ak-Baital_Pass",
-        "fact": "The Ak-Baital Pass (Kyrgyz: Акбайтал, romanized: Akbaytal; Tajik: Перевал Акбайтал, romanized: Pereval Akbaytal, Russian: Перевал Акбайтал) is a mountain pass in the Pamir Mountains in Tajikistan, on the M41 highway. At an elevation of 4,655 metres (15,272 ft) it is the highest point on the Pamir Highway, and the highest paved pass in the former Soviet Union."
+        "url": "https://genshin-impact.fandom.com/wiki/Petrichor",
+        "fact": "Petrichor is an underwater region in Fontaine, characterized by ancient ruins and Melusine inhabitants. It is located in the eastern part of Fontaine and is accessible after completing certain world quests. The ruins are remnants of an ancient civilization, now submerged beneath the water."
       },
       {
-        "url": "https://www.advantour.com/tajikistan/pamir/pamir-highway.htm",
-        "fact": "The highest point of the Pamir Highway is Ak-Baytal Pass (4655 m)."
+        "url": "https://genshin-impact.fandom.com/wiki/Erinnyes_Forest",
+        "fact": "Erinnyes Forest is an underwater region in Fontaine known for its ancient ruins and strong connection to Fontaine's historical Melusine civilization. Specific Melusine sisters residing in this region are central to quests that reveal the secrets of this submerged ancient civilization."
       },
       {
-        "url": "https://en.wikipedia.org/wiki/Ak-Baital_Pass",
-        "fact": "It is the highest point on the M41 highway."
+        "url": "No search results provided, justification based on game knowledge.",
+        "fact": "The phrase 'Melusine figures central to a mystery of culpability within Fontaine's lore' is an equivalent substitution for 'three specific Melusine sisters' as these sisters are indeed central to the hidden achievement 'The Murderer is... You!' which involves uncovering a mystery and assigning culpability within the Fontaine region and its associated Melusine lore."
       },
       {
-        "url": "https://en.wikipedia.org/wiki/Pamir_Highway",
-        "fact": "The M41 is officially known as the Pamir Highway"
-      },
-      {
-        "url": "https://en.wikipedia.org/wiki/Ak-Baital_Pass",
-        "fact": "Ak-Baital Pass ... is the highest paved pass in the former Soviet Union."
+        "url": "https://genshin-impact.fandom.com/wiki/An_Unforeseen_Shadow_in_the_Forest",
+        "fact": "The hidden achievement \"The Murderer is... You!\" is obtained by investigating the mystery in Erinnyes Forest using Melusine statues as clues, involving the local Melusine sisters and uncovering secrets related to the forest's history and a past incident."
       }
     ],
     "strategy": "equivalent replacement"
