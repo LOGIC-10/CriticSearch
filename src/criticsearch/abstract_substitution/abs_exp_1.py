@@ -16,6 +16,7 @@ import re
 import time
 import random
 import logging
+import threading
 from dataclasses import dataclass, asdict
 from pathlib import Path
 from typing import Any, Dict, List, Optional
@@ -189,6 +190,9 @@ class QAItem:
         return asdict(self)
 
 # === Workflow ===
+# 全局文件锁
+file_lock = threading.Lock()
+
 class ReverseUpgradeWorkflow:
     def __init__(self, *, max_level: int = 5, max_tries: int = 5):
         self.max_level = max_level
@@ -240,6 +244,7 @@ class ReverseUpgradeWorkflow:
         """
         prompt = (
             "You need to answer the question\n"
+            "if you cannot answer, please generate \\boxed{Sorry, I don't know.}\n"
             f"Question: {seed.question}\n"
             f"{FORMAT_INSTRUCTION}"
         )
@@ -373,8 +378,14 @@ class ReverseUpgradeWorkflow:
 
     def save(self, path: Path):
         printer.rule("Saving Results")
-        with open(path, "w", encoding="utf-8") as f:
-            json.dump([it.to_dict() for it in self.items], f, ensure_ascii=False, indent=2)
+        with file_lock:
+            existing = []
+            if path.exists():
+                with open(path, "r", encoding="utf-8") as f:
+                    existing = json.load(f)
+            existing.extend([it.to_dict() for it in self.items])
+            with open(path, "w", encoding="utf-8") as f:
+                json.dump(existing, f, ensure_ascii=False, indent=2)
         printer.print(f"Saved {len(self.items)} items to {path}", style="bold green")
         printer.rule("Saved JSON Preview")
         printer.print(pretty_json([it.to_dict() for it in self.items]), style="bold cyan")
@@ -397,7 +408,13 @@ def main():
     parser.add_argument("--max_tries", type=int, default=5)
     parser.add_argument("--batch", type=int, default=1, help="批量运行次数，>1 则追加写入同一文件")
     parser.add_argument("--concurrency", type=int, default=1, help="最大并行并发数")
+    parser.add_argument("--model", type=str, default=None, help="LLM model name to use")
     args = parser.parse_args()
+
+    # 支持通过命令行覆盖默认模型
+    if args.model:
+        global GPT_MODEL
+        GPT_MODEL = args.model
 
     # 单次执行
     if args.batch <= 1:
@@ -413,11 +430,6 @@ def main():
 
     # 批量并行执行并追加
     async def _batch():
-        # 1. 读取已有数据
-        all_items = []
-        if args.out.exists():
-            with open(args.out, "r", encoding="utf-8") as f:
-                all_items = json.load(f)
 
         # 2. 并发控制信号量
         sem = asyncio.Semaphore(args.concurrency)
@@ -429,21 +441,28 @@ def main():
                     printer.rule(f"Batch Run {idx+1}/{args.batch}")
                     wf = ReverseUpgradeWorkflow(max_level=args.max_level, max_tries=args.max_tries)
                     await wf.run()
-                    return [it.to_dict() for it in wf.items]
+                    # 完成一次运行后立即读-插入-写回
+                    items = [it.to_dict() for it in wf.items]
+                    with file_lock:
+                        # 读取现有数据列表，文件不存在时视为空
+                        try:
+                            with open(args.out, "r", encoding="utf-8") as f:
+                                existing = json.load(f)
+                        except FileNotFoundError:
+                            existing = []
+                        existing.extend(items)
+                        with open(args.out, "w", encoding="utf-8") as f:
+                            json.dump(existing, f, ensure_ascii=False, indent=2)
+                    printer.print(f"Batch saved {len(items)} items; total now {len(existing)}", style="bold green")
+                    return items
                 except Exception as e:
                     logger.exception(f"Error in batch run {idx+1}")
                     printer.print(f"Error in batch run {idx+1}: {e}", style="bold red")
                     return []
 
-        # 4. 提交所有任务并收集结果
-        batches = await asyncio.gather(*(run_one(i) for i in range(args.batch)))
-
-        # 5. 扁平化并写回文件
-        for batch_items in batches:
-            all_items.extend(batch_items)
-        with open(args.out, "w", encoding="utf-8") as f:
-            json.dump(all_items, f, ensure_ascii=False, indent=2)
-        printer.print(f"Completed {args.batch} runs, total items: {len(all_items)}", style="bold green")
+        # 4. 提交所有任务并等待完成
+        await asyncio.gather(*(run_one(i) for i in range(args.batch)))
+        printer.print(f"Completed {args.batch} runs; file at {args.out}", style="bold green")
 
     asyncio.run(_batch())
 
@@ -453,5 +472,6 @@ if __name__ == "__main__":
 """
 %%%
 python -m criticsearch.abstract_substitution.abs_exp_1 --out trace_data.json --batch 20 --concurrency 20
+python -m criticsearch.abstract_substitution.abs_exp_1 --out trace_data.json --batch 20 --concurrency 20 --model gpt-4o
 python -m criticsearch.abstract_substitution.abs_exp_1 --out trace_data.json --max_level 3 --max_tries 2 --batch 2 --concurrency 3
 """

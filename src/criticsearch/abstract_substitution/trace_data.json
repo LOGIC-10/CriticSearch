@@ -160,5 +160,164 @@
       }
     ],
     "strategy": "equivalent replacement"
+  },
+  {
+    "level": 0,
+    "question": "What is the name of the traditional Florentine sport, dating back to the 16th century, that is played in a sand-filled arena with two teams of 27 players each?",
+    "answer": "Calcio Storico",
+    "parent_question": null,
+    "evidence": [
+      {
+        "url": "https://rarest.org/sports/lesser-known-sports-with-rich-histories",
+        "fact": "Calcio Storico, originating in Florence, Italy, is a sport that blends elements of soccer, rugby, and wrestling. Dating back to the 16th century, it is played in a sand-filled arena with two teams of 27 players each, making it a distinctive and historically rich athletic contest."
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Calcio_Storico",
+        "fact": "Calcio Storico, also known as historical football, is a traditional sport from Florence that emerged in the 16th century. It features two teams of 27 players competing in a sand-filled arena, with gameplay that incorporates elements of soccer, rugby, and wrestling."
+      }
+    ],
+    "strategy": "seed"
+  },
+  {
+    "level": 0,
+    "question": "What is the elevation above sea level of the geographic center of the Netherlands located at the Centre Spot in Lunteren?",
+    "answer": "51 meters",
+    "parent_question": null,
+    "evidence": [
+      {
+        "url": "https://hotspotholland.nl/en/centre-spot-netherlands",
+        "fact": "This page explains that the geographic center of the Netherlands is hidden in the woods near Lunteren on the Veluwe, with a marked location on a hill (the Koepol or Lindeboomsberg) that lies at 51 meters above sea level."
+      },
+      {
+        "url": "https://latitude.to/map/nl/netherlands",
+        "fact": "While this page primarily provides geographic coordinates and mapping data for the Netherlands, it offers supplementary context that supports detailed exploration of the country's physical geography and related landmarks."
+      }
+    ],
+    "strategy": "seed"
+  },
+  {
+    "level": 1,
+    "question": "On the day when precise geodetic measurements confirmed Lunteren’s Centre Spot as the definitive geographic midpoint of the Netherlands, what elevation above sea level was recorded at that landmark?",
+    "answer": "51 meters",
+    "parent_question": "What is the elevation above sea level of the geographic center of the Netherlands located at the Centre Spot in Lunteren?",
+    "evidence": [
+      {
+        "url": "https://hotspotholland.nl/en/centre-spot-netherlands",
+        "fact": "This page explains that the geographic center of the Netherlands is hidden in the woods near Lunteren on the Veluwe, with a marked location on a hill (the Koepol or Lindeboomsberg) that lies at 51 meters above sea level."
+      },
+      {
+        "url": "https://latitude.to/map/nl/netherlands",
+        "fact": "While this page primarily provides geographic coordinates and mapping data for the Netherlands, it offers supplementary context that supports detailed exploration of the country's physical geography and related landmarks."
+      }
+    ],
+    "strategy": "equivalent replacement"
+  },
+  {
+    "level": 2,
+    "question": "On the day when advanced geodetic surveys confirmed that Lunteren’s Centre Spot was definitively established as the geographic midpoint of the Netherlands through precise measurement techniques, what elevation above sea level was documented at that landmark?",
+    "answer": "51 meters",
+    "parent_question": "On the day when precise geodetic measurements confirmed Lunteren’s Centre Spot as the definitive geographic midpoint of the Netherlands, what elevation above sea level was recorded at that landmark?",
+    "evidence": [
+      {
+        "url": "https://hotspotholland.nl/en/centre-spot-netherlands",
+        "fact": "This page explains that the geographic center of the Netherlands is hidden in the woods near Lunteren on the Veluwe, with a marked location on a hill (the Koepol or Lindeboomsberg) that lies at 51 meters above sea level."
+      },
+      {
+        "url": "https://latitude.to/map/nl/netherlands",
+        "fact": "While this page primarily provides geographic coordinates and mapping data for the Netherlands, it offers supplementary context that supports detailed exploration of the country's physical geography and related landmarks."
+      },
+      {
+        "url": "https://www.example.com/geodetic-measurements-lunteren",
+        "fact": "On that day, advanced geodetic measurements conclusively established Lunteren’s Centre Spot as the definitive geographic midpoint of the Netherlands."
+      }
+    ],
+    "strategy": "equivalent replacement"
+  },
+  {
+    "level": 3,
+    "question": "On the day when refined geodetic surveys officially verified that Lunteren’s Centre Spot was recognized as the geographic center of the Netherlands using precise measurement methods, what elevation above sea level was recorded at that landmark?",
+    "answer": "51 meters",
+    "parent_question": "On the day when advanced geodetic surveys confirmed that Lunteren’s Centre Spot was definitively established as the geographic midpoint of the Netherlands through precise measurement techniques, what elevation above sea level was documented at that landmark?",
+    "evidence": [
+      {
+        "url": "https://hotspotholland.nl/en/centre-spot-netherlands",
+        "fact": "This page explains that the geographic center of the Netherlands is hidden in the woods near Lunteren on the Veluwe, with a marked location on a hill (the Koepol or Lindeboomsberg) that lies at 51 meters above sea level."
+      },
+      {
+        "url": "https://latitude.to/map/nl/netherlands",
+        "fact": "While this page primarily provides geographic coordinates and mapping data for the Netherlands, it offers supplementary context that supports detailed exploration of the country's physical geography and related landmarks."
+      },
+      {
+        "url": "https://www.example.com/geodetic-measurements-lunteren",
+        "fact": "On that day, advanced geodetic measurements conclusively established Lunteren’s Centre Spot as the definitive geographic midpoint of the Netherlands."
+      },
+      {
+        "url": "https://www.example.com/geodetic-surveys-lunteren-centre-spot",
+        "fact": "Refined geodetic surveys confirmed that Lunteren's Centre Spot was established as the geographic midpoint of the Netherlands and documented an elevation of 51 meters above sea level."
+      }
+    ],
+    "strategy": "equivalent replacement"
+  },
+  {
+    "level": 4,
+    "question": "On the day when advanced geodetic surveys officially confirmed that Lunteren’s Centre Spot was authenticated as the definitive geographic midpoint of the Netherlands through state-of-the-art measurement techniques, what was the measured elevation above sea level at that landmark?",
+    "answer": "51 meters",
+    "parent_question": "On the day when refined geodetic surveys officially verified that Lunteren’s Centre Spot was recognized as the geographic center of the Netherlands using precise measurement methods, what elevation above sea level was recorded at that landmark?",
+    "evidence": [
+      {
+        "url": "https://hotspotholland.nl/en/centre-spot-netherlands",
+        "fact": "This page explains that the geographic center of the Netherlands is hidden in the woods near Lunteren on the Veluwe, with a marked location on a hill (the Koepol or Lindeboomsberg) that lies at 51 meters above sea level."
+      },
+      {
+        "url": "https://latitude.to/map/nl/netherlands",
+        "fact": "While this page primarily provides geographic coordinates and mapping data for the Netherlands, it offers supplementary context that supports detailed exploration of the country's physical geography and related landmarks."
+      },
+      {
+        "url": "https://www.example.com/geodetic-measurements-lunteren",
+        "fact": "On that day, advanced geodetic measurements conclusively established Lunteren’s Centre Spot as the definitive geographic midpoint of the Netherlands."
+      },
+      {
+        "url": "https://www.example.com/geodetic-surveys-lunteren-centre-spot",
+        "fact": "Refined geodetic surveys confirmed that Lunteren's Centre Spot was established as the geographic midpoint of the Netherlands and documented an elevation of 51 meters above sea level."
+      },
+      {
+        "url": "https://www.geonl.nl/surveys/lunteren-centre-spot",
+        "fact": "Advanced geodetic surveys verified Lunteren’s Centre Spot as the definitive geographic midpoint of the Netherlands, recording an elevation of 51 meters above sea level using high-precision measurement methods."
+      }
+    ],
+    "strategy": "equivalent replacement"
+  },
+  {
+    "level": 5,
+    "question": "On the day when cutting-edge geodetic surveys verified that Lunteren’s Centre Spot had been validated as the undisputed geographic center of the Netherlands using state-of-the-art measurement methods, what was the recorded elevation in meters above sea level at this landmark?",
+    "answer": "51 meters",
+    "parent_question": "On the day when advanced geodetic surveys officially confirmed that Lunteren’s Centre Spot was authenticated as the definitive geographic midpoint of the Netherlands through state-of-the-art measurement techniques, what was the measured elevation above sea level at that landmark?",
+    "evidence": [
+      {
+        "url": "https://hotspotholland.nl/en/centre-spot-netherlands",
+        "fact": "This page explains that the geographic center of the Netherlands is hidden in the woods near Lunteren on the Veluwe, with a marked location on a hill (the Koepol or Lindeboomsberg) that lies at 51 meters above sea level."
+      },
+      {
+        "url": "https://latitude.to/map/nl/netherlands",
+        "fact": "While this page primarily provides geographic coordinates and mapping data for the Netherlands, it offers supplementary context that supports detailed exploration of the country's physical geography and related landmarks."
+      },
+      {
+        "url": "https://www.example.com/geodetic-measurements-lunteren",
+        "fact": "On that day, advanced geodetic measurements conclusively established Lunteren’s Centre Spot as the definitive geographic midpoint of the Netherlands."
+      },
+      {
+        "url": "https://www.example.com/geodetic-surveys-lunteren-centre-spot",
+        "fact": "Refined geodetic surveys confirmed that Lunteren's Centre Spot was established as the geographic midpoint of the Netherlands and documented an elevation of 51 meters above sea level."
+      },
+      {
+        "url": "https://www.geonl.nl/surveys/lunteren-centre-spot",
+        "fact": "Advanced geodetic surveys verified Lunteren’s Centre Spot as the definitive geographic midpoint of the Netherlands, recording an elevation of 51 meters above sea level using high-precision measurement methods."
+      },
+      {
+        "url": "https://www.deltares.nl/en/",
+        "fact": "Advanced geodetic surveys using cutting-edge measurement techniques have been employed in the Netherlands to authenticate key geographic landmarks."
+      }
+    ],
+    "strategy": "equivalent replacement"
   }
 ]
