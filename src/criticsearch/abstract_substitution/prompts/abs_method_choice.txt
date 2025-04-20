@@ -1,0 +1,47 @@
+You are an expert in upgrading the difficulty level of a question, and you need to upgrade a specific part of a given question. You must select an upgrade method and provide the corresponding search query to ensure your upgrade is valid. You will be required to follow a specific format for your output.
+
+# There are several upgrade methods as follows:
+
+## equivalence substitution
+
+### Case 1
+
+Assume there is a question: "Who was the president of the United States on July 24, 2023?" The answer is Biden. In the question, the date "July 24, 2023" should be searched online for what happened on that date. For example, you might find "On the day of the collective boycott by opposition lawmakers and public protests, the ruling coalition in the Israeli parliament passed the judicial reform proposal by a vote of 64 to 0."
+
+i. Find the basis: Verify that this reverse upgrade is supported and provide a specific URL:  
+https://www.reuters.com/world/middle-east/israels-netanyahu-discharged-hospital-reuters-witness-says-2023-07-24/ which clearly states the incident occurred on July 24, 2023.  
+ii. Confirm uniqueness: Ensure that after this reverse upgrade, the answer remains unique. You need to confirm through online sources that "On the day of the collective boycott by opposition lawmakers and public protests, the ruling coalition in the Israeli parliament passed the judicial reform proposal by a vote of 64 to 0" occurred specifically at U.S. time on July 24, 2023, and not at any other time or the time of the report's release; it should be a very unique event date. (If the time is not unique, it represents that this is not an equivalent substitution.)
+
+You must ensure that the answer does not appear in your upgraded question. Then you can use the equivalence substitution method to upgrade the question: On the day when the ruling coalition in the Israeli parliament passed the judicial reform proposal by a vote of 64 to 0 in the face of a collective boycott by opposition lawmakers and public protests, who was the sitting president of the United States?
+
+So the output you need to provide is:  
+<answer>  
+<method>equivalence substitution</method>  
+<query>  
+["Events of July 24, 2023", "July 24, 2023", "International news on July 24, 2023", "What happened on July 24, 2023?"]  
+</query>  
+</answer>
+
+### Case 2
+
+Assume there is a question: "In which war was the Colossal Giant Crusher widely used?" The answer is "Giant War."
+
+In the question, the weapon "Colossal Giant Crusher" should be researched online for its background. For example, you might find that "The Colossal Giant Crusher is a massive weapon from the game 'Elden Ring,' set against the backdrop of being widely used in the 'Giant War.' This weapon is one of the heaviest in the Lands Between, symbolizing the tremendous power of that era. With the downfall of the giants and the rise of conflict among humans, this weapon gradually faded into obscurity and exited the battlefield. Compared to ancient times, humans have become increasingly fragile and can no longer wield such a heavy weapon."
+
+You can replace "Colossal Giant Crusher" with "a massive weapon from the game 'Elden Ring,' a colossal rock hammer. This weapon is one of the heaviest in the Lands Between, symbolizing the great power of that era. With the downfall of the giants and the rise of conflict among humans, this weapon gradually faded into obscurity and exited the battlefield," but you also need to ensure that the answer "Giant War" does not appear in your upgraded question. You can then use the equivalence substitution method to upgrade the question: "In what war was such a weapon, a massive weapon from the game 'Elden Ring,' used widely, which is one of the heaviest in the Lands Between, symbolizing the great power of that era, gradually faded into obscurity and exited the battlefield?"
+
+The above is an example of equivalence substitution.
+
+## Complex abstraction concretization
+
+If you abstract a certain entity into something with numerous possibilities or a very open range, you need to provide additional information. The additional information you provide can be listed as points, such as for the entity "Berya," if you replace it directly with "a game character," the possibilities are too many, so you would add information, turning it into "a female game character, with 1) a fierce expression, 2) pink-white hair." Or for "Einstein," if you directly replace it with "a scientist," the possibilities are too many, so you would add information, turning it into "a scientist, who 1) is a physicist, 2) won the Nobel Prize in XXXX year," and 3) was born in 1879.
+
+So the output you need to provide is:  
+<answer>  
+<method>complex abstraction concretization</method>  
+<query>  
+["Einstein's birth year", "Einstein's birthplace", "Einstein's father", "Einstein's wife", "Einstein's Nobel Prize"]  
+</query>  
+</answer>
+
+Now, you need to face the question: {{question}}, and the answer is {{answer}}. You need to choose one of the methods mentioned above to upgrade this question, and first provide the relevant search queries to assist in your upgrade. Please follow the format described above for the output.

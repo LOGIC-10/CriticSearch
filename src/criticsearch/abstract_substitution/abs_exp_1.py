@@ -45,7 +45,10 @@ TAVILY_SEARCH_URL = "https://api.tavily.com/search"
 TAVILY_EXTRACT_URL = "https://api.tavily.com/extract"
 
 PROMPT_ROOT_FOLDER = "prompts"
-
+FORMAT_INSTRUCTION = """
+Your answer must be contained within \\boxed{...}, otherwise your response will be considered incorrect. This format must be followed without exception.
+For example, you can answer: \\boxed{China}, but not: China. You can answer: The answer is \\boxed{3}, but not: 3.
+"""
 # === Initialization ===
 agent = BaseAgent()
 
@@ -85,8 +88,8 @@ def call_llm(
 
 # === Tavily Search & Extract ===
 async def tavily_search(query: str, *, include_raw_content: bool = True) -> List[dict]:
-    printer.rule("Tavily Search Query")
-    printer.print(query, style="bold yellow")
+    # printer.rule("Tavily Search Query")
+    # printer.print(query, style="bold yellow")
     payload = {"query": query, "include_raw_content": include_raw_content, "api_key": TAVILY_API_KEY}
     async with httpx.AsyncClient(http2=True, timeout=30) as client:
         r = await client.post(TAVILY_SEARCH_URL, json=payload)
@@ -179,17 +182,128 @@ class ReverseUpgradeWorkflow:
             "Politics",
         ]
         return random.choice(domains)
+    
+    def method_choice(self, question: str, answer: str) -> str:
+        
+        methods = [
+            "equivalent replacement",
+            "simple abstraction",
+        ]
+        model_choice = agent.chat_with_template(
+            template_name="abs_method_choice.txt",
+            template_data={"question": question, "answer": answer},
+            root_folder=PROMPT_ROOT_FOLDER,
+        )
+        method = extract_tag_content(model_choice, "method")
+        queries = extract_tag_content(model_choice, "queries")
+
+        norm = method.strip().lower().replace(" ", "")
+        for m in methods:
+            if norm == m.lower().replace(" ", ""):
+                return m, queries
+            
+        return methods[0], queries
+    
+    async def multi_verify(self, seed: QAItem) -> bool:
+        """
+        对给定的 QAItem 进行多重校验。
+        Returns:
+            bool: True 表示验证通过（模型无法回答），False 表示验证失败（模型能回答）
+        """
+        prompt = (
+            "You need to answer the question\n"
+            f"Question: {seed.question}\n"
+            f"{FORMAT_INSTRUCTION}"
+        )
+        
+        # 第一步：直接校验模型内部知识是否能回答
+        max_retries = 5
+        for attempt in range(1, max_retries + 1):
+            direct_answer = agent.chat(prompt, model = "gpt-4o")
+            boxed_answer = extract_boxed(direct_answer)
+            if not boxed_answer:
+                printer.rule(f"格式错误重试 #{attempt}")
+                printer.print("模型原始返回：", style="bold red")
+                printer.print(direct_answer, style="bold red")
+                if attempt == max_retries:
+                    raise RuntimeError(f"连续 {max_retries} 次格式错误（答案未包含在 \\boxed{{}} 中），终止执行")
+                continue
+            
+            if boxed_answer == seed.answer:    
+                printer.print("验证失败：模型能直接回答", style="bold red")
+                return False
+            break
+
+        # 第二步：如果模型不能直接回答，进行搜索
+        search_results = await tavily_search(seed.question)
+        
+        for attempt in range(1, max_retries + 1):
+            search_based_answer = agent.chat(prompt + f"here are some search results:\n\n{search_results}", model = "gpt-4o") 
+            boxed_answer = extract_boxed(search_based_answer)
+            if not boxed_answer:
+                printer.rule(f"搜索验证格式错误重试 #{attempt}")
+                printer.print("模型原始返回：", style="bold red")
+                printer.print(search_based_answer, style="bold red")
+                if attempt == max_retries:
+                    raise RuntimeError(f"连续 {max_retries} 次格式错误（基于搜索的答案未包含在 \\boxed{{}} 中），终止执行")
+                continue
+                
+            if boxed_answer == seed.answer:
+                printer.print("验证失败：模型能通过搜索回答", style="bold red")
+                return False
+            break
+
+        printer.print("验证通过：模型无法直接回答也无法通过搜索回答", style="bold green")
+        return True
+    
+    async def query_update(self, method, queries, seed: Optional[QAItem]):
+        search_results = await asyncio.gather(*(tavily_search(q) for q in queries)) 
+        question_update_resp = agent.chat_with_template(
+            template_name="abs_query_update.txt",
+            template_data={"method": method, "search_results": search_results, "question": seed.question, "answer": seed.answer},
+            root_folder=PROMPT_ROOT_FOLDER,
+        )
+        # 提取出update之后的question
+        updated_item = extract_and_validate_json(extract_tag_content(question_update_resp, "data"))
+        updated_question = updated_item["updated_question"].strip()
+        updated_evidence = updated_item.get("updated_evidence", [])
+
+        printer.rule("Query Update Output")
+        printer.print(pretty_json(updated_item), style="bold green")
+        printer.rule("Query Update Evidence")       
+        printer.print(pretty_json(updated_evidence), style="bold green")
+
+        return QAItem(
+            level=seed.level + 1,
+            question=updated_question,
+            answer=seed.answer,
+            parent_question=seed.question,
+            evidence=seed.evidence + updated_evidence,
+            strategy=method,
+        )   
 
     async def generate_seed(self) -> QAItem:
-        random_domain = self.random_domain()
-        query_resp = agent.chat_with_template(template_name="search_query_for_seed_fact.txt",template_data={"domain": random_domain}, root_folder=PROMPT_ROOT_FOLDER)
-        # 提取第一次为了domain seed搜索的query并直接调用搜索工具获得搜索结果
-        queries = extract_queries_from_response(query_resp)
-        printer.rule("Extracted Queries")
-        printer.print(queries, style="bold cyan")
+        max_query_retries = 3
+        for attempt in range(1, max_query_retries + 1):
+            random_domain = self.random_domain()
+            query_resp = agent.chat_with_template(
+                template_name="search_query_for_seed_fact.txt",
+                template_data={"domain": random_domain},
+                root_folder=PROMPT_ROOT_FOLDER,
+            )
+            queries = extract_queries_from_response(query_resp)[:3]
+            if queries:
+                printer.rule(f"Extracted Queries for Seed Fact in {random_domain} Domain")
+                printer.print(queries, style="bold cyan")
+                break
+            printer.print(f"第 {attempt} 次抽取到空 queries，重试中…", style="bold red")
+            printer.print(query_resp, style="bold red")
+        else:
+            raise RuntimeError("连续 3 次 Extracted Queries 为空，终止执行")
+
         search_results = await asyncio.gather(*(tavily_search(q) for q in queries))
 
-        seed_fact_resp = extract_and_validate_json(agent.chat_with_template(template_name="seed_idea_from_internet.txt",template_data={"domain": random_domain,"search_results": search_results,}, root_folder=PROMPT_ROOT_FOLDER))
+        seed_fact_resp = extract_and_validate_json(agent.chat_with_template(            template_name="seed_idea_from_internet.txt",            template_data={"domain": random_domain,"search_results": search_results,},             root_folder=PROMPT_ROOT_FOLDER        ))
         printer.rule(f"Generate Seed Fact Output after browsing in {random_domain}")
         printer.print(pretty_json(seed_fact_resp), style="bold green")
         return QAItem(
@@ -201,95 +315,32 @@ class ReverseUpgradeWorkflow:
             strategy="seed",
         )
 
-    async def upgrade_once(self, prev: QAItem) -> QAItem:
-        prompt = (
-            "Reverse-upgrade the benchmark question according to spec.\n"
-            f"Original: {prev.question}\nAnswer: {prev.answer}\n\n"
-            "Perform one of: equivalent replacement, simple abstraction, or complex abstraction+info.\n"
-            "Return JSON: {\"new_question\": ..., \"support_urls\": [...], \"strategy\": ...}"
-        )
-        printer.rule(f"Upgrade Prompt (Level {prev.level + 1})")
-        printer.print(prompt, style="bold yellow")
-        resp = call_llm(prompt)
-        printer.rule(f"Upgrade LLM Output (Level {prev.level + 1})")
-        printer.print(resp, style="bold green")
-        pl = self._safe_json(resp)
-        printer.rule(f"Parsed Upgrade JSON (Level {prev.level + 1})")
-        printer.print(pretty_json(pl), style="bold cyan")
-        return QAItem(
-            level=prev.level + 1,
-            question=pl["new_question"].strip(),
-            answer=prev.answer,
-            parent_question=prev.question,
-            evidence=pl.get("support_urls", prev.evidence),
-            strategy=pl.get("strategy", "unknown"),
-        )
-
-    async def knowledge_validator(self, question: str, gold: str) -> bool:
-        prompt = f"<question>{question}</question>\nAnswer with boxed value only inside <answer>."
-        printer.rule("Knowledge Validator Prompt")
-        printer.print(prompt, style="bold yellow")
-        resp = call_llm(prompt, temperature=0)
-        printer.rule("Knowledge Validator LLM Output")
-        printer.print(resp, style="bold green")
-        pred = extract_boxed(extract_answer_tag(resp))
-        printer.print(f"Extracted Boxed: {pred}", style="bold cyan")
-        return pred == gold
-
-    async def search_validator(self, question: str, gold: str) -> bool:
-        printer.rule("Search Validator - Question")
-        printer.print(question, style="bold yellow")
-        results = await tavily_search(question)
-        urls = [r.get("url") for r in results[:3] if r.get("url")]
-        printer.print(f"Top URLs: {urls}", style="bold cyan")
-        if not urls:
-            return False
-        ext = await tavily_extract(urls)
-        texts: List[str] = []
-        for u in urls:
-            raw = ext.get(u, {}).get("raw_content", "")
-            if not raw:
-                scraped = await fallback_scrape([u])
-                raw = scraped.get(u, "")
-            texts.append(raw)
-        ctx = "\n\n".join(texts)[:40000]
-        printer.rule("Search Validator - Context")
-        printer.print(ctx, style="dim")
-        prompt = f"<context>{ctx}</context>\n<question>{question}</question>\nAnswer with boxed value."
-        printer.rule("Search Validator Prompt")
-        printer.print(prompt, style="bold yellow")
-        resp = call_llm(prompt, temperature=0)
-        printer.rule("Search Validator LLM Output")
-        printer.print(resp, style="bold green")
-        pred = extract_boxed(extract_answer_tag(resp))
-        printer.print(f"Extracted Boxed: {pred}", style="bold cyan")
-        return pred == gold
-
     async def run(self):
-        printer.rule("Workflow Start")
+        printer.rule(f"Workflow Start with {GPT_MODEL}")
         seed = await self.generate_seed()
-        exit(1)
         self.items.append(seed)
         current = seed
-        for _ in range(self.max_level):
+
+        # 按照 max_level 和 max_tries 进行多级问题升级
+        for level in range(self.max_level):
             retries = 0
             while retries < self.max_tries:
                 retries += 1
-                printer.rule(f"Upgrade Attempt {retries} (Level {current.level + 1})")
-                candidate = await self.upgrade_once(current)
-                if await self.knowledge_validator(candidate.question, candidate.answer):
-                    printer.print("Knowledge validator failed, retrying...", style="bold red")
+                printer.rule(f"Level {level+1} Update Attempt {retries}")
+                method, queries = self.method_choice(current.question, current.answer)
+                updated = await self.query_update(method, queries, current)
+                passed = await self.multi_verify(updated)
+                if not passed:  # 验证失败（模型能回答）
+                    printer.print("多重校验未通过（模型能回答），重试 query_update …", style="bold red")
                     continue
-                if await self.search_validator(candidate.question, candidate.answer):
-                    printer.print("Search validator failed, retrying...", style="bold red")
-                    continue
-                self.items.append(candidate)
-                current = candidate
-                printer.print(f"Upgrade success at level {current.level}", style="bold green")
+                printer.print("多重校验通过（模型无法回答），记录更新后的 QAItem", style="bold green")
+                self.items.append(updated)  # 只有验证通过才记录
+                current = updated
                 break
             else:
-                printer.print(f"Stopped at level {current.level}; no valid upgrade after {self.max_tries} tries.", style="bold red")
-                break
+                printer.print(f"Stopped at level {current.level}; no valid update after {self.max_tries} tries.", style="bold red")
+                return
+
         printer.rule("Workflow End")
 
     def save(self, path: Path):
@@ -313,7 +364,7 @@ def random_domain():
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--out", type=Path, default=Path("trace.json"))
+    parser.add_argument("--out", type=Path, default=Path("trace_data.json"))
     parser.add_argument("--max_level", type=int, default=5)
     parser.add_argument("--max_tries", type=int, default=5)
     args = parser.parse_args()

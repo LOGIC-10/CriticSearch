@@ -18,5 +18,8 @@ The factual paragraph in the webpage:
 Thus, you can extract a question and its corresponding ground truth short answer:  
 In which war was the Smash Giant Hammer widely used?
 
-Now, for the first step, you need to search for relevant queries in the {{domain}} domain and return them in the following format:
+# FORMAT Constraint
 <queries>XX Here are your search queries, provided in python List[str] format</queries>
+You can only generate a standard JSON list wrapped in <queries></queries>, without any extra words or unnecessary text.
+
+Now, for the first step, you need to search for relevant queries in the {{domain}} domain and return them in the required format:

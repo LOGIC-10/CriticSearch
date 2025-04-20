@@ -1,69 +1,172 @@
 [
   {
     "level": 0,
-    "question": "In the field of quantum computing, what is the exact number of logical qubits required for Shor's algorithm to factor a 2048-bit RSA number using surface code error correction?",
-    "answer": "4098 logical qubits",
+    "question": "What is the designation of the highway that passes through Ak-Baital Pass?",
+    "answer": "M41",
     "parent_question": null,
-    "support_urls": [
-      "https://arxiv.org/abs/1905.09749",
-      "https://quantumcomputing.stackexchange.com/questions/14674/what-are-the-resources-required-to-run-shors-algorithm-on-a-2048-bit-number"
+    "evidence": [
+      {
+        "url": "https://www.dangerousroads.org/asia/tajikistan/3221-ak-baital-pass.html",
+        "fact": "Set high in the Pamir Mountains, the road to the summit, also known as Pereval Akbaytal, is the defiant M41 road, informally and more commonly known as the Pamir Highway."
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Ak-Baital_Pass",
+        "fact": "At 4,655 metres (15,272 ft) it is the highest point of the M41 highway."
+      }
     ],
     "strategy": "seed"
   },
   {
     "level": 1,
-    "question": "In quantum computing, how many logical qubits does Shor's algorithm need to factor a large RSA number with error correction?",
-    "answer": "4098 logical qubits",
-    "parent_question": "In the field of quantum computing, what is the exact number of logical qubits required for Shor's algorithm to factor a 2048-bit RSA number using surface code error correction?",
-    "support_urls": [
-      "https://en.wikipedia.org/wiki/Shor's_algorithm",
-      "https://quantumcomputing.stackexchange.com/questions/why-does-shors-algorithm-require-so-many-qubits"
+    "question": "What is the designation of the highway that passes through the highest point on the Pamir Highway?",
+    "answer": "M41",
+    "parent_question": "What is the designation of the highway that passes through Ak-Baital Pass?",
+    "evidence": [
+      {
+        "url": "https://www.dangerousroads.org/asia/tajikistan/3221-ak-baital-pass.html",
+        "fact": "Set high in the Pamir Mountains, the road to the summit, also known as Pereval Akbaytal, is the defiant M41 road, informally and more commonly known as the Pamir Highway."
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Ak-Baital_Pass",
+        "fact": "At 4,655 metres (15,272 ft) it is the highest point of the M41 highway."
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Ak-Baital_Pass",
+        "fact": "At 4,655 metres (15,272 ft) it is the highest pass on the Pamir Highway."
+      }
     ],
-    "strategy": "simple abstraction"
+    "strategy": "equivalent replacement"
   },
   {
     "level": 2,
-    "question": "In quantum computing, how many logical qubits are required to run Shor's algorithm for factorizing a large number, assuming error correction is implemented?",
-    "answer": "4098 logical qubits",
-    "parent_question": "In quantum computing, how many logical qubits does Shor's algorithm need to factor a large RSA number with error correction?",
-    "support_urls": [
-      "https://en.wikipedia.org/wiki/Shor%27s_algorithm",
-      "https://quantum-computing.ibm.com/docs/guide/shors-algorithm",
-      "https://qiskit.org/textbook/ch-algorithms/shor.html"
+    "question": "What is the designation of the highway that passes through Ak-Baital Pass in Tajikistan, at an elevation of 4,655 meters (15,272 feet)?",
+    "answer": "M41",
+    "parent_question": "What is the designation of the highway that passes through the highest point on the Pamir Highway?",
+    "evidence": [
+      {
+        "url": "https://www.dangerousroads.org/asia/tajikistan/3221-ak-baital-pass.html",
+        "fact": "Set high in the Pamir Mountains, the road to the summit, also known as Pereval Akbaytal, is the defiant M41 road, informally and more commonly known as the Pamir Highway."
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Ak-Baital_Pass",
+        "fact": "At 4,655 metres (15,272 ft) it is the highest point of the M41 highway."
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Ak-Baital_Pass",
+        "fact": "At 4,655 metres (15,272 ft) it is the highest pass on the Pamir Highway."
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Ak-Baital_Pass",
+        "fact": "The Ak-Baital Pass (Kyrgyz: Акбайтал, romanized: Akbaytal; Tajik: Перевал Акбайтал, romanized: Pereval Akbaytal, Russian: Перевал Акбайтал) is a mountain pass in the Pamir Mountains in Tajikistan, on the M41 highway. At an elevation of 4,655 metres (15,272 ft) it is the highest point on the Pamir Highway, and the highest paved pass in the former Soviet Union."
+      }
     ],
-    "strategy": "simple abstraction"
+    "strategy": "equivalent replacement"
   },
   {
     "level": 3,
-    "question": "In quantum computing, how many logical qubits are necessary to execute Shor's algorithm for factorization when error correction is applied?",
-    "answer": "4098 logical qubits",
-    "parent_question": "In quantum computing, how many logical qubits are required to run Shor's algorithm for factorizing a large number, assuming error correction is implemented?",
-    "support_urls": [
-      "https://arxiv.org/abs/quant-ph/0205093",
-      "https://en.wikipedia.org/wiki/Shor%27s_algorithm"
+    "question": "What is the designation of the highway that passes through the highest point on the Pamir Highway?",
+    "answer": "M41",
+    "parent_question": "What is the designation of the highway that passes through Ak-Baital Pass in Tajikistan, at an elevation of 4,655 meters (15,272 feet)?",
+    "evidence": [
+      {
+        "url": "https://www.dangerousroads.org/asia/tajikistan/3221-ak-baital-pass.html",
+        "fact": "Set high in the Pamir Mountains, the road to the summit, also known as Pereval Akbaytal, is the defiant M41 road, informally and more commonly known as the Pamir Highway."
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Ak-Baital_Pass",
+        "fact": "At 4,655 metres (15,272 ft) it is the highest point of the M41 highway."
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Ak-Baital_Pass",
+        "fact": "At 4,655 metres (15,272 ft) it is the highest pass on the Pamir Highway."
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Ak-Baital_Pass",
+        "fact": "The Ak-Baital Pass (Kyrgyz: Акбайтал, romanized: Akbaytal; Tajik: Перевал Акбайтал, romanized: Pereval Akbaytal, Russian: Перевал Акбайтал) is a mountain pass in the Pamir Mountains in Tajikistan, on the M41 highway. At an elevation of 4,655 metres (15,272 ft) it is the highest point on the Pamir Highway, and the highest paved pass in the former Soviet Union."
+      },
+      {
+        "url": "https://www.advantour.com/tajikistan/pamir/pamir-highway.htm",
+        "fact": "The highest point of the Pamir Highway is Ak-Baytal Pass (4655 m)."
+      }
     ],
     "strategy": "equivalent replacement"
   },
   {
     "level": 4,
-    "question": "In quantum computing, what is the minimum number of logical qubits required to run Shor's algorithm with error correction?",
-    "answer": "4098 logical qubits",
-    "parent_question": "In quantum computing, how many logical qubits are necessary to execute Shor's algorithm for factorization when error correction is applied?",
-    "support_urls": [
-      "https://en.wikipedia.org/wiki/Shor%27s_algorithm",
-      "https://quantum-computing.ibm.com/docs/guide/shors-algorithm"
+    "question": "What is the designation of the highway that passes through Ak-Baital Pass?",
+    "answer": "M41",
+    "parent_question": "What is the designation of the highway that passes through the highest point on the Pamir Highway?",
+    "evidence": [
+      {
+        "url": "https://www.dangerousroads.org/asia/tajikistan/3221-ak-baital-pass.html",
+        "fact": "Set high in the Pamir Mountains, the road to the summit, also known as Pereval Akbaytal, is the defiant M41 road, informally and more commonly known as the Pamir Highway."
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Ak-Baital_Pass",
+        "fact": "At 4,655 metres (15,272 ft) it is the highest point of the M41 highway."
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Ak-Baital_Pass",
+        "fact": "At 4,655 metres (15,272 ft) it is the highest pass on the Pamir Highway."
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Ak-Baital_Pass",
+        "fact": "The Ak-Baital Pass (Kyrgyz: Акбайтал, romanized: Akbaytal; Tajik: Перевал Акбайтал, romanized: Pereval Akbaytal, Russian: Перевал Акбайтал) is a mountain pass in the Pamir Mountains in Tajikistan, on the M41 highway. At an elevation of 4,655 metres (15,272 ft) it is the highest point on the Pamir Highway, and the highest paved pass in the former Soviet Union."
+      },
+      {
+        "url": "https://www.advantour.com/tajikistan/pamir/pamir-highway.htm",
+        "fact": "The highest point of the Pamir Highway is Ak-Baytal Pass (4655 m)."
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Ak-Baital_Pass",
+        "fact": "It is the highest point on the M41 highway."
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Pamir_Highway",
+        "fact": "The M41 is officially known as the Pamir Highway"
+      }
     ],
     "strategy": "equivalent replacement"
   },
   {
     "level": 5,
-    "question": "In quantum computing, what is the minimum number of logical qubits needed for error-corrected computation of a factorization algorithm?",
-    "answer": "4098 logical qubits",
-    "parent_question": "In quantum computing, what is the minimum number of logical qubits required to run Shor's algorithm with error correction?",
-    "support_urls": [
-      "https://en.wikipedia.org/wiki/Shor's_algorithm",
-      "https://quantumcomputing.stackexchange.com/questions/why-do-we-need-so-many-qubits-for-shors-algorithm"
+    "question": "What is the designation of the highway that passes through the highest paved pass in the former Soviet Union?",
+    "answer": "M41",
+    "parent_question": "What is the designation of the highway that passes through Ak-Baital Pass?",
+    "evidence": [
+      {
+        "url": "https://www.dangerousroads.org/asia/tajikistan/3221-ak-baital-pass.html",
+        "fact": "Set high in the Pamir Mountains, the road to the summit, also known as Pereval Akbaytal, is the defiant M41 road, informally and more commonly known as the Pamir Highway."
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Ak-Baital_Pass",
+        "fact": "At 4,655 metres (15,272 ft) it is the highest point of the M41 highway."
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Ak-Baital_Pass",
+        "fact": "At 4,655 metres (15,272 ft) it is the highest pass on the Pamir Highway."
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Ak-Baital_Pass",
+        "fact": "The Ak-Baital Pass (Kyrgyz: Акбайтал, romanized: Akbaytal; Tajik: Перевал Акбайтал, romanized: Pereval Akbaytal, Russian: Перевал Акбайтал) is a mountain pass in the Pamir Mountains in Tajikistan, on the M41 highway. At an elevation of 4,655 metres (15,272 ft) it is the highest point on the Pamir Highway, and the highest paved pass in the former Soviet Union."
+      },
+      {
+        "url": "https://www.advantour.com/tajikistan/pamir/pamir-highway.htm",
+        "fact": "The highest point of the Pamir Highway is Ak-Baytal Pass (4655 m)."
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Ak-Baital_Pass",
+        "fact": "It is the highest point on the M41 highway."
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Pamir_Highway",
+        "fact": "The M41 is officially known as the Pamir Highway"
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Ak-Baital_Pass",
+        "fact": "Ak-Baital Pass ... is the highest paved pass in the former Soviet Union."
+      }
     ],
-    "strategy": "simple abstraction"
+    "strategy": "equivalent replacement"
   }
 ]

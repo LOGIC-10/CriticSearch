@@ -16,17 +16,20 @@ Therefore, you can extract a question and corresponding ground truth short answe
 Of course, you need to output in the standardized JSON format:  
 {
   "seed": {
-    "question": "粉碎巨人锤在什么战争中被广泛使用",
-    "answer": "巨人战争",
+    "question": "In which war was the Crushing Giant Hammer widely used?",
+    "answer": "Giant War",
     "evidence": [
       {
         "url": "https://www.3dmgame.com/g!/3898261.html",
-        "text": "粉碎巨人锤是《艾尔登法环》游戏中的一把特大武器，其背景设定为在“巨人战争”中被广泛使用的巨岩大槌。该武器是交界地中最为沉重的武器之一，象征着那个时代的强大力量。随着巨人的灭亡和人与人之间战争的兴起，这把武器逐渐被遗忘，退出了战斗的舞台。与远古时代相比，人类变得越来越脆弱，无法再驾驭如此沉重的武器。"
+        "fact": "The Crushing Giant Hammer is an oversized weapon in the game *Elden Ring*, with its background set as a giant rock hammer widely used during the 'Giant War.' This weapon is one of the heaviest in the Lands Between, symbolizing the immense power of that era. With the extinction of the giants and the rise of human-on-human wars, this weapon was gradually forgotten and left the battlefield. Compared to ancient times, humans have become increasingly fragile and can no longer wield such a heavy weapon."
       },
-      {...},
+      {
+          "url": "XXX", # Replace with a valid URL
+          "fact": "XXX" # Replace with a valid fact from the URL
+      },
     ]
   },
-}  
+} 
 
 Now, to design a seed fact in the {{domain}} domain, you need to browse through the content of the webpages you searched to generate a data in the format above.  
 
