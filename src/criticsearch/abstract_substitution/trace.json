@@ -1,0 +1,69 @@
+[
+  {
+    "level": 0,
+    "question": "In the field of quantum computing, what is the exact number of logical qubits required for Shor's algorithm to factor a 2048-bit RSA number using surface code error correction?",
+    "answer": "4098 logical qubits",
+    "parent_question": null,
+    "support_urls": [
+      "https://arxiv.org/abs/1905.09749",
+      "https://quantumcomputing.stackexchange.com/questions/14674/what-are-the-resources-required-to-run-shors-algorithm-on-a-2048-bit-number"
+    ],
+    "strategy": "seed"
+  },
+  {
+    "level": 1,
+    "question": "In quantum computing, how many logical qubits does Shor's algorithm need to factor a large RSA number with error correction?",
+    "answer": "4098 logical qubits",
+    "parent_question": "In the field of quantum computing, what is the exact number of logical qubits required for Shor's algorithm to factor a 2048-bit RSA number using surface code error correction?",
+    "support_urls": [
+      "https://en.wikipedia.org/wiki/Shor's_algorithm",
+      "https://quantumcomputing.stackexchange.com/questions/why-does-shors-algorithm-require-so-many-qubits"
+    ],
+    "strategy": "simple abstraction"
+  },
+  {
+    "level": 2,
+    "question": "In quantum computing, how many logical qubits are required to run Shor's algorithm for factorizing a large number, assuming error correction is implemented?",
+    "answer": "4098 logical qubits",
+    "parent_question": "In quantum computing, how many logical qubits does Shor's algorithm need to factor a large RSA number with error correction?",
+    "support_urls": [
+      "https://en.wikipedia.org/wiki/Shor%27s_algorithm",
+      "https://quantum-computing.ibm.com/docs/guide/shors-algorithm",
+      "https://qiskit.org/textbook/ch-algorithms/shor.html"
+    ],
+    "strategy": "simple abstraction"
+  },
+  {
+    "level": 3,
+    "question": "In quantum computing, how many logical qubits are necessary to execute Shor's algorithm for factorization when error correction is applied?",
+    "answer": "4098 logical qubits",
+    "parent_question": "In quantum computing, how many logical qubits are required to run Shor's algorithm for factorizing a large number, assuming error correction is implemented?",
+    "support_urls": [
+      "https://arxiv.org/abs/quant-ph/0205093",
+      "https://en.wikipedia.org/wiki/Shor%27s_algorithm"
+    ],
+    "strategy": "equivalent replacement"
+  },
+  {
+    "level": 4,
+    "question": "In quantum computing, what is the minimum number of logical qubits required to run Shor's algorithm with error correction?",
+    "answer": "4098 logical qubits",
+    "parent_question": "In quantum computing, how many logical qubits are necessary to execute Shor's algorithm for factorization when error correction is applied?",
+    "support_urls": [
+      "https://en.wikipedia.org/wiki/Shor%27s_algorithm",
+      "https://quantum-computing.ibm.com/docs/guide/shors-algorithm"
+    ],
+    "strategy": "equivalent replacement"
+  },
+  {
+    "level": 5,
+    "question": "In quantum computing, what is the minimum number of logical qubits needed for error-corrected computation of a factorization algorithm?",
+    "answer": "4098 logical qubits",
+    "parent_question": "In quantum computing, what is the minimum number of logical qubits required to run Shor's algorithm with error correction?",
+    "support_urls": [
+      "https://en.wikipedia.org/wiki/Shor's_algorithm",
+      "https://quantumcomputing.stackexchange.com/questions/why-do-we-need-so-many-qubits-for-shors-algorithm"
+    ],
+    "strategy": "simple abstraction"
+  }
+]

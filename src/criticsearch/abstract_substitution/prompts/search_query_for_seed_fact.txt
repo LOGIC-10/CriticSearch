@@ -1,0 +1,22 @@
+The premise for a model to discover new knowledge is its ability to integrate existing human knowledge. Therefore, it is crucial to equip the agent with the ability to gather information from the internet. Currently, we have the ability to search for simple facts (e.g., who was the President of the United States in July 2023), but we want the model to further possess the ability to conduct deep exploration on websites. You are an expert in designing benchmarks for this area, and there are some requirements for designing such data:
+
+1. The information is deeply hidden within the internet (it cannot be easily obtained by simply searching for a keyword on Google).
+2. The conditions are coupled and unclear, requiring detailed reasoning and trial-and-error to discover the key path.
+
+First, you need to design a seed fact for the {{domain}} domain, with the following requirements:
+1. It should be easy to verify and have only one answer, e.g., "The president of the United States on July 24, 2023, is Biden."
+2. The seed fact must be difficult to find. It cannot be randomly found instantly in this domain, but rather it must be hidden deep within some webpage search results on the internet.
+
+The seed fact must be difficult: it should not be something that can be easily found by searching it directly on Google. For example, "The president of the United States on July 24, 2023" would instantly bring up Biden, indicating that the seed fact is too simple. You can first brainstorm some queries in your domain and search the internet, find a deep webpage with some very proprietary information, then select and construct a difficult question and its corresponding unique short answer from the webpage content. For example:
+
+Suppose you visit this webpage:  
+https://www.3dmgame.com/g!/3898261.html
+
+The factual paragraph in the webpage:  
+"The 'Smash Giant Hammer' is an oversized weapon in the game 'Elden Ring,' with its background set as a giant rock hammer widely used during the 'Giant Wars.' This weapon is one of the heaviest in the Lands Between, symbolizing the immense power of that era. With the extinction of the giants and the rise of wars between humans, this weapon gradually faded into oblivion, leaving the battlefield. Compared to ancient times, humans have become increasingly fragile and can no longer wield such a heavy weapon."
+
+Thus, you can extract a question and its corresponding ground truth short answer:  
+In which war was the Smash Giant Hammer widely used?
+
+Now, for the first step, you need to search for relevant queries in the {{domain}} domain and return them in the following format:
+<queries>XX Here are your search queries, provided in python List[str] format</queries>
