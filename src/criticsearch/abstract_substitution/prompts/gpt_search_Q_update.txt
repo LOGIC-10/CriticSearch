@@ -56,7 +56,7 @@ Then you need to search online for relevant information and based on the search 
 </data>  
 </answer>
 
-Above are examples of the equivalent substitution method.
+Above are examples of the equivalent substitution method. Please remember, your updated question must incorporate more information to make it longer than the original question, it must not be shorter, and you must ensure that the updated question does not contain the answer to the original question.
 
 ## Method Two: Complex Abstraction and Visualization
 
@@ -87,4 +87,4 @@ Then the output you need to provide is:
 </data>  
 </answer>  
 
-Now, you need to face the question: {{question}}, and the answer is {{answer}}. You need to use one of the method according to actual circumstances to enhance this question. Remember to provide the relevant search results to assist in your enhancement. Please follow the format described above for the output.
+Now, you need to face the question: {{question}}, and the answer is {{answer}}. You need to use one of the method according to actual circumstances to enhance this question. Please remember, your updated question must incorporate more information to make it longer than the original question, it must not be shorter, and you must ensure that the updated question does not contain the answer to the original question. Remember to provide the relevant search results to assist in your enhancement. Please follow the format described above for the output.

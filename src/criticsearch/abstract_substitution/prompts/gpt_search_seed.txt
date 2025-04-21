@@ -6,6 +6,8 @@ First, you need to design a seed fact for the given {{domain}} domain, and the r
 1. It should be easy to verify and there should only be one answer, for example, the President of the United States on July 24, 2023, is Biden.
 2. The seed fact must be relatively difficult; it should not be something that can be randomly found instantly but rather something that you discover hidden deeper within search results on the internet.  
 
+# Content Requirements
+
 The seed fact must be difficult: you cannot simply search for the seed fact on Google and find the answer. For example, searching "Who was the President of the United States on July 24, 2023," immediately yields Biden, indicating that the seed fact is too simple. You can first construct various queries you are interested in within your domain and search online, finding a deep webpage with highly specialized information, from which you can select to construct a difficult question and its corresponding unique short answer. For example:  
 
 Suppose you access this webpage:  
@@ -17,7 +19,8 @@ Of course, you need to output in the standardized JSON format:
 {
   "seed": {
     "question": "In which war was the Crushing Giant Hammer widely used?",
-    "answer": "Giant War",
+    "answer": "Giant War", # Specifies the required answer format
+    "constrained_format": "Answer in two pure English words",
     "evidence": [
       {
         "url": "https://www.3dmgame.com/g!/3898261.html",
@@ -31,4 +34,37 @@ Of course, you need to output in the standardized JSON format:
   },
 } 
 
+# Format Requirements
+
+### **Additional Constraint Format Variations:**
+
+- Answer in pure number (for numeric responses)
+Example: Answer in pure number → "42"
+- Answer with a date in mm-dd-yyyy format (for date responses)
+Example: Answer with a date in mm-dd-yyyy format → "12-25-2025"
+- Answer in exactly N words (for short text responses)
+Example: Answer in exactly 2 words → "Fast car"
+- Answer in pure English capital words (for organization names, acronyms, or entities)
+Example: Answer in pure English capital words → "NASA"
+- Answer in exactly N characters (for concise text responses)
+Example: Answer in exactly 10 characters → "DataLimit"
+- Answer with a percentage (for proportion-based responses)
+Example: Answer with a percentage → "75%"
+- Answer in a single syllable word (for minimalistic responses)
+Example: Answer in a single syllable word → "Yes"
+
+---
+
+### **Bad Examples (What to Avoid):**
+- Too open-ended or subjective answers:
+Bad: "How were the injured transported to the hospital?"
+Why? The answer could vary widely, making verification difficult.
+- Answers that are too long or vague:
+Bad: "Why didn’t the alarms activate during the fire?"
+Why? The response could have multiple reasons and interpretations.
+- Answers requiring paragraphs or non-verifiable information:
+Bad: "What was the impact of the wildfire on local businesses?"
+Why? The answer could be subjective and difficult to verify with a single value.
+
+---
 Now, to design a seed fact in the {{domain}} domain, you need to browse through the content of the webpages you searched to generate a data in the format above.  
