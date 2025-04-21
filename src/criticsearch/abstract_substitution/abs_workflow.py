@@ -350,9 +350,15 @@ class ReverseUpgradeWorkflow:
 
     async def run(self):
         printer.rule(f"Workflow Start with {GPT_MODEL}")
-        seed = await self.generate_seed()
-        self.items.append(seed)
-        current = seed
+        # Seed 生成
+        try:
+            seed = await self.generate_seed()
+            self.items.append(seed)
+            current = seed
+        except Exception as e:
+            logger.exception("Error in generate_seed")
+            printer.print(f"Error in generate_seed: {e}", style="bold red")
+            return
 
         # 按照 max_level 和 max_tries 进行多级问题升级
         for level in range(self.max_level):
@@ -360,16 +366,23 @@ class ReverseUpgradeWorkflow:
             while retries < self.max_tries:
                 retries += 1
                 printer.rule(f"Level {level+1} Update Attempt {retries}")
-                method, queries = self.method_choice(current.question, current.answer)
-                # 随机化一下方法，以后看表现调整
-                method = random.choice([method, "simple abstraction"])
-                updated = await self.query_update(method, queries, current)
-                passed = await self.multi_verify(updated)
-                if not passed:  # 验证失败（模型能回答）
+                try:
+                    method, queries = self.method_choice(current.question, current.answer)
+                    # 随机化一下方法，以后看表现调整
+                    method = random.choice([method, "simple abstraction"])
+                    updated = await self.query_update(method, queries, current)
+                    passed = await self.multi_verify(updated)
+                except Exception as e:
+                    logger.exception(f"Error in level {level+1} attempt {retries}")
+                    printer.print(f"Error in update process: {e}", style="bold red")
+                    continue
+
+                if not passed:
                     printer.print("多重校验未通过（模型能回答），重试 query_update …", style="bold red")
                     continue
+
                 printer.print("多重校验通过（模型无法回答），记录更新后的 QAItem", style="bold green")
-                self.items.append(updated)  # 只有验证通过才记录
+                self.items.append(updated)
                 current = updated
                 break
             else:
@@ -455,22 +468,34 @@ class ReverseUpgradeWorkflow:
     async def gpt_search_run(self):
         GPT_MODEL = "gpt-4o-search-preview"
         printer.rule(f"GPT-Search Workflow Start with {GPT_MODEL}")
-        # 第一步：Seed 生成
-        seed = await self.gpt_search_generate_seed(self.random_domain())
-        self.items.append(seed)
-        current = seed
+        # Seed 生成
+        try:
+            seed = await self.gpt_search_generate_seed(self.random_domain())
+            self.items.append(seed)
+            current = seed
+        except Exception as e:
+            logger.exception("Error in gpt_search_generate_seed")
+            printer.print(f"Error in gpt_search_generate_seed: {e}", style="bold red")
+            return
 
-        # 按照 max_level 和 max_tries 进行多级问题升级
+        # 多级升级
         for level in range(self.max_level):
             retries = 0
             while retries < self.max_tries:
                 retries += 1
                 printer.rule(f"GPT-Search Level {level+1} Update Attempt {retries}")
-                updated = await self.gpt_search_query_update(current)
-                passed = await self.multi_verify(updated)
+                try:
+                    updated = await self.gpt_search_query_update(current)
+                    passed = await self.multi_verify(updated)
+                except Exception as e:
+                    logger.exception(f"Error in GPT-Search level {level+1} attempt {retries}")
+                    printer.print(f"Error in GPT-Search update: {e}", style="bold red")
+                    continue
+
                 if not passed:
                     printer.print("GPT-Search: 多重校验未通过（模型能回答），重试 query_update …", style="bold red")
                     continue
+
                 printer.print("GPT-Search: 多重校验通过（模型无法回答），记录更新后的 QAItem", style="bold green")
                 self.items.append(updated)
                 current = updated
@@ -576,11 +601,16 @@ def main():
         wf = ReverseUpgradeWorkflow(max_level=args.max_level, max_tries=args.max_tries)
         try:
             asyncio.run(wf.gpt_search_run())
-            wf.save(args.out)
-            print(f"Saved {len(wf.items)} items to {args.out}")
         except Exception as e:
             logger.exception("Error in single gptsearch run")
             printer.print(f"Error during single gptsearch run: {e}", style="bold red")
+        finally:
+            try:
+                wf.save(args.out)
+                print(f"Saved {len(wf.items)} items to {args.out}")
+            except Exception as e:
+                logger.exception("Error saving results for single gptsearch run")
+                printer.print(f"Error saving results: {e}", style="bold red")
         return
 
     # 单次普通 run
@@ -588,11 +618,16 @@ def main():
         wf = ReverseUpgradeWorkflow(max_level=args.max_level, max_tries=args.max_tries)
         try:
             asyncio.run(wf.run())
-            wf.save(args.out)
-            print(f"Saved {len(wf.items)} items to {args.out}")
         except Exception as e:
             logger.exception("Error in single run")
             printer.print(f"Error during single run: {e}", style="bold red")
+        finally:
+            try:
+                wf.save(args.out)
+                print(f"Saved {len(wf.items)} items to {args.out}")
+            except Exception as e:
+                logger.exception("Error saving results for single run")
+                printer.print(f"Error saving results: {e}", style="bold red")
         return
 
     # 批量并行执行

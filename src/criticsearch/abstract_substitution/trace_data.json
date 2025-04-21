@@ -694,5 +694,557 @@
       }
     ],
     "strategy": "seed"
+  },
+  {
+    "level": 0,
+    "question": "During the Roman Tetrarchy, Emperor Diocletian associated himself with Jupiter by taking the cognomen Jovius. Which mythological hero did his co-Augustus, Maximian, associate himself with through his cognomen?",
+    "answer": "Hercules",
+    "parent_question": null,
+    "evidence": [
+      {
+        "url": "https://www.worldhistory.org/Maximian/",
+        "fact": "Diocletian, as senior emperor, associated himself with Jupiter, king of the gods, adopting the name Iovius; Maximian, ever the soldier, identified with the hero Hercules, taking the name Herculius."
+      },
+      {
+        "url": "https://www.britannica.com/biography/Maximian",
+        "fact": "Diocletian ruled the East, and Maximian controlled the West. To legitimize their rule and create divine protectors, Maximian took the cognomen Herculius (signifying descent from Hercules) and Diocletian took that of Jovius (signifying descent from Jupiter)."
+      }
+    ],
+    "strategy": "seed"
+  },
+  {
+    "level": 0,
+    "question": "What specific early plastic, derived from milk protein, did László Moholy-Nagy incorporate into his kinetic sculpture 'Light Prop for an Electric Stage' (Lichtrequisit einer elektrischen Bühne)?",
+    "answer": "Galalith",
+    "parent_question": null,
+    "evidence": [
+      {
+        "url": "https://harvardartmuseums.org/collections/object/227800",
+        "fact": "The original Light Prop, created between 1922 and 1930, was constructed from a variety of industrial materials including polished aluminum, steel, nickel-plated brass, glass, and plastic (specifically, Galalith and Trolitan). It featured an electric motor that drove the complex movements of its perforated discs, spirals, and rotating glass elements, casting intricate patterns of light and shadow."
+      },
+      {
+        "url": "https://www.bauhauskooperation.com/knowledge/the-bauhaus/works/plastic/light-prop-for-an-electric-stage/",
+        "fact": "Materials: Metal (partly nickel-plated and polished), glass and plastic (Galalith, Trolitan), wood base plate, electric motor, light bulbs. Moholy-Nagy’s Light-Space Modulator, which he began working on in 1922, is a key work of kinetic art."
+      }
+    ],
+    "strategy": "seed"
+  },
+  {
+    "level": 0,
+    "question": "What specific chemical process causes the degradation and notable color loss of smalt pigment, particularly evident in some historical oil paintings like those by Rembrandt?",
+    "answer": "Leaching of potassium ions",
+    "parent_question": null,
+    "evidence": [
+      {
+        "url": "https://colourlex.com/project/smalt/",
+        "fact": "Smalt is a moderately permanent pigment with a tendency to fade and turn greyish or yellowish with time especially in oil medium. This degradation is caused by the leaching of potassium ions from the glass matrix. [...] A prominent example of the discoloration of smalt can be seen in the background drapery of the Portrait of Hendrickje Stoffels by Rembrandt van Rijn in the National Gallery in London."
+      },
+      {
+        "url": "https://www.nationalgallery.org.uk/technical-bulletin/colour-change-in-rembrandts-portrait-of-jakob-trip",
+        "fact": "The blue pigment smalt (ground cobalt-containing potash glass) is known to discolour in oil medium as a result of potassium leaching from the glass particles. The degraded smalt appears greyish or brownish yellow and has very little colouring strength."
+      }
+    ],
+    "strategy": "seed"
+  },
+  {
+    "level": 1,
+    "question": "What specific chemical process causes the degradation and notable color loss of a ground blue pigment made from potassium glass containing cobalt oxide, popular between the 15th and 18th centuries, particularly evident in some historical oil paintings like those by Rembrandt?",
+    "answer": "Leaching of potassium ions",
+    "parent_question": "What specific chemical process causes the degradation and notable color loss of smalt pigment, particularly evident in some historical oil paintings like those by Rembrandt?",
+    "evidence": [
+      {
+        "url": "https://colourlex.com/project/smalt/",
+        "fact": "Smalt is a moderately permanent pigment with a tendency to fade and turn greyish or yellowish with time especially in oil medium. This degradation is caused by the leaching of potassium ions from the glass matrix. [...] A prominent example of the discoloration of smalt can be seen in the background drapery of the Portrait of Hendrickje Stoffels by Rembrandt van Rijn in the National Gallery in London."
+      },
+      {
+        "url": "https://www.nationalgallery.org.uk/technical-bulletin/colour-change-in-rembrandts-portrait-of-jakob-trip",
+        "fact": "The blue pigment smalt (ground cobalt-containing potash glass) is known to discolour in oil medium as a result of potassium leaching from the glass particles. The degraded smalt appears greyish or brownish yellow and has very little colouring strength."
+      },
+      {
+        "url": "https://www.naturalpigments.com/smalt-pigment.html",
+        "fact": "Smalt is a ground blue potassium glass containing cobalt. It is made by melting cobalt oxide together with potash and silica, quenching the molten glass in water, and grinding the resulting shards. Smalt has been identified on paintings dating from the fifteenth through the eighteenth centuries."
+      },
+      {
+        "url": "https://colourlex.com/pigment/smalt/",
+        "fact": "Smalt is essentially potassium glass coloured blue with cobalt oxide. Its use as a pigment spans from the 15th to the 18th century."
+      }
+    ],
+    "strategy": "equivalence substitution"
+  },
+  {
+    "level": 2,
+    "question": "What specific chemical process causes the degradation and notable color loss of a historically significant blue pigment, known for being a coarsely ground glass popular with Old Masters like Rembrandt between the 15th and 18th centuries, which often contained cobalt, sometimes acted as a siccative, but exhibited notable instability and discoloration when used in oil binders?",
+    "answer": "Leaching of potassium ions",
+    "parent_question": "What specific chemical process causes the degradation and notable color loss of a ground blue pigment made from potassium glass containing cobalt oxide, popular between the 15th and 18th centuries, particularly evident in some historical oil paintings like those by Rembrandt?",
+    "evidence": [
+      {
+        "url": "https://colourlex.com/project/smalt/",
+        "fact": "Smalt is a moderately permanent pigment with a tendency to fade and turn greyish or yellowish with time especially in oil medium. This degradation is caused by the leaching of potassium ions from the glass matrix. [...] A prominent example of the discoloration of smalt can be seen in the background drapery of the Portrait of Hendrickje Stoffels by Rembrandt van Rijn in the National Gallery in London."
+      },
+      {
+        "url": "https://www.nationalgallery.org.uk/technical-bulletin/colour-change-in-rembrandts-portrait-of-jakob-trip",
+        "fact": "The blue pigment smalt (ground cobalt-containing potash glass) is known to discolour in oil medium as a result of potassium leaching from the glass particles. The degraded smalt appears greyish or brownish yellow and has very little colouring strength."
+      },
+      {
+        "url": "https://www.naturalpigments.com/smalt-pigment.html",
+        "fact": "Smalt is a ground blue potassium glass containing cobalt. It is made by melting cobalt oxide together with potash and silica, quenching the molten glass in water, and grinding the resulting shards. Smalt has been identified on paintings dating from the fifteenth through the eighteenth centuries."
+      },
+      {
+        "url": "https://colourlex.com/pigment/smalt/",
+        "fact": "Smalt is essentially potassium glass coloured blue with cobalt oxide. Its use as a pigment spans from the 15th to the 18th century."
+      },
+      {
+        "url": "https://colourlex.com/project/smalt/",
+        "fact": "Smalt is a pigment made of ground blue potassium glass containing cobalt... It was widely used in European painting between the 15th and 18th centuries... Smalt is known for its tendency to lose its color over time, especially when used in oil medium... The discoloration is caused by the leaching of potassium ions from the glass matrix... Cobalt as a component of smalt also acts as a siccative... Notable painters who employed smalt include Titian, Tintoretto, Veronese, Rembrandt, Vermeer, Velázquez, Murillo, Rubens, Jordaens, Brueghel, Claude Lorrain and Poussin."
+      },
+      {
+        "url": "https://www.naturalpigments.com/smalt-pigment.html",
+        "fact": "Smalt is a ground potash glass containing cobalt oxide... Due to its low refractive index, it has low hiding power in oil medium... Smalt tends to discolor in oil medium... The cobalt in smalt is a powerful drier (siccative) of linseed oil and was sometimes added to paint mixtures solely for this purpose."
+      }
+    ],
+    "strategy": "equivalence substitution"
+  },
+  {
+    "level": 3,
+    "question": "What specific chemical process causes the degradation and notable color loss when used in oil binders of a certain blue pigment characterized by the following? 1) It is a man-made vitreous pigment. 2) Its production involves melting sand, potash, and cobalt oxide. 3) Its use declined significantly following the discovery of a synthetic blue pigment by Louis Jacques Thénard in the early 19th century.",
+    "answer": "Leaching of potassium ions",
+    "parent_question": "What specific chemical process causes the degradation and notable color loss of a historically significant blue pigment, known for being a coarsely ground glass popular with Old Masters like Rembrandt between the 15th and 18th centuries, which often contained cobalt, sometimes acted as a siccative, but exhibited notable instability and discoloration when used in oil binders?",
+    "evidence": [
+      {
+        "url": "https://colourlex.com/project/smalt/",
+        "fact": "Smalt is a moderately permanent pigment with a tendency to fade and turn greyish or yellowish with time especially in oil medium. This degradation is caused by the leaching of potassium ions from the glass matrix. [...] A prominent example of the discoloration of smalt can be seen in the background drapery of the Portrait of Hendrickje Stoffels by Rembrandt van Rijn in the National Gallery in London."
+      },
+      {
+        "url": "https://www.nationalgallery.org.uk/technical-bulletin/colour-change-in-rembrandts-portrait-of-jakob-trip",
+        "fact": "The blue pigment smalt (ground cobalt-containing potash glass) is known to discolour in oil medium as a result of potassium leaching from the glass particles. The degraded smalt appears greyish or brownish yellow and has very little colouring strength."
+      },
+      {
+        "url": "https://www.naturalpigments.com/smalt-pigment.html",
+        "fact": "Smalt is a ground blue potassium glass containing cobalt. It is made by melting cobalt oxide together with potash and silica, quenching the molten glass in water, and grinding the resulting shards. Smalt has been identified on paintings dating from the fifteenth through the eighteenth centuries."
+      },
+      {
+        "url": "https://colourlex.com/pigment/smalt/",
+        "fact": "Smalt is essentially potassium glass coloured blue with cobalt oxide. Its use as a pigment spans from the 15th to the 18th century."
+      },
+      {
+        "url": "https://colourlex.com/project/smalt/",
+        "fact": "Smalt is a pigment made of ground blue potassium glass containing cobalt... It was widely used in European painting between the 15th and 18th centuries... Smalt is known for its tendency to lose its color over time, especially when used in oil medium... The discoloration is caused by the leaching of potassium ions from the glass matrix... Cobalt as a component of smalt also acts as a siccative... Notable painters who employed smalt include Titian, Tintoretto, Veronese, Rembrandt, Vermeer, Velázquez, Murillo, Rubens, Jordaens, Brueghel, Claude Lorrain and Poussin."
+      },
+      {
+        "url": "https://www.naturalpigments.com/smalt-pigment.html",
+        "fact": "Smalt is a ground potash glass containing cobalt oxide... Due to its low refractive index, it has low hiding power in oil medium... Smalt tends to discolor in oil medium... The cobalt in smalt is a powerful drier (siccative) of linseed oil and was sometimes added to paint mixtures solely for this purpose."
+      },
+      {
+        "url": "https://colourlex.com/project/smalt/",
+        "fact": "Smalt is described as a man-made (artificially prepared) vitreous pigment (ground blue cobalt-containing potassium glass)."
+      },
+      {
+        "url": "https://www.naturalpigments.com/smalt-pigment.html",
+        "fact": "The production of Smalt involves melting cobalt oxide together with quartz (sand) and potash."
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Cobalt_blue",
+        "fact": "Cobalt blue, a synthetic blue pigment, was discovered by Louis Jacques Thénard in 1802."
+      },
+      {
+        "url": "https://colourlex.com/project/smalt/",
+        "fact": "The use and production of smalt declined sharply in the 19th century due to the availability of newer blue pigments like cobalt blue (discovered by Thénard) and artificial ultramarine."
+      }
+    ],
+    "strategy": "complex abstraction concretization"
+  },
+  {
+    "level": 4,
+    "question": "What specific chemical process causes the degradation and notable color loss when used in oil binders of a certain blue pigment characterized by the following? 1) It is a man-made vitreous pigment. 2) Its production involves melting sand, potash, and cobalt oxide. 3) Its use declined significantly following the discovery of a synthetic blue pigment in the early 19th century by the French chemist who would later, in 1818, announce his discovery of hydrogen peroxide.",
+    "answer": "Leaching of potassium ions",
+    "parent_question": "What specific chemical process causes the degradation and notable color loss when used in oil binders of a certain blue pigment characterized by the following? 1) It is a man-made vitreous pigment. 2) Its production involves melting sand, potash, and cobalt oxide. 3) Its use declined significantly following the discovery of a synthetic blue pigment by Louis Jacques Thénard in the early 19th century.",
+    "evidence": [
+      {
+        "url": "https://colourlex.com/project/smalt/",
+        "fact": "Smalt is a moderately permanent pigment with a tendency to fade and turn greyish or yellowish with time especially in oil medium. This degradation is caused by the leaching of potassium ions from the glass matrix. [...] A prominent example of the discoloration of smalt can be seen in the background drapery of the Portrait of Hendrickje Stoffels by Rembrandt van Rijn in the National Gallery in London."
+      },
+      {
+        "url": "https://www.nationalgallery.org.uk/technical-bulletin/colour-change-in-rembrandts-portrait-of-jakob-trip",
+        "fact": "The blue pigment smalt (ground cobalt-containing potash glass) is known to discolour in oil medium as a result of potassium leaching from the glass particles. The degraded smalt appears greyish or brownish yellow and has very little colouring strength."
+      },
+      {
+        "url": "https://www.naturalpigments.com/smalt-pigment.html",
+        "fact": "Smalt is a ground blue potassium glass containing cobalt. It is made by melting cobalt oxide together with potash and silica, quenching the molten glass in water, and grinding the resulting shards. Smalt has been identified on paintings dating from the fifteenth through the eighteenth centuries."
+      },
+      {
+        "url": "https://colourlex.com/pigment/smalt/",
+        "fact": "Smalt is essentially potassium glass coloured blue with cobalt oxide. Its use as a pigment spans from the 15th to the 18th century."
+      },
+      {
+        "url": "https://colourlex.com/project/smalt/",
+        "fact": "Smalt is a pigment made of ground blue potassium glass containing cobalt... It was widely used in European painting between the 15th and 18th centuries... Smalt is known for its tendency to lose its color over time, especially when used in oil medium... The discoloration is caused by the leaching of potassium ions from the glass matrix... Cobalt as a component of smalt also acts as a siccative... Notable painters who employed smalt include Titian, Tintoretto, Veronese, Rembrandt, Vermeer, Velázquez, Murillo, Rubens, Jordaens, Brueghel, Claude Lorrain and Poussin."
+      },
+      {
+        "url": "https://www.naturalpigments.com/smalt-pigment.html",
+        "fact": "Smalt is a ground potash glass containing cobalt oxide... Due to its low refractive index, it has low hiding power in oil medium... Smalt tends to discolor in oil medium... The cobalt in smalt is a powerful drier (siccative) of linseed oil and was sometimes added to paint mixtures solely for this purpose."
+      },
+      {
+        "url": "https://colourlex.com/project/smalt/",
+        "fact": "Smalt is described as a man-made (artificially prepared) vitreous pigment (ground blue cobalt-containing potassium glass)."
+      },
+      {
+        "url": "https://www.naturalpigments.com/smalt-pigment.html",
+        "fact": "The production of Smalt involves melting cobalt oxide together with quartz (sand) and potash."
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Cobalt_blue",
+        "fact": "Cobalt blue, a synthetic blue pigment, was discovered by Louis Jacques Thénard in 1802."
+      },
+      {
+        "url": "https://colourlex.com/project/smalt/",
+        "fact": "The use and production of smalt declined sharply in the 19th century due to the availability of newer blue pigments like cobalt blue (discovered by Thénard) and artificial ultramarine."
+      },
+      {
+        "url": "https://www.nationalgallery.org.uk/technical-bulletin/vol-19-contents/smalt",
+        "fact": "Smalt is essentially a ground potassium glass coloured blue with cobalt oxide... The degradation of smalt involves the leaching of potassium ions from the glass network... This process is accelerated in oil binders, leading to discoloration."
+      },
+      {
+        "url": "https://www.britannica.com/biography/Louis-Jacques-Thenard",
+        "fact": "Louis-Jacques Thénard (born May 4, 1777, La Louptière, Fr.—died June 21, 1857, Paris) was a French chemist who discovered hydrogen peroxide (1818)."
+      },
+      {
+        "url": "https://webexhibits.org/pigments/indiv/overview/smalt.html",
+        "fact": "Smalt is a ground blue potassium glass containing cobalt... Its use rapidly declined after the French chemist Louis Jacques Thénard introduced the synthetic pigment cobalt blue in 1802."
+      }
+    ],
+    "strategy": "equivalence substitution"
+  },
+  {
+    "level": 5,
+    "question": "What specific chemical process causes the degradation and notable color loss when used in oil binders of a certain blue pigment characterized by the following? 1) It is a man-made vitreous pigment. 2) Its production involves melting sand, potash, and cobalt oxide. 3) Its use declined significantly following the discovery of a synthetic blue pigment in the early 19th century by the French chemist who, in 1808 alongside Joseph Louis Gay-Lussac, announced the discovery of boron?",
+    "answer": "Leaching of potassium ions",
+    "parent_question": "What specific chemical process causes the degradation and notable color loss when used in oil binders of a certain blue pigment characterized by the following? 1) It is a man-made vitreous pigment. 2) Its production involves melting sand, potash, and cobalt oxide. 3) Its use declined significantly following the discovery of a synthetic blue pigment in the early 19th century by the French chemist who would later, in 1818, announce his discovery of hydrogen peroxide.",
+    "evidence": [
+      {
+        "url": "https://colourlex.com/project/smalt/",
+        "fact": "Smalt is a moderately permanent pigment with a tendency to fade and turn greyish or yellowish with time especially in oil medium. This degradation is caused by the leaching of potassium ions from the glass matrix. [...] A prominent example of the discoloration of smalt can be seen in the background drapery of the Portrait of Hendrickje Stoffels by Rembrandt van Rijn in the National Gallery in London."
+      },
+      {
+        "url": "https://www.nationalgallery.org.uk/technical-bulletin/colour-change-in-rembrandts-portrait-of-jakob-trip",
+        "fact": "The blue pigment smalt (ground cobalt-containing potash glass) is known to discolour in oil medium as a result of potassium leaching from the glass particles. The degraded smalt appears greyish or brownish yellow and has very little colouring strength."
+      },
+      {
+        "url": "https://www.naturalpigments.com/smalt-pigment.html",
+        "fact": "Smalt is a ground blue potassium glass containing cobalt. It is made by melting cobalt oxide together with potash and silica, quenching the molten glass in water, and grinding the resulting shards. Smalt has been identified on paintings dating from the fifteenth through the eighteenth centuries."
+      },
+      {
+        "url": "https://colourlex.com/pigment/smalt/",
+        "fact": "Smalt is essentially potassium glass coloured blue with cobalt oxide. Its use as a pigment spans from the 15th to the 18th century."
+      },
+      {
+        "url": "https://colourlex.com/project/smalt/",
+        "fact": "Smalt is a pigment made of ground blue potassium glass containing cobalt... It was widely used in European painting between the 15th and 18th centuries... Smalt is known for its tendency to lose its color over time, especially when used in oil medium... The discoloration is caused by the leaching of potassium ions from the glass matrix... Cobalt as a component of smalt also acts as a siccative... Notable painters who employed smalt include Titian, Tintoretto, Veronese, Rembrandt, Vermeer, Velázquez, Murillo, Rubens, Jordaens, Brueghel, Claude Lorrain and Poussin."
+      },
+      {
+        "url": "https://www.naturalpigments.com/smalt-pigment.html",
+        "fact": "Smalt is a ground potash glass containing cobalt oxide... Due to its low refractive index, it has low hiding power in oil medium... Smalt tends to discolor in oil medium... The cobalt in smalt is a powerful drier (siccative) of linseed oil and was sometimes added to paint mixtures solely for this purpose."
+      },
+      {
+        "url": "https://colourlex.com/project/smalt/",
+        "fact": "Smalt is described as a man-made (artificially prepared) vitreous pigment (ground blue cobalt-containing potassium glass)."
+      },
+      {
+        "url": "https://www.naturalpigments.com/smalt-pigment.html",
+        "fact": "The production of Smalt involves melting cobalt oxide together with quartz (sand) and potash."
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Cobalt_blue",
+        "fact": "Cobalt blue, a synthetic blue pigment, was discovered by Louis Jacques Thénard in 1802."
+      },
+      {
+        "url": "https://colourlex.com/project/smalt/",
+        "fact": "The use and production of smalt declined sharply in the 19th century due to the availability of newer blue pigments like cobalt blue (discovered by Thénard) and artificial ultramarine."
+      },
+      {
+        "url": "https://www.nationalgallery.org.uk/technical-bulletin/vol-19-contents/smalt",
+        "fact": "Smalt is essentially a ground potassium glass coloured blue with cobalt oxide... The degradation of smalt involves the leaching of potassium ions from the glass network... This process is accelerated in oil binders, leading to discoloration."
+      },
+      {
+        "url": "https://www.britannica.com/biography/Louis-Jacques-Thenard",
+        "fact": "Louis-Jacques Thénard (born May 4, 1777, La Louptière, Fr.—died June 21, 1857, Paris) was a French chemist who discovered hydrogen peroxide (1818)."
+      },
+      {
+        "url": "https://webexhibits.org/pigments/indiv/overview/smalt.html",
+        "fact": "Smalt is a ground blue potassium glass containing cobalt... Its use rapidly declined after the French chemist Louis Jacques Thénard introduced the synthetic pigment cobalt blue in 1802."
+      },
+      {
+        "url": "https://www.britannica.com/biography/Louis-Jacques-Thenard",
+        "fact": "In 1808 he [Louis-Jacques Thénard] and Gay-Lussac announced their discovery of boron."
+      },
+      {
+        "url": "https://www.britannica.com/technology/smalt",
+        "fact": "Smalt, blue pigment produced by grinding cobalt-containing glass to a fine powder. Smalt is made by fusing potash, silica sand, and cobalt oxide; the molten glass is poured into water, shattered, and ground."
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Cobalt_blue#Discovery_and_production",
+        "fact": "Cobalt blue in impure forms had long been used in Chinese porcelain, but it was discovered as a pure alumina-based pigment by Louis Jacques Thénard in 1802. Its discovery led to the decline in the use of smalt."
+      }
+    ],
+    "strategy": "equivalence substitution"
+  },
+  {
+    "level": 0,
+    "question": "Which specific type of artillery piece, known for its effectiveness against fortifications, did Mehmed II use extensively during the Siege of Constantinople in 1453, as documented in contemporary accounts?",
+    "answer": "Orban bombard",
+    "parent_question": null,
+    "evidence": [
+      {
+        "url": "https://en.wikipedia.org/wiki/Orban_bombard",
+        "fact": "The Orban bombard or Basilica was a supergun designed by Orban, a cannon founder from Brassó, Kingdom of Hungary (now Brașov, Romania), who offered his services to the Ottoman Sultan Mehmed II in 1452, the year before the Fall of Constantinople. Orban was one of at least two cannon founders offering their services to the sultan; the other founder, Munir Ali, produced the majority of the cannons used by the Ottomans in the siege. However, the Orban bombard was the largest cannon possessed by either side, and according to most historical accounts, it was this weapon that battered down the Theodosian Walls, leading to the capture of the city."
+      },
+      {
+        "url": "https://www.britannica.com/event/Siege-of-Constantinople-1453",
+        "fact": "Mehmed II's army included a number of very large cannons, the most famous of which was the 'Basilica' or Great Turkish Bombard, designed by a Hungarian engineer named Orban. This massive bronze cannon, reportedly over 27 feet (8 meters) long, could fire stone balls weighing upwards of 1,200 pounds (540 kg) over a mile. While slow to reload and prone to cracking, its psychological impact and destructive power against the ancient walls were significant factors in the siege."
+      }
+    ],
+    "strategy": "seed"
+  },
+  {
+    "level": 1,
+    "question": "According to contemporary accounts of the Siege of Constantinople in 1453, which specific type of artillery piece, known for its effectiveness against fortifications, was extensively used by the Ottoman Sultan famous for ordering his warships dragged overland into the Golden Horn?",
+    "answer": "Orban bombard",
+    "parent_question": "Which specific type of artillery piece, known for its effectiveness against fortifications, did Mehmed II use extensively during the Siege of Constantinople in 1453, as documented in contemporary accounts?",
+    "evidence": [
+      {
+        "url": "https://en.wikipedia.org/wiki/Orban_bombard",
+        "fact": "The Orban bombard or Basilica was a supergun designed by Orban, a cannon founder from Brassó, Kingdom of Hungary (now Brașov, Romania), who offered his services to the Ottoman Sultan Mehmed II in 1452, the year before the Fall of Constantinople. Orban was one of at least two cannon founders offering their services to the sultan; the other founder, Munir Ali, produced the majority of the cannons used by the Ottomans in the siege. However, the Orban bombard was the largest cannon possessed by either side, and according to most historical accounts, it was this weapon that battered down the Theodosian Walls, leading to the capture of the city."
+      },
+      {
+        "url": "https://www.britannica.com/event/Siege-of-Constantinople-1453",
+        "fact": "Mehmed II's army included a number of very large cannons, the most famous of which was the 'Basilica' or Great Turkish Bombard, designed by a Hungarian engineer named Orban. This massive bronze cannon, reportedly over 27 feet (8 meters) long, could fire stone balls weighing upwards of 1,200 pounds (540 kg) over a mile. While slow to reload and prone to cracking, its psychological impact and destructive power against the ancient walls were significant factors in the siege."
+      },
+      {
+        "url": "https://www.worldhistory.org/article/1750/mehmed-iis-overland-transport-of-ships-at-the-sieg/",
+        "fact": "One of Mehmet II's most famous tactics during the siege [of Constantinople in 1453] was the transportation of seventy Ottoman ships overland from the Bosphorus into the Golden Horn."
+      },
+      {
+        "url": "https://www.britannica.com/event/Siege-of-Constantinople-1453",
+        "fact": "During the Siege of Constantinople (1453), on April 22 Mehmet [II] ordered his lighter warships dragged overland from the Bosphorus to the Golden Horn on wooden rollers."
+      }
+    ],
+    "strategy": "equivalence substitution"
+  },
+  {
+    "level": 2,
+    "question": "According to contemporary accounts of the Siege of Constantinople in 1453, which specific type of artillery piece, known for its effectiveness against fortifications, was extensively used by the Ottoman Sultan who first ascended the throne in 1444 at the age of 12, abdicated two years later in favour of his father, and regained power permanently in 1451?",
+    "answer": "Orban bombard",
+    "parent_question": "According to contemporary accounts of the Siege of Constantinople in 1453, which specific type of artillery piece, known for its effectiveness against fortifications, was extensively used by the Ottoman Sultan famous for ordering his warships dragged overland into the Golden Horn?",
+    "evidence": [
+      {
+        "url": "https://en.wikipedia.org/wiki/Orban_bombard",
+        "fact": "The Orban bombard or Basilica was a supergun designed by Orban, a cannon founder from Brassó, Kingdom of Hungary (now Brașov, Romania), who offered his services to the Ottoman Sultan Mehmed II in 1452, the year before the Fall of Constantinople. Orban was one of at least two cannon founders offering their services to the sultan; the other founder, Munir Ali, produced the majority of the cannons used by the Ottomans in the siege. However, the Orban bombard was the largest cannon possessed by either side, and according to most historical accounts, it was this weapon that battered down the Theodosian Walls, leading to the capture of the city."
+      },
+      {
+        "url": "https://www.britannica.com/event/Siege-of-Constantinople-1453",
+        "fact": "Mehmed II's army included a number of very large cannons, the most famous of which was the 'Basilica' or Great Turkish Bombard, designed by a Hungarian engineer named Orban. This massive bronze cannon, reportedly over 27 feet (8 meters) long, could fire stone balls weighing upwards of 1,200 pounds (540 kg) over a mile. While slow to reload and prone to cracking, its psychological impact and destructive power against the ancient walls were significant factors in the siege."
+      },
+      {
+        "url": "https://www.worldhistory.org/article/1750/mehmed-iis-overland-transport-of-ships-at-the-sieg/",
+        "fact": "One of Mehmet II's most famous tactics during the siege [of Constantinople in 1453] was the transportation of seventy Ottoman ships overland from the Bosphorus into the Golden Horn."
+      },
+      {
+        "url": "https://www.britannica.com/event/Siege-of-Constantinople-1453",
+        "fact": "During the Siege of Constantinople (1453), on April 22 Mehmet [II] ordered his lighter warships dragged overland from the Bosphorus to the Golden Horn on wooden rollers."
+      },
+      {
+        "url": "https://www.britannica.com/biography/Mehmed-II-Ottoman-sultan",
+        "fact": "Mehmed II (born March 30, 1432) first ruled as Ottoman sultan from 1444 (at age 12) to 1446."
+      },
+      {
+        "url": "https://www.britannica.com/biography/Mehmed-II-Ottoman-sultan",
+        "fact": "During his first reign, Mehmed II was pressured to abdicate in favour of his father, Murad II, in 1446, before succeeding his father permanently upon Murad II's death in 1451."
+      }
+    ],
+    "strategy": "equivalence substitution"
+  },
+  {
+    "level": 3,
+    "question": "According to contemporary accounts of the Siege of Constantinople in 1453, which specific type of artillery piece, known for its effectiveness against fortifications, was extensively used by a historical ruler notable for: 1) being reportedly fluent in multiple languages including Greek and Latin, and 2) promulgating a series of new regulations and laws, compiled into a Kanun-name (Book of Laws)?",
+    "answer": "Orban bombard",
+    "parent_question": "According to contemporary accounts of the Siege of Constantinople in 1453, which specific type of artillery piece, known for its effectiveness against fortifications, was extensively used by the Ottoman Sultan who first ascended the throne in 1444 at the age of 12, abdicated two years later in favour of his father, and regained power permanently in 1451?",
+    "evidence": [
+      {
+        "url": "https://en.wikipedia.org/wiki/Orban_bombard",
+        "fact": "The Orban bombard or Basilica was a supergun designed by Orban, a cannon founder from Brassó, Kingdom of Hungary (now Brașov, Romania), who offered his services to the Ottoman Sultan Mehmed II in 1452, the year before the Fall of Constantinople. Orban was one of at least two cannon founders offering their services to the sultan; the other founder, Munir Ali, produced the majority of the cannons used by the Ottomans in the siege. However, the Orban bombard was the largest cannon possessed by either side, and according to most historical accounts, it was this weapon that battered down the Theodosian Walls, leading to the capture of the city."
+      },
+      {
+        "url": "https://www.britannica.com/event/Siege-of-Constantinople-1453",
+        "fact": "Mehmed II's army included a number of very large cannons, the most famous of which was the 'Basilica' or Great Turkish Bombard, designed by a Hungarian engineer named Orban. This massive bronze cannon, reportedly over 27 feet (8 meters) long, could fire stone balls weighing upwards of 1,200 pounds (540 kg) over a mile. While slow to reload and prone to cracking, its psychological impact and destructive power against the ancient walls were significant factors in the siege."
+      },
+      {
+        "url": "https://www.worldhistory.org/article/1750/mehmed-iis-overland-transport-of-ships-at-the-sieg/",
+        "fact": "One of Mehmet II's most famous tactics during the siege [of Constantinople in 1453] was the transportation of seventy Ottoman ships overland from the Bosphorus into the Golden Horn."
+      },
+      {
+        "url": "https://www.britannica.com/event/Siege-of-Constantinople-1453",
+        "fact": "During the Siege of Constantinople (1453), on April 22 Mehmet [II] ordered his lighter warships dragged overland from the Bosphorus to the Golden Horn on wooden rollers."
+      },
+      {
+        "url": "https://www.britannica.com/biography/Mehmed-II-Ottoman-sultan",
+        "fact": "Mehmed II (born March 30, 1432) first ruled as Ottoman sultan from 1444 (at age 12) to 1446."
+      },
+      {
+        "url": "https://www.britannica.com/biography/Mehmed-II-Ottoman-sultan",
+        "fact": "During his first reign, Mehmed II was pressured to abdicate in favour of his father, Murad II, in 1446, before succeeding his father permanently upon Murad II's death in 1451."
+      },
+      {
+        "url": "https://www.britannica.com/biography/Mehmed-II",
+        "fact": "Mehmed II was a cultured and learned man who was fluent in several languages, including Turkish, Arabic, Persian, Hebrew, Serbian, Greek, and Latin."
+      },
+      {
+        "url": "https://www.britannica.com/biography/Mehmed-II",
+        "fact": "He [Mehmed II] promulgated a series of new regulations and laws, compiled into a Kanun-name (Book of Laws)."
+      }
+    ],
+    "strategy": "complex abstraction concretization"
+  },
+  {
+    "level": 4,
+    "question": "During the pivotal military engagement that concluded on May 29, 1453, leading to the demise of the final Byzantine Emperor and the dissolution of the Eastern Roman Empire, contemporary accounts mention the extensive use of a specific type of fortification-breaching artillery. This artillery was employed by a historical ruler notable for: 1) reported fluency in multiple languages including Greek and Latin, and 2) the promulgation of new regulations compiled into a Kanun-name (Book of Laws). What was this specific type of artillery piece?",
+    "answer": "Orban bombard",
+    "parent_question": "According to contemporary accounts of the Siege of Constantinople in 1453, which specific type of artillery piece, known for its effectiveness against fortifications, was extensively used by a historical ruler notable for: 1) being reportedly fluent in multiple languages including Greek and Latin, and 2) promulgating a series of new regulations and laws, compiled into a Kanun-name (Book of Laws)?",
+    "evidence": [
+      {
+        "url": "https://en.wikipedia.org/wiki/Orban_bombard",
+        "fact": "The Orban bombard or Basilica was a supergun designed by Orban, a cannon founder from Brassó, Kingdom of Hungary (now Brașov, Romania), who offered his services to the Ottoman Sultan Mehmed II in 1452, the year before the Fall of Constantinople. Orban was one of at least two cannon founders offering their services to the sultan; the other founder, Munir Ali, produced the majority of the cannons used by the Ottomans in the siege. However, the Orban bombard was the largest cannon possessed by either side, and according to most historical accounts, it was this weapon that battered down the Theodosian Walls, leading to the capture of the city."
+      },
+      {
+        "url": "https://www.britannica.com/event/Siege-of-Constantinople-1453",
+        "fact": "Mehmed II's army included a number of very large cannons, the most famous of which was the 'Basilica' or Great Turkish Bombard, designed by a Hungarian engineer named Orban. This massive bronze cannon, reportedly over 27 feet (8 meters) long, could fire stone balls weighing upwards of 1,200 pounds (540 kg) over a mile. While slow to reload and prone to cracking, its psychological impact and destructive power against the ancient walls were significant factors in the siege."
+      },
+      {
+        "url": "https://www.worldhistory.org/article/1750/mehmed-iis-overland-transport-of-ships-at-the-sieg/",
+        "fact": "One of Mehmet II's most famous tactics during the siege [of Constantinople in 1453] was the transportation of seventy Ottoman ships overland from the Bosphorus into the Golden Horn."
+      },
+      {
+        "url": "https://www.britannica.com/event/Siege-of-Constantinople-1453",
+        "fact": "During the Siege of Constantinople (1453), on April 22 Mehmet [II] ordered his lighter warships dragged overland from the Bosphorus to the Golden Horn on wooden rollers."
+      },
+      {
+        "url": "https://www.britannica.com/biography/Mehmed-II-Ottoman-sultan",
+        "fact": "Mehmed II (born March 30, 1432) first ruled as Ottoman sultan from 1444 (at age 12) to 1446."
+      },
+      {
+        "url": "https://www.britannica.com/biography/Mehmed-II-Ottoman-sultan",
+        "fact": "During his first reign, Mehmed II was pressured to abdicate in favour of his father, Murad II, in 1446, before succeeding his father permanently upon Murad II's death in 1451."
+      },
+      {
+        "url": "https://www.britannica.com/biography/Mehmed-II",
+        "fact": "Mehmed II was a cultured and learned man who was fluent in several languages, including Turkish, Arabic, Persian, Hebrew, Serbian, Greek, and Latin."
+      },
+      {
+        "url": "https://www.britannica.com/biography/Mehmed-II",
+        "fact": "He [Mehmed II] promulgated a series of new regulations and laws, compiled into a Kanun-name (Book of Laws)."
+      },
+      {
+        "url": "https://www.britannica.com/event/Fall-of-Constantinople-1453",
+        "fact": "The Fall of Constantinople occurred on May 29, 1453, after a siege which began on April 6. The capture of the city... marked the end of the Byzantine Empire, a continuation of the Roman Empire under its emperor Constantine XI Palaiologos."
+      },
+      {
+        "url": "https://www.worldhistory.org/Fall_of_Constantinople/",
+        "fact": "The city fell on 29 May 1453 CE... The consequence of the Fall of Constantinople was, then, the end of the Byzantine Empire which had survived for over a millennium and the final demise of the Roman Empire founded by Augustus in 27 BCE."
+      }
+    ],
+    "strategy": "equivalence substitution"
+  },
+  {
+    "level": 5,
+    "question": "During the pivotal military engagement concluded on the day Constantine XI Palaiologos died, leading to the dissolution of the Eastern Roman Empire, contemporary accounts mention the extensive use of a specific type of fortification-breaching artillery. This artillery was employed by a historical ruler notable for: 1) conquering the city central to this engagement at the age of 21, and 2) decades later, commissioning the Venetian artist Gentile Bellini to paint his portrait. What was this specific type of artillery piece?",
+    "answer": "Orban bombard",
+    "parent_question": "During the pivotal military engagement that concluded on May 29, 1453, leading to the demise of the final Byzantine Emperor and the dissolution of the Eastern Roman Empire, contemporary accounts mention the extensive use of a specific type of fortification-breaching artillery. This artillery was employed by a historical ruler notable for: 1) reported fluency in multiple languages including Greek and Latin, and 2) the promulgation of new regulations compiled into a Kanun-name (Book of Laws). What was this specific type of artillery piece?",
+    "evidence": [
+      {
+        "url": "https://en.wikipedia.org/wiki/Orban_bombard",
+        "fact": "The Orban bombard or Basilica was a supergun designed by Orban, a cannon founder from Brassó, Kingdom of Hungary (now Brașov, Romania), who offered his services to the Ottoman Sultan Mehmed II in 1452, the year before the Fall of Constantinople. Orban was one of at least two cannon founders offering their services to the sultan; the other founder, Munir Ali, produced the majority of the cannons used by the Ottomans in the siege. However, the Orban bombard was the largest cannon possessed by either side, and according to most historical accounts, it was this weapon that battered down the Theodosian Walls, leading to the capture of the city."
+      },
+      {
+        "url": "https://www.britannica.com/event/Siege-of-Constantinople-1453",
+        "fact": "Mehmed II's army included a number of very large cannons, the most famous of which was the 'Basilica' or Great Turkish Bombard, designed by a Hungarian engineer named Orban. This massive bronze cannon, reportedly over 27 feet (8 meters) long, could fire stone balls weighing upwards of 1,200 pounds (540 kg) over a mile. While slow to reload and prone to cracking, its psychological impact and destructive power against the ancient walls were significant factors in the siege."
+      },
+      {
+        "url": "https://www.worldhistory.org/article/1750/mehmed-iis-overland-transport-of-ships-at-the-sieg/",
+        "fact": "One of Mehmet II's most famous tactics during the siege [of Constantinople in 1453] was the transportation of seventy Ottoman ships overland from the Bosphorus into the Golden Horn."
+      },
+      {
+        "url": "https://www.britannica.com/event/Siege-of-Constantinople-1453",
+        "fact": "During the Siege of Constantinople (1453), on April 22 Mehmet [II] ordered his lighter warships dragged overland from the Bosphorus to the Golden Horn on wooden rollers."
+      },
+      {
+        "url": "https://www.britannica.com/biography/Mehmed-II-Ottoman-sultan",
+        "fact": "Mehmed II (born March 30, 1432) first ruled as Ottoman sultan from 1444 (at age 12) to 1446."
+      },
+      {
+        "url": "https://www.britannica.com/biography/Mehmed-II-Ottoman-sultan",
+        "fact": "During his first reign, Mehmed II was pressured to abdicate in favour of his father, Murad II, in 1446, before succeeding his father permanently upon Murad II's death in 1451."
+      },
+      {
+        "url": "https://www.britannica.com/biography/Mehmed-II",
+        "fact": "Mehmed II was a cultured and learned man who was fluent in several languages, including Turkish, Arabic, Persian, Hebrew, Serbian, Greek, and Latin."
+      },
+      {
+        "url": "https://www.britannica.com/biography/Mehmed-II",
+        "fact": "He [Mehmed II] promulgated a series of new regulations and laws, compiled into a Kanun-name (Book of Laws)."
+      },
+      {
+        "url": "https://www.britannica.com/event/Fall-of-Constantinople-1453",
+        "fact": "The Fall of Constantinople occurred on May 29, 1453, after a siege which began on April 6. The capture of the city... marked the end of the Byzantine Empire, a continuation of the Roman Empire under its emperor Constantine XI Palaiologos."
+      },
+      {
+        "url": "https://www.worldhistory.org/Fall_of_Constantinople/",
+        "fact": "The city fell on 29 May 1453 CE... The consequence of the Fall of Constantinople was, then, the end of the Byzantine Empire which had survived for over a millennium and the final demise of the Roman Empire founded by Augustus in 27 BCE."
+      },
+      {
+        "url": "https://www.britannica.com/biography/Mehmed-II",
+        "fact": "Mehmed II conquered Constantinople in 1453. Born in 1432, he was 21 years old at the time of the conquest."
+      },
+      {
+        "url": "https://www.nationalgallery.org.uk/paintings/attributed-to-gentile-bellini-the-sultan-mehmet-ii",
+        "fact": "In 1479 the Venetian painter Gentile Bellini was sent to Constantinople (by then Istanbul) at the request of Sultan Mehmet II (also known as Mehmed II) to paint his portrait."
+      },
+      {
+        "url": "https://www.britannica.com/biography/Constantine-XI-Palaeologus",
+        "fact": "Constantine XI Palaeologus, the last Byzantine emperor, died defending Constantinople during its fall on May 29, 1453."
+      }
+    ],
+    "strategy": "equivalence substitution"
+  },
+  {
+    "level": 0,
+    "question": "Which specific administrative subprefecture of Tokyo Metropolis governs both the island group that includes Iwo Jima and Japan's easternmost point?",
+    "answer": "Ogasawara Subprefecture",
+    "parent_question": null,
+    "evidence": [
+      {
+        "url": "https://en.wikipedia.org/wiki/Ogasawara_Subprefecture",
+        "fact": "Ogasawara Subprefecture (小笠原支庁, Ogasawara-shichō) is a subprefecture of Tokyo Metropolis, Japan. ... Besides the Ogasawara Archipelago, the subprefecture includes other outlying islands such as the Volcano Islands [includes Iwo Jima], Nishinoshima, Minami-Tori-shima [Japan's easternmost point] and Oki-no-Tori-shima [Japan's southernmost point]."
+      },
+      {
+        "url": "https://www.britannica.com/place/Bonin-Islands",
+        "fact": "The Bonin Islands, also called Ogasawara Islands... administratively part of Tokyo metropolis (to)... They consist of three main groups: the Chichijima Retto (Beechey Islands), the Hahajima Retto (Baily Islands), and the Mukojima Retto (Parry Islands). Geographically associated with the Bonins are the Volcano Islands (Kazan Retto) to the south—which include Iwo Jima—and the isolated islands of Nishino, Minami Tori, and Okinotori. Minami Tori Island (Marcus Island) is the easternmost territory of Japan."
+      }
+    ],
+    "strategy": "seed"
+  },
+  {
+    "level": 0,
+    "question": "In 'Monster Hunter World: Iceborne', on which specific large herbivore species, found exclusively in the Hoarfrost Reach, can the rare endemic life 'Downy Crake' sometimes be found riding?",
+    "answer": "Popo",
+    "parent_question": null,
+    "evidence": [
+      {
+        "url": "https://monsterhunter.fandom.com/wiki/Downy_Crake",
+        "fact": "Downy Crakes are rare birds that have a small chance of appearing on the backs of Aptonoth, Apceros, or Popo in various locales. [...] They are small white birds that flock together on the backs of herbivores."
+      },
+      {
+        "url": "https://monsterhunter.fandom.com/wiki/Popo",
+        "fact": "Popo are large, woolly herbivores resembling mammoths, introduced in Monster Hunter 2 and reappearing in Monster Hunter World: Iceborne. They are exclusively found grazing in herds within the Hoarfrost Reach."
+      }
+    ],
+    "strategy": "seed"
   }
 ]
