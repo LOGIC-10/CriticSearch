@@ -448,6 +448,9 @@ class ReverseUpgradeWorkflow:
 
         printer.rule("Workflow End")
 
+    async def entity_decompose_run(self):
+        
+        pass
 
     def save(self, path: Path):
         # Keeping original save logic exactly
@@ -554,7 +557,7 @@ class ReverseUpgradeWorkflow:
             strategy=method,
         )
 
-    # 恢复 GPT-Search 主流程入口
+    # GPT-Search 主流程入口
     async def gpt_search_run(self):
         GPT_MODEL = "gpt-4o-search-preview" # Original code set this here
         printer.rule(f"GPT-Search Workflow Start with {GPT_MODEL}")
@@ -826,6 +829,77 @@ def evaluate(
     printer.print(f"Accuracy for '{search_model}': {acc:.4%}", style="bold green")
     # <-- End MODIFIED Report -->
 
+async def test_fuzzy_replacement():
+    """Test the fuzzy_replacement prompt with some example inputs."""
+    test_cases = ["全球"]
+    
+    printer.rule("Testing Fuzzy Replacement")
+    for test_input in test_cases:
+        try:
+            result = agent.chat_with_template(
+                template_name="fuzzy_replacement.txt",
+                template_data={"input": test_input},
+                root_folder=PROMPT_ROOT_FOLDER,
+                model="gpt-4o"
+            )
+            parsed_result = extract_and_validate_json(result)
+            printer.print(f"\nInput: {test_input}", style="bold yellow")
+            printer.print(f"Output: {parsed_result}", style="bold green")
+        except Exception as e:
+            printer.print(f"Error processing {test_input}: {e}", style="bold red")
+            logger.exception(f"Error in fuzzy replacement test for input: {test_input}")
+
+async def test_entity_extraction():
+    """Test the entity_extraction prompt with example inputs."""
+    test_cases = [
+        "The CEO of Apple Inc. in 2024 is Tim Cook.",
+        "2020年东京奥运会最终在2021年举行。",
+        "习近平是中国国家主席。",
+        "The Eiffel Tower is located in Paris, France.",
+        "2022年北京冬奥会由中国举办。",
+        "Elon Musk founded SpaceX in 2002.",
+        "2023年诺贝尔文学奖得主是一位非洲作家。",
+        "The capital of Japan is Tokyo.",
+        "2021年7月，河南遭遇严重洪灾。",
+        "Barack Obama served as the U.S. president from 2009 to 2017.",
+        "2024年11月，美国将举行总统大选。",
+        "Harry Potter was written by J.K. Rowling.",
+        "The COVID-19 pandemic began in late 2019.",
+        "乔丹是NBA历史上最伟大的球员之一。",
+        "The United Nations was founded in 1945.",
+        "2023年杭州亚运会吸引了数千名运动员参与。",
+        "The Great Wall of China can be seen from space, though it's a myth.",
+        "2022年，俄罗斯与乌克兰爆发冲突。",
+        "Albert Einstein was awarded the Nobel Prize in Physics in 1921.",
+        "2023年5月，ChatGPT在全球范围内被广泛使用。",
+    ]
+    
+    printer.rule("Testing Entity Extraction")
+    for test_input in test_cases:
+        try:
+            result = agent.chat_with_template(
+                template_name="entity_extraction.txt",
+                template_data={"input": test_input},
+                root_folder=PROMPT_ROOT_FOLDER,
+                model="gpt-4o"
+            )
+            printer.print(f"\nInput: {test_input}", style="bold yellow")
+            printer.print(f"Output: {result}", style="bold green")
+
+            # 尝试解析JSON结果并格式化显示
+            try:
+                parsed_result = extract_and_validate_json(result)
+                printer.print("\nParsed entities:", style="bold blue")
+                for entity_type, entities in parsed_result.get("entities", {}).items():
+                    if entities:  # 只显示非空的实体类型
+                        printer.print(f"{entity_type}: {', '.join(entities)}")
+            except json.JSONDecodeError:
+                printer.print("Warning: Failed to parse JSON output", style="bold red")
+
+        except Exception as e:
+            printer.print(f"Error processing {test_input}: {e}", style="bold red")
+            logger.exception(f"Error in entity extraction test for input: {test_input}")
+
 def main():
     # Added --search_model argument
     parser = argparse.ArgumentParser(description="Generates or evaluates multi-level reverse-upgrade benchmark questions.")
@@ -839,7 +913,9 @@ def main():
     parser.add_argument("--gptsearch", action="store_true", help="运行 GPT-Search 专用流程")
     parser.add_argument("--eval_concurrency", type=int, default=10, help="最大并行并发数 (for --evaluate mode)")
     parser.add_argument("--search_model", type=str, default="gpt-4o-search-preview", help="Model to use for evaluation LLM calls (in --evaluate mode)") # New argument
-
+    parser.add_argument("--test_fuzzy", action="store_true", help="运行 fuzzy replacement 测试")
+    parser.add_argument("--test_entity", action="store_true", help="运行实体抽取测试")
+    
     args = parser.parse_args()
 
     # Keeping original model override logic
@@ -848,6 +924,14 @@ def main():
         GPT_MODEL = args.model
         printer.print(f"Using overridden model for generation runs: {GPT_MODEL}", style="bold yellow")
 
+    # Add test branch
+    if args.test_fuzzy:
+        asyncio.run(test_fuzzy_replacement())
+        return
+
+    if args.test_entity:
+        asyncio.run(test_entity_extraction())
+        return
 
     # --- Evaluation Branch ---
     if args.evaluate:
@@ -964,5 +1048,11 @@ python -m criticsearch.abstract_substitution.abs_workflow --out trace_data.json 
 python -m criticsearch.abstract_substitution.abs_workflow --batch 3 --concurrency 20 --gptsearch --out trace_data—1.json
 
 ## 批量评估
-python -m criticsearch.abstract_substitution.abs_workflow --out trace_data-1.json --evaluate --search_model gpt-4o-mini-search-preview --eval_concurrency 15
+python -m criticsearch.abstract_substitution.abs_workflow --out trace_data-1.json --evaluate --search_model gemini-2.0-flash-search --eval_concurrency 15
+
+## 测试 fuzzy replacement
+python -m criticsearch.abstract_substitution.abs_workflow --test_fuzzy
+
+## 测试实体抽取
+python -m criticsearch.abstract_substitution.abs_workflow --test_entity
 """
