@@ -213,6 +213,51 @@ class FuzzyQAItem:
     def to_dict(self) -> dict:
         return asdict(self)
 
+async def verify_fuzzy_item(item: FuzzyQAItem) -> bool:
+    """
+    验证模糊替换后的问题是否能从evidence中的facts中直接推理出答案:
+    - 拼接 evidence 中的 fact 条目
+    - 加入 question 和 constrained_format
+    - 要求模型以 \\boxed{} 格式作答
+    """
+    # 拼接 evidence facts
+    lines: List[str] = []
+    for f in item.evidence:
+        if isinstance(f, dict):
+            fact = f.get("fact")
+            if fact:
+                lines.append(f"- {fact}")
+        elif isinstance(f, str):
+            txt = f.strip()
+            if txt:
+                lines.append(f"- {txt}")
+    facts = "\n".join(lines)
+
+    prompt = (
+        f"Based on these facts:\n{facts}\n\n"
+        f"Question: {item.question}\n"
+        f"Format constraint: {item.constrained_format}\n"
+        f"{FORMAT_INSTRUCTION}"
+    )
+    try:
+        resp = agent.chat(prompt, model="o4-mini")
+        pred = extract_boxed_content(resp)
+        if not pred:
+            printer.print("验证失败：未返回 boxed 内容", style="bold red")
+            return False
+        # 规范化比较
+        norm_pred = "".join(c for c in pred.lower() if c.isalnum() or c.isspace()).replace(" ", "")
+        norm_true = "".join(c for c in item.answer.lower() if c.isalnum() or c.isspace()).replace(" ", "")
+        if norm_pred != norm_true:
+            printer.print(f"验证失败：答案不匹配 (pred={pred}  true={item.answer})", style="bold red")
+            return False
+        printer.print("验证通过：格式及答案均正确", style="bold green")
+        return True
+    except Exception as e:
+        printer.print(f"验证过程出错：{e}", style="bold red")
+        logger.exception("verify_fuzzy_item error")
+        return False
+
 # === Workflow ===
 # 全局文件锁
 file_lock = threading.Lock()
@@ -629,7 +674,8 @@ def evaluate(
     use_cache: bool = True,
     cache_file: Path | None = None,
     eval_concurrency: int = 10,
-    search_model: str = "gpt-4o-search-preview" # Added search_model parameter
+    search_model: str = "gpt-4o-search-preview",  # Added search_model parameter
+    level: Optional[int] = None                   # 新增 level 参数
 ):
     """
     Evaluate level-5 items in a JSON trace, using concurrency for LLM calls.
@@ -640,6 +686,7 @@ def evaluate(
     - cache_file: 缓存文件路径，默认与 json_file 同目录，名为 "<stem>_eval_cache.json"
     - eval_concurrency: Max concurrent evaluations.
     - search_model: Model to use for evaluation LLM calls. This model name is used as the key in the cache.
+    - level: 指定评估的 level，若为 None 则评估所有记录。
     """
     printer.print(f"Evaluation using model: {search_model}", style="bold cyan")
 
@@ -692,10 +739,15 @@ def evaluate(
         return
 
     # --- Filter and Prepare Items ---
-    items_to_evaluate = [r for r in records if isinstance(r, dict) and r.get("level") == 5]
+    if level is None:
+        # 不指定 level 时评估所有记录
+        items_to_evaluate = [r for r in records if isinstance(r, dict)]
+    else:
+        # 指定 level 时只评估该 level
+        items_to_evaluate = [r for r in records if isinstance(r, dict) and r.get("level") == level]
     total_items = len(items_to_evaluate)
     if total_items == 0:
-        printer.print(f"No level-5 items found in {json_file}.", style="yellow")
+        printer.print(f"No items{' of level '+str(level) if level is not None else ''} found in {json_file}.", style="yellow")
         return
 
     items_needing_eval: List[Dict] = []
@@ -727,7 +779,7 @@ def evaluate(
                  items_needing_eval.append(item)
         # <-- End MODIFIED Block -->
 
-    printer.print(f"Total level-5 items found: {total_items}")
+    printer.print(f"Total items found: {total_items}")
     # <-- MODIFIED Print statements -->
     printer.print(f"Items found in cache for model '{search_model}': {items_found_in_cache_for_this_model} ({correct_in_cache_for_this_model} correct)")
     printer.print(f"Items needing evaluation by model '{search_model}' (LLM call): {len(items_needing_eval)}")
@@ -835,7 +887,7 @@ def evaluate(
     # <-- MODIFIED: Report accuracy based on results for *this model run* -->
     acc = total_correct_for_this_model / total_evaluated_for_this_model if total_evaluated_for_this_model else 0.0
     printer.rule(f"Evaluation Results for Model: {search_model}")
-    printer.print(f"Total level-5 items considered: {total_items}", style="bold")
+    printer.print(f"Total items considered: {total_items}", style="bold")
     printer.print(f"Total items evaluated for '{search_model}' (cache + new): {total_evaluated_for_this_model}", style="bold")
     printer.print(f"Correct predictions for '{search_model}': {total_correct_for_this_model}", style="bold")
     printer.print(f"Accuracy for '{search_model}': {acc:.4%}", style="bold green")
@@ -934,7 +986,7 @@ async def test_combination_workflow(out_file: Path):
         parsed_entities = extract_and_validate_json(result)
         if not parsed_entities or "entities" not in parsed_entities:
             raise ValueError("Failed to extract entities from the seed question")
-        
+
         # 3. 对每个实体进行模糊替换（并发处理）
         replacements = []
         entities_to_process = []
@@ -1006,7 +1058,7 @@ async def test_combination_workflow(out_file: Path):
         except Exception as e:
             printer.print(f"Error parsing final polish result: {e}", style="bold red")
         
-        # 7. 将结果转换为FuzzyQAItem并保存
+        # 7. 将结果转换为 FuzzyQAItem
         fuzzy_item = FuzzyQAItem(
             original_question=seed.question,
             question=input_data["fuzzy_result"]["question"],
@@ -1015,10 +1067,14 @@ async def test_combination_workflow(out_file: Path):
             strategy="fuzzy_replacement",
             evidence=input_data["fuzzy_result"]["evidence"]
         )
-        
-        # 只有在整个流程都成功完成后才保存结果
+
+        # 8. 验证, 未通过则丢弃
+        if not await verify_fuzzy_item(fuzzy_item):
+            printer.print("核验未通过，丢弃此条结果", style="bold yellow")
+            return None
+
         return fuzzy_item
-        
+
     except Exception as e:
         printer.print(f"Error in combination workflow: {e}", style="bold red")
         logger.exception("Error in combination workflow")
@@ -1033,10 +1089,10 @@ def main():
     parser.add_argument("--batch", type=int, default=1, help="批量运行次数，>1 则追加写入同一文件")
     parser.add_argument("--concurrency", type=int, default=1, help="最大并行并发数 (for batch runs)")
     parser.add_argument("--model", type=str, default=None, help="LLM model name to use (for non-GPT-Search runs)")
-    parser.add_argument("--evaluate", action="store_true", help="只运行 evaluate()，输出 level-5 测试结果并退出")
-    parser.add_argument("--gptsearch", action="store_true", help="运行 GPT-Search 专用流程")
+    parser.add_argument("--evaluate", action="store_true", help="只运行 evaluate()，输出测试结果并退出")
     parser.add_argument("--eval_concurrency", type=int, default=10, help="最大并行并发数 (for --evaluate mode)")
-    parser.add_argument("--search_model", type=str, default="gpt-4o-search-preview", help="Model to use for evaluation LLM calls (in --evaluate mode)") # New argument
+    parser.add_argument("--search_model", type=str, default="gpt-4o-search-preview", help="Model to use for evaluation LLM calls")
+    parser.add_argument("--eval_level", type=int, default=None, help="Specify level to evaluate; omit for all records")
     parser.add_argument("--test_fuzzy", action="store_true", help="运行 fuzzy replacement 测试")
     parser.add_argument("--test_entity", action="store_true", help="运行实体抽取测试")
     parser.add_argument("--test_combination", action="store_true", help="运行组合测试流程")
@@ -1117,13 +1173,13 @@ def main():
 
     # --- Evaluation Branch ---
     if args.evaluate:
-        # Pass eval_concurrency and search_model to the function
         evaluate(
             json_file=args.out,
             use_cache=True,
             eval_concurrency=args.eval_concurrency,
-            search_model=args.search_model # Pass the new argument
-            )
+            search_model=args.search_model,
+            level=args.eval_level
+        )
         return # Exit after evaluation
 
     # --- Single Run Branches (Unchanged) ---

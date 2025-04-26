@@ -4419,5 +4419,214 @@
         "fact": "Egypt is located in the northeastern corner of Africa and is known for its ancient monuments and the Suez Canal, which connects the Mediterranean Sea and the Red Sea."
       }
     ]
+  },
+  {
+    "original_question": "Which conductor led the orchestra at the Tivoli Concert Hall in Copenhagen for the Léonie Sonning Music Prize ceremony honoring Birgit Nilsson on May 17, 1966?",
+    "question": "Which conductor led a large ensemble of strings, woodwinds, brass, and percussion at a concert hall in a historic Northern European capital—known for its 30‑meter underground saltwater aquarium—during an annual Scandinavian music prize ceremony honoring a renowned Nordic soprano, on a mid‑1960s date when “Monday, Monday” topped the US charts?",
+    "answer": "Arvid Jansons",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": "fuzzy_replacement",
+    "evidence": [
+      {
+        "url": "https://www.sonningmusik.dk/main-prize-recipients/birgit-nilsson",
+        "fact": "The Léonie Sonning Music Prize of DKK 50,000 was presented on Tuesday, 17 May 1966 at a concert in the Tivoli Concert Hall. The music performed was: Beethoven: Leonora Overture no. 3. Verdi, Wagner, Puccini and Richard Strauss: Arias. Conductor: Arvid Jansons."
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/L%C3%A9onie_Sonning_Music_Prize",
+        "fact": "The Léonie Sonning Music Prize is an international music prize awarded annually to a composer, conductor, instrumentalist or singer. The prize ceremony usually takes place in Copenhagen... Recipients include... 1966 Birgit Nilsson Sweden Soprano..."
+      },
+      {
+        "url": "https://takemeback.to/17-May-1966",
+        "fact": "On May 17, 1966, 'Monday, Monday' by The Mamas & The Papas was the number 1 song in the USA."
+      },
+      {
+        "url": "https://www.sonningmusik.dk/the-danish-string-quartet-receives-the-leonie-sonning-music-prize-2025/?lang=en",
+        "fact": "The Danish String Quartet received the Léonie Sonning Music Prize in 2025, the first ensemble to do so."
+      },
+      {
+        "url": "https://www.latimes.com/archives/la-xpm-2006-jan-12-me-nilsson12-story.html",
+        "fact": "Nilsson’s rich, powerful voice was considered something of a phenomenon. She could dominate a full orchestra with astonishing force."
+      },
+      {
+        "url": "https://dac.dk/en/knowledgebase/architecture/tivoli-concert-hall-2/",
+        "fact": "The basement below the concert hall features a 30-meter-long saltwater aquarium filled with sharks and tropical fish."
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Copenhagen",
+        "fact": "The Copenhagen Fire of 1728 was the largest in the city's history, destroying approximately 28% of the city."
+      },
+      {
+        "url": "https://www.jacksonsymphony.org/what-is-a-symphony-orchestra/",
+        "fact": "A Symphony Orchestra is defined as a large ensemble composed of wind, string, brass and percussion instruments and organized to perform classical music."
+      }
+    ]
+  },
+  {
+    "original_question": "What specific type of flower did Kurt Cobain request be used for the stage decoration during the taping of Nirvana's MTV Unplugged performance at Sony Music Studios on November 18, 1993?",
+    "question": "What specific type of flower did a Pacific Northwest musician—who in the early 1990s led a chart‑topping grunge band—request for the stage decoration during the taping of a notable acoustic session by the Pacific Northwest ensemble known for a 1991 album that sold over 30 million copies, at a five‑story red‑brick studio in a bustling metropolis on a day when a significant North American trade agreement was ratified?",
+    "answer": "Stargazer lilies",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": "fuzzy_replacement",
+    "evidence": [
+      {
+        "url": "https://faroutmagazine.co.uk/kurt-cobain-nirvana-mtv-unplugged-funeral-set/",
+        "fact": "When MTV approached Nirvana about doing an Unplugged show towards the end of 1993, frontman Kurt Cobain agreed under one condition: the stage had to be decorated like a funeral... Specifically, Cobain requested stargazer lilies for the performance, which took place at Sony Music Studios in New York City on November 18th, 1993."
+      },
+      {
+        "url": "https://www.rollingstone.com/music/music-news/nirvana-oral-history-of-mtv-unplugged-in-new-york-106376/",
+        "fact": "Recounting the preparations for the November 18, 1993 taping at Sony Music Studios, Producer Alex Coletti stated: 'He [Kurt Cobain] asked for stargazer lilies, which are these big, purple, fragrant flowers...'"
+      },
+      {
+        "url": "https://www.kerrang.com/nirvana-unplugged-in-new-york-the-story-behind-the-greatest-live-album-of-all-time",
+        "fact": "For the recording on November 18, 1993, at Sony Music Studios, Kurt Cobain famously requested the stage be adorned with black candles and stargazer lilies, contributing to the performance's funereal atmosphere."
+      },
+      {
+        "url": "https://takemeback.to/18-November-1993",
+        "fact": "On November 18, 1993, the North American Free Trade Agreement (NAFTA) was passed by the U.S. House of Representatives."
+      },
+      {
+        "url": "https://faroutmagazine.co.uk/ten-greatest-mtv-unplugged-performances-bob-dylan-nirvana/",
+        "fact": "Nirvana's 1993 MTV Unplugged session is noted for being one of Kurt Cobain’s last acts before his tragic death, featuring a cover of David Bowie's 'The Man Who Sold The World'."
+      },
+      {
+        "url": "https://www.britannica.com/summary/Kurt-Cobain",
+        "fact": "In 1991, the release of Nirvana's hit, 'Smells Like Teen Spirit' marked the beginning of a dramatic shift of popular rock music away from the dominant genres of the 1980s, toward grunge and alternative rock."
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Sony_Music_Studios",
+        "fact": "The building was sold in November 2007 for $44 million."
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Nirvana_%28band%29",
+        "fact": "Nevermind, their most successful album, has sold more than 30 million copies worldwide, making it one of the best-selling albums ever."
+      }
+    ]
+  },
+  {
+    "original_question": "What was the full name of the theater manager who oversaw the special preview screening of 'Jaws' held for island residents at the Capawock Theatre in Vineyard Haven on June 18, 1975?",
+    "question": "What was the full name of the theater manager who oversaw an early screening of a 1970s marine‑predator thriller—during which a viewer had a strong physical reaction—for island residents at a century‑old entertainment venue in a northeastern coastal community known as the island’s main gateway, on a mid‑1970s day noted for a major musical performance?",
+    "answer": "Denna Scheffer LaBell",
+    "constrained_format": "Answer in exactly 3 words",
+    "strategy": "fuzzy_replacement",
+    "evidence": [
+      {
+        "url": "https://www.mvtimes.com/2015/06/17/forty-years-later-jaws-still-rules-summer/",
+        "fact": "A special preview screening was held for Islanders at the Capawock Theatre in Vineyard Haven on June 18, 1975, attended by director Steven Spielberg. Denna Scheffer LaBell, then manager of the Capawock and Strand Theatres, remembers the preview night well: 'We held a special preview screening for the Islanders, the night before the official opening,' she said."
+      },
+      {
+        "url": "https://www.mvtimes.com/2012/07/18/forty-years-later-jaws-remains-a-blockbuster-11492/",
+        "fact": "Denna Scheffer-LaBell, the manager of the Capawock and Strand theaters in 1975, recalls the excitement and the challenges. 'It was very exciting,' Ms. LaBell, now 66, said in a recent phone conversation from her home in Los Angeles. 'We had lines down the street for both theaters.'"
+      },
+      {
+        "url": "https://www.setlist.fm/setlist/pink-floyd/1975/boston-garden-boston-ma-bd62d22.html",
+        "fact": "On June 18, 1975, Pink Floyd performed at the Boston Garden in Boston, Massachusetts."
+      },
+      {
+        "url": "https://www.syfy.com/syfy-wire/an-audience-member-vomited-during-early-screening-of-jaws-spielberg-remembers",
+        "fact": "During an early screening of 'Jaws', a man vomited after the scene where young Alex Kintner is attacked."
+      },
+      {
+        "url": "https://www.wbur.org/news/2020/12/18/independent-movie-theater-closures-marthas-vineyard",
+        "fact": "The Capawock Theatre, a historic venue in Vineyard Haven, Massachusetts, underwent significant restoration in 2015 but faced operational challenges during the COVID-19 pandemic in 2020."
+      },
+      {
+        "url": "https://www.marthasvisit.com/towns/vineyard-haven",
+        "fact": "Vineyard Haven is the island's central location for coming and going, year round. It's where the Steamship Authority Ferry docks in, day in and day out, and is the town that welcomes most visitors to the island as the main port of entry."
+      }
+    ]
+  },
+  {
+    "original_question": "At which specific venue in London, Ontario did drummer John Rutsey play his final concert with the band Rush on July 25, 1974?",
+    "question": "At which venue in a European metropolis known for its underground rivers and urban foxes—located in a North American region famed for its freshwater lakes—did a North American percussionist, who co‑founded a celebrated late‑1960s trio and appeared on their debut album, perform his final concert with a Canadian trio renowned for intricate compositions and philosophical themes on the mid‑1970s day when a landmark U.S. school desegregation ruling was issued?",
+    "answer": "Centennial Hall",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": "fuzzy_replacement",
+    "evidence": [
+      {
+        "url": "http://www.cygnus-x1.net/links/rush/concerts/london-07.25.1974.php",
+        "fact": "RUSH - London, Ontario: July 25th, 1974. Venue: Centennial Hall. City: London, Ontario, Canada. Notes: Opening for ZZ Top. John Rutsey's last gig with Rush."
+      },
+      {
+        "url": "https://rushwiki.com/index.php?title=July_25,_1974",
+        "fact": "July 25, 1974: Centennial Hall, London, ON. Promoter: Tunc Productions. Opening Act For: ZZ Top. Capacity: 1,842. Attendance: Sold Out. Notes: John Rutsey's final concert with Rush."
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/July_1974",
+        "fact": "On July 25, 1974, the U.S. Supreme Court ruled, 5 to 4, that busing of students from suburban school districts to city schools, to achieve racial desegregation, was unconstitutional. The decision came in a challenge to a ruling requiring white students in Michigan, living outside Detroit city and school district limits, to be sent on school buses to predominantly black schools in Detroit."
+      },
+      {
+        "url": "https://ultimateclassicrock.com/nirvana-last-concert/",
+        "fact": "On March 1, 1994, Nirvana performed their final concert at Terminal 1 in Munich, Germany, where Kurt Cobain, suffering from bronchitis, delivered a poignant performance to approximately 3,000 attendees."
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/John_Rutsey",
+        "fact": "John Rutsey was a founding member and original drummer of Rush, performing on the band's 1974 debut album before leaving due to health problems."
+      },
+      {
+        "url": "https://facts.net/london-facts/",
+        "fact": "London has around 20 underground rivers."
+      },
+      {
+        "url": "https://facts.net/london-facts/",
+        "fact": "The city is home to about 10,000 foxes."
+      },
+      {
+        "url": "https://www.ontario.ca/page/about-ontario",
+        "fact": "Ontario's more than 250,000 lakes contain about one-fifth of the world's fresh water."
+      },
+      {
+        "url": "https://www.loudersound.com/features/rush-geddy-lee-alex-lifeson-interview-band-history-2015",
+        "fact": "In 1974, the band opened for the New York Dolls, a glam rock band."
+      }
+    ]
+  },
+  {
+    "original_question": "According to Matthew Henson's 1912 account, what specific scientific observations did Professor Marvin of Cornell conduct after establishing his station at Cape Sheridan during the 1908-1909 Peary expedition?",
+    "question": "According to an early 20th‑century Arctic explorer later honored by a leading field research society, in a year marked by a maritime disaster with over 1,500 casualties, what scientific observations did a cognitive neuroscience professor from a northeastern U.S. university make after establishing his station at a remote Arctic headland during an expedition aiming for the North Pole between the Siberian forest‑flattening event and the founding of a major U.S. civil rights organization?",
+    "answer": "Tidal observations",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": "fuzzy_replacement",
+    "evidence": [
+      {
+        "url": "https://www.gutenberg.org/files/4333/4333-h/4333-h.htm",
+        "fact": "Professor Marvin of Cornell established his station at Cape Sheridan and began his series of tidal observations, which were conducted with ability and success. Simultaneously with the tidal observations, Professor Marvin also made observations of the velocity and direction of the winds on the summit of the hill at Cape Sheridan, 800 feet high."
+      },
+      {
+        "url": "https://worldamazingfacts.com/1912-history-events/",
+        "fact": "On April 15, 1912, the British luxury passenger liner Titanic sank on route to New York City from Southampton, Hampshire, England, after colliding with an iceberg during her maiden voyage; 1,500 people died."
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/1908",
+        "fact": "On June 30, 1908, the Tunguska event occurred in remote Siberia, flattening 2,000 square kilometers of forest."
+      },
+      {
+        "url": "https://www.history.com/this-day-in-history/year/1909",
+        "fact": "On February 12, 1909, the NAACP was founded in the United States."
+      },
+      {
+        "url": "https://www.history.com/this-day-in-history/pearys-expedition-reaches-north-pole",
+        "fact": "On April 6, 1909, American explorer Robert Peary, assistant Matthew Henson, and four Inuits reached what they determined to be the North Pole."
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Matthew_Henson",
+        "fact": "Matthew Henson was an African American explorer who accompanied Robert Peary on his 1908–09 expedition to the North Pole."
+      },
+      {
+        "url": "https://www.thoughtco.com/matthew-henson-north-pole-explorer-45284",
+        "fact": "In 1937, he was the first African American to be made a life member of The Explorers Club."
+      },
+      {
+        "url": "https://your.yale.edu/get-know-yale-leaders-marvin-chun",
+        "fact": "Marvin M. Chun leads a cognitive neuroscience laboratory that uses functional brain imaging to study how people see, attend, remember, and perform optimally."
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Cape_Sheridan",
+        "fact": "Cape Sheridan was the wintering site of Robert Peary's final quest to reach the North Pole in 1908/1909."
+      },
+      {
+        "url": "https://www.reuters.com/legal/litigation/cornell-university-sues-att-verizon-over-wi-fi-patents-2025-01-22/",
+        "fact": "Cornell University has filed lawsuits against AT&T and Verizon, alleging infringement on patents related to Wi-Fi technology."
+      }
+    ]
   }
 ]
