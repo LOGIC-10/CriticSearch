@@ -8,6 +8,8 @@ First, you need to design a seed fact for the given {{domain}} domain, and the r
 
 # Content Requirements
 
+Seed facts require the inclusion of DATE, EVENT, PERSON, and PLACE. These are the basic elements, and if there is more detailed information, ORGANIZATION and others can be added.
+
 The seed fact must be difficult: you cannot simply search for the seed fact on Google and find the answer. For example, searching "Who was the President of the United States on July 24, 2023," immediately yields Biden, indicating that the seed fact is too simple. You can first construct various queries you are interested in within your domain and search online, finding a deep webpage with highly specialized information, from which you can select to construct a difficult question and its corresponding unique short answer. For example:  
 
 Suppose you access this webpage:  
@@ -67,4 +69,4 @@ Bad: "What was the impact of the wildfire on local businesses?"
 Why? The answer could be subjective and difficult to verify with a single value.
 
 ---
-Now, to design a seed fact in the {{domain}} domain, you need to browse through the content of the webpages you searched to generate a data in the format above.  
+Now, remember Seed facts require the inclusion of DATE, EVENT, PERSON, and PLACE and some other basic elements. To begin, design a seed fact in the {{domain}} domain, you need to browse through the content of the webpages you searched to generate a data in the format above.  

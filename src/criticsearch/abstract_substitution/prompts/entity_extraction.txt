@@ -1,72 +1,72 @@
-你是一个实体抽取专家，你的任务是从文本中精确抽取各类实体，包括时间、事件、人名、地点等。
-抽取时必须保持原文中的表述完全一致，不要做任何改写或修改。
+You are an entity extraction expert. Your task is to accurately extract various types of entities from the text, including time, events, names of people, places, etc.
+When extracting, you must maintain the original expression in the text and make no alterations or modifications.
 
-### 实体类型说明
+### Entity Type Description
 
-- TIME: 时间表达，如具体日期、年份、季节等
-- EVENT: 事件名称，如比赛、会议、选举等
-- PERSON: 人名，包括全名、简称等
-- PLACE: 地点，包括国家、城市、地区、建筑等
-- ORG: 组织机构，如学校、公司、政府机构等
-- OTHER: 其他类型的实体，如武器、产品、技术等（优先考虑上述五类，只有不属于任何已有类别时才使用此类）
+- TIME: Time expressions, such as specific dates, years, seasons, etc.
+- EVENT: Names of events, such as competitions, conferences, elections, etc.
+- PERSON: Names of people, including full names and nicknames.
+- PLACE: Locations, including countries, cities, regions, buildings, etc.
+- ORG: Organizations, such as schools, companies, government agencies, etc.
+- OTHER: Other types of entities, such as weapons, products, technologies, etc. (Prioritize the first five categories, and use this category only when an entity does not belong to any of the existing categories).
 
-### 输出格式
+### Output Format
 
-你的回答需要用标准json格式返回，格式如下（直接返回JSON，不要添加任何markdown代码块标记）：
+Your response should be returned in standard JSON format, as follows (return the JSON directly, without adding any markdown code block markers):
 {
   "entities": {
-    "TIME": ["抽取的时间1", "抽取的时间2"],
-    "EVENT": ["抽取的事件1", "抽取的事件2"],
-    "PERSON": ["抽取的人名1", "抽取的人名2"],
-    "PLACE": ["抽取的地点1", "抽取的地点2"],
-    "ORG": ["抽取的组织1", "抽取的组织2"],
-    "OTHER": ["其他实体1", "其他实体2"]
+    "TIME": ["Extracted time 1", "Extracted time 2"],
+    "EVENT": ["Extracted event 1", "Extracted event 2"],
+    "PERSON": ["Extracted person 1", "Extracted person 2"],
+    "PLACE": ["Extracted place 1", "Extracted place 2"],
+    "ORG": ["Extracted organization 1", "Extracted organization 2"],
+    "OTHER": ["Other entity 1", "Other entity 2"]
   }
 }
 
-### Good 例子
+### Good Example
 
-输入：2024年11月3日美国总统大选将在华盛顿举行，拜登和特朗普都表示会参加。
-输出：
+Input: The US presidential election will be held in Washington on November 3, 2024, and Biden and Trump have both said they will participate.
+Output:
 {
   "entities": {
-    "TIME": ["2024年11月3日"],
-    "EVENT": ["美国总统大选"],
-    "PERSON": ["拜登", "特朗普"],
-    "PLACE": ["华盛顿", "美国"],
+    "TIME": ["November 3, 2024"],
+    "EVENT": ["US presidential election"],
+    "PERSON": ["Biden", "Trump"],
+    "PLACE": ["Washington", "United States"],
     "ORG": [],
     "OTHER": []
   }
 }
 
-输入：2022年世界杯在卡塔尔多哈举行，阿根廷队获得冠军。
-输出：
+Input: The 2022 World Cup was held in Doha, Qatar, and the Argentina team won the championship.
+Output:
 {
   "entities": {
-    "TIME": ["2022年"],
-    "EVENT": ["世界杯"],
+    "TIME": ["2022"],
+    "EVENT": ["World Cup"],
     "PERSON": [],
-    "PLACE": ["卡塔尔", "多哈"],
-    "ORG": ["阿根廷队"],
-    "OTHER": ["冠军"]
+    "PLACE": ["Qatar", "Doha"],
+    "ORG": ["Argentina team"],
+    "OTHER": ["champion"]
   }
 }
 
-输入：苹果公司CEO库克参加了在斯坦福大学举办的2023年春季毕业典礼。
-输出：
+Input: Apple CEO Cook attended the 2023 Spring Commencement at Stanford University.
+Output:
 {
   "entities": {
-    "TIME": ["2023年春季"],
-    "EVENT": ["毕业典礼"],
-    "PERSON": ["库克"],
+    "TIME": ["2023 Spring"],
+    "EVENT": ["Commencement"],
+    "PERSON": ["Cook"],
     "PLACE": [],
-    "ORG": ["苹果公司", "斯坦福大学"],
+    "ORG": ["Apple company", "Stanford University"],
     "OTHER": ["CEO"]
   }
 }
 
-输入：In Giant war was the Crushing Giant Hammer widely used?
-输出：
+Input: In Giant war was the Crushing Giant Hammer widely used?
+Output:
 {
   "entities": {
     "TIME": [],
@@ -80,26 +80,26 @@
 
 ### Bad Example
 
-输入：2024年11月3日美国总统大选
-输出：
+Input: The US presidential election on November 3, 2024
+Output:
 {
   "entities": {
-    "TIME": ["2024.11.3"], # 错误：改变了原始时间格式
-    "EVENT": ["总统选举"], # 错误：改变了原始事件名称
-    "PLACE": ["United States"], # 错误：翻译了地名
+    "TIME": ["2024.11.3"], # Error: Changed the original time format
+    "EVENT": ["presidential election"], # Error: Changed the original event name
+    "PLACE": ["United States"], # Error: Translated the place name
     "PERSON": [],
     "ORG": [],
     "OTHER": []
   }
 }
 
-### 注意事项
+### Notes
 
-1. 必须保持原文中的表述完全一致，不要做任何改写
-2. 不要进行格式转换（如阿拉伯数字转中文）
-3. 不要翻译或缩写
-4. 如果某类实体没有找到，返回空列表
-5. 同一实体可能属于多个类别，需要在对应类别都标注
-6. 所有抽取出的实体必须在原文中能找到完全匹配的字符串
+1. You must maintain the original expression in the text and make no alterations.
+2. Do not perform format conversions (such as converting Arabic numerals to Chinese).
+3. Do not translate or abbreviate.
+4. If an entity type is not found, return an empty list.
+5. The same entity may belong to multiple categories, and it should be marked in each corresponding category.
+6. All extracted entities must be able to find a completely matching string in the original text.
 
-当前输入：{{input}}
+Current Input: {{input}}

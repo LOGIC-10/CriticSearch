@@ -201,6 +201,18 @@ class QAItem:
     def to_dict(self) -> dict:
         return asdict(self)
 
+@dataclass
+class FuzzyQAItem:
+    original_question: str
+    question: str
+    answer: str
+    constrained_format: str
+    strategy: str
+    evidence: List[str]
+
+    def to_dict(self) -> dict:
+        return asdict(self)
+
 # === Workflow ===
 # 全局文件锁
 file_lock = threading.Lock()
@@ -900,6 +912,118 @@ async def test_entity_extraction():
             printer.print(f"Error processing {test_input}: {e}", style="bold red")
             logger.exception(f"Error in entity extraction test for input: {test_input}")
 
+async def test_combination_workflow(out_file: Path):
+    """Test the combination of entity extraction and fuzzy replacement using seed generation."""
+    printer.rule("Testing Combination Workflow")
+    
+    # 1. 使用 gpt_search_generate_seed 生成种子QA
+    wf = ReverseUpgradeWorkflow()
+    try:
+        seed = await wf.gpt_search_generate_seed(wf.random_domain())
+        printer.print(f"\nSeed Question: {seed.question}", style="bold yellow")
+        printer.print(f"Seed Answer: {seed.answer}", style="bold green")
+        
+        # 2. 对问题进行实体抽取
+        result = agent.chat_with_template(
+            template_name="entity_extraction.txt",
+            template_data={"input": seed.question},
+            root_folder=PROMPT_ROOT_FOLDER,
+            model="gpt-4o"
+        )
+        
+        parsed_entities = extract_and_validate_json(result)
+        if not parsed_entities or "entities" not in parsed_entities:
+            raise ValueError("Failed to extract entities from the seed question")
+        
+        # 3. 对每个实体进行模糊替换（并发处理）
+        replacements = []
+        entities_to_process = []
+        for entity_type, entities in parsed_entities["entities"].items():
+            if entity_type == "OTHER":
+                continue
+            entities_to_process.extend([(entity_type, entity) for entity in entities])
+        
+        def process_entity(args):
+            entity_type, entity = args
+            try:
+                fuzzy_result = agent.chat_with_template(
+                    template_name="fuzzy_replacement.txt",
+                    template_data={"input": entity},
+                    root_folder=PROMPT_ROOT_FOLDER,
+                    model="gpt-4o-search-preview"
+                )
+                parsed_fuzzy = extract_and_validate_json(fuzzy_result)
+                if parsed_fuzzy and "output" in parsed_fuzzy:
+                    return {
+                        "type": entity_type,
+                        "original": entity,
+                        "fuzzy": parsed_fuzzy["output"],
+                        "evidence": parsed_fuzzy.get("evidence", [])
+                    }
+            except Exception as e:
+                printer.print(f"Error processing fuzzy replacement for {entity}: {e}", style="bold red")
+                return None
+        
+        with ThreadPoolExecutor(max_workers=20) as executor:
+            results = list(executor.map(process_entity, entities_to_process))
+            replacements = [r for r in results if r is not None]
+
+        # 4. 生成草稿模糊问题
+        fuzzy_question = seed.question
+        for rep in replacements:
+            fuzzy_question = fuzzy_question.replace(rep["original"], rep["fuzzy"])
+            seed.evidence.extend(rep["evidence"])
+        
+        # 5. 准备最终问题润色的输入数据
+        input_data = {
+            "original": {
+                "question": seed.question,
+                "answer": seed.answer
+            },
+            "entities": parsed_entities["entities"],
+            "replacements": replacements,
+            "fuzzy_result": {
+                "question": fuzzy_question,
+                "answer": seed.answer,
+                "constrained_format": seed.constrained_format,
+                "evidence": seed.evidence,
+                "strategy": "fuzzy_replacement"
+            }
+        }
+        
+        # 6. 进行最终问题润色
+        final_result = agent.chat_with_template(
+            template_name="entity_final_question.txt",
+            template_data={"input_data": json.dumps(input_data, ensure_ascii=False)},
+            root_folder=PROMPT_ROOT_FOLDER,
+            model="o4-mini"
+        )
+        
+        try:
+            parsed_final = extract_and_validate_json(final_result)
+            if parsed_final and "polished_question" in parsed_final:
+                input_data["fuzzy_result"]["question"] = parsed_final["polished_question"]
+        except Exception as e:
+            printer.print(f"Error parsing final polish result: {e}", style="bold red")
+        
+        # 7. 将结果转换为FuzzyQAItem并保存
+        fuzzy_item = FuzzyQAItem(
+            original_question=seed.question,
+            question=input_data["fuzzy_result"]["question"],
+            answer=seed.answer,
+            constrained_format=seed.constrained_format,
+            strategy="fuzzy_replacement",
+            evidence=input_data["fuzzy_result"]["evidence"]
+        )
+        
+        # 只有在整个流程都成功完成后才保存结果
+        return fuzzy_item
+        
+    except Exception as e:
+        printer.print(f"Error in combination workflow: {e}", style="bold red")
+        logger.exception("Error in combination workflow")
+        return None  # 返回 None 表示执行失败
+
 def main():
     # Added --search_model argument
     parser = argparse.ArgumentParser(description="Generates or evaluates multi-level reverse-upgrade benchmark questions.")
@@ -915,6 +1039,10 @@ def main():
     parser.add_argument("--search_model", type=str, default="gpt-4o-search-preview", help="Model to use for evaluation LLM calls (in --evaluate mode)") # New argument
     parser.add_argument("--test_fuzzy", action="store_true", help="运行 fuzzy replacement 测试")
     parser.add_argument("--test_entity", action="store_true", help="运行实体抽取测试")
+    parser.add_argument("--test_combination", action="store_true", help="运行组合测试流程")
+    parser.add_argument("--combination_batch", type=int, default=1, help="组合测试运行批次")
+    parser.add_argument("--combination_concurrency", type=int, default=1, help="组合测试并发数")
+    parser.add_argument("--combination_out", type=Path, default=Path("fuzzy_replacement_bench.json"), help="组合测试结果输出文件")
     
     args = parser.parse_args()
 
@@ -924,13 +1052,67 @@ def main():
         GPT_MODEL = args.model
         printer.print(f"Using overridden model for generation runs: {GPT_MODEL}", style="bold yellow")
 
-    # Add test branch
+    # Add test branches
     if args.test_fuzzy:
         asyncio.run(test_fuzzy_replacement())
         return
 
     if args.test_entity:
         asyncio.run(test_entity_extraction())
+        return
+
+    if args.test_combination:
+        printer.rule(f"Starting Combination Workflow: {args.combination_batch} instances with concurrency {args.combination_concurrency}")
+        
+        def _combination_batch():
+            def sync_run_one_wrapper(idx: int):
+                return asyncio.run(test_combination_workflow(args.combination_out))
+
+            successful_results = []  # 存储成功执行的结果
+
+            with ThreadPoolExecutor(max_workers=args.combination_concurrency) as executor:
+                futures = {executor.submit(sync_run_one_wrapper, i): i 
+                          for i in range(args.combination_batch)}
+                for future in as_completed(futures):
+                    try:
+                        result = future.result()  # 获取执行结果
+                        if result is not None:  # 只保存成功的结果
+                            successful_results.append(result.to_dict())
+                    except Exception as exc:
+                        run_idx = futures[future] + 1
+                        logger.exception(f"Combination run {run_idx} failed: {exc}")
+                        printer.print(f"Combination run {run_idx} failed: {exc}", style="bold red")
+                        continue  # 跳过失败的运行
+
+            # 只有在有成功结果时才更新文件
+            if successful_results:
+                with file_lock:
+                    existing = []
+                    if args.combination_out.exists() and args.combination_out.stat().st_size > 0:
+                        try:
+                            with open(args.combination_out, "r", encoding="utf-8") as f:
+                                existing = json.load(f)
+                        except json.JSONDecodeError:
+                            logger.error(f"Could not decode JSON from {args.combination_out}. Starting fresh.")
+                        except Exception as e:
+                            logger.exception(f"Error reading {args.combination_out}")
+
+                    existing.extend(successful_results)
+                    
+                    try:
+                        with open(args.combination_out, "w", encoding="utf-8") as f:
+                            json.dump(existing, f, ensure_ascii=False, indent=2)
+                        printer.print(f"Successfully saved {len(successful_results)} items to {args.combination_out}", style="bold green")
+                    except Exception as e:
+                        logger.exception(f"Error saving to {args.combination_out}")
+                        printer.print(f"Error saving results: {e}", style="bold red")
+
+            printer.print(f"Completed {args.combination_batch} combination runs", style="bold green")
+            printer.print(f"Successfully processed: {len(successful_results)} items", style="bold green")
+            printer.print(f"Failed: {args.combination_batch - len(successful_results)} items", style="bold yellow")
+            printer.print(f"Results saved to: {args.combination_out}", style="bold green")
+        
+        _combination_batch()
         return
 
     # --- Evaluation Branch ---
@@ -1045,7 +1227,7 @@ python -m criticsearch.abstract_substitution.abs_workflow --out trace_data.json 
 python -m criticsearch.abstract_substitution.abs_workflow --out trace_data.json --max_level 3 --max_tries 2 --batch 2 --concurrency 3
 
 ## 跑数据--使用 GPT-Search workflow
-python -m criticsearch.abstract_substitution.abs_workflow --batch 3 --concurrency 20 --gptsearch --out trace_data—1.json
+python -m criticsearch.abstract_substitution.abs_workflow --batch 2 --concurrency 20 --gptsearch --out trace_data—1.json --max_level 2
 
 ## 批量评估
 python -m criticsearch.abstract_substitution.abs_workflow --out trace_data-1.json --evaluate --search_model gemini-2.0-flash-search --eval_concurrency 15
@@ -1055,4 +1237,7 @@ python -m criticsearch.abstract_substitution.abs_workflow --test_fuzzy
 
 ## 测试实体抽取
 python -m criticsearch.abstract_substitution.abs_workflow --test_entity
+
+## 测试组合流程
+python -m criticsearch.abstract_substitution.abs_workflow --test_combination --combination_batch 5 --combination_concurrency 20
 """

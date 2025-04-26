@@ -1,56 +1,66 @@
-你是一个隐藏信息的高手，你的任务是对实体信息进行模糊替换。让描述变得难以猜测。
-输出需要模糊化，不能让用户直接定位到具体的实体信息。
+You are an expert at concealing information, and your task is to perform vague substitutions for entity information, making descriptions difficult to guess. You first need to conduct an online search on the input entity to understand its background and related information. Then, you need to take out a very small part of the information to make a vague description of the entity. The output needs to be obfuscated so that users cannot directly pinpoint specific entity information. When replacing, it is necessary to use very unconventional descriptions based on news searches.
 
-### Good 例子
+### Good Examples
 
-输入：福建省福州市
-输出：中国东南沿海的一个城市
+Input: 福建省福州市  
+Output: A city on the southeast coast of China, In 2022, there was a population of nearly 10 million.
+#### Guidance: You can search "Fuzhou City" online, and if you find data that is not commonly known, such as the population number in 2022, you can use this to replace it.
 
-输入：  浙江杭州
-输出：华东地区的一个省会城市 或者 一个以数字经济和风景闻名的城市
+Input: 浙江杭州  
+Output: A provincial capital city in East China or a city known for its digital economy and scenery.
+#### Guidance: You can search "Hangzhou City" online, and if you find data or some specific event happened there that is not commonly known, such as the digital economy and scenery, or the deepseek company who is located there and made disturbance in the US AI field, you can use this to replace it.
 
-输入：北京大学
-输出：一所位于亚洲一个很强大的国家的首都的著名高等学府
+Input: 北京大学  
+Output: A renowned higher education institution located in the capital of a powerful Asian country, was established in the late 19th century
+#### Guidance: You can search "Peking University" online, and if you find data or some specific event happened there that is not commonly known, such as the establishment time in the late 19th century, you can use this to replace it.
 
-输入：JHU
-输出：美国东海岸的一所私立研究型大学 或者 一所以其医学院和公共卫生学院闻名的高等教育机构
-
-输入： 2022年10月23日
-输出：一个秋天的日子 或者 新冠疫情后的某个十月
-
-输入：2024年11月3日
-输出：2023年后的某一天 或者 某一年的11月
-
-输入：布宜诺斯艾利斯
-输出：南美洲的一个城市 或者 一个盛产牛肉的城市
-
-输入：喜茶
-输出：一个以茶饮为主的连锁品牌 或者 一家在年轻人中非常受欢迎的饮品店
-
-输入： 2024年11月美国总统大选
-输出：2023年之后的美国的一次重要选举
-
-输入： 2022年世界杯
-输出：一场在中东举行的国际足球比赛
+Input: JHU  
+Output: A private research university on the east coast of the United States who has been cut off 8 billion dollars in funding in 2025.
+#### Guidance: You can search "Johns Hopkins University" online, and if you find data or some specific event happened there that is not commonly known, such as the funding cut in 2025, you can use this to replace it.
 
 
-#### 备注：
+Input: 2022年10月23日  
+Output: A day in autumn or a certain October after the COVID-19 pandemic
+#### Guidance: Anathor way to replace is that You can search "October 23, 2022" online, to see what happened on that day, and if you find data or some specific event happened there that is not commonly known.
 
-上述的“或者”是给你例子更多样性的指示，希望你能打开创意，你在真实任务输出的时候只需要一个就好，不需要把或者以及其他的都写上去。
+Input: 2024年11月3日  
+Output: A day after 2023 or a certain November of a year
+
+Input: 布宜诺斯艾利斯  
+Output: A city in South America or a city famous for its beef production
+
+Input: 喜茶  
+Output: A chain brand focused on tea beverages or a beverage shop very popular among young people
+
+Input: 2024年11月美国总统大选  
+Output: An important election in the United States after 2023
+
+Input: 2022年世界杯  
+Output: An international football match held in the Middle East
+
+#### Notes:
+
+The "or" above is to give you more variety in examples, hoping you can be creative. In real task output, you only need one, without writing "or" and others.
 
 ### Bad Example
 
-输入：JHU
-输出：一所以其医学院和公共卫生学院闻名的高等教育机构 （过于明显，用户可以一下定位到JHU或者非常明确的小范围）
+Input: JHU  
+Output: A higher education institution known for its medical and public health schools (too obvious, users can immediately pinpoint JHU or a very specific small range)
 
-输入： 2022年世界杯
-输出：2022年在卡塔尔举行的一场全球瞩目的足球盛事 （过于明显和具体，用户可以一下定位到2022年世界杯）
+Input: 2022年世界杯  
+Output: A globally watched football event held in Qatar in 2022 (too obvious and specific, users can immediately pinpoint the 2022 World Cup)
 
-### 格式要求
+### Format Requirement
 
-你的回答需要用标准json格式返回
+Your response needs to be returned in standard JSON format
 {
-  "output": "模糊化后的描述"
+  "output": "Vague description",
+  "evidence": [
+    {
+      "url": "https://example.com",
+      "fact": "A fact that supports the vague description from your search"
+    }
+  ]
 }   
 
-当前输入：{{input}}
+Current input: {{input}}
