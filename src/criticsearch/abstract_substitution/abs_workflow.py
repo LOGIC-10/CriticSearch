@@ -668,6 +668,21 @@ def random_domain():
     domains = ["TV shows & movies", "Other", "Science & technology", "Art", "History", "Sports", "Music", "Video games", "Geography", "Politics"]
     return random.choice(domains)
 
+def find_all_wrong_items(data: Dict[str, Any]) -> Dict[str, Dict[str, Any]]:
+    """
+    返回所有模型都答错的条目映射（question -> entry）。
+    判定：除 GroundTruth 和 constrained_format 外，
+    若所有其它字段中的 'is_correct' 都为 False，则认为此条目全部答错。
+    """
+    wrong_items: Dict[str, Dict[str, Any]] = {}
+    for q, entry in data.items():
+        # 收集所有模型字段
+        model_fields = [v for k, v in entry.items() if k not in ("GroundTruth", "constrained_format")]
+        # 若至少有一个模型且全部 is_correct=False
+        if model_fields and all(not m.get("is_correct", False) for m in model_fields if isinstance(m, dict)):
+            wrong_items[q] = entry
+    return wrong_items
+
 # --- Modified evaluate function for concurrency & search model override ---
 def evaluate(
     json_file: Path = Path("trace_data.json"),
@@ -694,31 +709,30 @@ def evaluate(
         cache_file = json_file.parent / f"{json_file.stem}_eval_cache.json"
 
     # --- Load Cache ---
-    # cache: Dict[str, bool] = {} # <-- OLD Structure
-    cache: Dict[str, Dict[str, bool]] = {} # <-- MODIFIED: Cache structure {question_key: {model_name: is_correct}}
+    cache: Dict[str, Dict[str, Any]] = {}
     if use_cache and cache_file.exists():
         try:
             with open(cache_file, "r", encoding="utf-8") as f:
-                cache_content = json.load(f)
-                # <-- MODIFIED: Validate the loaded structure
-                if isinstance(cache_content, dict):
-                    # Basic validation: ensure values are dictionaries (or can be treated as such)
-                    validated_cache = {}
-                    for k, v in cache_content.items():
-                        if isinstance(v, dict):
-                             validated_cache[k] = v
-                        else:
-                             logger.warning(f"Invalid cache entry for key '{k}' in {cache_file}. Expected dict, got {type(v)}. Ignoring.")
-                    cache = validated_cache
-                else:
-                    logger.warning(f"Cache file {cache_file} does not contain a valid dictionary. Ignoring cache.")
-                    cache = {} # Reset cache if file format is wrong
-        except json.JSONDecodeError:
-            logger.error(f"Error decoding JSON from cache file {cache_file}. Ignoring cache.")
-            cache = {} # Reset cache on decode error
-        except Exception as e:
-            logger.exception(f"Error loading cache file {cache_file}: {e}")
-            cache = {} # Reset cache on other errors
+                raw = json.load(f)
+            if isinstance(raw, dict):
+                for q, models in raw.items():
+                    if isinstance(models, dict):
+                        cache[q] = {}
+                        for m, val in models.items():
+                            if m == "GroundTruth":
+                                cache[q]["GroundTruth"] = val
+                            elif isinstance(val, dict):
+                                cache[q][m] = val
+                            elif isinstance(val, bool):
+                                cache[q][m] = {"is_correct": val, "prediction": ""}
+                            else:
+                                logger.warning(f"Ignoring invalid cache value for {q}/{m}")
+            else:
+                logger.warning(f"Cache file {cache_file} invalid, resetting")
+                cache = {}
+        except Exception:
+            logger.exception("Error loading cache, resetting")
+            cache = {}
 
     # --- Load Records ---
     try:
@@ -740,22 +754,26 @@ def evaluate(
 
     # --- Filter and Prepare Items ---
     if level is None:
-        # 不指定 level 时评估所有记录
         items_to_evaluate = [r for r in records if isinstance(r, dict)]
     else:
-        # 指定 level 时只评估该 level
         items_to_evaluate = [r for r in records if isinstance(r, dict) and r.get("level") == level]
     total_items = len(items_to_evaluate)
     if total_items == 0:
         printer.print(f"No items{' of level '+str(level) if level is not None else ''} found in {json_file}.", style="yellow")
         return
 
+    item_map = {item['question'].strip().lower(): item for item in items_to_evaluate}
+
+    # 在构建 item_map 之后，确保 cache 里有 constrained_format
+    for key, item in item_map.items():
+        if key in cache:
+            # 如果 cache[key] 中没有 constrained_format，就补上
+            if 'constrained_format' not in cache[key]:
+                cache[key]['constrained_format'] = item.get('constrained_format', '')
+                logger.info(f"补充 cache 中缺失的 constrained_format: {key} -> {cache[key]['constrained_format']}")
+
     items_needing_eval: List[Dict] = []
-    # correct_in_cache: int = 0 # <-- OLD Counter
-    # processed_keys_in_cache: set = set() # <-- OLD Set
-    items_found_in_cache_for_this_model: int = 0 # <-- NEW Counter
-    correct_in_cache_for_this_model: int = 0   # <-- NEW Counter
-    evaluated_keys_for_this_model_in_cache: set = set() # <-- NEW Set
+    items_found_in_cache_for_this_model = correct_in_cache_for_this_model = 0
 
     for item in items_to_evaluate:
         if "question" not in item or "answer" not in item:
@@ -764,29 +782,24 @@ def evaluate(
 
         key = item['question'].strip().lower()
 
-        # <-- MODIFIED: Check cache for the specific model -->
-        cache_entry_exists_for_model = use_cache and key in cache and search_model in cache[key]
-
-        if cache_entry_exists_for_model:
+        if use_cache and key in cache and search_model in cache[key]:
+            entry = cache[key][search_model]
             items_found_in_cache_for_this_model += 1
-            if cache[key][search_model]: # Check if cached result is correct for this model
-                 correct_in_cache_for_this_model += 1
-            evaluated_keys_for_this_model_in_cache.add(key) # Mark as processed via cache *for this model*
+            if entry.get("is_correct"):
+                correct_in_cache_for_this_model += 1
+            # 打印缓存预测
+            pred = entry.get("prediction", "")
+            printer.print(f"[Cache] Q: {key}  Pred: {pred}", style="dim")
         else:
-            # Needs evaluation if not in cache OR in cache but not evaluated by *this* model yet.
-            # Avoid duplicates in items_needing_eval list for the same key.
             if key not in {i['question'].strip().lower() for i in items_needing_eval}:
-                 items_needing_eval.append(item)
-        # <-- End MODIFIED Block -->
+                items_needing_eval.append(item)
 
     printer.print(f"Total items found: {total_items}")
-    # <-- MODIFIED Print statements -->
     printer.print(f"Items found in cache for model '{search_model}': {items_found_in_cache_for_this_model} ({correct_in_cache_for_this_model} correct)")
     printer.print(f"Items needing evaluation by model '{search_model}' (LLM call): {len(items_needing_eval)}")
-    # <-- End MODIFIED Print statements -->
 
-    # --- Worker Function (No change needed inside worker itself) ---
-    def evaluate_item_worker(item: Dict, worker_search_model: str) -> Tuple[str, bool]:
+    # --- Worker Function ---
+    def evaluate_item_worker(item: Dict, worker_search_model: str) -> Tuple[str, bool, str, str]:
         """Worker function to evaluate a single item using LLM."""
         q = item["question"]
         ans_true = item["answer"]
@@ -805,6 +818,7 @@ def evaluate(
             ans_pred = extract_boxed_content(resp)
 
             # 打印出GT answer 和preidct answer
+            printer.print(f"Evaluating Question: {q}")
             printer.print(f"GT Answer: {ans_true}", style="bold red")
             printer.print(f"Predicted Answer: {ans_pred}", style="bold green")  
 
@@ -812,16 +826,17 @@ def evaluate(
                  ans_pred_norm = "".join(c for c in ans_pred.strip().lower() if c.isalnum() or c.isspace())
                  ans_true_norm = "".join(c for c in ans_true.strip().lower() if c.isalnum() or c.isspace())
                  is_correct = (ans_pred_norm == ans_true_norm)
+                
 
         except Exception as e:
             logger.exception(f"Error during evaluation LLM call for Q: {q} using model {worker_search_model}")
             printer.print(f"Error evaluating question {q} with model {worker_search_model}: {e}", style="bold red")
             is_correct = False
 
-        return key, is_correct
+        return key, is_correct, ans_pred, ans_true
 
     # --- Concurrent Execution ---
-    newly_evaluated_results: Dict[str, bool] = {} # Stores results {key: is_correct} for *this run*
+    newly_evaluated: Dict[str, Dict[str, Any]] = {}
     correct_newly_evaluated: int = 0
 
     if items_needing_eval:
@@ -832,66 +847,49 @@ def evaluate(
 
             processed_count = 0
             for future in as_completed(future_to_item):
-                item_data = future_to_item[future]
-                processed_count += 1
-                try:
-                    key, is_correct = future.result()
-                    # <-- Store result temporarily for this run -->
-                    newly_evaluated_results[key] = is_correct
-                    if is_correct:
-                        correct_newly_evaluated += 1
-                    # <-- End Temporary Store -->
-                    if processed_count % 10 == 0 or processed_count == len(items_needing_eval):
-                         printer.print(f"  Evaluated {processed_count}/{len(items_needing_eval)}...", style="dim")
-
-                except Exception as exc:
-                    q = item_data.get("question", "UNKNOWN QUESTION")
-                    key = q.strip().lower()
-                    logger.exception(f"Evaluation worker for Q: {q} generated an exception: {exc}")
-                    printer.print(f'Error processing result for Q: {q} - {exc}', style="bold red")
-                    if key != "unknown question":
-                         # Store as False in temporary results if an error occurred
-                         newly_evaluated_results[key] = False
+                key, ok, ans_pred, ans_true = future.result()
+                # 同时保存预测和正确答案
+                newly_evaluated[key] = {
+                    "is_correct": ok,
+                    "prediction": ans_pred,
+                    "answer": ans_true
+                }
+                if ok:
+                    correct_newly_evaluated += 1
+                if processed_count % 10 == 0 or processed_count == len(items_needing_eval):
+                     printer.print(f"  Evaluated {processed_count}/{len(items_needing_eval)}...", style="dim")
 
     # --- Combine Results & Save Cache ---
-    # <-- MODIFIED: Calculate total correct and evaluated *for this specific model run* -->
-    total_correct_for_this_model = correct_in_cache_for_this_model + correct_newly_evaluated
-    # Total evaluated for *this model* includes those found in cache for this model plus newly evaluated ones.
-    total_evaluated_for_this_model = items_found_in_cache_for_this_model + len(newly_evaluated_results)
-    # <-- End MODIFIED Calculation -->
-
     if use_cache:
-        # <-- MODIFIED: Update the main cache with newly evaluated results under the specific model key -->
-        updated_cache_count = 0
-        for key, is_correct in newly_evaluated_results.items():
+        for key, res in newly_evaluated.items():
             if key not in cache:
-                cache[key] = {} # Initialize question entry if not present
-            if search_model not in cache[key] or cache[key][search_model] != is_correct:
-                # Only log/count as update if value changes or is new for this model
-                updated_cache_count +=1
-            cache[key][search_model] = is_correct # Store/overwrite result for this specific model
-        # <-- End MODIFIED Cache Update Logic -->
-
+                cache[key] = {}
+            # 保存 GroundTruth
+            cache[key]["GroundTruth"] = res["answer"]
+            # 保存 constrained_format
+            cache[key]["constrained_format"] = item_map.get(key, {}).get("constrained_format", "")
+            # 各模型结果放在模型名下
+            cache[key][search_model] = {
+                "is_correct": res["is_correct"],
+                "prediction": res["prediction"]
+            }
         try:
             with open(cache_file, "w", encoding="utf-8") as f:
                 json.dump(cache, f, ensure_ascii=False, indent=2)
-            if updated_cache_count > 0:
-                 printer.print(f"Cache updated with {updated_cache_count} new/changed results for model '{search_model}' and saved to {cache_file}", style="dim")
-            else:
-                 printer.print(f"Cache saved to {cache_file}. No new results for model '{search_model}' were added in this run.", style="dim")
+            printer.print(f"Cache updated and saved to {cache_file}", style="dim")
         except Exception as e:
              logger.exception(f"Error saving cache file {cache_file}: {e}")
              printer.print(f"Error saving cache file {cache_file}: {e}", style="red")
 
     # --- Final Report ---
-    # <-- MODIFIED: Report accuracy based on results for *this model run* -->
+    total_correct_for_this_model = correct_in_cache_for_this_model + correct_newly_evaluated
+    total_evaluated_for_this_model = items_found_in_cache_for_this_model + len(newly_evaluated)
     acc = total_correct_for_this_model / total_evaluated_for_this_model if total_evaluated_for_this_model else 0.0
     printer.rule(f"Evaluation Results for Model: {search_model}")
     printer.print(f"Total items considered: {total_items}", style="bold")
     printer.print(f"Total items evaluated for '{search_model}' (cache + new): {total_evaluated_for_this_model}", style="bold")
     printer.print(f"Correct predictions for '{search_model}': {total_correct_for_this_model}", style="bold")
     printer.print(f"Accuracy for '{search_model}': {acc:.4%}", style="bold green")
-    # <-- End MODIFIED Report -->
 
 async def test_fuzzy_replacement():
     """Test the fuzzy_replacement prompt with some example inputs."""
@@ -972,7 +970,7 @@ async def test_combination_workflow(out_file: Path):
     wf = ReverseUpgradeWorkflow()
     try:
         seed = await wf.gpt_search_generate_seed(wf.random_domain())
-        printer.print(f"\nSeed Question: {seed.question}", style="bold yellow")
+        printer.print(f"\nSeed Question: {seed.question}", style="dim underline")
         printer.print(f"Seed Answer: {seed.answer}", style="bold green")
         
         # 2. 对问题进行实体抽取
@@ -1286,7 +1284,8 @@ python -m criticsearch.abstract_substitution.abs_workflow --out trace_data.json 
 python -m criticsearch.abstract_substitution.abs_workflow --batch 2 --concurrency 20 --gptsearch --out trace_data—1.json --max_level 2
 
 ## 批量评估
-python -m criticsearch.abstract_substitution.abs_workflow --out trace_data-1.json --evaluate --search_model gemini-2.0-flash-search --eval_concurrency 15
+python -m criticsearch.abstract_substitution.abs_workflow --out fuzzy_replacement_bench_refined.json --evaluate --search_model gemini-2.0-flash-search --eval_concurrency 7
+python -m criticsearch.abstract_substitution.abs_workflow --out fuzzy_replacement_bench.json --evaluate --search_model gpt-4o-search-preview --eval_concurrency 7
 
 ## 测试 fuzzy replacement
 python -m criticsearch.abstract_substitution.abs_workflow --test_fuzzy
@@ -1295,5 +1294,5 @@ python -m criticsearch.abstract_substitution.abs_workflow --test_fuzzy
 python -m criticsearch.abstract_substitution.abs_workflow --test_entity
 
 ## 测试组合流程
-python -m criticsearch.abstract_substitution.abs_workflow --test_combination --combination_batch 5 --combination_concurrency 20
+python -m criticsearch.abstract_substitution.abs_workflow --test_combination --combination_batch 5 --combination_concurrency 20 --combination_out bench0427.json
 """
