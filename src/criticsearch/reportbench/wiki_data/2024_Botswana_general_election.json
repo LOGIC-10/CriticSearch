@@ -39,7 +39,7 @@
                   "id": "2.1.s1",
                   "text": "{{main|2019 Botswana general election}}\nThe election held on 23 October 2019, saw the BDP maintain its parliamentary majority for the 12th consecutive time, securing 53% of the votes and 38 out of 57 seats, one more than in the 2014 Botswana general election|2014 election. The UDC garnered 36% of the votes and 15 seats, two fewer than its 2014 result. The election marked a significant political realignment in Botswana's political landscape. This was because the Central District (Botswana)|Central District (which had consistently supported the BDP, averaging around 75% of the vote since the first elections in 1965 Bechuanaland general election|1965) saw large swings to the opposition due to former President Ian Khama's backing of the newly-formed Botswana Patriotic Front (BPF) and of UDC candidates, where the BPF did not stand candidates of its own. The UDC and BPF won 11 out of 17 seats in the district, marking the first time ever that a party other than the BDP won a seat in the district. Nonetheless, the BDP made substantial gains in other regions, securing all seats in both Gaborone and districts in the southern parts of the country, offsetting the UDC's advances. The election outcome described as an Upset (competition)|upset was attributed to President Masisi's efforts to reconcile with segments of society previously at odds with Khama, such as labour unions, whose support had waned in the 2014 election. The rapprochement between the UDC leadership and Khama, who remains unpopular among urban and southern voters, led to a loss of support for the UDC among its traditional opposition base in the south.",
                   "references": [
-                    "https://www.cambridge.org/core/journals/african-studies-review/article/abs/botswanas-2019-general-elections-a-referendum-on-general-ian-khama/025D7A45D5F26B1A8045E91529DCAAB5#access-block"
+                    "https://www.cambridge.org/core/journals/african-studies-review/article/abs/botswanas-2019-general-elections-a-referendum-on-general-ian-khama/025D7A45D5F26B1A8045E91529DCAAB5"
                   ]
                 },
                 {
@@ -101,7 +101,8 @@
                   "id": "2.2.s6",
                   "text": "The election campaign also saw the return of former president Ian Khama, a critic of incumbent president Mokgweetsi Masisi, after three years of self-imposed exile in September 2024. Khama supported the BPF in the election.",
                   "references": [
-                    "https://www.france24.com/en/live-news/20241030-botswana-votes-with-ruling-party-aiming-to-extend-six-decades-of-power"
+                    "https://www.france24.com/en/live-news/20241030-botswana-votes-with-ruling-party-aiming-to-extend-six-decades-of-power",
+                    "https://apnews.com/article/botswana-election-bdp-masisi-7ae583e904f30e4fe3df3e6de2ecefb6"
                   ]
                 }
               ]
@@ -133,24 +134,13 @@
       "title": "Electoral system",
       "content": [
         {
-          "sentences": [
-            {
-              "id": "3.s1",
-              "text": "The president is indirectly elected for a five-year term by the National Assembly. Since 1997, presidents are limited to a maximum of ten years in office, whether consecutive or not. The president's survival is dependent on whether their government has the support of a simple majority of the National Assembly MPs. He can be removed by a motion of no confidence, prompting their resignation or if not, the dissolution of parliament if the president refuses to do so.",
-              "references": [
-                "https://www.parliament.gov.bw/index.php?option=com_content&view=article&id=6&Itemid=163"
-              ]
-            }
-          ]
-        },
-        {
-          "id": "3.2",
+          "id": "3.1",
           "title": "Seat redistribution",
           "content": [
             {
               "sentences": [
                 {
-                  "id": "3.2.s1",
+                  "id": "3.1.s1",
                   "text": "In accordance with section 64(1) of the Constitution of Botswana, a Delimitation Commission was appointed on 13 May 2022 (following the release of the decennial 2022 Botswana Census) to Redistribution (election)|redistribute the constituencies of the National Assembly. The National Assembly passed a bill increasing the number of constituencies by four seats from 57 to 61 seats. Consultations with the public and various interest groups ran from 20 June to 28 November 2022. The Commission presented its finalised report to the Mokgweetsi Masisi|President on 10 February 2023.",
                   "references": [
                     "https://www.mmegi.bw/news/four-new-constituencies-come-2024/news"
@@ -172,7 +162,7 @@
               "id": "4.s1",
               "text": "Unless a snap election is called, a general election is held every five years. The previous election was held on 23 October 2019. The President of Botswana|president must issue Writ of election|writs for an election within sixty days of the expiration or dissolution of parliament. Under section 91 (3) of the Constitution of Botswana|constitution, parliament, \"…unless sooner dissolved, shall continue for five years from the date of the first sitting of the National Assembly of Botswana|National Assembly after any dissolution and shall then stand dissolved\". If left to dissolve on its own, parliament would have done so on 5 November 2024. As a result, the latest possible date to hold the next election within constitutional limits would be on 4 January 2025.",
               "references": [
-                "https://www.constituteproject.org/constitution/Botswana_2002#s1205"
+                "https://www.constituteproject.org/constitution/Botswana_2002"
               ]
             },
             {
@@ -181,13 +171,6 @@
               "references": [
                 "https://www.mmegi.bw/news/why-elections-in-october/news",
                 "https://www.mmegi.bw/news/elections-date-hot-topic-in-parly/news"
-              ]
-            },
-            {
-              "id": "4.s3",
-              "text": "It was widely accepted by political commentators, news media and the Independent Electoral Commission (Botswana)|Independent Electoral Commission that the next election would be held in October 2024. Indeed, in his announcement the president stated that Wednesday, 30 October 2024, will be the election date and that the day and the next will be public holidays in an effort to boost turnout. The 13th Parliament shall commence within 30 days of the date of the general election. The schedule for the election was as follows:",
-              "references": [
-                "https://www.iec.gov.bw/index.php/elections.html/#process"
               ]
             }
           ]

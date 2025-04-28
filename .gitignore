@@ -204,3 +204,6 @@ output.txt
 cache/
 */cache/
 */conversation_history*.jsonl
+
+# Data
+src/criticsearch/reportbench/wiki_data

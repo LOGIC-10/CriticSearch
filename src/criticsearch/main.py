@@ -3,6 +3,8 @@ import concurrent.futures
 import importlib.resources
 import json
 import re
+import argparse
+import sys
 
 import yaml
 
@@ -312,7 +314,7 @@ def _action_router(
         return writing_content
 
 
-def process_single_task(task, max_iterations):
+def process_single_task(task, max_iterations, file_name=None):
     # Initialize agents
     agent = BaseAgent()
     agent.receive_task(task)
@@ -324,7 +326,7 @@ def process_single_task(task, max_iterations):
     verifier = ReportVerifier(agent)
 
     package_name = "criticsearch.reportbench.wiki_data"
-    file_name = "2024_Syrian_opposition_offensives.json"
+    file_name = file_name or "2024_Syrian_opposition_offensives.json"
 
     with importlib.resources.files(package_name).joinpath(file_name) as json_file_path:
         json_file = str(json_file_path)
@@ -388,13 +390,13 @@ def process_single_task(task, max_iterations):
 
                     ## 从这里开始我们提供了详细的网页信息，由模型决定下一步的行动
                     ## 模型会根据上一次的搜索结果，决定下一步的行动
-                    answer_content = _action_router(agent, search_results, task, section_path, iteration, agent_report, section_path, search_results)
+                    answer_content = _action_router(agent, search_results, task, section_path, iteration, agent_report, section_path, search_results) # 本次迭代模型生成的这一节（paragraph）内容
 
 
                     # 将生成的内容添加到agent_report_sections
                     agent_report_sections.append(answer_content)
 
-                    # 使用verifier进行factual QA验证
+                    # 使用verifier进行factual QA验证，得到这个段落写作的reward分数（也就是准确率）
                     accuracy = verifier.verify_section(answer_content, extracted_facts)
                     agent.training_data.append({"from": "verifier", "section": section_path, "accuracy": accuracy})
 
@@ -545,3 +547,29 @@ def process_single_task(task, max_iterations):
             printer.log(agent_answer)
 
             return f"\n{agent_answer}\n"
+
+# 新增：命令行入口
+def main():
+    parser = argparse.ArgumentParser(description="Run CriticSearch pipeline")
+    parser.add_argument("task", help="用户任务描述")
+    parser.add_argument("--max-iterations", "-n", type=int, default=3, help="最大迭代次数")
+    parser.add_argument("--file-name", "-f", default=None, help="GT 数据文件名")
+    args = parser.parse_args()
+    try:
+        result = process_single_task(args.task, args.max_iterations, args.file_name)
+        if result:
+            print(result)
+    except Exception as e:
+        printer.print_exception(f"运行失败: {e}")
+        sys.exit(1)
+
+if __name__ == "__main__":
+    main()
+
+# Usage example:
+"""
+# 不指定文件名，用默认 2024_Syrian_opposition_offensives.json
+criticsearch "给我写一份2024年叙利亚反对派进攻战役概述" -n 5
+
+# 指定文件名
+criticsearch "给我写一份2024年叙利亚反对派进攻战役概述" -n 5 -f my_custom_data.json"""
