@@ -4,6 +4,7 @@ from rouge_score import rouge_scorer
 from typing import List, Dict
 from tqdm import tqdm
 import re
+from criticsearch.rich_output import printer
 
 class ReportVerifier:
     def __init__(self, agent):
@@ -105,11 +106,10 @@ class ReportVerifier:
         
         final_accuracy = 0.7 * (exact_matches / total) + 0.3 * avg_rouge
         
-        print("\n=== Verification Results Summary ===")
-        print(f"Total Questions: {total}")
-        print(f"Exact Matches: {exact_matches}/{total} ({exact_matches/total:.2%})")
-        print(f"Average ROUGE-L for Partial Matches: {avg_rouge:.2%}")
-        print(f"Final Weighted Score: {final_accuracy:.2%}")
-        print("=" * 40 + "\n")
+        printer.rule("Verification Results Summary")
+        printer.log(f"Total Questions: {total}")
+        printer.log(f"Exact Matches: {exact_matches}/{total} ({exact_matches/total:.2%})")
+        printer.log(f"Average ROUGE-L for Partial Matches: {avg_rouge:.2%}")
+        printer.log(f"Final Weighted Score: {final_accuracy:.2%}")
         
         return final_accuracy

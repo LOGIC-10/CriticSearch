@@ -2,6 +2,7 @@ import argparse
 import json
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from datetime import datetime
 
 from criticsearch.base_agent import BaseAgent
 from criticsearch.config import settings
@@ -10,59 +11,84 @@ from criticsearch.main import process_single_task
 
 def execute_multiple_tasks(
     tasks: list,
-    max_iterations: int = 10,
     output_file: Path | str = "conversation_history_sharegpt.jsonl",
     file_name: str = None,
+    conv_dir: Path | str = "conversation_histories",
 ):
     """
-    Function to execute multiple tasks, process them iteratively, and log conversation history.
+    顺序执行多个写作任务，并为每个任务保存对话历史。
 
-    Parameters:
-    - tasks (list): List of task strings (questions) to process.
-    - max_iterations (int): Maximum number of iterations for each task.
-    - output_file (Path | str): Path to save the conversation history in ShareGPT format.
-    - file_name (str): Optional file name to load GT JSON.
+    先清空会话管理器，然后调用 process_single_task 完成单个任务。
+    完成后将对话历史保存到 conv_dir/<前缀>_<timestamp>_conversation.json。
+
+    Args:
+        tasks (list[str]): 待执行的写作指令列表。
+        output_file (Path|str): （未使用）保留以兼容上一版接口。
+        file_name (str|None): 如果指定，则将其作为前缀；否则使用任务文本生成前缀。
+        conv_dir (Path|str): 保存对话历史文件的目录，按需自动创建。
+
+    Returns:
+        None
     """
+    conv_dir = Path(conv_dir)
+    conv_dir.mkdir(parents=True, exist_ok=True)
 
     for task in tasks:
-        # Execute a single task
-        process_single_task(task, max_iterations, file_name)
-
-        if settings.save_sharegpt:
-            # TODO: When dealing with multiple tasks, we need to save different conversation histories to different files.
-            conversation_data = BaseAgent.conversation_manager.model_dump(
-                context={"sharegpt": True}
-            )
-            BaseAgent.conversation_manager.write(
-                data=conversation_data,
-                path=output_file,
-            )
+        BaseAgent.conversation_manager.clear_history()
+        process_single_task(task, file_name=file_name)
+        ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+        prefix = Path(file_name).stem if file_name else task.replace(" ", "_")[:50]
+        out_path = conv_dir / f"{prefix}_{ts}_conversation.json"
+        history = BaseAgent.conversation_manager.model_dump(context={"sharegpt": True})
+        with out_path.open("w", encoding="utf-8") as f:
+            json.dump(history, f, ensure_ascii=False, indent=2)
+        print(f"[INFO] saved conversation to {out_path}")
 
 
 def execute_from_mapping(
     mapping_file: Path | str,
-    max_iterations: int,
     concurrent: bool,
     workers: int,
     limit: int | None = None,
+    conv_dir: Path | str = "conversation_histories",
 ):
     """
-    从 mapping_file 加载 {file_name: instruction}，
-    并对每一对 (instruction, file_name) 调用 process_single_task。
-    支持并发和限量。
-    """
-    mapping_path = Path(mapping_file)
-    with mapping_path.open(encoding="utf-8") as f:
-        mapping = json.load(f)
+    从 instruction_mapping.json 批量调度写作任务，支持顺序或并发执行。
 
+    根据 mapping_file 加载 {file_name: instruction} 映射表，可指定 limit
+    只执行前 N 条。对于每一对 (file_name, instruction)，先清空会话管理器，
+    再调用 process_single_task 完成写作；完成后将对话历史保存到
+    conv_dir/<file_stem>_<timestamp>_conversation.json。
+
+    Args:
+        mapping_file (Path|str): instruction_mapping.json 文件路径。
+        concurrent (bool): 是否并发执行所有任务。
+        workers (int): 并发模式下的最大线程数。
+        limit (int|None): 限制最多执行的条目数，None 表示不限制。
+        conv_dir (Path|str): 保存对话历史的目录。
+
+    Returns:
+        None
+    """
+    conv_dir = Path(conv_dir)
+    conv_dir.mkdir(parents=True, exist_ok=True)
+
+    mapping = json.loads(Path(mapping_file).read_text(encoding="utf-8"))
     items = list(mapping.items())
     if limit:
         items = items[:limit]
 
     def run(pair):
         file_name, task = pair
-        print(f"[INFO] start task for {file_name}")
-        process_single_task(task, max_iterations, file_name=file_name)
+        BaseAgent.conversation_manager.clear_history()
+        process_single_task(task, file_name=file_name)
+        ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+        safe = Path(file_name).stem
+        out_path = conv_dir / f"{safe}_{ts}_conversation.json"
+        history = BaseAgent.conversation_manager.model_dump(context={"sharegpt": True})
+        with out_path.open("w", encoding="utf-8") as f:
+            json.dump(history, f, ensure_ascii=False, indent=2)
+        print(f"[INFO] saved {file_name} conversation to {out_path}")
 
     if concurrent and workers > 1:
         with ThreadPoolExecutor(max_workers=workers) as exe:
@@ -81,65 +107,73 @@ def execute_from_mapping(
 
 def start_task_execution():
     """
-    Entry point to start executing predefined or CLI-specified tasks.
+    CLI 入口：解析命令行参数并调度执行。
+
+    支持单任务模式和映射文件批量模式。可通过 --from-mapping 切换，
+    并通过 --concurrent、--workers 控制并发，--limit 控制条目数，
+    --conv-dir 指定对话历史保存目录。
+
+    CLI 参数:
+        tasks (positional): 不指定 --from-mapping 时，作为单任务列表。
+        -f, --file-name: 单任务模式下的 GT JSON 文件名。
+        -o, --output-file: 单任务模式下的历史保存文件，兼容旧版。
+        --from-mapping: 批量模式开关。
+        --mapping-file: 指定映射文件路径，默认 reportbench/instruction_mapping.json。
+        --concurrent: 批量模式下并发执行开关。
+        -w, --workers: 并发时线程数，默认 5。
+        --limit: 批量时最多执行条目数，默认无限制。
+        --conv-dir: 对话历史保存目录，默认 conversation_histories。
+
+    Returns:
+        None
     """
     parser = argparse.ArgumentParser(description="批量执行 CriticSearch 任务")
-    parser.add_argument(
-        "tasks", nargs="*", help="要执行的任务列表；不传时使用默认列表"
-    )
-    parser.add_argument(
-        "-n", "--max-iterations", type=int, default=2, help="每个任务的最大迭代次数"
-    )
-    parser.add_argument(
-        "-f", "--file-name", type=str, default=None, help="指定要加载的 GT JSON 文件名"
-    )
-    parser.add_argument(
-        "-o", "--output-file", type=Path, default="conversation_history_sharegpt.jsonl",
-        help="保存 ShareGPT 历史的输出文件"
-    )
-    # 新增批量映射执行参数
-    parser.add_argument(
-        "--from-mapping", action="store_true",
-        help="从 mapping 文件批量读取 instruction 和 file_name 并执行"
-    )
-    parser.add_argument(
-        "--mapping-file", type=Path,
-        default=Path(__file__).parent / "reportbench" / "instruction_mapping.json",
-        help="指定 instruction_mapping.json 路径"
-    )
-    parser.add_argument(
-        "--concurrent", action="store_true",
-        help="是否并发执行批量写作任务"
-    )
-    parser.add_argument(
-        "-w", "--workers", type=int, default=5,
-        help="并发时的最大线程数"
-    )
-    parser.add_argument(
-        "--limit", type=int, default=None,
-        help="只执行前 N 个映射条目"
-    )
+    parser.add_argument("tasks", nargs="*", help="要执行的任务列表；不传时使用默认")
+    parser.add_argument("-f", "--file-name", type=str, default=None,
+                        help="单任务模式下的 GT JSON 文件名")
+    parser.add_argument("-o", "--output-file", type=Path,
+                        default="conversation_history_sharegpt.jsonl",
+                        help="单任务模式下的历史保存文件")
+    parser.add_argument("--from-mapping", action="store_true",
+                        help="从映射文件批量执行任务")
+    parser.add_argument("--mapping-file", type=Path,
+                        default=Path(__file__).parent / "reportbench" / "instruction_mapping.json",
+                        help="instruction_mapping.json 路径")
+    parser.add_argument("--concurrent", action="store_true",
+                        help="批量模式下并发执行任务")
+    parser.add_argument("-w", "--workers", type=int, default=5,
+                        help="并发时的线程数")
+    parser.add_argument("--limit", type=int, default=None,
+                        help="批量执行时最多执行条目数")
+    parser.add_argument("--conv-dir", type=Path, default=Path("conversation_histories"),
+                        help="对话历史保存目录")
     args = parser.parse_args()
+
+    # —— 新增：如果用户传入的是相对路径，则以当前脚本所在目录为基础去找文件 —— 
+    if args.from_mapping:
+        mf = args.mapping_file
+        if not mf.is_absolute():
+            args.mapping_file = Path(__file__).parent / mf
+    # ——————————————————————————————————————————————————————————
 
     try:
         if args.from_mapping:
             execute_from_mapping(
                 mapping_file=args.mapping_file,
-                max_iterations=args.max_iterations,
                 concurrent=args.concurrent,
                 workers=args.workers,
                 limit=args.limit,
+                conv_dir=args.conv_dir,
             )
         else:
-            # 如果没传 tasks，就使用默认
             tasks = args.tasks or [
                 "write an 2024 Syrian opposition_offensives comprehensive report",
             ]
             execute_multiple_tasks(
                 tasks,
-                args.max_iterations,
                 args.output_file,
                 file_name=args.file_name,
+                conv_dir=args.conv_dir,
             )
     except KeyboardInterrupt:
         print("Execution interrupted by the user.")
@@ -148,30 +182,29 @@ def start_task_execution():
 if __name__ == "__main__":
     start_task_execution()
 
-
 # Usage example:
 """
-# 1. 单个任务执行（使用默认 GT JSON）
-criticsearch "给我写一份2024年叙利亚反对派进攻战役概述" -n 5
+1. 单任务模式（默认 GT JSON）：
+   criticsearch "给我写一份2024年叙利亚反对派进攻战役概述"
 
-# 2. 单个任务并指定 GT 文件
-criticsearch "给我写一份2024年叙利亚反对派进攻战役概述" -n 5 -f custom_data.json
+2. 单任务模式 + 自定义 GT JSON：
+   criticsearch "写一篇关于2024年欧洲洪水的报告" -f 2024_European_floods.json
 
-# 3. 多任务顺序执行（自定义任务列表）
-criticsearch "任务一描述" "任务二描述" -n 4
+3. 多任务顺序执行：
+   criticsearch "任务A描述" "任务B描述" --conv-dir my_history_dir
 
-# 4. 指定输出文件保存 ShareGPT 会话历史
-criticsearch "任务描述" -n 2 -o my_history.jsonl
+4. 从映射文件顺序批量执行：
+   criticsearch --from-mapping --mapping-file reportbench/instruction_mapping.json
 
-# 5. 从映射文件批量执行，顺序模式
-criticsearch --from-mapping --mapping-file /path/to/instruction_mapping.json -n 3
+5. 并发模式 + 指定线程数：
+   criticsearch --from-mapping --concurrent -w 10
 
-# 6. 从映射文件批量执行，并发模式（5 线程）
-criticsearch --from-mapping --concurrent -w 5 --mapping-file /path/to/instruction_mapping.json -n 3
+6. 并发模式 + 限制条目数：
+   criticsearch --from-mapping --concurrent -w 1 --limit 1
 
-# 7. 从映射文件批量执行，限量前 10 条，并发模式
-criticsearch --from-mapping --concurrent -w 5 --limit 10
+7. 自定义对话历史保存目录：
+   criticsearch --from-mapping --concurrent --limit 10 --conv-dir ./logs
 
-# 8. 使用默认映射文件路径，并发执行所有条目
-criticsearch --from-mapping --concurrent -w 10 -n 2
+8. Python 模块方式直接运行（绕过 console‑script）：
+   python -m criticsearch.tasks_runner --from-mapping --concurrent -w 5
 """
