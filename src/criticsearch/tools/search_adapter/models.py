@@ -1,11 +1,9 @@
 # critic_search/tools/search_adapter/models.py
-from datetime import datetime
-from typing import Dict, List, Optional
+from typing import List, Optional
 
 from pydantic import BaseModel, Field, model_serializer
-from sqlmodel import Field, SQLModel
 
-from criticsearch.log import logger
+from criticsearch.rich_output import printer
 
 
 class SearchResult(BaseModel):
@@ -23,14 +21,14 @@ class SearchResponse(BaseModel):
     def ser_model(self) -> str:
         if self.error_message:
             formatted_response = (
-                f"\nQuery: {self.query}\nError: {self.error_message}\n" + "-" * 50
+                f"Query: {self.query}\nError: {self.error_message}\n" + "-" * 50
             )
         elif self.results == []:
             formatted_response = (
-                f"\nQuery: {self.query}\nError: No results found." + "-" * 50
+                f"Query: {self.query}\nError: No results found." + "-" * 50
             )
         else:
-            formatted_response = f"\nQuery: {self.query}\nSearch Results:\n" + "-" * 50
+            formatted_response = f"Query: {self.query}\nSearch Results:\n" + "-" * 50
             for i, res in enumerate(self.results, 1):
                 formatted_response += (
                     f"\n[{i}]:\nTITLE: {res.title}\nURL: {res.url}\nCONTENT: {res.content}\n"
@@ -41,6 +39,18 @@ class SearchResponse(BaseModel):
 
 class SearchResponseList(BaseModel):
     responses: List[SearchResponse] = Field(default_factory=list)
+
+    def _is_wiki_url(self, url: str) -> bool:
+        """检查URL是否为维基百科或wiki相关网站"""
+        wiki_domains = [
+            "wikipedia.org",
+            "wiki.",
+            "fandom.com",
+            "wikimedia.org",
+            "wiktionary.org"
+        ]
+        return any(domain in url.lower() for domain in wiki_domains)
+    
 
     @model_serializer
     def ser_model(self) -> str:
@@ -55,11 +65,12 @@ class SearchResponseList(BaseModel):
         global_seen_contents = set()  # 全局去重逻辑
         total_results = 0
         unique_results_count = 0
+        filtered_wiki_count = 0
         result_str = ""
 
         for response in self.responses:
             if response.error_message:
-                logger.debug(
+                printer.log(
                     f"Skipping serialize query '{response.query}' due to error: {response.error_message}"
                 )
                 continue  # 跳过有 error_message 的响应
@@ -67,6 +78,12 @@ class SearchResponseList(BaseModel):
             unique_results = []
             for res in response.results:
                 total_results += 1
+
+                # 过滤wiki页面
+                if self._is_wiki_url(res.url):
+                    filtered_wiki_count += 1
+                    continue
+
                 if res.content not in global_seen_contents:
                     global_seen_contents.add(res.content)
                     unique_results.append(res)
@@ -78,10 +95,12 @@ class SearchResponseList(BaseModel):
 
         # 打印提示信息
         duplicates_removed = total_results - unique_results_count
-        logger.success(
+        printer.log(
             f"Serialization completed. Total results: {total_results}, "
             f"Unique results: {unique_results_count}, "
-            f"Duplicates removed: {duplicates_removed}."
+            f"Duplicates removed: {duplicates_removed},"
+            f"Wiki pages filtered: {filtered_wiki_count}.",
+            style="bold green",
         )
 
         return result_str

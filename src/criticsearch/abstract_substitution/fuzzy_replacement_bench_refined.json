@@ -1,0 +1,1706 @@
+[
+  {
+    "original_question": null,
+    "question": "on a late spring day in the early 2020s, during the grand final of a prominent east asian tournament for a classic real‑time strategy game held in a major urban center known for its blend of modernity and tradition, who won the fifth game?",
+    "answer": "Yoo Young Jin",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "what city-related statement was adopted by leaders at a recurring summit of regional nations, held in a small, affluent southeast asian country known for its diverse population and high standard of living on a late-autumn day that coincides with a north american environmental observance?",
+    "answer": "ASEAN Smart Cities",
+    "constrained_format": "Answer in exactly 3 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "what was the name of the theater in a densely populated urban area on the eastern seaboard of a north american country, known for its significant financial district and diverse cultural landscape, where a filmmaker renowned for crafting intricate narratives and exploring complex themes—whose recent work delves into the life of a pivotal historical figure—first screened the opening sequence of a film featuring a masked antagonist orchestrating a high-altitude hijacking on a late-2011 date marked by a celestial observation over a peace monument in a south asian capital?",
+    "answer": "AMC Lincoln Square",
+    "constrained_format": "Answer in exactly 3 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "in a year in the early 21st century marked by significant global events—such as a major conflict in the middle east and the emergence of advanced ai technologies—on what date did a committee of experts responsible for naming locations in a remote, icy region formally approve the name of a sierra nevada peak, originally named for a 19th‑century banker, for a feature in a vast, icy landmass at earth’s southernmost point, in honour of a u.s. military officer?",
+    "answer": "11-07-2023",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on a day in early summer 2023 notable for a significant legal development involving a former national leader, who chaired the auxiliary group within an international environmental framework—established by an early‑1990s agreement to address global environmental concerns—during its session in the historically significant european city known as the birthplace of a famous composer?",
+    "answer": "Nabeel Munir",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on a late-summer day marked by significant penalties imposed on a major financial institution, what official title did a european professional team‑sport athlete hold when he represented an intergovernmental space agency at the formal handover ceremony of the nirspec instrument at a renowned eastern u.s. space research center?",
+    "answer": "ESA Director of Science and Robotic Exploration",
+    "constrained_format": "Answer in exactly 7 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on a day in mid‑april, approximately two years before the current date, at s/pv.9302—a gathering of representatives from various nations to discuss international matters—who was the first speaker formally given the floor after an introductory address by a nation’s leader?",
+    "answer": "Tor Wennesland",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "who unveiled the monument commemorating the first union shot fired by an individual from the 19th century who played a notable role in a significant historical event in north america, at a location in the northeastern united states known for a pivotal mid-19th-century engagement, during a formal event marking the official opening or completion of a significant project or structure on june 30, 1913?",
+    "answer": "Ellen J. Roper",
+    "constrained_format": "Answer in exactly 3 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "at which hotel in los angeles was a filmmaker celebrated for his meticulous attention to detail and innovative storytelling—who began his career as a photographer—announced as the recipient of the d.w. griffith award by the directors guild of america on a day in early spring that coincides with a global observance recognizing the contributions and rights of half the world’s population?",
+    "answer": "Century Plaza Hotel",
+    "constrained_format": "Answer in exactly 3 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "what score did an archer from the southeastern united states record with his final arrow to clinch the team gold medal against a technologically advanced east asian nation at the east asian precision‑sport venue on that early autumn day when a significant political figure assumed a new state role?",
+    "answer": "9",
+    "constrained_format": "Answer in pure number",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "during profiles in history’s hollywood auction 89 held in calabasas on june 28, 2017, which lot number was assigned to michael j. fox’s screen-used mattel hoverboard prop from back to the future part ii?",
+    "answer": "1580",
+    "constrained_format": "Answer in pure number",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "which commissioner from an executive body of a political and economic union in europe, established in the mid‑20th century, jointly presented the ‘european chips act’ proposal with a leader of a significant political entity in europe, re‑elected in 2024, at a gathering where individuals address the media and respond to inquiries in a city known for its blend of two distinct cultures and as the seat of several international institutions, on a day in early february 2022 when a notable international winter sports event was underway in east asia?",
+    "answer": "VESTAGER",
+    "constrained_format": "Answer in pure English capital words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on a late‑summer day when a young artist’s life was tragically cut short, during an industrial rock concert by a band with deep historical ties to its host city at an open‑air venue in a major u.s. city known for its distinctive arched stage and summer residency of a renowned orchestra, which song did an english electronic music pioneer perform alongside the band’s founder — a musician from a small northeastern u.s. town known for blending rock and electronic music?",
+    "answer": "Metal",
+    "constrained_format": "Answer in exactly 5 characters",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on what date in september 2019 did geert van der snickt present his work at the 'van eyck studies' symposium held in a western european port city renowned for its medieval architecture?",
+    "answer": "19-09-2019",
+    "constrained_format": "Answer with a date in dd-mm-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on a late‑winter day in early 2020, when a major global health crisis was escalating, who officially took over the senior research oversight role for a segment of a significant late‑2010s arctic scientific endeavor involving a vessel navigating ice‑covered waters near a place at the top of the world where the sun rises and sets only once a year?",
+    "answer": "Torsten Kanzow",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "in the synchronised swimming duet free routine final at the sydney international aquatic centre on september 26, 2000, what artistic impression score did the spanish judge (j5) award to olga brusnikina and maria kisseleva?",
+    "answer": "10.0",
+    "constrained_format": "Answer in pure number",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "at the january 2023 american astronomical society meeting in seattle, who presented the first direct images of exoplanet hip 65426 b taken by the james webb space telescope?",
+    "answer": "Sasha Hinkley",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "in the narrative set in a future society where individualism is suppressed and the populace is under constant surveillance, the women's olympic marathon commenced on august 5 at a los angeles educational institution. at which institution did joan benoit secure her victory?",
+    "answer": "Santa Monica City College",
+    "constrained_format": "Answer in exactly 4 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "which official from a country in the western hemisphere with a population exceeding 300 million refereed a significant international sports final held in a european capital city—where a team from north america secured its fifth consecutive top honor in a popular indoor game—contested between an island in the caribbean known for its vibrant culture and as a territory of a major north american country and a nation in the southern part of a continent known for its rich cultural history and diverse landscapes at a quadrennial multi‑sport event for nations in the western hemisphere, first held in the mid‑20th century, in a city renowned for its mariachi music and as a technology hub, on a day in late october over a decade ago marked by an early snowstorm in the northeastern united states?",
+    "answer": "Anthony Dewayne Jordan",
+    "constrained_format": "Answer in exactly 3 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "which physician repaired the primary seismograph at vostok station on august 10, 1987, thereby ensuring uninterrupted data collection for the polar geophysical year observations?",
+    "answer": "Ivan Smirnov",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "at which specific institute location within a central european city renowned for its vibrant cultural scene and historical significance was the experiment to probe subsurface thermal properties—led by the aerospace research organization in a european country—managed, in connection with the instrument package placed by the space agency established in the late 1950s on the flat volcanic plain of the reddish planet with two small moons on a day in early 2019 that coincided with a high-profile legal verdict?",
+    "answer": "Berlin-Adlershof",
+    "constrained_format": "Answer in exactly 16 characters",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on what date in a spring month of the late twentieth century—known for a major volcanic eruption in the pacific northwest—did a usgs volcanologist, an individual who later served as a prominent ceremonial figure in a north american country with a background in academia and law, arrive at a monitoring facility near mount st. helens to begin his final observation shift before the eruption?",
+    "answer": "17",
+    "constrained_format": "Answer in pure number",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on what exact date in september 2021 did prop store’s major film prop auction, which featured an elder wand used by ralph fiennes’s character voldemort, conclude near a town in the east of england known for its proximity to a major metropolis and its historical connection to a significant waterway?",
+    "answer": "09-23-2021",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "during an event in a year in the second decade of the 21st century marked by significant political shifts and natural disasters—where individuals completed digital challenges rapidly to raise over $2 million for a health‑related cause—tgh executed a particular approach to a game where the player chooses to eliminate all adversaries, leading to a unique conclusion. this run took place on a day in the first month of the year known for concluding a major 18th‑century conflict, in a town in the eastern united states known for its proximity to a major international airport and its role in the technology sector, within a southeastern region of a prominent country renowned for its historical significance and as the birthplace of several national leaders. what named battle was showcased as a bonus incentive during this run?",
+    "answer": "Annoying Dog",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "during its meeting in geneva on january 19, 1935, who presented the report on the saar plebiscite results to a decision‑making body of an early 20th‑century international organization composed of a select group of member states tasked with addressing global disputes and maintaining peace?",
+    "answer": "Baron Aloisi",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "which individual from memorial sloan kettering cancer center delivered the keynote talk at the mlcsb workshop held on july 21, 2019, in a city in a landlocked european country known for its cultural institutions and pharmaceutical industry?",
+    "answer": "Dana Pe'er",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "at the il cinema ritrovato festival on june 29, 2019, who from the institution in a european city dedicated to preserving and restoring cinematic works—known for its annual festival celebrating rediscovered films—introduced the piazza maggiore screening of the restored version of “the great dictator”?",
+    "answer": "Cecilia Cenciarelli",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "which individual, acting as the representative of the head of state and commander‑in‑chief in a vast nation in the northern part of a continent—renowned for its bilingual heritage and extensive natural landscapes—issued order‑in‑council (p.c. 5888) on september 5, 1945, authorizing the flying of the canadian red ensign as a distinctive national flag?",
+    "answer": "Earl of Athlone",
+    "constrained_format": "Answer in exactly 3 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "at the conclusion of a high-level meeting between a north american country and a group of southeast asian nations—hosted by president biden in the north american nation’s capital in the mid-2020s—what specific climate-focused initiative involving both parties was officially launched?",
+    "answer": "U.S.-ASEAN Climate Solutions Hub",
+    "constrained_format": "Answer in exactly 5 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on what date did canadian survey party chief a.j. brabazon confirm that his team had reached the frigid expanse encircling the northernmost point of the globe—known for its extensive ice cover and unique marine life—thus completing their fieldwork for an early 20th-century effort to delineate the boundary between two north american regions?",
+    "answer": "08-12-1913",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "during the 2016 european archipelago festival that brought together prominent figures to explore topics beyond the visible boundaries of knowledge—and on a summer day marked by a major international airport incident—at which venue on the atlantic island renowned for its towering volcanic peak and vibrant annual festivities did the british musician and astrophysicist deliver his talk titled ‘horizons — a visual journey through the universe’?",
+    "answer": "Pirámide de Arona Auditorium",
+    "constrained_format": "Answer in exactly 4 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "during a periodic gathering of leaders from select affluent nations held in late spring in an east asian city known for its layered savory pancakes and home to about 1.2 million people, which country’s prospective membership in an international coalition formed in the early 2020s to promote sustainable management of essential natural resources was welcomed by the leaders?",
+    "answer": "Australia",
+    "constrained_format": "Answer in exactly 1 word",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "during the polar music prize award ceremony at stockholm concert hall on june 15, 2017, who read the citation for sting?",
+    "answer": "Alice Bah Kuhnke",
+    "constrained_format": "Answer in exactly 3 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "during a year in the early 21st century marked by a global pop music sensation, a major social media ipo, and a high‑profile resignation, on what date did a former royal residence in a european capital—now home to an extensive art collection including the world‑famous portrait of a woman with an enigmatic smile—hold an exclusive preview gathering for select guests to view the newly restored painting by an italian renaissance polymath famed for his studies of avian flight, “the virgin and child with saint anne,” ahead of its public exhibition opening?",
+    "answer": "03-28-2012",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "which mayor was present at the historical marker dedication ceremony honoring botanist elara vance at willow creek park in smalltown, vermont, on october 5, 2017?",
+    "answer": "Johnathan Green",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on what exact date in a year in the early 20th century marked by significant global conflicts and cultural milestones did an individual born in the late 19th century in a north american country—renowned for extensive polar explorations and for adopting indigenous survival techniques—and serving as leader of a significant early 20th-century scientific journey in the northernmost regions of a north american country, ascend a high point on an uninhabited landmass in the northern reaches of a north american country (initially named after a former national leader) and observe the strait confirming its separation from another uninhabited arctic island discovered in the early 20th century?",
+    "answer": "06-30-1915",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "in which hall of reykjavik’s harpa concert hall did an individual known for shaping a vast virtual universe and authoring a manifesto on non‑traditional relationships (ccp seagull) unveil concept art for the sisters of eve exploration ships during an annual gathering focused on virtual space exploration and real‑world astrophysics, held on a day in early may marked by global economic and labor protests?",
+    "answer": "Silfurberg",
+    "constrained_format": "Answer in one pure English word",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "according to the diary of a 19th-century american scientist from the hayden survey, on what specific date in a year in the late 19th century notable for a catastrophic north american urban fire and a brief european revolutionary government did an individual who photographed western north american landscapes secure 'a fine series of views' in a national park region renowned for its dense geothermal features, including a famous periodically erupting geyser?",
+    "answer": "07-31-1871",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "at which facility in a western region of a large north american country—renowned for its high‑altitude terrain and numerous peaks above 14,000 feet—did an athlete, who in early 2025 tied a record from the 1930s by securing her 15th global championship medal, complete her final domestic speed training session on a day in early 2022 when a major technology company announced a record‑breaking acquisition, before departing for an international winter sports event held in a city that had previously hosted a major summer games and where a young athlete achieved a historic back‑to‑back victory in snowboarding?",
+    "answer": "Copper Speed Center",
+    "constrained_format": "Answer in exactly 3 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on which date in 2019 did daniel birnbaum speak at the 'hilma af klint: paintings for the future' symposium held at the solomon r. guggenheim museum in new york?",
+    "answer": "04-12-2019",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "during the bepicolombo venus flyby on august 10, 2021, from which specific location in berlin did jörn helbert coordinate the mertis thermal tests?",
+    "answer": "Berlin-Adlershof",
+    "constrained_format": "Answer in exactly 16 characters",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "in a month in the mid‑1980s marked by a devastating natural disaster in central africa, which usgs geologist attended the pivotal meeting held in a northern city in a vast, cold region—where a significant political shift occurred in 2024 with the election of its first female leader—to discuss the augustine volcano eruption and represent the agency in establishing the alaska volcano observatory?",
+    "answer": "Tom Miller",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "what composition by a 20th-century composer known for his children’s orchestral tale featuring a young boy and various animals did pianist sviatoslav richter perform as the final encore at his american debut recital at carnegie hall on october 27, 1961?",
+    "answer": "Suggestion diabolique",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "who chaired the panel discussing optical storage futures at the annual gathering that has been a hub for computer graphics and interactive techniques since the mid‑1970s, held in a city in the northern part of a large country—where a professional basketball team recently secured a significant playoff victory—during a month in the mid‑1980s when a major international sporting event commenced in a major u.s. city?",
+    "answer": "Alan E Bell",
+    "constrained_format": "Answer in exactly 3 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "in the 1967 italian grand prix at monza on september 10, after recovering from a puncture earlier in the race, on which lap did jim clark regain the lead?",
+    "answer": "61",
+    "constrained_format": "Answer in pure number",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "who was the permanent representative presiding over un security council meeting s/pv.9001 on march 15, 2022, regarding the situation in syria?",
+    "answer": "Lana Zaki Nusseibeh",
+    "constrained_format": "Answer in exactly 3 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "immediately after an annual motorsport event in a south american metropolis—renowned for its unpredictable weather and challenging circuit—held at jacarepaguá on march 21, 1982, which two formula 1 teams formally protested the results?",
+    "answer": "Ferrari Renault",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "in which year did the organization responsible for managing numerous historic sites—including a medieval fortress and a triumphal arch, and welcoming over 10 million visitors in 2022—officially approve, in the western european city famed for its underground ossuary, the 2021 collaboration between the artist renowned for large‑scale temporary landscape installations and his partner born in north africa in the mid‑1930s, which involved enveloping a historic european monument in silvery‑blue fabric and red rope?",
+    "answer": "2017",
+    "constrained_format": "Answer in pure number",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on the late‑summer day when residents of a southern u.s. city faced a critical water system failure, who presided over the session of the legislative body in the western coastal region of the country—the same day the appointment of the individual who in early 2023 became the first openly lgbtq+ woman of color to the nine‑member capital‑based judicial panel was confirmed?",
+    "answer": "Monique Limón",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "during a year in the early 21st century when a major social networking platform was launched at a prestigious university, the final match of a significant east asian esports championship was held in a metropolis famous for its blend of ancient palaces and modern skyscrapers, with the han river running through it. on a day in late autumn when a significant political movement began in a european nation, an east asian competitor—born in the late 1980s and later honoured with a prestigious strategic gaming accolade—defeated a renowned rival who went on to succeed in a card-based game of chance. at which venue did this competitor secure the title?",
+    "answer": "COEX Convention Center",
+    "constrained_format": "Answer in exactly 3 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on a day in early spring marked by the death of a renowned american comedian at age 33, in which southeastern u.s. city—recently having overtaken a major west coast city to become the nation’s 15th most populous—did a prominent entertainment conglomerate that had just defended a famous superhero’s legal rights hold the very first preview screening of the blade runner workprint for test audiences?",
+    "answer": "Denver",
+    "constrained_format": "Answer in one pure English word",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "what specific facility did the administrator of an agency founded in the late 1970s and now under scrutiny for its storm‑season preparedness visit in a western us city—known for its unique pedestrian bridge designed by a renowned spanish architect and situated in a region that has recently become the world’s fourth‑largest economy—on a summer day in the late 2010s marked by an unmanned aerial vehicle incident targeting a south american head of state, while assessing a major western us conflagration notable for producing a rare fire tornado?",
+    "answer": "Shasta District Fairgrounds",
+    "constrained_format": "Answer in exactly 3 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on what specific date during the mid-20th-century month known for the exile of a significant political figure did the victoria university of wellington antarctic expedition (vuwae 9), led by dr. r. h. clark, complete the establishment of their base camp at the head of the mackay glacier in antarctica?",
+    "answer": "11-04-1964",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "who presented the filmmaker from a pacific island nation—renowned for a 2018 documentary that revitalized century‑old conflict footage—with the ceremonial key to the southern hemisphere city celebrated for its unique kinetic sculpture, on the red carpet outside the historic midwest theater famed for its 1,100‑pipe organ and mid‑1990s stage expansion, just before the inaugural public presentation of the film that in 2004 tied the record for most academy awards wins, including best picture, on the early winter day marked by a significant aerospace industry leadership change?",
+    "answer": "Kerry Prendergast",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "in a year defined by a significant global financial crisis, on what date did the director‑general of a renowned european museum—celebrated for its 17th‑century collection and iconic nocturnal masterpiece—publicly confirm that it would host an exhibition in the capital featuring works by a german artist inspired by a 19th‑century master alongside the diamond skull “for the love of god” by the british artist known for preserving marine creatures in formaldehyde?",
+    "answer": "05-01-2008",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on what date, in an early 21st‑century year marked by the emergence of a significant global pandemic, did the team—led by a co‑chief scientist who later became the inaugural recipient of a prestigious oceanography award—aboard a vessel that was among the first north american surface ships to reach the north pole complete the first phase of a collaborative survey to map underwater topography in the frigid arctic expanse near alert, where sea ice can reach up to 15 meters in thickness?",
+    "answer": "08-26-2009",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "in the late 1980s, representing a former central european nation known for its industrial output and a distinctive flag redesign a decade after its founding, how many kilograms did an athlete—who later entered the quick‑preparation food industry—lift in the clean & jerk to secure the gold medal in the 67.5 kg category at an annual european weightlifting championship held in cardiff, a western city in a rugged north atlantic region?",
+    "answer": "195",
+    "constrained_format": "Answer in pure number",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on what date did the director known for blending extraterrestrial themes with urban subcultures attend the screening of his film “repo man” at the billy wilder theater of a west coast university— a venue famed for its vibrant pink seating and single brown chair honoring a celebrated filmmaker— as part of a mid‑1980s series that mixes science fiction and dark comedy around a mysterious glowing vehicle?",
+    "answer": "10-26-2012",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "what specific system on a dutch competitor’s iveco truck malfunctioned due to electrical issues during an annual endurance event across deserts and mountains, near the end of a cycling-stage featuring gravel sectors and a historic square finish on a day in early 2012 marked by the unexpected death of a northeastern u.s. political leader, as the route passed between a south american coastal copper‑mining hub and a coastal city famed for its ‘la cosa’ wave?",
+    "answer": "dashboard display",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on a morning in the early 19th century when a significant military engagement in europe yielded a tactical victory with lasting strategic implications, and before a renowned rearguard action commenced at a key crossroads in the same country, which village on the allied left flank was held by the brigade of a central european general?",
+    "answer": "Pireaumont",
+    "constrained_format": "Answer in exactly 1 word",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on a day in late october when a significant figure addressed the public, influencing global discourse, an individual known for her political involvement in a north american country and her advocacy for digital privacy served on the jury of an international accolade—established in the mid‑1990s and awarded biennially for groundbreaking contributions to contemporary visual culture—at a cultural institution in a major north american city, celebrated for its unique spiral design and a collection exceeding 8,000 works. what specific position did she hold at an institution housed in a historic 17th‑century building, renowned for its extensive collection of contemporary artworks, including pieces by lucian freud and marina abramović?",
+    "answer": "Senior Curator: Head of Exhibitions",
+    "constrained_format": "Answer in exactly 5 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on what date, in the month–day–year format common in north america, did the 19th‑century performer famed for her “spider dance,” who once resided in a bavarian palace, arrive in the coastal metropolis of western north america aboard a steamer named after a term for people from northern regions—during the mid‑19th‑century period of rapid population growth and economic change triggered by a major gold discovery?",
+    "answer": "05-16-1853",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on what date in the early 20th century—the same year a significant civil rights organization was founded in the united states—did an american commission established in 1904 to oversee a major interoceanic canal project in central america lay the first permanent concrete in the floor of a series of lock chambers built to lift vessels approximately 85 feet to an artificial lake during this monumental engineering endeavor?",
+    "answer": "08-21-1909",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "in a year when a historic european structure suffered a devastating fire and a young environmental advocate gained global recognition, on what specific date was report (a/hrc/40/70) by an entity established by an international organization to investigate alleged violations of international law in a specific region—an entity criticized for its perceived bias and accused of contributing to political tensions—regarding a nation in the middle east that experienced a significant political shift in late 2024, chaired by an individual who in 2023 took on a leadership role at a company specializing in agricultural genetics to enhance research and technology investments, officially distributed ahead of a significant gathering held in the capital of a european country in late 2019—where a convention to enhance student mobility across five continents was adopted—of an international assembly established in the early 21st century, comprising 47 members tasked with evaluating and addressing global issues related to individual freedoms and protections?",
+    "answer": "01-28-2019",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "in which quarry on an ancient pathway outside a southern european capital renowned for its ancient history did the artist—later celebrated for a monumental saline spiral—execute his 1969 earthwork, an installation of molten asphalt cascading down a steep embankment, during the month marked by a major north american anti‑war demonstration and organized by the gallerist famed for pioneering experimental exhibition spaces?",
+    "answer": "Cava di Selce",
+    "constrained_format": "Answer in exactly 3 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "at which city’s convention on a mid‑summer day in the early 21st century—when fox news surpassed cnn as the leading cable news network—did the studio behind a late‑1990s fantasy mmorpg host an interactive q&a session in which a key developer discussed potential changes to the olthoi nymphs?",
+    "answer": "Austin",
+    "constrained_format": "Answer in exactly 1 word",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "according to the official s/pv.9149 record of a recent assembly of a global council held on a day in early october when a prominent european power formalized the disputed annexation of four neighboring regions, which country’s representative specifically urged the authorities of a landlocked nation—characterized by arid landscapes and with nearly half its population under 15—to lift all barriers to the freedom of movement of an international stabilization initiative established in the early 2010s and concluded in late 2023?",
+    "answer": "France",
+    "constrained_format": "Answer in a single pure English word",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "during a late‑20th‑century period defined by a legal dispute over including a particular perspective in public school curricula—which coincided with an early‑20th‑century european political upheaval—what specific action did the assistant (an artist who captured the only existing images of a controversial mural before its destruction) take while assisting the north american muralist known for his large‑scale working‑class frescoes at a major midwestern art institution, that later proved invaluable?",
+    "answer": "Taking photographs",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "at which venue did the athlete—who, after starring in collegiate soccer at a new england university, joined a financial firm known for backing innovative businesses—score the game‑winning goal for a northeastern u.s. college, famed for its jumbo mascot and a recent doctoral‑student legal case, in the annual u.s. division iii men’s soccer national championship on a late‑autumn day when a significant earthquake struck a northern region of a large country?",
+    "answer": "UNCG Soccer Stadium",
+    "constrained_format": "Answer in exactly 3 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "in a month in early 2018 marked by a high‑profile diplomatic incident in europe involving a former intelligence officer and a rare nerve agent, on what specific date did the creative known for immersive storytelling—such as a virtual afterlife exploration—and representing the company acquired for $2 billion by a leading social media firm in 2014, speak on the “vr publishing & funding” panel at a conference dedicated to immersive digital experiences, held at the coastal convention venue that underwent a major expansion in 2019 and earned top environmental certification in this western coastal metropolis?",
+    "answer": "03-19-2018",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on a day in the mid‑1930s that marked the onset of a major heat wave in the u.s. midwest, who used a spanner to free a european artist—renowned for his early 1930s depictions of surreal timepieces—from his deep‑sea diving helmet after his lecture (a formal discourse with roots in the 14th century) at an avant‑garde exhibition venue in a european capital?",
+    "answer": "David Gascoyne",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "during a month in the mid‑20th century when a significant asian nation conducted its inaugural nuclear test, and in a metropolis in the northeastern united states that experienced a population decline of approximately 6% between 2020 and 2023, at which specific hotel did an individual who, in the mid‑20th century, developed a device that transformed the creation of sound—enabling artists to explore new auditory landscapes—publicly debut his synthesizer modules during a gathering of sound technology enthusiasts scheduled to take place in a coastal city in the western united states in late october 2025?",
+    "answer": "Hotel New Yorker",
+    "constrained_format": "Answer in exactly 3 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on a late-20th-century day when a diplomatic standoff in a south american capital ended peacefully, what type of instrument detected significant so2 emissions during an early 20th-century powered flight by two midwestern inventors over a pacific northwest volcano that subsequently lost approximately 1,300 feet in elevation?",
+    "answer": "COSPEC",
+    "constrained_format": "Answer in pure English capital words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on what date (mm-dd-yyyy) was the realm where a faceless entity commands formidable golems—each capable of delivering instant demise to intruders—significantly revamped post‑launch in the original everquest, as documented in patch notes that affected the accessibility of cazic‑thule for an association of individuals practicing similar crafts or trades raiding within a realm where a celestial being marked its territory with a significant gesture, leading to the emergence of formidable creatures?",
+    "answer": "10-27-1999",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on a day in late 2018 when a major european airport faced significant disruptions due to unauthorized aerial activity, an individual who has ventured to the highest and lowest points on earth, and in 2022 journeyed beyond our planet's atmosphere, undertook an underwater activity where an individual explores aquatic depths without a companion, often requiring specialized training and equipment. which named abyssal point in a deep underwater depression located near a caribbean island, known for its significant depth and complex geological features, did he reach?",
+    "answer": "Brownson Deep",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "at a gathering of individuals dedicated to supporting a coastal town’s community resource, held on a day in early 2019 when a prominent southeast asian ceremonial leader unexpectedly resigned before completing the usual term, what exact balance did the treasurer—an individual with leadership roles in both academic and corporate sectors, from health policy to retail management—report for the book sale account?",
+    "answer": "$12,094.73",
+    "constrained_format": "Answer in exactly 9 characters",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on what specific date in a year when a total solar eclipse traversed the united states and the #metoo movement gained momentum did an enigmatic electronic music innovator—renowned for a groundbreaking 1992 ambient release—perform his set at a coastal venue in a southwestern european metropolis during an annual music gathering famed for its eclectic lineup and economic impact, where the city later recorded a historic high of 1,007 centenarians in 2024?",
+    "answer": "06-02-2017",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on a day in early spring marked by a significant weather event, in which room within a prominent building in a european capital—renowned for its distinctive chimneys and natural ventilation system—did a former media professional turned public servant chair a parliamentary committee session to discuss legislation aimed at regulating online content?",
+    "answer": "Grimond Room",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on a day in the early 19th century marked by a pivotal engagement in a major european capital, which european army major—typically commanding around 120 soldiers—led a regiment raised in the late 17th century and later granted royal patronage, while garrisoned in a historic new england stone mill during a northern frontier confrontation where a small force and indigenous allies repelled a larger attacker in a north american region noted for its linguistic heritage and plans for a national history museum?",
+    "answer": "Richard B. Handcock",
+    "constrained_format": "Answer in exactly 3 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "during the year in the late 1950s when the first artificial satellite was launched, on what date did a junior maritime officer’s construction unit complete the construction phase of the original remote research station at earth’s southernmost point for a global scientific initiative that led to the discovery of a continuous system of submarine mid-oceanic ridges?",
+    "answer": "01-23-1957",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "during his testimony regarding s. 903 before a north american legislative body recently chaired by a senator from a western state known for its vast public lands, on a day in mid‑summer marking a significant leadership milestone in a european political entity, which remote settlement in the northernmost u.s. state—devastated by a fatal natural disaster in late 2023—did a legislator from a northern region of a large country, who retired from a military reserve force in early 2024 after over 30 years of service, cite as being adversely affected by the bulk electric system definition proposed by an organization responsible for ensuring the stability of a vast interconnected system, which had recently warned of potential resource shortfalls over the next decade?",
+    "answer": "Kotzebue",
+    "constrained_format": "Answer in exactly 1 word",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "in a spring month of the 16th century—when a prominent reformer was expelled from a european city and exiled—four commissioners visited a historic english estate, famed for its art collection and deer park, to take depositions from a 16th‑century abbot later executed for resisting the widespread closure of monastic houses. alongside a celebrated 92‑year‑old orchestral composer, a specialist in a distinct european culture, and a correspondent to a renowned dutch scholar, which commissioner was present?",
+    "answer": "Dr John Tregonwell",
+    "constrained_format": "Answer in exactly 3 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "in which town, in the country that in 2016 banned supermarkets from discarding unsold food and is home to a french company specializing in secure information and communication systems with over 5,000 employees, was the document from a european initiative to build a centralized ai-on-demand platform—its first functional release—formally submitted on a day in late 2019 marked by a historic legislative decision in a north american country?",
+    "answer": "Gennevilliers",
+    "constrained_format": "Answer in exactly 1 word",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on which exact date in that mid‑1920s summer month—marked by a landmark u.s. trial and the publication of a controversial political manifesto in europe—did an early 20th‑century zoologist provide his expert testimony (outside the jury’s presence) during the landmark southern u.s. trial over public school science instruction, held in a midwestern city renowned for its aviation heritage in a southeastern region known for its musical legacy?",
+    "answer": "07-20-1925",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on what specific date in a late‑20th‑century year—marked by a tragic bombing at a major sporting event—did a young scottish girl from a long‑running british science fiction series, following instructions from a u.s. medical professional, touch the cubic prison artifact at a national museum renowned for its extensive gem collection?",
+    "answer": "06-26-1996",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on an early 2006 date coinciding with a significant political transition in north america, which player, representing a north american guild renowned for success in strategic team‑based digital competitions, rang the scepter of the shifting sands on a prominent virtual server known for pioneering collaborative in‑game challenges to trigger a major event in a popular online game where players united to open a sealed area and unleash a ten‑hour battle?",
+    "answer": "Caelestrasz",
+    "constrained_format": "Answer in exactly 1 word",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "during a secluded late-1970s summit orchestrated by a prominent western mediator to negotiate territorial disputes between neighboring nations — and on a morning coinciding with a disastrous aviation accident in southeast asia — which two territories did the north african leader insist must be adequately addressed before he could return to his country in the northeastern corner of africa, renowned for its ancient monuments and strategic waterway?",
+    "answer": "West Bank and Gaza",
+    "constrained_format": "Answer in exactly 4 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "what was the full name of the theater manager who oversaw an early screening of a 1970s marine‑predator thriller—during which a viewer had a strong physical reaction—for island residents at a century‑old entertainment venue in a northeastern coastal community known as the island’s main gateway, on a mid‑1970s day noted for a major musical performance?",
+    "answer": "Denna Scheffer LaBell",
+    "constrained_format": "Answer in exactly 3 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "who was the aviator who first witnessed the brief geological event in the late 1970s that created two water‑filled maars—one with a nearly 50‑meter‑high central dome—near a vast northern lake famed for its salmon runs and historical namesake when it commenced on the same day a famous egyptian singer died of a parasitic infection?",
+    "answer": "Robert Motzko",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "in a year marked by a landmark peace agreement in a historically conflicted region, on what date did the american actress known for her log lady role and her assistant‑directing work on a 1977 film attend the formal check‑in reception at a restaurant renowned for its hearty breakfasts and signature caramel cake during an annual pacific northwest festival celebrating an enigmatic television series in a small town noted for its 19th‑century meeting hall in a state recognized for its private equity‑owned housing?",
+    "answer": "08-07-1998",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "which conductor led a large ensemble of strings, woodwinds, brass, and percussion at a concert hall in a historic northern european capital—known for its 30‑meter underground saltwater aquarium—during an annual scandinavian music prize ceremony honoring a renowned nordic soprano, on a mid‑1960s date when “monday, monday” topped the us charts?",
+    "answer": "Arvid Jansons",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on what date in the year when pluto revealed its distinctive heart‑shaped surface feature did the costume designer who partnered with a renowned jeweler to create a fantasy‑inspired objet sold for over $2 million receive the award recognizing technical and artistic achievement in television—an honor that has even recognized a former u.s. president for his narration—for her work on the game of thrones episode “the dance of dragons” at the major west coast entertainment venue that was renamed in mid‑2023?",
+    "answer": "09-12-2015",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "which actor was reported to have signed for 'casablanca' at a century‑old entertainment conglomerate—recently embroiled in a superhero rights dispute—in the issue of a publication founded in the early 20th century (now with international editions), published on a day in the early 1940s when a major pacific military operation commenced?",
+    "answer": "Dooley Wilson",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on what specific date in the mid‑20th‑century year marked by landmark north american civil rights legislation did crews, acting on the research of a historian instrumental in its rediscovery, successfully slip lifting straps under the hull of a 19th‑century armored gunboat—sunk by an underwater mine in a southern river and later preserved near a southern u.s. city central to a 19th‑century conflict?",
+    "answer": "10-28-1964",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "who was the chair umpire for the decisive women’s match—where an unseeded player defeated the top-ranked opponent to claim a major title and a luxury vehicle—contested between a former professional athlete who at 16 became the youngest ever to reach a significant milestone and a former athlete who in 1988 secured victories in four major competitions and an international event, held at a european capital venue named after a pioneering aviator on a day in the early 1990s marked by a tragic central american aviation accident?",
+    "answer": "Georgina Clark",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "who was crowned champion of the competitive fighting game tournament—featuring a diverse roster including a renowned dual‑gun combatant—held at a coastal‑city venue near the regional capital (later famed for hosting a major science‑fiction celebration), during the annual east asian gaming event that subsequently faced significant logistical challenges, in a month also distinguished by a landmark international sports competition and a record‑setting swimmer’s performance?",
+    "answer": "Kamizono",
+    "constrained_format": "Answer in a single capitalized English word",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "in the year when a significant global health threat emerged, a major virtual martial arts competition took place in a desert city in the southwestern united states on a mid‑summer day also notable for a tragic event in a southern u.s. city. which champion celebrated his victory by throwing his fight stick high into the air?",
+    "answer": "Infiltration",
+    "constrained_format": "Answer in one pure English word",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "at an annual event recognizing outstanding contributions in speculative storytelling, held at a venue in a european capital city known for hosting a major international summit in 2009, on a day in late summer when a significant rescue operation took place in central africa, who presented the 'best dramatic presentation, long form' award?",
+    "answer": "Robin Hobb",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on a late autumn day in the final year of the 20th century, at a ceremony held at a european capital institution famed for its collection of a 19th-century artist’s bequeathed works, who presented the annual european art prize—established in the mid-1980s and recently awarded to an artist featuring a vintage automobile draped in crochet—to its winner, the actor renowned for his late-1960s motorcycle escape role?",
+    "answer": "Charles Saatchi",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "during a notable late-2021 close approach to the sun—when a solar observation mission reached within roughly 96 solar radii—under the supervision of a division led by a european scientist who received an honorary doctorate in 2024 at an organization in a north american country recently noted for plans to prioritize a crewed mission to the fourth planet from the sun, what peak velocity in miles per hour did the parker solar probe record on the late-autumn day when a festive gathering in the midwest was disrupted by a significant incident?",
+    "answer": "364621",
+    "constrained_format": "Answer in pure number",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on a day in early 2008 when a renowned actor was appointed to a significant international role, during a visit by a former european leader—who later created a network to distribute surplus non‑food items—to an east asian metropolis noted for a bridge collapse after a fire in 2025, what specific type of joint near‑zero emissions coal project was agreed under a recent clean energy cooperation agreement between a historically monarchical nation and an ancient civilization?",
+    "answer": "Demonstration project",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on a day in early february marked by a major solar coronal mass ejection, during his session on a $2.5 billion–valued online platform at a european capital’s film archive—housed in a frank gehry–designed building in a metropolis famed for its underground ossuary—and in connection with an unconventional early twenty‑first‑century film self‑distributed by its director, what object did the american filmmaker—born in mid‑twentieth‑century america and famed for an early 1990s cult tv series—use to draw a diagram explaining transcendental meditation?",
+    "answer": "Piece of paper",
+    "constrained_format": "Answer in exactly 3 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "which specific rifle model, manufactured by a long-established european company renowned for its products featured in popular media, did a european marksman—celebrated for his precision expertise and recently honored with a commemorative plaque at a prominent sports venue—use to win the gold medal in a three‑position rifle event at a major global competition held in a coastal metropolis renowned for its vibrant street art, on the day a renowned sprinter achieved his third consecutive victory in a prestigious 100‑meter race?",
+    "answer": "KK500",
+    "constrained_format": "Answer in exactly 5 characters",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on a day in the mid‑1990s when a significant heat wave in a major midwestern city began to subside, which council member sponsored resolution r‑420‑7‑95 to approve a legal dispute in a midwestern state involving a property owner and a local government over the status of a public roadway adjacent to a popular waterfront establishment in a city in the northern part of a large country known for its significant educational institution and a population of approximately 120,000 in 2023?",
+    "answer": "Martin",
+    "constrained_format": "Answer in exactly 6 characters",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "who served as president of the group of officials in a global two‑wheeled sport responsible for overseeing competitions and enforcing regulations, which announced the removal of a former central european professional cyclist—renowned for achieving a unique hat‑trick in a prestigious international competition—from a multi‑stage cycling race following its fourth stage in a french spa town on a day in the summer of 2017 that coincided with a notable missile test in east asia?",
+    "answer": "Philippe Marien",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "according to an early 20th‑century arctic explorer later honored by a leading field research society, in a year marked by a maritime disaster with over 1,500 casualties, what scientific observations did a cognitive neuroscience professor from a northeastern u.s. university make after establishing his station at a remote arctic headland during an expedition aiming for the north pole between the siberian forest‑flattening event and the founding of a major u.s. civil rights organization?",
+    "answer": "Tidal observations",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "in that mid‑2010s year marked by a major political shift in a western nation and the loss of several cultural icons, during a flagship fighting game tournament at a las vegas convention center now undergoing extensive renovations, on what date did the tournament organizer—who would later face serious allegations—officially ban the tropical shoreline‑themed stage for the remainder of the street fighter v competition?",
+    "answer": "07-16-2016",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "in a month in the early 2020s marked by significant global events, including a tragic shooting during a national celebration in a north american suburb, on which specific date was the final closure of the newly installed specialized detector at the subterranean experimental pit beneath the french‑swiss border completed at the intergovernmental laboratory operating a 27‑kilometer circular accelerator? the detector, overseen by a project leader who transitioned from urban teaching to law and politics, shares its name with a european town, a nicotine pouch brand, and a blockchain token.",
+    "answer": "07-20-2022",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "at the conclusion of a late‑summer annual gathering on a southern british island, a promoter known for organizing a massive early‑1970s event made a famous onstage outburst and claimed his creative enterprise—relocated to a northern coastal city in late 2022—was facing what monetary loss in pounds?",
+    "answer": "60000",
+    "constrained_format": "Answer in pure number",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "which player from a vast southern hemisphere country—renowned for its unique marsupials and, in 2025, the site of a prominent anti‑exploitation advocate’s death in its western region—committed a burned‑stone violation in the sixth end against a north american team that, in mid‑2024, secured a major victory in a european capital under the leadership of a player who scored 24 points in the final moments, at the capital’s aquatic centre—known for its bubble‑like exterior—where 25 world records fell in 2008, during the mixed doubles curling match at an international winter sports gathering held in a city that had previously hosted a major summer sports event, on an early february 2022 day marked by the passing of a legendary 92‑year‑old singer?",
+    "answer": "Tahli Gill",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "which eniac programmer was chosen to assist an individual—who in the mid‑20th century helped develop a pioneering electronic device and later contributed to the academic study of complex systems at a midwestern university—with operating the master programmer panel during a collective assembly held at a southeastern united states educational institution renowned for its top‑ranked international business program, on a day when that technological innovation was publicly unveiled?",
+    "answer": "Betty Snyder",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "what was the meeting number of the gathering—where individuals convene to exchange ideas, often allowing dominant voices to overshadow others—that served as the weekly assembly in a central european city (where a mass grave of roman‑era soldiers was discovered beneath a soccer field in 2024), comprising representatives from 57 nations and tasked with overseeing the daily operations of a european security organization, at which the seasoned eurasian diplomat—who presented credentials to a gulf monarch in late 2013 and became a permanent representative in early 2021—delivered a statement on behalf of türkiye on a day in early spring when a significant financial institution announced its closure, sending ripples through the financial sector?",
+    "answer": "1415",
+    "constrained_format": "Answer in pure number",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "which knight was severely wounded by an artist from a european country, famed for his dramatic use of light and shadow and whose work was rediscovered in the mid‑20th century, during a noisy quarrel in a compact mediterranean capital striving for net‑zero emissions by 2030, on a day in the early 17th century that coincided with the conclusion of a significant military engagement off the southeastern african coast, ultimately leading to the artist’s imprisonment and expulsion from an ancient humanitarian order founded in the early 12th century?",
+    "answer": "Giovanni Rodomonte Roero",
+    "constrained_format": "Answer in exactly 3 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "in a year in the early 21st century marked by significant global events, including a major maritime incident that disrupted international trade for nearly a week, on what specific date did a filmmaker from a major u.s. city—who in 2023 directed a film that, despite becoming the highest‑grossing work by a black woman, underperformed at the box office—host an online event where individuals are recognized for their achievements, often involving digital certificates and virtual applause, for the annual event recognizing advancements in the art and science of visual storytelling (with the next ceremony scheduled for april 29, 2025), presented by an organization known for its annual awards ceremony, which has recently introduced new rules requiring voters to watch all nominated films and set guidelines for the use of ai in filmmaking?",
+    "answer": "02-13-2021",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on a day in mid‑april when a renowned american television personality died at age 82, during an initial encounter in a prestigious european club football competition, at a stadium in a european capital famed for hosting a record‑breaking women’s match in 2024, a former west african professional athlete—appointed as a goodwill ambassador for a global health organization—scored for a blue‑clad capital city team, which had just ended a four‑month goal drought, against a coastal iberian metropolis noted for reaching a historic high in centenarians in 2024. how many minutes into the additional period granted at the end of the first half was this goal officially recorded?",
+    "answer": "2",
+    "constrained_format": "Answer in pure number",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on a day in early july when a significant social media platform introduced a new competitor, heightening tensions among tech industry leaders, who chaired the mid‑2023 gathering of a weekly assembly in a central european capital—renowned for its unique engagement with mortality through cemetery events like yoga and cabaret—where a high‑ranking official from a south caucasus nation addressed an international assembly?",
+    "answer": "Igor Djundev",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on a winter day in the late 20th century marked by a significant online political revelation, during an annual gathering celebrating independent storytelling for over four decades, at which venue did the animated short film “more,” directed by an individual recognized among the top 25 global marketing technology trailblazers in 2017, receive its initial public presentation as part of a curated program of brief cinematic works?",
+    "answer": "Egyptian Theatre",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on the day in the late 20th century when a significant initiative was announced to address societal perceptions of cognitive health, at which specific venue in the coastal city known for its iconic pier and recent public art installations did the presenter and filmmaker (who began his career photographing bmx riders and skateboarders, co‑founded a youth culture magazine, directed a 1999 film exploring a renowned actor’s mind, and later won an academy award for a 2013 film about a man’s relationship with his computer’s ai) participate in the annual event known for its unconventional awards such as “best kiss” and “best villain,” which was paused in 2024 for a format revamp?",
+    "answer": "Barker Hangar",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "according to the recorded history of daggerfall within elder scrolls lore, during a specific period in a fictional universe notable for the rise of a significant figure who later became central to subsequent events, on which day of the month hearthfire did a royal figure from a realm known for its ancient scrolls and mystical artifacts host an exclusive gathering, where attendees contributed substantial sums to dine with prominent figures in opulent surroundings, for a ruler from a storied lineage who, after a decade-long absence, returned to lead his realm through significant upheaval, in a prominent coastal settlement that had grown to over 110,000 inhabitants by the early third era?",
+    "answer": "13",
+    "constrained_format": "Answer in pure number",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "in the mid‑19th century period when a prominent human rights advocate toured ireland, what specific appointment did the individual—who in 2024 died unexpectedly at age 77 aboard a cruise—hold on the european naval vessel that later took part in a tragic polar expedition and whose wreck was found in the early 21st century, during its overwintering at a remote, uninhabited arctic island in northern canada where three crew members were buried?",
+    "answer": "Armourer",
+    "constrained_format": "Answer in exactly 1 word",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on what specific date in the year characterized by a significant financial downturn in a major north american city—which led to the formation of a large holding company to control multiple railway lines—were the remains of the only fatality of an early 19th‑century continental expedition interred for the fourth and final time at the foundational segment of his commemorative monument in a midwestern city known for one of the upper midwest’s largest outdoor music festivals, located in a central region famed for its annual dairy‑sculpture event?",
+    "answer": "05-30-1901",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "which former heisman trophy recipient presented the trophy to an individual who, in the late 1980s, became the first to achieve all-star status in two major north american sports and was inducted into a regional hall of fame in 2024, during a structured event with specific rituals at a towering early 20th‑century athletic club in a major u.s. city on a day in the mid‑1980s when the prestigious collegiate award was decided by a narrow margin?",
+    "answer": "John Cappelletti",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "during a month in the late 2010s when a significant political shift ended a six‑decade ruling coalition in a southeast asian nation, on what date did the institution established in the early 20th century and renowned for its pacific volcano research, under the direction of an individual honored for their service to volcanology, first raise the aviation color code to red in response to a major geological event in the pacific that destroyed over 700 structures and displaced thousands of residents?",
+    "answer": "05-15-2018",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on what date in the year when a significant natural disaster struck the great lakes region, killing over 250 people, did the late 19th‑century gallery in the coastal city in the western part of a large north american country—known for its significant population fluctuations in recent years and partly owned by an early 20th‑century genealogical author—first publicly exhibit “nude descending a staircase, no. 2” by the artist famed for challenging traditional norms with everyday objects, following its controversial appearance at an annual gathering of international contemporary and modern art in a major u.s. city?",
+    "answer": "05-24-1913",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "for how many minutes was play suspended due to the second rain delay during a significant match in a popular team sport—one at which a player known for his distinctive hairstyle concluded his career before a record crowd in a city famed for its coffee culture—between a retired athlete from a central european nation and a retired athlete from a european island nation, held at a private members’ club in a european capital city that hosts a prestigious annual event known for its use of electronic line‑calling technology, on a day in the summer of 2008 notable for ending a five‑year dominance in that tournament?",
+    "answer": "74",
+    "constrained_format": "Answer in pure number",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "what was the release date (mm-dd-yyyy) of the patch for the long‑standing online realm where adventurers have awaited the ability to personalize their own dwellings for over two decades, which featured a significant narrative event—a coastal stronghold’s obliteration by an arcane device—and during which a prominent scholar‑leader sacrificed himself at a strategically important marshland port settlement?",
+    "answer": "08-28-2012",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "in a month of the early 1980s marked by a rare alignment of all nine planets on the same side of the sun, on what specific date did an octogenarian filmmaker from a european island nation—renowned for his atmospheric visual style and fresh from directing a historical epic sequel—attend the ill‑fated early exclusive preview of a 1982 science fiction film in a high‑altitude western north american city noted for a surge in concealed carry permits?",
+    "answer": "03-05-1982",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on what date in the mid-1970s month marked by a devastating european earthquake did an east asian meteorological event ravage a southeast asian archipelago—renowned for its western bay, extensive mangrove forest, and white‑sand beaches—destroying a significant portion of the filming sets for an american filmmaker’s apocalypse now?",
+    "answer": "05-26-1976",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on what date in a mid‑20th‑century year—one marked by a devastating central u.s. tornado outbreak—did the early‑20th‑century artist renowned for his kinetic sculptures and miniature circus attend the formal inauguration of the fine arts museum in the south american capital designed by the european‑born architect whose university complex later became a world heritage site?",
+    "answer": "03-02-1955",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on which date, during the month in the early 1970s when a significant lunar mission concluded—marking the last time humans set foot on the moon in the 20th century—was the photograph showing the candidate event (a single electron shower) for the large‑scale apparatus that provided evidence for a unified electroweak theory taken at the intergovernmental research organization operating a 27‑kilometer circular tunnel?",
+    "answer": "12-13-1972",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on the day a major volcanic eruption over the north pacific disrupted air travel, the brightly hued vessel launched in the late 20th century set off from the southern hemisphere coastal city renowned for its weekly market on its inaugural service voyage—a 150‑day expedition from a southeastern u.s. port to a northern european capital. who was the senior science leader directing this voyage?",
+    "answer": "Patrick Quilty",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on what specific day in the month in the early 1970s that witnessed both the launch of the final human lunar mission and a significant political upheaval in a central american nation did the astronaut who left a message of hope and peace on the moon’s surface deploy the geophones for a lunar subsurface profiling experiment involving explosive charges, near the site where explorers collected over 100 kg of geological samples in the valley known for its vibrant volcanic soils?",
+    "answer": "12",
+    "constrained_format": "Answer in pure number",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on what date (mm-dd-yyyy) did a cultural institution in a major u.s. city—renowned for its collection of over 150,000 works spanning ancient to contemporary and for exhibitions on black diaspora art—acquire the print titled 'the temptation of' by a european artist celebrated for late‑19th‑century monochromes and an early‑20th‑century vibrant palette, depicting an early common era desert hermit often accompanied by a domesticated animal, from a european modern and contemporary art institution housed in a renzo piano–designed building, according to its official provenance record?",
+    "answer": "11-19-1971",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on a late-summer day in the mid-20th century, coinciding with a major political convention in a coastal city, filming began for the poignant farewell scene of the doctor’s granddaughter in a 1960s british science fiction serial about mechanical invaders in a major european metropolis. near which geographical feature was this filming initiated?",
+    "answer": "Butser Hill",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "during a preparatory event where autonomous vehicles underwent trials to qualify for a subsequent desert competition at a former high-speed racing venue in southern california, on a day in early autumn when a significant weather event reached its peak intensity near a prominent peninsula, which specific sensor component failed on the robot fielded by an educational institution in the western united states that had recently received a donation exceeding a billion dollars to establish a sustainability school?",
+    "answer": "Left LIDAR scanner",
+    "constrained_format": "Answer in exactly 3 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "which band served as the support act for a musician who, in the mid-20th century, led a group combining traditional and innovative jazz styles, at a venue in a european lakeside town known for its annual musical gathering famed for eclectic performances and legendary late‑night jam sessions, on a summer day in the mid‑1980s when a renowned rock band performed at a fairground in a western u.s. state?",
+    "answer": "Robert Cray Band",
+    "constrained_format": "Answer in exactly 3 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "in a year in the 19th century when a significant political figure faced threats en route to a major event, on what specific date did the leader of a southern‑hemisphere search mission—undertaken as part of a late‑19th‑century relief expedition—discover the presumed grave of the actor famed for portraying a british secret agent’s nemesis (and narrating a cult musical), who had been a member of the overland expedition across a vast southern landmass, near the remote watercourse associated with that journey?",
+    "answer": "10-21-1861",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on a summer day in the late 20th century, noted for nasa’s photograph of the sombrero galaxy, in which city did the first professional gamer signed to the cyberathlete professional league—who later became a technology executive—win the women’s championship title at a major annual gaming convention in texas?",
+    "answer": "Mesquite",
+    "constrained_format": "Answer in one pure English word",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on a day in late autumn when a political leader faced legal challenges, who accepted the best feature film award for ‘parasite’ at an annual event held in a coastal australian city known for its major september arts festival, recognizing cinematic achievements across more than 70 nations?",
+    "answer": "Jang Young Hwan",
+    "constrained_format": "Answer in exactly 3 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on a late summer day in 2023—marked by a significant weather event approaching the southeastern united states—the entity responsible for managing the financial resources of a prominent north american nation, having just announced a $776 billion borrowing estimate for the final quarter of 2023, issued a formal communication regarding high‑level appointments connected to sanctions on a vast nation spanning eastern europe and northern asia. what date of birth is listed for the individual with a common eastern european surname associated with a historically significant 20th‑century region?",
+    "answer": "04-18-1988",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "in may of the early 21st century, during the now‑defunct annual interactive digital entertainment expo in a major u.s. city, at which specific hall of the large convention center—also known for hosting a major annual japanese animation and culture convention—did the individual recognized in 2025 among the wealthiest in a pacific northwest state present a half‑life 2 demo at the booth of the company that relocated its headquarters in 2022 to a major southern u.s. city?",
+    "answer": "Kentia Hall",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on what exact date did a former european athlete—known for his powerful one‑handed backhand and a quarterfinalist at a major tournament in 2013—smash three racquets consecutively after losing a single point during an initial contest of a competitive series against a left‑handed competitor from a european capital, who concluded a 24‑year career in a middle eastern city alongside a renowned serbian player, at a major annual southern hemisphere event noted for its record‑breaking attendance exceeding 1.2 million?",
+    "answer": "01-14-2013",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on which date, in the month when a landmark international peacekeeping organization was founded in the early 20th century, did the art‑inclined official formally establish belgian administration over the small, triangular western european territory—known for its unique governance and mineral wealth—incorporating it into the western european nation, following the grand palace treaty that imposed territorial and economic penalties on a central european power?",
+    "answer": "01-10-1920",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "during a mid‐20th‐century antarctic expedition—when the leader endured a solitary winter at a remote outpost amid severe equipment failures—who held the chief scientific position and performed the first successful seismic reflection sounding near a cluster of small, snow‑covered granite elevations on a remote peninsula, on a day in the early 20th century marked by a catastrophic explosion at a central american port?",
+    "answer": "Thomas Poulter",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "which staff member at a canadian-based developer of interactive digital experiences—renowned for its cooperative online action game since 2013—posted the official acceptance list for a collection of user-generated content for that game on its official community forum on a day in early 2020 when a significant weather event occurred in the mid-atlantic united states?",
+    "answer": "[DE]Taylor",
+    "constrained_format": "Answer in exactly 10 characters",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on what specific date in a mid‑20th century year, notable for a mysterious incident in the american southwest, did an artist—who created a series of triptych artworks after a major global conflict—obtain the visa that allowed him and his wife to travel to a western hemisphere nation projected to exceed 340 million residents by 2025, thereby securing his teaching appointment at a midwestern university renowned for its substantial endowment and international student body?",
+    "answer": "07-22-1947",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "according to the diary of the artist born in the late 1930s in a central u.s. state—known for blending text and imagery and documenting urban landscapes through publications in the 1960s—as held by an institution in a major u.s. city that, in 2018, allocated $68.6 million to advance visual arts research, and by an international organization established in the late 20th century to develop sustainability reporting guidelines, on what specific date in a month in the early 1960s known for large‑scale peace demonstrations by north american women did he visit the studio of the artist born in the mid‑1930s in a small californian town—known for transforming discarded items into poetic assemblages he called “furniture for the soul”—located in a mountainous area in a western u.s. state known for its vibrant artistic community and its open‑air theater founded in the early 1970s, within a region on the western edge of north america that has become the world’s fourth‑largest economy?",
+    "answer": "11-25-1961",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "at the evo 2017 tournament held in a city in the southwestern united states known for its vibrant entertainment scene and recent sports developments, on a day in mid‑summer marked by a medium‑sized solar flare and coronal mass ejection, which player won the significant event in a racquet sport—an emotional farewell match concluding a seasoned athlete’s career alongside a long‑time competitor—in pool a17 of blazblue: central fiction?",
+    "answer": "Heiho",
+    "constrained_format": "Answer in exactly 5 characters",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on the mid-19th-century day remembered for its grand political parade with a giant portrait of a national leader and a famous campaign song, at which precise point near the coastal inlet celebrated as the final resting place of a legendary canoe did the notable pacific island chief sign the only surviving copy bearing a colonial official’s signature of the landmark agreement between indigenous leaders and the european monarchy?",
+    "answer": "Te Awhitu",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "in the year when data from the galileo probe revealed a hidden ocean beneath europa’s ice, on what date did a former european professional cyclist—who admitted in 2023 to using performance‑enhancing substances—finish second on a mountain stage of a renowned european cycling tour, famed for its steep ascents and later highlighted by a slovenian’s record‑breaking climb in 2024, which concluded in a southeastern french town known for hosting an early‑1990s winter olympics?",
+    "answer": "07-28-1998",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "which national team initially secured third place immediately following the team relay final of a winter sport combining skiing and shooting, held at a global competition in a mountainous central european settlement renowned for its winter sports facilities, on the day in early spring when a major natural event triggered an energy crisis in an island nation?",
+    "answer": "RUSSIA",
+    "constrained_format": "Answer in pure English capital words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "in the year when nations signed a landmark climate agreement to curb global temperature rise, on what date did an individual who moved from studying celestial bodies to developing data visualization tools, while affiliated with a mountaintop european research institute recognized for its work on instruments for a 39‑meter telescope in a central european city renowned for its centuries‑old university, formally announce on the project’s primary mailing list the initial release of a celestial data analysis software package?",
+    "answer": "02-18-2015",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "during a rain‐soaked procession through a major european metropolis famed for its extensive public transport network, held as part of a grand investiture ceremony on a day in the early 1950s when a royal event was first televised—spurring a boom in television sales—a ruler from a southeast asian region known for its cultural and linguistic diversity shared an open carriage with a pacific island sovereign celebrated for her literary works and memorable mid‑century appearance. what was this southeast asian ruler’s official title?",
+    "answer": "Sultan of Kelantan",
+    "constrained_format": "Answer in exactly 3 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "in the same year that a historic music festival attracted over 400,000 attendees to a northeastern u.s. farm, on what date was the recording session for “pharaoh’s dance”—featuring the composer of a late‑20th‑century staple for vocal groups and big bands on electric piano—held at a major record label’s studio b in a northeastern metropolis renowned for its 2022 gala honoring influential figures?",
+    "answer": "08-19-1969",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "who conducted the self‑governing musical ensemble founded in the early 20th century—renowned for its extensive film soundtrack work—at the annual summer festival in the european capital on the late‑summer day marked by a lunar probe’s crash, during the event in a european country where performers departed early to prepare protest materials, presenting the mid‑1920s‑born composer’s ‘btunes’?",
+    "answer": "Sir Antonio Pappano",
+    "constrained_format": "Answer in exactly 3 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on what specific date during the month in the late 2010s when a significant typhoon caused extensive flooding in an east asian nation was an individual—celebrated for collaborating with a director of period horror films and for their work on a maritime‑themed black‑and‑white film—announced as the recipient of the accolade recognizing exceptional visual artistry in motion pictures for 'the lighthouse' at the annual gathering in a coastal town near a major european city renowned for its imaginative and spine‑chilling cinema?",
+    "answer": "10-12-2019",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "in a northeastern u.s. city known for its aging population and efforts to manage surging growth, which city official placed the winner’s laurel wreath on an individual—who gained notoriety in the early 1980s for an unconventional approach to a prestigious long‑distance event and later faced legal challenges—immediately after she finished an annual marathon renowned for its challenging course and a notorious ascent near a prominent college, on a day in the early 1980s when the race was marred by a participant’s disqualification for not completing the entire course?",
+    "answer": "Mayor Kevin White",
+    "constrained_format": "Answer in exactly 3 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "following his capture in the early 17th century, shortly before a significant failed leadership plot, an individual from the late 16th century—renowned for his role in an event commemorated annually with bonfires and effigies—was first interrogated directly by a monarch who commissioned a landmark english translation of a religious text in 1611. at which royal residence in a metropolis in a european island nation known for its extensive public transport network and vibrant jazz scene did this interrogation take place?",
+    "answer": "Whitehall Palace",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on what date in the month when the global population reached five billion did a former dutch rider, who wore the yellow jersey for three days in a renowned multi-stage event, win the intermediate sprint at a mountain pass renowned for winter sports during a major annual european cycling competition that, in 2024, concluded in a coastal city for the first time in over a century?",
+    "answer": "07-16-1987",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "which promoter booked a prominent figure in 20th‑century music—renowned for his innovative contributions and a notable mid‑1960s european jazz festival appearance—to open for a musical artist from a major u.s. city—known for her unique genre‑blending compositions popularized by other performers—at a venue in a major u.s. city famous for hosting a seven‑hour closing‑night blues‑rock performance, on a day in early spring when a renowned british rock band performed at a prestigious academic institution in their nation’s capital?",
+    "answer": "Bill Graham",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on a late summer day in the late 17th century—notable for a significant agreement between two major powers of the time—the signing of an agreement from the late 17th century between two major eurasian powers, uniquely documented in a classical language not native to either party, took place in a settlement in the eastern part of a vast northern country known for defining borders with a neighboring empire. which french jesuit interpreter assisted the delegation of a period in the history of a vast east asian nation, during which its territory expanded significantly and a notable emperor ruled for over six decades?",
+    "answer": "Jean Francois Gerbillon",
+    "constrained_format": "Answer in exactly 3 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "which state senator chaired the specialized subcommittee within a western u.s. state’s legislature—focused on natural resources, environmental protection, and energy—during the collaborative session held by multiple legislative bodies to discuss strategies for addressing prolonged water scarcity on a day in early spring when a significant political address was delivered in a major north american country?",
+    "answer": "Bob Wieckowski",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "in which room number within a mid‑20th‑century building in the capital of a north american nation—distinguished by bronze doors bearing an eagle and inscriptions symbolizing core societal values—did the legislative body established in the early 19th century, pivotal in shaping international policy, hold its formal evaluation of a seasoned north american diplomat on the mid‑2021 day marking a significant milestone in a global health crisis?",
+    "answer": "G50",
+    "constrained_format": "Answer in exactly 3 characters",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on the late‑autumn day that coincided with the death at age 92 of a notable south asian political figure, which performer—whose profession involves portraying various characters and can earn honors such as “sexiest man alive”—introduced the screening of “the shining” at the performance venue affiliated with a prominent west coast university, inside a cultural institution in a major urban center on the western coast of a large north american country that lost over 90,000 residents in 2022?",
+    "answer": "Malcolm McDowell",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "who chaired the recent assembly in a european nation focusing on green employment opportunities, which took place on a late‑autumn day marked by a significant legal proceeding involving a former political adviser, in the legislature that achieved record diversity in 2024?",
+    "answer": "Philip Dunne",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "during the annual gathering of national delegates in that northeastern metropolis on the mid‑october day when a prominent technology industry figure passed away, and while discussing the recent report documenting unprecedented disregard for fundamental freedoms in a coastal enclave, which country’s representative spoke immediately before the delegation of the north american nation projected to exceed 340 million inhabitants by early 2025?",
+    "answer": "NICARAGUA",
+    "constrained_format": "Answer in pure English capital words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on a summer day in 2009 notable for a significant event in a west african country, which country’s team won the gold medal in the men’s coxless four final—a significant aquatic contest marking a north american team’s first triumph in this category since the mid‑20th century—at an international aquatic competition for young adults held annually since 2005, featuring twenty‑two boat classes (including eight lightweight categories), in a small central european settlement known for hosting water sports events in the early 1990s, in a landlocked european nation that recently achieved full independence from a major eastern energy supplier by enhancing a southern pipeline?",
+    "answer": "Germany",
+    "constrained_format": "Answer in one pure English word",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "who won the women’s title at the annual event in a european village where competitors wrestle in a pool of traditional meat‑based sauce, held on a late summer day in 2019 at a dining establishment in a northwestern european locale renowned for its savory wrestling competition?",
+    "answer": "Jade Padden",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on a day in early september 2023 marked by a significant seismic event in north africa, in a metropolis in east asia renowned for its extensive public transportation system, who chaired the segment held in a central asian capital in december 2024 focusing on collaborative efforts for global harmony and enduring progress, during a meeting of legislative leaders from a select group of economically advanced nations convened to address matters of global importance?",
+    "answer": "Fukushiro Nukaga",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "which individual elected to a continental legislative body—representing hundreds of millions of voters and benefiting from a recent surge in turnout—spoke on behalf of an alliance founded in the late 20th century to advocate environmental sustainability and regional autonomy during a session of a major international parliament debating a nation’s legal measures perceived to impinge on civil liberties, on a day in early 2023 marked by a significant military operation in the middle east, held in a western european city renowned for its culinary specialties and vibrant design scene?",
+    "answer": "Gwendoline Delbos Corfield",
+    "constrained_format": "Answer in exactly 3 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "what specific four-word charge, beginning with \"obstruction,\" was filed by a municipal organization in a major u.s. city—one that in 2024 appointed a new leader with a background in sanitation management—against a japanese individual, often referred to as the \"godfather\" of a unique competitive activity who retired in 2024 due to health concerns after a two-decade career, following his arrest on a day in early summer when a renowned athlete secured his second major victory on a prestigious grass court at an annual contest held in a coastal area of a major u.s. city, known for its historic amusement attractions and notable in 2024 for the absence of a prominent participant due to a sponsorship conflict?",
+    "answer": "Obstruction of governmental administration",
+    "constrained_format": "Answer in exactly 4 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on a late‑summer day marked by a significant weather event in the central united states, an annual celebration of imaginative storytelling—one that in 2024 recognized a notable interactive adventure for its expansive narrative choices—was hosted in mid‑august 2014 at a venue in a european capital that later unveiled a new entertainment district featuring exhibits based on a popular ’90s sitcom and an international motorsport series. which author presented the best novella award during this event?",
+    "answer": "Ann Leckie",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "who officially confirmed the victory of an age‑old institution—founded before a prominent mesoamerican civilization and celebrated for its distinctive tutorial system—after its rival crew from a uk city renowned for its booming technology and life sciences sectors sank near a bridge spanning a major european river during the annual rowing contest between two esteemed universities on a spring day marked by a total lunar eclipse?",
+    "answer": "Antony Reynolds",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "in a month in the early 20th century marked by a significant seismic event off the coast of two neighboring south american countries, a maritime disaster struck off a large pacific northwest island—claiming over a hundred lives and prompting major safety reforms. off an island known for its mild climate and ancient rainforests, which vessel under a historical figure famed for 18th‑century maritime exploits—and later honored with a prestigious legislative award—arrived late on the date tied to the constitutional change in the early 1960s that granted residents of a specific federal district the right to participate in national elections, and attempted rescue operations the following day, a late april 2025 new moon?",
+    "answer": "SALVOR",
+    "constrained_format": "Answer in pure English capital words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "according to the diary of an individual who endured a prolonged stay in a frozen shelter, living off local wildlife and later becoming a prominent academic leader in a culturally diverse city, on what specific date in a year in the early 20th century marked by a major maritime disaster and a significant political shift in north america did the northern party of an individual whose name can be a scottish surname, a given name, or that of someone concluding a major endeavor in late 2023 finish excavating their snow cave during a period when certain arctic creatures adapt their vision to ultraviolet light, after being marooned on a desolate landmass in the southernmost continent during an early 20th-century expedition to conduct scientific studies?",
+    "answer": "03-25-1912",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "in ‘the heart of the antarctic,’ the account by an early 20th-century polar expedition leader whose ship became icebound, on what date in the year marked by a catastrophic explosion that flattened an extensive forest in a remote part of a large eurasian country did a severe blizzard begin that confined the shore party of a record‑setting southern expedition—including its member who reached within 97 miles of the south pole—to their hut at a remote dark rocky cape for a period traditionally associated with the time between the crucifixion and resurrection?",
+    "answer": "06-06-1908",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "in the seismicity chapter of professional paper 1250 by an organization established in the late 19th century to study the earth’s physical characteristics and natural phenomena, with its main office in virginia, and authored by a group of researchers known for a landmark early‑1970s study, what precise utc time did seismic station shw record for the onset of the seismic event that triggered a massive geological collapse in the pacific northwest on that notable spring day in the early 1980s?",
+    "answer": "15:32:11.4",
+    "constrained_format": "Answer in hh:mm:ss.s format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "during his keynote speech at the 2007 edition of a major first‑person shooter fan convention in a southern u.s. city known for inventing the frozen margarita machine, on a late‑2000s day marked by a significant financial market downturn, what specific processing units did a renowned game developer say a texas‑based studio chose not to use for its game rage on a gaming console line that had sold over 450 million units worldwide at the time?",
+    "answer": "SPUS",
+    "constrained_format": "Answer in pure English capital words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "according to seismic monitoring reports by the national mapping and geographic data authority of a country on the iberian peninsula that produces around 40% of the world’s olive oil, for the cumbre vieja volcano on an atlantic island known for hosting a 2025 festival with eight nobel laureates, on what date during a month in the early 2020s marked by a major political leadership change was sustained volcanic tremor activity notably recorded before a natural event involving the expulsion of molten rock, ash, and gases?",
+    "answer": "09-17-2021",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "during a late-1970s cinematic project noted for its desert sequences shot in a north african nation famed for its ancient mercantile empire and rivalry with a historic republic, on what specific date did the director—an individual who in 2012 transferred ownership of his renowned storytelling enterprise to a major entertainment conglomerate for over four billion dollars—encounter the region’s first significant rainfall in a period spanning five decades, thereby disrupting the shooting schedule?",
+    "answer": "03-25-1976",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on which street in a western european metropolis renowned for its extensive underground transit system inaugurated in the early 20th century was a 16th‑century french nobleman—captured during a significant siege, converted to a new faith, and ultimately killed in a notorious massacre—wounded during an event in the early 19th century where a prominent leader was targeted by an individual who believed himself to be a deposed monarch, on a day in late summer of the 16th century that marked a significant escalation of religious tensions in a european nation?",
+    "answer": "rue des Fossés Saint-Germain",
+    "constrained_format": "Answer in exactly 4 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "which ambassador represented a nation in the southern hemisphere—where a significant portion of the population is non‑religious and a former history teacher recently became president—and explained their vote during a session of an international security council convened to address the repercussions of unilateral economic measures, held on a late‑december day when a pivotal resolution concerning activities in a historically contentious region was adopted?",
+    "answer": "Elbio Rosselli",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "in a month in the mid‑19th century when a significant gathering advocating gender equality took place in a northeastern u.s. state, a british explorer who led a perilous voyage through icy waters connecting two vast oceans climbed a hill near a southern hemisphere coastal feature named for a notably short 19th‑century british statesman on a treeless northern island. from that vantage point, he sighted a remote arctic waterway, thereby confirming the existence of the northwest passage. on what specific date did this event occur?",
+    "answer": "10-26-1850",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "which division of this well‑known broadcaster, established in the early 20th century and currently under review for its funding model, commissioned the work “dadaville” by the composer associated with a 1973 ritualistic film, which received its inaugural public performance by the broadcaster’s philharmonic orchestra at the grand circular venue in a european capital on a summer day in 2014?",
+    "answer": "BBC Radio 3",
+    "constrained_format": "Answer in exactly 3 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on a day in late 2019 marked by a significant political shift in europe, an individual honored for his contributions to visual media technology gave a presentation at an event in a coastal canadian city focused on human and machine visual perception. at that time, he was affiliated with an organization in a major u.s. city recognized in 2022 for developing a highly energy-efficient computing system. what center, directed by this individual, is part of that organization?",
+    "answer": "Center for Computational Neuroscience",
+    "constrained_format": "Answer in exactly 4 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on a day in early spring when a high‑profile entertainment event was overshadowed by an unexpected on‑stage incident, an individual who in late summer 2022 assumed a prominent role representing a european country at an international organization headquartered in new york city spoke at a gathering of international representatives convened to address the challenges facing a horn of africa nation. the meeting took place in a slender 39‑story tower with a green glass façade and vermont marble accents along a major north american river and focused on the situation in a northeastern african country whose principal cultural institution had been devastated by prolonged internal conflict. which country did he represent at this meeting?",
+    "answer": "IRELAND",
+    "constrained_format": "Answer in pure English capital words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on what specific date in the mid‑20th‑century year marked by a devastating ionian islands earthquake did the physicist from a remote pacific island nation—who later helped uncover the dna double helix—show the crucial “photo 51” to the scientist who proposed the dna model (later a nobel laureate but subsequently stripped of honors), without the british x‑ray specialist’s knowledge, at the european university founded in 1829 with the motto “sancte et sapienter”?",
+    "answer": "01-30-1953",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "who led the shore party that, on a day in the early 20th century when a pioneering aviator experienced a significant event during a regional conflict, spotted the return of an individual—who had undertaken a perilous 160‑kilometer solo journey across a frozen expanse in 30 days after losing his two companions—to a remote, rocky outcrop in a southern polar region known for its early exploration huts, and then unsuccessfully attempted to recall via wireless a late 19th‑century vessel known for its voyages to the southernmost continent, which later vanished under mysterious circumstances during a transoceanic journey in the early 20th century?",
+    "answer": "Cecil Madigan",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on which lap number did the driver who clinched the 2015 global endurance championship with a german manufacturer crash his early‑2000s green‑liveried formula one car heavily at the subida dos boxes corner during the annual brazilian grand prix in são paulo on the day a key middle eastern city changed hands in early spring?",
+    "answer": "54",
+    "constrained_format": "Answer in pure number",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "during an avant‑garde gathering in a european city—where artists staged unconventional performances, including one with a large sheet of paper and unexpected methods to create openings—organized by a mid‑20th‑century visionary who blurred artistic boundaries and transformed a new york neighborhood into a creative hub, held in a central european spa town renowned for its thermal springs and the 2024 opening of a museum by a distinguished japanese architect in a nation of about 84 million inhabitants as of early 2025—whose specific composition, performed on a sunday in the early 1960s notable for marking a shift in eastern bloc economic discourse, involved multiple fluxus artists actively destroying a piano?",
+    "answer": "Philip Corner",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on what specific date in a mid‑2000s month marked by a major south asian earthquake did a high‑temperature plasma physics researcher—known for contributions to compact magnetic confinement devices and academic positions in north america and east asia—present “recent results from tst‑2” at the iaea technical meeting on spherical tori held at an educational institution in a historic east asian city renowned for its early 20th‑century clock tower?",
+    "answer": "10-26-2005",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on a winter day in the early 2020s marked by a significant event in a european nation, at an annual conference devoted to the theoretical aspects of a discipline merging physics and computer science, held in a western european city renowned for its ten-day festival attracting over a million visitors, which researcher presented a tutorial specifically on surface codes?",
+    "answer": "Barbara Terhal",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on what specific date in a year in the late 2010s marked by significant global events—such as the historic summit between two long‑divided nations’ leaders—did a seasoned european tennis player who had just suffered an unexpected early exit at a prominent clay‑court tournament hold a formal press conference at the private members’ club in a european capital—renowned for hosting a prestigious annual grass‑court championship and recently approved for major expansion—to announce his withdrawal from the annual grass‑court tournament where a young british player had ended a leading spaniard’s 13‑match grass‑court winning streak, due to injury recovery, shortly before the prestigious tournament in southwest london known for its grass courts and strict all‑white dress code?",
+    "answer": "06-22-2018",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on a late summer day in the early 1990s—when a powerful storm was approaching the southeastern coast of a north american country—individuals responsible for coordinating responses to unexpected events issued a directive requiring residents to leave areas designated by a federal agency as having a 1% annual flood chance, often without detailed elevation data, in a region renowned for significant international migration within a southeastern state of a large north american country, due to a significant meteorological event known for its rapid intensification and extensive damage in the southeastern u.s. at what specific time (edt) was this initial evacuation directive issued?",
+    "answer": "8:00 AM",
+    "constrained_format": "Answer in H:MM AM format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "which female presenter co-announced the winner of the 'must-see moment' award at an annual european television awards ceremony held at a prominent cultural venue in a european capital on a day in may when a major football club clinched its league title by a single point?",
+    "answer": "Emily Atack",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "at which hotel in a rapidly expanding southwestern city known for its technology sector growth and sustainability initiatives did the owners of a major north american professional sports league—scheduled to begin its 2026 season with an opening game in a country famed for its unique wildlife—approve the limited use of instant replay technology on a day in early spring when the league first introduced this system?",
+    "answer": "Arizona Biltmore",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "which naturalist aboard a 19th-century vessel that embarked on a global journey collecting numerous previously unknown marine species was primarily responsible for studying the land fauna, including crabs and insects, on a cluster of small, uninhabited equatorial atlantic islets—one of the few places where the earth’s mantle is exposed above sea level—during the ship’s visit in a period in the late 19th century, shortly before a significant financial downturn in the united states?",
+    "answer": "Henry Nottidge Moseley",
+    "constrained_format": "Answer in exactly 3 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "during a period in the early 20th century marked by a devastating earthquake in a major u.s. city, an expedition led by an individual who guided a group into a remote, icy region—where their vessel became trapped in frozen waters—became the first to winter on the antarctic mainland while conducting scientific studies. in the month when a groundbreaking automotive innovation was introduced to the public, on what specific date did the expedition’s biologist—later portrayed in a 2024 streaming series as a member of a prominent royal family—record that water froze immediately around their winter base at a remote southern island, known for its dark rocky terrain and historic explorer’s shelter, thereby impeding his microscopic observations?",
+    "answer": "10-22-1908",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "which specific studio room at the renowned u.s. recording facility—famous for its mid‑1980s charity session—was primarily used by the sound engineer who collaborated with a renowned female singer‑songwriter on numerous albums over more than a decade when recording the influential north american artist—who returned to live performances in 2022 after a significant 2015 health event—on her 'blue' album in the early‑1970s year marked by the advent of microprocessor technology?",
+    "answer": "Studio C",
+    "constrained_format": "Answer in exactly 8 characters",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on what specific date in the year when a major midwestern conflagration destroyed over 17,000 structures and left more than 100,000 residents homeless did an individual—renowned for photographing conflicts and uncharted territories, including a notable western waterfall—as part of a 19th-century expedition to map the western regions of a north american nation, experience a significant equipment malfunction near a once‑thriving silver‑mining settlement in the western united states?",
+    "answer": "08-17-1871",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "according to reports from the avengers: endgame press conference, which took place at a luxury hotel run by a mediterranean‑founded hospitality group in a european capital on a day in early spring marked by a significant leadership change in a north american government department, which museum did the actor—who in 2025 reprised a role from over three decades prior—joke the ant‑man suit was on display in?",
+    "answer": "Smithsonian",
+    "constrained_format": "Answer in one pure English word starting with a capital letter",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "what exact air temperature in degrees celsius was recorded by a researcher from a leading european biomedical institute aboard the vessel that had been intentionally encased in arctic ice since late 2019—under the auspices of a northern european cold‑regions research institute founded in 1980—when it reached the remote arctic pole on a late‑summer 2020 day marked by a covid‑19 outbreak at a southeastern us university?",
+    "answer": "-0.7",
+    "constrained_format": "Answer in pure number",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "in what month and year did the conservator—who began her career in the mid‑1970s through a work‑study program in an ancient artifacts department, later specialized in painted artworks and eventually led that department—begin consolidating vulnerable paint areas on the “mural” by an early 20th‑century artist renowned for his drip technique (who turned a coastal barn into his studio and died in a 1950s car crash), painted in a mid‑20th‑century year marked by the largest tank battle in history, as part of an initiative to rejuvenate a vast southeastern u.s. wetland by restoring natural water flows, at a cultural complex in a major city celebrated for its fire‑resistant architecture and million‑gallon water tank, located in a sprawling western metropolis with prohibition‑era underground tunnels?",
+    "answer": "12-2013",
+    "constrained_format": "Answer with a date in mm-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on a mid-summer day in the early 2020s—coinciding with a major tennis final in london—in a challenging segment of a renowned european cycling event featuring a 15.8 km ascent with an average gradient of 7.9% and passing near a settlement nestled at the base of a towering european peak famed for its thermal waters and as a gateway to the continent’s highest summit, approximately how many kilometers into the stage did the large spectator-caused crash occur?",
+    "answer": "128",
+    "constrained_format": "Answer in pure number",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on what date in the early 1970s—when the first compact microprocessor was unveiled—did the c-141 aircraft carrying the apollo 14 crew (a new england naval officer who later became the oldest person to walk on the moon, an astronaut who transported tree seeds into space, and another who would found a consciousness research institute), housed within a specialized quarantine module designed to prevent extraterrestrial contamination, land at a southern u.s. pilot training facility following their mission by a private organization that achieved the first non‑governmental soft landing on a celestial body?",
+    "answer": "02-12-1971",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on a weekend in late 2012 when a renowned footballer broke a longstanding goal‑scoring record, an international event where young participants design and program small autonomous machines to tackle annual thematic challenges was directed by a finance expert devoted to community impact. held at a northeastern u.s. university celebrated for its tuition‑free initiative in a city famed for its bridges and steel heritage, what was the specific theme name of this competition?",
+    "answer": "Senior Solutions",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "what film starring an american performer—born in the mid‑20th century, co‑founder of an avant‑garde new york theater collective and later artistic director of a leading european arts festival’s theater department—was screened at a renowned european capital film venue, outfitted in 2015 with a pro‑ribbon sound system, immediately following his honorary golden bear award ceremony at that venue, which was held on the same day as a youth‑led gun‑control advocacy event in a southeastern u.s. state capital?",
+    "answer": "The Hunter",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "in a gathering held in a northeastern metropolis of a prominent country on a day in early summer when a significant legislative decision was made, an international assembly decided to extend maritime inspection measures for an additional year and discussed the maintenance of international peace. which individual spoke on behalf of a nation in the western balkans at this session?",
+    "answer": "Ferit Hoxha",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on a day in the late 20th century known for a new york baseball team’s triumph over its charm city rival, a south asian women’s cricket team posted its highest-ever odi total against a european opponent. the match was held at a historic green space in a southeastern us city, situated within a planned urban area famed for its grid system and parkland. who was the opening batting partner of the former national team captain when she scored her debut century?",
+    "answer": "Reshma Gandhi",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "during an early 20th‑century expedition to the earth’s southernmost point—later learned to have been preceded by another party by over a month—what cooking apparatus, used by three explorers (one bearing a common english surname, another with a saxon‑derived surname meaning “chamber,” and the third who suffered severe dental damage in the cold), was recovered intact about fifty yards away after a blizzard ripped the roof from their igloo at a remote southern coastal site known for its vast penguin colonies on a summer day when the u.s. senate approved a major trade agreement with canada?",
+    "answer": "Rippingille stove",
+    "constrained_format": "Answer in exactly 2 words",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "during a month in the early 20th century marked by the first nonstop transcontinental flight across the united states, on what date did an individual who later led a prominent u.s. cultural and scientific institution—renowned for his avian research—and the main scientific party of a series of remote pacific island voyages depart from an isolated pacific ocean island, known for its unique hypersaline lake and as home to the world’s rarest duck, after completing their survey work there?",
+    "answer": "05-14-1923",
+    "constrained_format": "Answer with a date in mm-dd-yyyy format",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "in which month and year was a significant gathering to discuss enhancing defensive capabilities scheduled, shortly after a visual art preservation specialist (who taught future conservators in 2009) and an expert in 18th‑century european art resigned from the committee of the cultural institution in a european capital—renowned for its extensive art collection and distinctive late‑20th‑century glass structure—that is dedicated to promoting the nation’s products and culture?",
+    "answer": "October 2011",
+    "constrained_format": "Answer with month and year in format Month YYYY",
+    "strategy": null,
+    "evidence": []
+  },
+  {
+    "original_question": null,
+    "question": "on a day in late autumn when a european capital heightened its security measures to the maximum level due to a significant threat, at a venue in a northern english town known for hosting a significant football match in 1929 that drew over 60,000 spectators, against which club based in a metropolis in a european nation—where a significant archaeological discovery was made during preparations for a new office building—did the defender, an irish athlete who, after a decade‑long tenure with a northern english club transitioned to a rival team in 2022 and recently achieved academic success in sports science, score his first goal in a group of individuals or organizations united for a common purpose for blackburn rovers?",
+    "answer": "Brentford",
+    "constrained_format": "Answer in one pure English word",
+    "strategy": null,
+    "evidence": []
+  }
+]

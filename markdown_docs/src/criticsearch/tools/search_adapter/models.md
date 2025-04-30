@@ -26,160 +26,173 @@ Similarly, in the `DuckDuckGoClient.search` method, the search results are proce
 - The `SearchResult` class is often used as part of a larger response object, such as `SearchResponse`, which groups together multiple `SearchResult` instances along with metadata like the search query and potential error messages.
 - It is important that each `SearchResult` contains relevant and accurate data, as it directly reflects the results returned by external search APIs, which may vary in structure.
 ## ClassDef SearchResponse
-## Class: `SearchResponse`
-
-### Overview
-The `SearchResponse` class is a data model used to represent the results of a search query. It encapsulates the query itself, the list of search results, and any potential error messages that may have occurred during the search process. This class is commonly used to structure the response from a search API client, such as a Bing or DuckDuckGo search client.
-
-### Attributes
-- **query** (`str`): The search query string that was submitted by the user.
-- **results** (`List[SearchResult]`): A list of `SearchResult` objects representing the individual search results. If no results are found, this list will be empty.
-- **error_message** (`Optional[str]`): An optional string that contains an error message, if applicable. If an error occurred during the search, this attribute will contain a descriptive error message.
-
-### Method
-
-#### `ser_model() -> str`
-The `ser_model` method is used to serialize the `SearchResponse` object into a human-readable string. It formats the response based on the availability of results and error messages.
-
-- **Returns**: A formatted string representing the search response, including the query, any error message, and the details of the search results.
-  
-  **Behavior**:
-  - If an `error_message` is provided, the method will include it in the formatted response.
-  - If no results are found (i.e., `results` is an empty list), the method will indicate that no results were found.
-  - If results are available, the method will format the response with the titles, URLs, and content of the search results.
-
-### Usage Example
-```python
-search_response = SearchResponse(query="Python programming", results=[...], error_message=None)
-print(search_response.ser_model())
-```
-
-### Notes
-- The `SearchResult` class is used to structure each individual search result, containing attributes like `title`, `url`, and `content`. These details are displayed when the `ser_model` method is called, allowing for easy inspection of the search results.
-- The `error_message` is optional, and if there are no errors, the response will display the search results or indicate that no results were found.
-
-This class is useful in the context of search client responses, enabling structured representation and easy presentation of the query and search outcomes.
-### FunctionDef ser_model(self)
-**ser_model**: The function of ser_model is to generate a formatted string representation of the search response based on the query, error messages, and results.
-
-**parameters**: The parameters of this Function.
-· self: An instance of the class that contains the attributes query, error_message, and results.
-
-**Code Description**: The ser_model function constructs a formatted response string that summarizes the outcome of a search operation. It first checks if there is an error message present in the instance. If an error message exists, it formats the response to include the query and the error message, followed by a line of dashes for separation. If there are no results (i.e., the results list is empty), it similarly formats the response to indicate that no results were found. In the case where there are valid search results, the function constructs a response that includes the query and iterates through the results list. For each result, it appends the index, title, URL, and content of the result to the formatted response, again followed by a line of dashes for clarity. Finally, the function returns the complete formatted response string.
-
-**Note**: It is important to ensure that the attributes query, error_message, and results are properly initialized in the class before calling this function. The results should be a list of objects that contain title, url, and content attributes for the function to work correctly.
-
-**Output Example**: 
-```
-Query: "How to use Python for data analysis?"
-Error: No results found.--------------------------------------------------
-```
-or 
-```
-Query: "How to use Python for data analysis?"
-Search Results:
---------------------------------------------------
-[1]:
-TITLE: "Data Analysis with Python"
-URL: "https://example.com/data-analysis-python"
-CONTENT: "This article provides an overview of data analysis techniques using Python."
---------------------------------------------------
-[2]:
-TITLE: "Python for Data Science"
-URL: "https://example.com/python-data-science"
-CONTENT: "Learn how Python is used in data science and analytics."
---------------------------------------------------
-```
-***
-## ClassDef SearchResponseList
-**SearchResponseList**: The function of SearchResponseList is to represent a list of search response objects and provide functionality to serialize them, ensuring that duplicate content across queries is removed.
+**SearchResponse**: The function of SearchResponse is to encapsulate the results of a search query, including the query string, a list of search results, and any error messages encountered during the search process.
 
 **attributes**: The attributes of this Class.
-· responses: A list of `SearchResponse` objects that represent the responses from multiple search queries.
+· query: A string representing the user's search query.  
+· results: A list of `SearchResult` objects that represent the individual search results returned from the query.  
+· error_message: An optional string that contains an error message if an error occurred during the search.
 
-**Code Description**: 
-The `SearchResponseList` class is used to hold a collection of `SearchResponse` objects, each representing an individual search query's response. It provides a method, `ser_model()`, which serializes these responses into a formatted string while ensuring the removal of duplicate content across the search results.
+**Code Description**: The `SearchResponse` class is a data model that serves to structure the response from search queries. It inherits from `BaseModel`, indicating that it is likely part of a data validation and serialization framework, such as Pydantic. 
 
-- The class inherits from `BaseModel`, indicating that it is part of a data model system, likely designed for serialization or structured data handling.
-- The primary attribute, `responses`, is a list that holds instances of `SearchResponse`. This attribute holds the individual responses from search queries and is initialized as an empty list by default.
-  
-The key functionality of this class is in the `ser_model()` method. This method iterates over the `SearchResponse` objects in the `responses` list and performs several actions:
-1. It maintains a set of `global_seen_contents` to ensure that duplicate search results are removed across queries.
-2. For each `SearchResponse`, if there is an error message (i.e., `error_message` is not `None`), the method will log the error and skip processing that response.
-3. For each result in a valid `SearchResponse`, it checks if the content of the result has been seen before across all responses. If the content is unique, it is added to a list of unique results, and this result is serialized.
-4. After processing, the method updates the `SearchResponse` object to reflect only unique results and keeps track of the total number of results and the unique results count. It then generates a string representation of the serialized results.
-5. The method logs the number of duplicates removed and returns the final serialized string.
+The primary attributes of the `SearchResponse` class include:
+- `query`: This attribute holds the search query string that was submitted by the user. It is essential for understanding the context of the results returned.
+- `results`: This attribute is a list of `SearchResult` instances, each representing an individual result from the search query. The `SearchResult` class encapsulates details such as the title, URL, and content snippet of each search result.
+- `error_message`: This optional attribute is used to convey any error messages that may arise during the search process. If no errors occur, this attribute will be `None`.
 
-The `SearchResponseList` class is primarily used in the context of aggregating and serializing multiple search responses in a way that filters out redundant results. It plays a crucial role in handling multiple search queries, especially when working with multiple search engines or sources. 
+The `SearchResponse` class includes a method named `ser_model`, which is responsible for serializing the response into a formatted string. This method constructs a human-readable representation of the search results. It checks for the presence of an error message and formats the output accordingly. If there are no results, it indicates that no results were found. If results are present, it enumerates through each `SearchResult`, appending its details to the formatted string.
 
-From a functional perspective, this class is invoked in the `search` method of the `SearchAggregator` class. The `search` method performs concurrent searches for a list of queries, collects the responses, and returns them as an instance of `SearchResponseList`. This allows for streamlined processing and serialization of the search results, ensuring that the final output only includes unique search results from the queries.
+The `SearchResponse` class is utilized by various search client implementations, such as `BingClient` and `DuckDuckGoClient`. In these implementations, after executing a search query, the results are collected and instantiated as `SearchResult` objects. These objects are then aggregated into a `SearchResponse` object, which is returned to the caller. This structured response allows for consistent handling of search results across different search engines.
+
+For example, in the `BingClient.search` method, after successfully retrieving search results from the Bing API, a list of `SearchResult` instances is created. This list, along with the original query and any potential error messages, is used to construct a `SearchResponse` object that is returned to the user.
 
 **Note**: 
-- The `ser_model()` method only includes `SearchResponse` objects that do not contain error messages in its serialization.
-- It ensures that any duplicate content across multiple responses is filtered out based on the content of the search results, which helps in returning cleaner and more relevant data.
-- This class uses logging to provide feedback on the serialization process, including information on skipped responses due to errors and the number of duplicates removed.
+- The `query` attribute must be a valid string representing the user's search input. 
+- The `results` attribute will contain a list of `SearchResult` objects, which must be populated with valid data to ensure meaningful output.
+- The `error_message` attribute is optional and should be used to provide feedback in case of errors during the search process.
+- Proper handling of the `SearchResponse` object is crucial for applications that rely on search functionality, as it encapsulates both successful results and error states.
 
-**Output Example**:
-An example output of the `ser_model()` method might look like this:
-
-```
-Query: "Python programming"
-Search Results:
---------------------------------------------------
-[1]:
-TITLE: Introduction to Python
-URL: https://example.com/python
-CONTENT: Python is a high-level programming language.
---------------------------------------------------
-[2]:
-TITLE: Python Tutorials
-URL: https://example.com/tutorials
-CONTENT: Learn Python programming with these tutorials.
---------------------------------------------------
-Serialization completed. Total results: 5, Unique results: 3, Duplicates removed: 2.
+**Output Example**: A possible return value of the `SearchResponse` object could be structured as follows:
+```python
+SearchResponse(
+    query="latest technology news",
+    results=[
+        SearchResult(title="Tech Innovations", url="https://example.com/tech-innovations", content="Explore the latest in technology."),
+        SearchResult(title="Gadget Reviews", url="https://example.com/gadget-reviews", content="Read reviews on the newest gadgets.")
+    ],
+    error_message=None
+)
 ``` 
 
-This output shows the results of the search query, including the serialized format of unique results, and a summary of the serialization process.
+This output illustrates a successful search response containing the original query, a list of search results, and no error messages.
 ### FunctionDef ser_model(self)
-**ser_model**: The function of ser_model is to serialize a list of SearchResponse objects into a string, ensuring uniqueness in the content across different queries.
+**ser_model**: The function of ser_model is to generate a formatted string representation of the search response, including the query, any errors, and the results.
 
 **parameters**: This function does not take any parameters.
 
 **Code Description**:  
-The `ser_model` method is responsible for serializing the list of `SearchResponse` objects contained within the instance. It processes each `SearchResponse` object to ensure that the search results are unique by comparing their content against a global set of previously seen content.
+The `ser_model` function generates a formatted string that presents the search results or error messages associated with a search query. It checks for the presence of an error message or results in the following order:
 
-1. **Global Uniqueness Tracking**:  
-   A set named `global_seen_contents` is used to store the content of the results encountered so far, ensuring that each result is unique across all queries processed by this method.
+1. If there is an error message, the function creates a formatted response containing the query and the error message, followed by a separator line.
+2. If the `results` list is empty, it generates a formatted response indicating that no results were found, including the query and an appropriate error message, followed by a separator line.
+3. If there are search results, the function formats the response with the query and a header indicating search results. It then iterates over the results, adding details such as the title, URL, and content of each result, followed by a separator line after each entry.
 
-2. **Response Processing**:  
-   The method loops over each `SearchResponse` object in `self.responses`. For each `response`, if it contains an error message, it is skipped, and the serialization continues with the next response.
+The final formatted string is returned to the caller. This function is useful for presenting a search summary in a readable format, including any potential errors or results from a search operation.
 
-3. **Result Deduplication**:  
-   For each `response`, the method iterates through its `results` and checks whether the `content` of each result has already been encountered (using the `global_seen_contents` set). If a result’s content is unique (i.e., not found in the set), it is added to the list `unique_results` and the content is added to the set to prevent future duplicates. The total number of results and unique results are tracked during this process.
-
-4. **Updating the Response**:  
-   After deduplication, the `results` attribute of the `response` is updated with the `unique_results`. The count of unique results is accumulated in `unique_results_count`.
-
-5. **Serialization**:  
-   The `model_dump()` method is called on each `response` to generate its serialized string representation, which is appended to `result_str`. This `result_str` will contain the serialized data of all responses, with duplicates removed.
-
-6. **Logging**:  
-   After processing all responses, the method logs a summary message, indicating the total number of results processed, the number of unique results, and the number of duplicates removed.
-
-7. **Return Value**:  
-   Finally, the method returns the `result_str`, which contains the serialized data of the unique results.
-
-**Note**: 
-- The method ensures that only unique search results are included in the serialized output, removing any duplicates based on content.
-- The method relies on the `model_dump()` method of the `SearchResponse` object to generate its string representation, which may vary depending on the implementation of that method.
-- If any `SearchResponse` contains an error message, it will be skipped entirely, and no results from that response will be included in the final serialized output.
+**Note**:  
+- This function does not take any input parameters, as it operates on the attributes of the object it is a part of. 
+- The function relies on the `query`, `error_message`, and `results` attributes of the object to generate the formatted response. It assumes that `results` is a list of objects that have `title`, `url`, and `content` attributes.
 
 **Output Example**:  
-Assuming `self.responses` contains two `SearchResponse` objects with some duplicate results, the returned `result_str` might look like this:
+Here’s an example of the returned string based on different scenarios:
+
+1. **Error with a message:**
 
 ```
-"SearchResponse(query='query1', results=[{'content': 'unique content 1'}, {'content': 'unique content 2'}])SearchResponse(query='query2', results=[{'content': 'unique content 3'}, {'content': 'unique content 1'}])"
+Query: example query
+Error: Something went wrong.
+--------------------------------------------------
 ```
 
-In this example, 'unique content 1' is only included once, even though it appeared in multiple responses.
+2. **No results found:**
+
+```
+Query: example query
+Error: No results found.
+--------------------------------------------------
+```
+
+3. **With search results:**
+
+```
+Query: example query
+Search Results:
+--------------------------------------------------
+[1]:
+TITLE: Example Title 1
+URL: http://example.com/1
+CONTENT: Example content for result 1.
+--------------------------------------------------
+[2]:
+TITLE: Example Title 2
+URL: http://example.com/2
+CONTENT: Example content for result 2.
+--------------------------------------------------
+```
+***
+## ClassDef SearchResponseList
+### Class: `SearchResponseList`
+
+#### Overview:
+The `SearchResponseList` class is designed to represent a collection of `SearchResponse` objects. It provides functionality to serialize the list of search responses, ensuring unique content across all search queries by removing duplicates.
+
+#### Attributes:
+- **responses** (`List[SearchResponse]`): A list containing `SearchResponse` objects. Each `SearchResponse` encapsulates the results of a single search query, including the query string, a list of search results, and any error messages encountered during the search process. The list is initialized with an empty list by default.
+
+#### Methods:
+- **ser_model()** -> `str`:
+  The `ser_model` method serializes the list of `SearchResponse` objects into a string format. This method ensures that any duplicate content across the search results is removed. The serialization process proceeds as follows:
+  1. The method iterates over each `SearchResponse` in the `responses` list.
+  2. If the `SearchResponse` contains an error message, it logs the error and skips serialization for that particular response.
+  3. For each valid `SearchResponse`, the method checks for unique search results by comparing the `content` of each result to a global set of seen contents.
+  4. The results are filtered to retain only unique entries, and the count of unique results is updated.
+  5. After filtering, the method appends the serialized content of the `SearchResponse` to the result string.
+  6. A summary log is generated, indicating the total number of results, the number of unique results, and the number of duplicates removed.
+  
+  The method returns a formatted string containing the serialized results of the search responses.
+
+#### Example Usage:
+```python
+search_response_list = SearchResponseList(responses=[response1, response2])
+serialized_results = search_response_list.ser_model()
+```
+
+#### Notes:
+- The `responses` attribute must be populated with instances of the `SearchResponse` class.
+- The method `ser_model` performs de-duplication across all responses and presents the results in a human-readable format.
+- If any `SearchResponse` contains an error message, it will be skipped during serialization, ensuring that the final output only contains valid data.
+### FunctionDef ser_model(self)
+**ser_model**: The function of ser_model is to serialize a list of SearchResponse objects into a formatted string, ensuring unique content across different queries.
+
+**parameters**: The parameters of this Function.
+- None
+
+**Code Description**:  
+The `ser_model` method is designed to process a list of `SearchResponse` objects and serialize the relevant data into a string representation. The method ensures that content within the search responses is unique across all queries by removing duplicate results based on their content.
+
+1. **Global Deduplication Logic**:  
+   The function initializes a set called `global_seen_contents` to store content that has already been encountered. This set helps track which results have been seen across all queries, ensuring that duplicates are eliminated.
+
+2. **Processing Search Responses**:  
+   The method then iterates over each `response` in the `self.responses` list. If a response contains an `error_message`, it is skipped, and a log message is generated using the `printer.log` method to notify that the response was ignored due to an error. This ensures that only valid responses are processed.
+
+3. **Result Deduplication**:  
+   For each valid response, the method further iterates over the `results` in the response. It checks whether the `content` of each result has already been encountered by comparing it against the `global_seen_contents` set. If a result's content is unique, it is added to the list `unique_results`, and its content is stored in the set to prevent future duplicates. The method keeps track of both the total number of results and the number of unique results.
+
+4. **Updating the Response**:  
+   Once duplicates are removed, the `results` of the current `response` are updated to include only the unique results. The count of unique results is then updated.
+
+5. **Result Serialization**:  
+   After processing all responses, the `model_dump` method is called on each `response` to obtain a serialized string representation of the response, which is concatenated into the `result_str` variable.
+
+6. **Logging the Summary**:  
+   After completing the serialization process, a log message is printed using the `printer.log` method to summarize the operation. The message includes the total number of results, the number of unique results, and the number of duplicates removed.
+
+7. **Return Value**:  
+   The method returns the concatenated string (`result_str`) representing all serialized and deduplicated search responses.
+
+**Note**:  
+- The `model_dump` method is assumed to serialize each response object into a string format, and the exact format depends on its implementation.
+- The `printer.log` function is used for logging, which formats the messages in a styled manner to enhance readability in the console output.
+- It is important to ensure that all responses in `self.responses` are well-formed and contain the expected attributes, especially `error_message` and `results`. This method does not handle any unexpected data formats or missing attributes.
+
+**Output Example**:  
+Assuming a scenario where there are two search responses with some duplicate content, the output might look like:
+
+```
+Serialization completed. Total results: 10, Unique results: 7, Duplicates removed: 3.
+<Serialized String of the Responses>
+```
+
+The string returned would contain the serialized representations of the unique search responses, with any duplicates removed based on the content comparison.
 ***

@@ -1,0 +1,41 @@
+The prerequisite for a model to discover new knowledge is its ability to integrate existing human knowledge. Therefore, it is crucial for the agent to have the ability to gather information from the internet. Currently, we have the capability to search for simple facts (such as who was the President of the United States in July 2023), and we hope that the model can further acquire the ability to conduct in-depth explorations on websites. You are an expert in designing benchmarks in this area, and there are some requirements for designing such data:  
+1. The information is hidden deep in the internet (it cannot be simply found by searching a keyword directly on Google).
+2. The conditions are coupled and unclear; one must conduct detailed reasoning and trial-and-error to uncover the key pathways.  
+
+First, you need to design a seed fact for the given {{domain}} domain, and the requirements for the seed fact are as follows:  
+1. It should be easy to verify and there should only be one answer, for example, the President of the United States on July 24, 2023, is Biden.
+2. The seed fact must be relatively difficult; it should not be something that can be randomly found instantly but rather something that you discover hidden deeper within search results on the internet.  
+
+The seed fact must be difficult: you cannot simply search for the seed fact on Google and find the answer. For example, searching "Who was the President of the United States on July 24, 2023," immediately yields Biden, indicating that the seed fact is too simple. You can first construct various queries you are interested in within your domain and search online, finding a deep webpage with highly specialized information, from which you can select to construct a difficult question and its corresponding unique short answer. For example:  
+
+Suppose you access this webpage:  
+https://www.3dmgame.com/g!/3898261.html:  
+The factual paragraph on the webpage states: "The 'Colossal Crusher' is a massive weapon in the game 'Elden Ring,' which is set to have been widely used during the 'War of the Giants.' This weapon is one of the heaviest in the land between, symbolizing the immense power of that era. With the extinction of the giants and the rise of wars among humans, this weapon gradually fell into obscurity and exited the combat stage. Compared to ancient times, humanity has become increasingly fragile and can no longer wield such a heavy weapon."  
+
+Therefore, you can extract a question and corresponding ground truth short answer: "In which war was the Colossal Crusher widely used?"  
+Of course, you need to output in the standardized JSON format:  
+{
+  "seed": {
+    "question": "In which war was the Crushing Giant Hammer widely used?",
+    "answer": "Giant War",
+    "evidence": [
+      {
+        "url": "https://www.3dmgame.com/g!/3898261.html",
+        "fact": "The Crushing Giant Hammer is an oversized weapon in the game *Elden Ring*, with its background set as a giant rock hammer widely used during the 'Giant War.' This weapon is one of the heaviest in the Lands Between, symbolizing the immense power of that era. With the extinction of the giants and the rise of human-on-human wars, this weapon was gradually forgotten and left the battlefield. Compared to ancient times, humans have become increasingly fragile and can no longer wield such a heavy weapon."
+      },
+      {
+          "url": "XXX", # Replace with a valid URL
+          "fact": "XXX" # Replace with a valid fact from the URL
+      },
+    ]
+  },
+} 
+
+Now, to design a seed fact in the {{domain}} domain, you need to browse through the content of the webpages you searched to generate a data in the format above.  
+
+Here are the search results:  
+========= Search Results =========  
+{{search_results}}  
+========= End of Search Results =========  
+
+Please output strictly according to the aforementioned JSON format:

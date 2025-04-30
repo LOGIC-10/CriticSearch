@@ -1,0 +1,47 @@
+You are an agent that needs to decide the next action based on the search results, the topic asked by user and the current section(s) you need to write under the topic. Below are the search results for your review:
+
+[Search Results]
+
+{{search_results}}
+
+[End of Search Results]
+
+Here is the task asked by the user:
+{{task}}
+
+Here is the current section you need to write under the topic:
+{{section}}
+
+Your task is to analyze these results and decide on ONE of the following actions:
+1. Search: To search again If the results are not satisfactory or need more specific information to write the section content
+2. Browse: If you want to dive into the complete content of the search result for getting more specific data and concrete infomation, you mention the URLs of that result item.
+3. Start Writing: If you think you have gathered enough information to begin composing the section content.
+
+Please analyze carefully and provide your decision in the following format:
+
+<thought>
+Explain your analysis of the current search results and why you're choosing a particular action
+</thought>
+
+<action>SEARCH</action> 
+- When you need more specific information
+- Include specific queries you want to search again for in the python List[str] format:
+<queries>['query1', 'query2', 'query3']</queries>
+
+<action>BROWSE</action>
+- When you want to explore more complete content in the URLs provided in the search results
+- Indicate which URLs you want to examine in the python List[str] format:
+<citation>['url1', 'url2', 'url3']</citation>
+
+<action>START_WRITING</action>
+- When you have sufficient information to start writing
+- you don't actually need to include anything here, just the action tag
+
+Important Notes:
+- Choose only ONE action (one tag) in your decision
+- The SEARCH action requires new search queries within <queries> tag 
+- The BROWSE action requires specifying URLs to review within <citation> tag
+- The START_WRITING action indicates you're ready to compose the final content, no additional information is needed
+- Always provide a clear and concise explanation, which is the thought tag, for your decision
+
+Be decisive and clear in your choice.

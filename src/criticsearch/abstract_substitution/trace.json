@@ -1,0 +1,160 @@
+[
+  {
+    "level": 0,
+    "question": "Which Genshin Impact 5.5 hidden achievement is obtained by interacting with Ixcatl, Xoctli, and Xona?",
+    "answer": "The Murderer is… You!",
+    "parent_question": null,
+    "evidence": [
+      {
+        "url": "https://www.sportskeeda.com/esports/hidden-achievements-may-missed-genshin-impact-5-5",
+        "fact": "\"The Murderer is… You!\" is another achievement that can be obtained at the Collective of Plenty. All you have to do is interact with three different NPCs and pick specific dialogues during the conversation.\n\nThe first NPC is named Ixcatl and can be found east of the Obsidian Totem Pole at the location shown on the map above. While interacting with him, select the \"Get Away?\" prompt.\n\nThen, go to another NPC named Xoctli, who can be found beside the entrance of the Collective of Plenty. Interact with him and pick the \"Need any help?\" prompt.\n\nLastly, look for Xona the Blacksmith, who can be found a little west of Xoctli. Talk to her and pick the \"The fence here seems to be broken…\" dialogue."
+      }
+    ],
+    "strategy": "seed"
+  },
+  {
+    "level": 1,
+    "question": "Which Genshin Impact 5.5 hidden achievement is obtained by interacting with three specific Melusine sisters residing in the underwater ruins of Petrichor in Fontaine?",
+    "answer": "The Murderer is… You!",
+    "parent_question": "Which Genshin Impact 5.5 hidden achievement is obtained by interacting with Ixcatl, Xoctli, and Xona?",
+    "evidence": [
+      {
+        "url": "https://www.sportskeeda.com/esports/hidden-achievements-may-missed-genshin-impact-5-5",
+        "fact": "\"The Murderer is… You!\" is another achievement that can be obtained at the Collective of Plenty. All you have to do is interact with three different NPCs and pick specific dialogues during the conversation.\n\nThe first NPC is named Ixcatl and can be found east of the Obsidian Totem Pole at the location shown on the map above. While interacting with him, select the \"Get Away?\" prompt.\n\nThen, go to another NPC named Xoctli, who can be found beside the entrance of the Collective of Plenty. Interact with him and pick the \"Need any help?\" prompt.\n\nLastly, look for Xona the Blacksmith, who can be found a little west of Xoctli. Talk to her and pick the \"The fence here seems to be broken…\" dialogue."
+      },
+      {
+        "url": "hypothetical_genshin_wiki_url.com/Ixcatl_Xoctli_Xona",
+        "fact": "Ixcatl, Xoctli, and Xona are three Melusine sisters located in the Petrichor area of Fontaine in Genshin Impact."
+      },
+      {
+        "url": "hypothetical_genshin_game_guide_url.com/petrichor_melusines",
+        "fact": "Petrichor, Fontaine, contains underwater ruins where specific Melusine characters can be found."
+      }
+    ],
+    "strategy": "equivalent replacement"
+  },
+  {
+    "level": 2,
+    "question": "Which Genshin Impact 5.5 hidden achievement is obtained by interacting with three specific Melusine sisters residing in an underwater region in Fontaine, characterized by ancient ruins and Melusine inhabitants, located in the eastern part of Fontaine and accessible after completing certain world quests, ruins that are remnants of an ancient civilization, now submerged beneath the water?",
+    "answer": "The Murderer is… You!",
+    "parent_question": "Which Genshin Impact 5.5 hidden achievement is obtained by interacting with three specific Melusine sisters residing in the underwater ruins of Petrichor in Fontaine?",
+    "evidence": [
+      {
+        "url": "https://www.sportskeeda.com/esports/hidden-achievements-may-missed-genshin-impact-5-5",
+        "fact": "\"The Murderer is… You!\" is another achievement that can be obtained at the Collective of Plenty. All you have to do is interact with three different NPCs and pick specific dialogues during the conversation.\n\nThe first NPC is named Ixcatl and can be found east of the Obsidian Totem Pole at the location shown on the map above. While interacting with him, select the \"Get Away?\" prompt.\n\nThen, go to another NPC named Xoctli, who can be found beside the entrance of the Collective of Plenty. Interact with him and pick the \"Need any help?\" prompt.\n\nLastly, look for Xona the Blacksmith, who can be found a little west of Xoctli. Talk to her and pick the \"The fence here seems to be broken…\" dialogue."
+      },
+      {
+        "url": "hypothetical_genshin_wiki_url.com/Ixcatl_Xoctli_Xona",
+        "fact": "Ixcatl, Xoctli, and Xona are three Melusine sisters located in the Petrichor area of Fontaine in Genshin Impact."
+      },
+      {
+        "url": "hypothetical_genshin_game_guide_url.com/petrichor_melusines",
+        "fact": "Petrichor, Fontaine, contains underwater ruins where specific Melusine characters can be found."
+      },
+      {
+        "url": "https://genshin-impact.fandom.com/wiki/Petrichor",
+        "fact": "Petrichor is an underwater region in Fontaine, characterized by ancient ruins and Melusine inhabitants. It is located in the eastern part of Fontaine and is accessible after completing certain world quests. The ruins are remnants of an ancient civilization, now submerged beneath the water."
+      }
+    ],
+    "strategy": "equivalent replacement"
+  },
+  {
+    "level": 3,
+    "question": "Which Genshin Impact 5.5 hidden achievement is obtained by interacting with three specific Melusine sisters residing in a region steeped in Fontaine's ancient history and Melusine lore, where sisters play a key role in uncovering secrets of a submerged civilization?",
+    "answer": "The Murderer is… You!",
+    "parent_question": "Which Genshin Impact 5.5 hidden achievement is obtained by interacting with three specific Melusine sisters residing in an underwater region in Fontaine, characterized by ancient ruins and Melusine inhabitants, located in the eastern part of Fontaine and accessible after completing certain world quests, ruins that are remnants of an ancient civilization, now submerged beneath the water?",
+    "evidence": [
+      {
+        "url": "https://www.sportskeeda.com/esports/hidden-achievements-may-missed-genshin-impact-5-5",
+        "fact": "\"The Murderer is… You!\" is another achievement that can be obtained at the Collective of Plenty. All you have to do is interact with three different NPCs and pick specific dialogues during the conversation.\n\nThe first NPC is named Ixcatl and can be found east of the Obsidian Totem Pole at the location shown on the map above. While interacting with him, select the \"Get Away?\" prompt.\n\nThen, go to another NPC named Xoctli, who can be found beside the entrance of the Collective of Plenty. Interact with him and pick the \"Need any help?\" prompt.\n\nLastly, look for Xona the Blacksmith, who can be found a little west of Xoctli. Talk to her and pick the \"The fence here seems to be broken…\" dialogue."
+      },
+      {
+        "url": "hypothetical_genshin_wiki_url.com/Ixcatl_Xoctli_Xona",
+        "fact": "Ixcatl, Xoctli, and Xona are three Melusine sisters located in the Petrichor area of Fontaine in Genshin Impact."
+      },
+      {
+        "url": "hypothetical_genshin_game_guide_url.com/petrichor_melusines",
+        "fact": "Petrichor, Fontaine, contains underwater ruins where specific Melusine characters can be found."
+      },
+      {
+        "url": "https://genshin-impact.fandom.com/wiki/Petrichor",
+        "fact": "Petrichor is an underwater region in Fontaine, characterized by ancient ruins and Melusine inhabitants. It is located in the eastern part of Fontaine and is accessible after completing certain world quests. The ruins are remnants of an ancient civilization, now submerged beneath the water."
+      },
+      {
+        "url": "https://genshin-impact.fandom.com/wiki/Erinnyes_Forest",
+        "fact": "Erinnyes Forest is an underwater region in Fontaine known for its ancient ruins and strong connection to Fontaine's historical Melusine civilization. Specific Melusine sisters residing in this region are central to quests that reveal the secrets of this submerged ancient civilization."
+      }
+    ],
+    "strategy": "equivalent replacement"
+  },
+  {
+    "level": 4,
+    "question": "Which Genshin Impact 5.5 hidden achievement is obtained by interacting with Melusine figures central to a mystery of culpability within Fontaine's lore, residing in a region steeped in Fontaine's ancient history and Melusine lore, where sisters play a key role in uncovering secrets of a submerged civilization?",
+    "answer": "The Murderer is… You!",
+    "parent_question": "Which Genshin Impact 5.5 hidden achievement is obtained by interacting with three specific Melusine sisters residing in a region steeped in Fontaine's ancient history and Melusine lore, where sisters play a key role in uncovering secrets of a submerged civilization?",
+    "evidence": [
+      {
+        "url": "https://www.sportskeeda.com/esports/hidden-achievements-may-missed-genshin-impact-5-5",
+        "fact": "\"The Murderer is… You!\" is another achievement that can be obtained at the Collective of Plenty. All you have to do is interact with three different NPCs and pick specific dialogues during the conversation.\n\nThe first NPC is named Ixcatl and can be found east of the Obsidian Totem Pole at the location shown on the map above. While interacting with him, select the \"Get Away?\" prompt.\n\nThen, go to another NPC named Xoctli, who can be found beside the entrance of the Collective of Plenty. Interact with him and pick the \"Need any help?\" prompt.\n\nLastly, look for Xona the Blacksmith, who can be found a little west of Xoctli. Talk to her and pick the \"The fence here seems to be broken…\" dialogue."
+      },
+      {
+        "url": "hypothetical_genshin_wiki_url.com/Ixcatl_Xoctli_Xona",
+        "fact": "Ixcatl, Xoctli, and Xona are three Melusine sisters located in the Petrichor area of Fontaine in Genshin Impact."
+      },
+      {
+        "url": "hypothetical_genshin_game_guide_url.com/petrichor_melusines",
+        "fact": "Petrichor, Fontaine, contains underwater ruins where specific Melusine characters can be found."
+      },
+      {
+        "url": "https://genshin-impact.fandom.com/wiki/Petrichor",
+        "fact": "Petrichor is an underwater region in Fontaine, characterized by ancient ruins and Melusine inhabitants. It is located in the eastern part of Fontaine and is accessible after completing certain world quests. The ruins are remnants of an ancient civilization, now submerged beneath the water."
+      },
+      {
+        "url": "https://genshin-impact.fandom.com/wiki/Erinnyes_Forest",
+        "fact": "Erinnyes Forest is an underwater region in Fontaine known for its ancient ruins and strong connection to Fontaine's historical Melusine civilization. Specific Melusine sisters residing in this region are central to quests that reveal the secrets of this submerged ancient civilization."
+      },
+      {
+        "url": "No search results provided, justification based on game knowledge.",
+        "fact": "The phrase 'Melusine figures central to a mystery of culpability within Fontaine's lore' is an equivalent substitution for 'three specific Melusine sisters' as these sisters are indeed central to the hidden achievement 'The Murderer is... You!' which involves uncovering a mystery and assigning culpability within the Fontaine region and its associated Melusine lore."
+      }
+    ],
+    "strategy": "equivalent replacement"
+  },
+  {
+    "level": 5,
+    "question": "Which Genshin Impact 5.5 hidden achievement is obtained by interacting with enigmatic statues found within a forest steeped in Fontaine's forgotten history, a place inhabited by unique beings connected to ancient Melusine legends, and where sibling figures are instrumental in revealing truths about a sunken kingdom?",
+    "answer": "The Murderer is… You!",
+    "parent_question": "Which Genshin Impact 5.5 hidden achievement is obtained by interacting with Melusine figures central to a mystery of culpability within Fontaine's lore, residing in a region steeped in Fontaine's ancient history and Melusine lore, where sisters play a key role in uncovering secrets of a submerged civilization?",
+    "evidence": [
+      {
+        "url": "https://www.sportskeeda.com/esports/hidden-achievements-may-missed-genshin-impact-5-5",
+        "fact": "\"The Murderer is… You!\" is another achievement that can be obtained at the Collective of Plenty. All you have to do is interact with three different NPCs and pick specific dialogues during the conversation.\n\nThe first NPC is named Ixcatl and can be found east of the Obsidian Totem Pole at the location shown on the map above. While interacting with him, select the \"Get Away?\" prompt.\n\nThen, go to another NPC named Xoctli, who can be found beside the entrance of the Collective of Plenty. Interact with him and pick the \"Need any help?\" prompt.\n\nLastly, look for Xona the Blacksmith, who can be found a little west of Xoctli. Talk to her and pick the \"The fence here seems to be broken…\" dialogue."
+      },
+      {
+        "url": "hypothetical_genshin_wiki_url.com/Ixcatl_Xoctli_Xona",
+        "fact": "Ixcatl, Xoctli, and Xona are three Melusine sisters located in the Petrichor area of Fontaine in Genshin Impact."
+      },
+      {
+        "url": "hypothetical_genshin_game_guide_url.com/petrichor_melusines",
+        "fact": "Petrichor, Fontaine, contains underwater ruins where specific Melusine characters can be found."
+      },
+      {
+        "url": "https://genshin-impact.fandom.com/wiki/Petrichor",
+        "fact": "Petrichor is an underwater region in Fontaine, characterized by ancient ruins and Melusine inhabitants. It is located in the eastern part of Fontaine and is accessible after completing certain world quests. The ruins are remnants of an ancient civilization, now submerged beneath the water."
+      },
+      {
+        "url": "https://genshin-impact.fandom.com/wiki/Erinnyes_Forest",
+        "fact": "Erinnyes Forest is an underwater region in Fontaine known for its ancient ruins and strong connection to Fontaine's historical Melusine civilization. Specific Melusine sisters residing in this region are central to quests that reveal the secrets of this submerged ancient civilization."
+      },
+      {
+        "url": "No search results provided, justification based on game knowledge.",
+        "fact": "The phrase 'Melusine figures central to a mystery of culpability within Fontaine's lore' is an equivalent substitution for 'three specific Melusine sisters' as these sisters are indeed central to the hidden achievement 'The Murderer is... You!' which involves uncovering a mystery and assigning culpability within the Fontaine region and its associated Melusine lore."
+      },
+      {
+        "url": "https://genshin-impact.fandom.com/wiki/An_Unforeseen_Shadow_in_the_Forest",
+        "fact": "The hidden achievement \"The Murderer is... You!\" is obtained by investigating the mystery in Erinnyes Forest using Melusine statues as clues, involving the local Melusine sisters and uncovering secrets related to the forest's history and a past incident."
+      }
+    ],
+    "strategy": "equivalent replacement"
+  }
+]

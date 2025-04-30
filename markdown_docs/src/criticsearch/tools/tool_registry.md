@@ -1,43 +1,43 @@
 ## ClassDef ToolRegistry
-**ToolRegistry**: The function of ToolRegistry is to manage tools by using their function names as keys, allowing easy retrieval and creation of schemas for those tools.
+**ToolRegistry**: The function of ToolRegistry is to manage tools using their function names as keys, allowing for the retrieval or creation of schemas for these tools.
 
-**Attributes**:
-- **_tools**: A dictionary that maps function names (as strings) to their respective tool schemas. It is initialized as an empty dictionary and is used to store the schemas of tools for quick access and reuse.
+**attributes**: The attributes of this Class.
+· _tools: A dictionary mapping function names (as strings) to their respective schemas (as dictionaries).
 
-**Code Description**:  
-The `ToolRegistry` class is designed to manage the registration and retrieval of tool schemas based on function names. It allows the creation of new schemas for tools if they are not already registered. The primary use case of this class is within systems that work with a variety of tools, where each tool is associated with a function, and its schema needs to be retrieved or generated.
+**Code Description**: The ToolRegistry class serves as a centralized registry for managing tool schemas, which are essential for the operation of various tools within the application. Upon initialization, it creates an empty dictionary, _tools, to store the schemas associated with different functions. 
 
-- **`__init__`**: This method initializes an empty registry (`_tools`) for storing tool schemas. The registry is a dictionary where keys are the names of functions (as strings) and values are the schemas related to those functions. The class starts with no schemas stored.
+The primary method of this class, get_or_create_tool_schema, accepts one or more functions as arguments. For each function, it checks if a schema already exists in the _tools dictionary. If a schema does not exist, it invokes the Tool.create_schema_from_function method to generate a new schema based on the provided function and stores it in the _tools dictionary. This method also logs the creation of new schemas for tracking purposes.
 
-- **`get_or_create_tool_schema`**: This method accepts one or more function references (`target_functions`) as arguments. For each function provided, it checks whether the schema for that function already exists in the `_tools` dictionary. If a schema does not exist for the function, the method creates it using a class method `Tool.create_schema_from_function` and then stores it in the `_tools` dictionary. After the schema is retrieved or created, it is added to a list and returned. This method ensures that schemas are not repeatedly created for the same functions, promoting efficiency and reuse.
+The ToolRegistry class is utilized by the BaseAgent class, which acts as a foundational component for intelligent agents in the project. The BaseAgent creates an instance of ToolRegistry to manage the schemas for various tools it employs, such as the search aggregator and content scraper. By leveraging the ToolRegistry, the BaseAgent can efficiently retrieve and utilize the necessary schemas for its operations, ensuring that the tools are correctly configured and ready for use.
 
-    - **Arguments**:
-      - `*target_functions`: One or more functions whose schemas need to be retrieved or created.
-    - **Returns**: A list of dictionaries representing the schemas of the provided functions.
+**Note**: It is crucial to ensure that the ToolRegistry is populated with the required schemas for the tools being used, as the functionality of the BaseAgent and its ability to perform tasks depend on these schemas being available.
 
-In the context of the larger project, the `ToolRegistry` class is used in the `BaseAgent` class (found in `src/criticsearch/base_agent.py`). Specifically, instances of `ToolRegistry` are used to manage the schemas for different tools within the agent, such as `search_aggregator` and `content_scraper`. When initializing these tools, `BaseAgent` calls `get_or_create_tool_schema` to retrieve or create the schemas associated with their functions. These schemas are essential for the tools to be correctly used in subsequent operations, such as when the agent interacts with external services or processes data.
-
-The `ToolRegistry` class plays a crucial role in ensuring that the agent can consistently access the correct schema for its tools, avoiding the need to repeatedly recreate schemas and thus improving efficiency.
-
-**Note**:  
-- The `Tool.create_schema_from_function` method (referenced in `get_or_create_tool_schema`) is expected to be responsible for creating a schema from a function. This method should handle the specifics of schema creation and may include validation or other processing steps.
-- The `_tools` dictionary is managed entirely within the `ToolRegistry` class. Users of this class do not need to directly modify this attribute.
-- This class assumes that function names are unique and can be used as reliable keys for storing schemas.
-
-**Output Example**:  
-When calling `get_or_create_tool_schema` with the `search` function of `search_aggregator` and the `scrape` function of `content_scraper`, a possible return value could look like this:
-
-```python
-[
+**Output Example**: A possible appearance of the code's return value when retrieving schemas for a function might look like this:
+```json
+{
+  "schemas": [
     {
-        "function_name": "search",
-        "schema_details": { ... }  # Detailed schema information for the 'search' function
+      "function_name": "search",
+      "schema": {
+        "parameters": {
+          "query": "string",
+          "results": "list"
+        },
+        "description": "Schema for the search tool."
+      }
     },
     {
-        "function_name": "scrape",
-        "schema_details": { ... }  # Detailed schema information for the 'scrape' function
+      "function_name": "scrape",
+      "schema": {
+        "parameters": {
+          "urls": "list",
+          "content": "string"
+        },
+        "description": "Schema for the content scraper tool."
+      }
     }
-]
+  ]
+}
 ```
 ### FunctionDef __init__(self)
 **__init__**: The function of __init__ is to initialize an empty registry for storing tool schemas.
@@ -50,64 +50,33 @@ When calling `get_or_create_tool_schema` with the `search` function of `search_a
 **Note**: It is important to understand that this function does not take any parameters and does not return any value. It solely serves the purpose of setting up the initial state of the ToolRegistry instance. Users should ensure that the _tools dictionary is populated with valid tool schemas through other methods provided in the ToolRegistry class after the instance is initialized.
 ***
 ### FunctionDef get_or_create_tool_schema(self)
-**get_or_create_tool_schema**: The function of get_or_create_tool_schema is to retrieve or create tool schemas for specified functions.
+## Method: `get_or_create_tool_schema`
 
-**parameters**: The parameters of this Function.
-· target_functions: One or more functions for which schemas are to be retrieved or created.
+### Description:
+The `get_or_create_tool_schema` method retrieves or creates tool schemas for the given functions. If the schema for a function is not already registered, it will be created using the `Tool.create_schema_from_function` method and added to the registry. This ensures that the necessary tool schemas are available for the provided functions.
 
-**Code Description**: The get_or_create_tool_schema method is a member of the ToolRegistry class, responsible for managing the schemas associated with various tools (functions) within the application. This method accepts one or more callable functions as arguments and checks if a schema for each function is already registered in the internal registry (self._tools). 
+### Parameters:
+- `*target_functions` (Callable): One or more functions for which schemas are to be retrieved or created. The parameter accepts a variable number of function arguments.
 
-If a function's schema is not found, the method invokes the Tool class's create_schema_from_function method to generate a new schema based on the function's metadata, including its name, description, and parameters. This newly created schema is then stored in the registry for future reference. The method logs the creation of the schema for debugging purposes.
+### Returns:
+- `List[Dict]`: A list of schemas corresponding to the provided functions. Each schema is returned as a dictionary.
 
-The method returns a list of schemas corresponding to the provided functions, ensuring that all requested schemas are either retrieved from the registry or newly created. This functionality is crucial for maintaining a structured representation of functions within the application, allowing for consistent access to their metadata.
+### Behavior:
+1. The method iterates through each provided function in `target_functions`.
+2. For each function, it checks if its schema already exists in the registry (using the function's name).
+3. If the schema is not registered:
+   - The schema is created by calling `Tool.create_schema_from_function` with the target function.
+   - The schema is added to the registry.
+   - A log message is printed indicating the creation of the schema.
+4. Finally, the method returns a list of schemas corresponding to the provided functions, whether they were newly created or retrieved from the registry.
 
-The get_or_create_tool_schema method is called within the __init__ method of the BaseAgent class. During the initialization of a BaseAgent instance, it retrieves or creates schemas for the search aggregator and content scraper tools. These schemas are then stored in the conversation manager's available tools, facilitating their use in subsequent interactions.
-
-**Note**: When using this method, ensure that the functions passed as arguments are callable and properly defined, as the method relies on their metadata to generate the schemas.
-
-**Output Example**: A possible appearance of the code's return value when invoking get_or_create_tool_schema might look like this:
-```json
-[
-    {
-        "type": "function",
-        "function": {
-            "name": "search",
-            "description": "Performs a search operation.",
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "query": {
-                        "type": "str",
-                        "description": "The search query."
-                    },
-                    "limit": {
-                        "type": "int",
-                        "description": "The maximum number of results to return."
-                    }
-                },
-                "required": ["query"],
-                "additionalProperties": false
-            }
-        }
-    },
-    {
-        "type": "function",
-        "function": {
-            "name": "scrape",
-            "description": "Scrapes content from a given URL.",
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "url": {
-                        "type": "str",
-                        "description": "The URL to scrape."
-                    }
-                },
-                "required": ["url"],
-                "additionalProperties": false
-            }
-        }
-    }
-]
+### Example Usage:
+```python
+tool_registry = ToolRegistry()
+schemas = tool_registry.get_or_create_tool_schema(function1, function2)
 ```
+
+### Notes:
+- The method leverages the `Tool.create_schema_from_function` to generate the schema when necessary.
+- Logging of schema creation is handled by the `printer.log` function, providing feedback on the schema creation process.
 ***

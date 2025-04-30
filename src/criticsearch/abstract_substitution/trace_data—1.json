@@ -1,0 +1,170 @@
+[
+  {
+    "level": 0,
+    "question": "Which specific laboratory at NASA Goddard Space Flight Center was responsible for the fabrication of the James Webb Space Telescope's NIRSpec Micro-Shutter Assembly (MSA) chip assemblies?",
+    "answer": "Detector Development Laboratory",
+    "constrained_format": "Answer in exactly 3 words",
+    "parent_question": null,
+    "evidence": [
+      {
+        "url": "https://jwst-docs.stsci.edu/jwst-near-infrared-spectrograph/nirspec-instrumentation/nirspec-micro-shutter-assembly",
+        "fact": "The MSA shutters are electrostatically actuated and latched using electrodes biased with selectable voltages up to ±35 V. The MSA chip assemblies were fabricated at the NASA Goddard Detector Development Laboratory."
+      },
+      {
+        "url": "https://ui.adsabs.harvard.edu/abs/2004SPIE.5167...94K/abstract",
+        "fact": "The abstract for the SPIE conference paper titled 'JWST NIRSpec micro-shutter array development' (Kutyrev et al., 2004) lists author affiliations including 'NASA Goddard Space Flight Center, Detector Development Laboratory, Greenbelt, MD 20771', indicating this lab's involvement in the MSA development."
+      }
+    ],
+    "strategy": "seed"
+  },
+  {
+    "level": 1,
+    "question": "Which specific laboratory at NASA Goddard Space Flight Center was responsible for the fabrication of a novel microelectromechanical system (MEMS) component developed for an instrument on the James Webb Space Telescope, consisting of four postage-stamp-sized chips, each containing over 62,000 microscopic shutters, allowing the instrument to gather spectra from more than 100 objects simultaneously by selectively blocking unwanted light?",
+    "answer": "Detector Development Laboratory",
+    "constrained_format": "Answer in exactly 3 words",
+    "parent_question": "Which specific laboratory at NASA Goddard Space Flight Center was responsible for the fabrication of the James Webb Space Telescope's NIRSpec Micro-Shutter Assembly (MSA) chip assemblies?",
+    "evidence": [
+      {
+        "url": "https://jwst-docs.stsci.edu/jwst-near-infrared-spectrograph/nirspec-instrumentation/nirspec-micro-shutter-assembly",
+        "fact": "The MSA shutters are electrostatically actuated and latched using electrodes biased with selectable voltages up to ±35 V. The MSA chip assemblies were fabricated at the NASA Goddard Detector Development Laboratory."
+      },
+      {
+        "url": "https://ui.adsabs.harvard.edu/abs/2004SPIE.5167...94K/abstract",
+        "fact": "The abstract for the SPIE conference paper titled 'JWST NIRSpec micro-shutter array development' (Kutyrev et al., 2004) lists author affiliations including 'NASA Goddard Space Flight Center, Detector Development Laboratory, Greenbelt, MD 20771', indicating this lab's involvement in the MSA development."
+      },
+      {
+        "url": "https://www.nasa.gov/image-detail/webbs-microshutter-assembly/",
+        "fact": "The microshutter assembly (MSA) is a new technology developed for the James Webb Space Telescope at NASA's Goddard Space Flight Center. The MSA will allow Webb's Near Infrared Spectrograph (NIRSpec) instrument to gather spectra from more than 100 objects at once."
+      },
+      {
+        "url": "https://www.nasa.gov/image-detail/webbs-microshutter-assembly/",
+        "fact": "Each postage-stamp-size 'chip' contains 62,000 shutters... The Webb telescope requires four of these chips for the NIRSpec instrument... The shutters are microelectromechanical systems (MEMS) devices."
+      },
+      {
+        "url": "https://webb.nasa.gov/content/observatory/instruments/nirspec.html",
+        "fact": "The NIRSpec instrument... features a microshutter array composed of a quarter-million individually controllable shutters. These shutters enable the instrument to perform spectroscopy on multiple specific targets simultaneously by blocking unwanted light."
+      }
+    ],
+    "strategy": "equivalence substitution"
+  },
+  {
+    "level": 2,
+    "question": "Which specific laboratory located within a major NASA space research facility—that is 1) situated in Greenbelt, Maryland, 2) was established on May 1, 1959, and 3) is named after the American physicist acclaimed as the father of modern liquid-fueled rocketry—was responsible for the fabrication of a novel microelectromechanical system (MEMS) component developed for an instrument on the James Webb Space Telescope, consisting of four postage-stamp-sized chips, each containing over 62,000 microscopic shutters, allowing the instrument to gather spectra from more than 100 objects simultaneously by selectively blocking unwanted light?",
+    "answer": "Detector Development Laboratory",
+    "constrained_format": "Answer in exactly 3 words",
+    "parent_question": "Which specific laboratory at NASA Goddard Space Flight Center was responsible for the fabrication of a novel microelectromechanical system (MEMS) component developed for an instrument on the James Webb Space Telescope, consisting of four postage-stamp-sized chips, each containing over 62,000 microscopic shutters, allowing the instrument to gather spectra from more than 100 objects simultaneously by selectively blocking unwanted light?",
+    "evidence": [
+      {
+        "url": "https://jwst-docs.stsci.edu/jwst-near-infrared-spectrograph/nirspec-instrumentation/nirspec-micro-shutter-assembly",
+        "fact": "The MSA shutters are electrostatically actuated and latched using electrodes biased with selectable voltages up to ±35 V. The MSA chip assemblies were fabricated at the NASA Goddard Detector Development Laboratory."
+      },
+      {
+        "url": "https://ui.adsabs.harvard.edu/abs/2004SPIE.5167...94K/abstract",
+        "fact": "The abstract for the SPIE conference paper titled 'JWST NIRSpec micro-shutter array development' (Kutyrev et al., 2004) lists author affiliations including 'NASA Goddard Space Flight Center, Detector Development Laboratory, Greenbelt, MD 20771', indicating this lab's involvement in the MSA development."
+      },
+      {
+        "url": "https://www.nasa.gov/image-detail/webbs-microshutter-assembly/",
+        "fact": "The microshutter assembly (MSA) is a new technology developed for the James Webb Space Telescope at NASA's Goddard Space Flight Center. The MSA will allow Webb's Near Infrared Spectrograph (NIRSpec) instrument to gather spectra from more than 100 objects at once."
+      },
+      {
+        "url": "https://www.nasa.gov/image-detail/webbs-microshutter-assembly/",
+        "fact": "Each postage-stamp-size 'chip' contains 62,000 shutters... The Webb telescope requires four of these chips for the NIRSpec instrument... The shutters are microelectromechanical systems (MEMS) devices."
+      },
+      {
+        "url": "https://webb.nasa.gov/content/observatory/instruments/nirspec.html",
+        "fact": "The NIRSpec instrument... features a microshutter array composed of a quarter-million individually controllable shutters. These shutters enable the instrument to perform spectroscopy on multiple specific targets simultaneously by blocking unwanted light."
+      },
+      {
+        "url": "https://www.nasa.gov/goddard/",
+        "fact": "NASA's Goddard Space Flight Center is located in Greenbelt, Maryland."
+      },
+      {
+        "url": "https://www.nasa.gov/centers/goddard/about/history/gsfc_history.html",
+        "fact": "Goddard Space Flight Center (GSFC) was established May 1, 1959, as NASA's first space flight complex."
+      },
+      {
+        "url": "https://www.nasa.gov/centers/goddard/about/history/dr_goddard.html",
+        "fact": "NASA's Goddard Space Flight Center is named in tribute to Dr. Robert Hutchings Goddard, the American physicist and engineer acknowledged as the father of modern liquid-fueled rocketry."
+      }
+    ],
+    "strategy": "complex abstraction concretization"
+  },
+  {
+    "level": 0,
+    "question": "What is the specific model number of the Andor CCD detector used in the Spectrometer Element (SSE) of the SHERLOC instrument on the Perseverance rover?",
+    "answer": "CCD42-10",
+    "constrained_format": "Answer in exactly 8 characters",
+    "parent_question": null,
+    "evidence": [
+      {
+        "url": "https://mars.nasa.gov/mars2020/spacecraft/instruments/sherloc/for-scientists/",
+        "fact": "The SSE detector is an Andor CCD42-10 back-thinned, deep-depletion CCD detector that is cooled using a thermoelectric cooler (TEC) mounted between the detector and the spectrometer housing."
+      },
+      {
+        "url": "https://link.springer.com/article/10.1007/s11214-020-00747-w",
+        "fact": "The spectrometer detector is an Andor CCD42-10 frame transfer device operating at −60∘C. A 1024×255 region is clocked out after an integration period."
+      }
+    ],
+    "strategy": "seed"
+  },
+  {
+    "level": 1,
+    "question": "What is the specific model number of the Andor CCD detector utilized within the Spectrometer Element (SSE) of the instrument known as Scanning Habitable Environments with Raman & Luminescence for Organics & Chemicals (SHERLOC), which is designed to search for organic compounds and minerals on Mars, aboard the NASA rover that successfully executed its landing within Jezero Crater on February 18, 2021?",
+    "answer": "CCD42-10",
+    "constrained_format": "Answer in exactly 8 characters",
+    "parent_question": "What is the specific model number of the Andor CCD detector used in the Spectrometer Element (SSE) of the SHERLOC instrument on the Perseverance rover?",
+    "evidence": [
+      {
+        "url": "https://mars.nasa.gov/mars2020/spacecraft/instruments/sherloc/for-scientists/",
+        "fact": "The SSE detector is an Andor CCD42-10 back-thinned, deep-depletion CCD detector that is cooled using a thermoelectric cooler (TEC) mounted between the detector and the spectrometer housing."
+      },
+      {
+        "url": "https://link.springer.com/article/10.1007/s11214-020-00747-w",
+        "fact": "The spectrometer detector is an Andor CCD42-10 frame transfer device operating at −60∘C. A 1024×255 region is clocked out after an integration period."
+      },
+      {
+        "url": "https://mars.nasa.gov/mars2020/mission/instruments/sherloc/",
+        "fact": "The SHERLOC instrument, short for Scanning Habitable Environments with Raman & Luminescence for Organics & Chemicals, is mounted on the Perseverance rover's robotic arm and is designed to detect organic compounds and minerals on the Martian surface."
+      },
+      {
+        "url": "https://mars.nasa.gov/mars2020/timeline/landing/",
+        "fact": "NASA's Perseverance rover successfully landed in Jezero Crater on Mars on February 18, 2021."
+      }
+    ],
+    "strategy": "equivalence substitution"
+  },
+  {
+    "level": 2,
+    "question": "What is the specific model number of the Andor CCD detector utilized within the Spectrometer Element (SSE) of the instrument known as Scanning Habitable Environments with Raman & Luminescence for Organics & Chemicals (SHERLOC), which is designed to search for organic compounds and minerals on Mars, aboard the NASA rover carrying Ingenuity, the first aircraft intended for powered, controlled flight on another planet, which successfully landed in Jezero Crater?",
+    "answer": "CCD42-10",
+    "constrained_format": "Answer in exactly 8 characters",
+    "parent_question": "What is the specific model number of the Andor CCD detector utilized within the Spectrometer Element (SSE) of the instrument known as Scanning Habitable Environments with Raman & Luminescence for Organics & Chemicals (SHERLOC), which is designed to search for organic compounds and minerals on Mars, aboard the NASA rover that successfully executed its landing within Jezero Crater on February 18, 2021?",
+    "evidence": [
+      {
+        "url": "https://mars.nasa.gov/mars2020/spacecraft/instruments/sherloc/for-scientists/",
+        "fact": "The SSE detector is an Andor CCD42-10 back-thinned, deep-depletion CCD detector that is cooled using a thermoelectric cooler (TEC) mounted between the detector and the spectrometer housing."
+      },
+      {
+        "url": "https://link.springer.com/article/10.1007/s11214-020-00747-w",
+        "fact": "The spectrometer detector is an Andor CCD42-10 frame transfer device operating at −60∘C. A 1024×255 region is clocked out after an integration period."
+      },
+      {
+        "url": "https://mars.nasa.gov/mars2020/mission/instruments/sherloc/",
+        "fact": "The SHERLOC instrument, short for Scanning Habitable Environments with Raman & Luminescence for Organics & Chemicals, is mounted on the Perseverance rover's robotic arm and is designed to detect organic compounds and minerals on the Martian surface."
+      },
+      {
+        "url": "https://mars.nasa.gov/mars2020/timeline/landing/",
+        "fact": "NASA's Perseverance rover successfully landed in Jezero Crater on Mars on February 18, 2021."
+      },
+      {
+        "url": "https://mars.nasa.gov/technology/helicopter/",
+        "fact": "The Mars Helicopter, Ingenuity, is a technology demonstration to test powered flight on another world for the first time. It hitched a ride to the Red Planet on the Perseverance rover."
+      },
+      {
+        "url": "https://mars.nasa.gov/mars2020/timeline/landing/entry-descent-landing/",
+        "fact": "NASA's Mars 2020 Perseverance rover landed on Mars Feb. 18, 2021 in Jezero Crater."
+      }
+    ],
+    "strategy": "equivalence substitution"
+  }
+]

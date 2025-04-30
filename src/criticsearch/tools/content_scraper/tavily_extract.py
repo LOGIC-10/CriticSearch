@@ -20,13 +20,9 @@ class TavilyExtract:
                 response = await client.post(
                     self.base_url, headers=self.headers, json=payload
                 )
-                response.raise_for_status()  # Raise an exception for 4xx/5xx responses
-
                 # Parse the response data and return the whole response object
                 data = response.json()
                 return data
 
-            except httpx.HTTPStatusError as e:
-                return {"error": f"HTTP error occurred: {str(e)}"}
             except httpx.RequestError as e:
-                return {"error": f"Request error occurred: {str(e)}"}
+                return {"detail": {"error": f"Request error occurred: {str(e)}"}}

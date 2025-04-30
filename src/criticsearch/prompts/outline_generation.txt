@@ -1,19 +1,27 @@
-You are a very helpful assistant. Your primary task is to design an article outline structure and break down the key points based on the user’s query.
+You are a very helpful assistant. Your primary task is to design an article outline structure and break down the key points based on the user’s query and the provided search results.
 
-When you receive a user’s request to write a report, you need to think about how to make the report as comprehensive and complete as possible. At the same time, you must consider both the depth and breadth of the report.
+When you receive a user’s request to write a report, you should think about how to make the report as comprehensive and complete as possible by browsing the relevant search results (provided as web_result_markdown_text) and integrating key details from them.
 
-On the breadth level, you should expand the report by exploring various perspectives and aspects. On the depth level, you should enhance the report by adding valuable outline nodes and breaking it down into more detailed sub-sections.
+On the breadth level, expand the report by exploring various perspectives and aspects. On the depth level, enhance the report by adding valuable outline nodes with detailed sub-sections.
 
-Finally, you need to present the outline structure in a highly standardized JSON format. Below is a standard example of an outline structure in JSON format. The query for this outline is:
+Finally, you need to present the outline structure in a highly standardized JSON format. Ensure the description and all sections are in English. Below is a standard example of an outline structure in JSON format. The query for this outline is:
 
 “Please write a report on CrowdStrike-related IT outages in 2024.”
 
-Here is the standard answer:
+Here is the standard answer (note that the search result details should be integrated as applicable):
 
-{'title': '2024_CrowdStrike-related_IT_outages', 'children': [{'title': 'Preface'}, {'title': 'Background'}, {'title': 'Outage', 'children': [{'title': 'Remedy'}]}, {'title': 'Impact', 'children': [{'title': 'CrowdStrike liability'}, {'title': 'Air transport', 'children': [{'title': 'Oceania'}, {'title': 'Asia'}, {'title': 'Europe'}, {'title': 'Middle East and North Africa'}, {'title': 'North America'}]}, {'title': 'Finance'}, {'title': 'Government'}, {'title': 'Ground transport'}, {'title': 'Healthcare'}, {'title': 'Media and communications'}, {'title': 'Retail'}, {'title': 'Other sectors'}]}, {'title': 'Response', 'children': [{'title': 'Political'}, {'title': 'Industry'}, {'title': 'Criminal'}]}, {'title': 'Analysis', 'children': [{'title': 'Cause'}, {'title': 'Centralisation and homogeneity'}, {'title': 'IT practices'}, {'title': 'Operating system design and antitrust enforcement'}]}]} 
+{'title': '2024_CrowdStrike-related_IT_outages', 'children': [{'title': 'Preface'}, {'title': 'Background'}, {'title': 'Outage', 'children': [{'title': 'Remedy'}]}, {'title': 'Impact', 'children': [{'title': 'CrowdStrike liability'}, {'title': 'Air transport', 'children': [{'title': 'Oceania'}, {'title': 'Asia'}, {'title': 'Europe'}, {'title': 'Middle East and North Africa'}, {'title': 'North America'}]}, {'title': 'Finance'}, {'title': 'Government'}, {'title': 'Ground transport'}, {'title': 'Healthcare'}, {'title': 'Media and communications'}, {'title': 'Retail'}, {'title': 'Other sectors'}]}, {'title': 'Response', 'children': [{'title': 'Political'}, {'title': 'Industry'}, {'title': 'Criminal'}]}, {'title': 'Analysis', 'children': [{'title': 'Cause'}, {'title': 'Centralisation and homogeneity'}, {'title': 'IT practices'}, {'title': 'Operating system design and antitrust enforcement'}]}]}
+
+Include in the outline any key information extracted from the web_result_markdown_text.
 
 The user has now officially provided their query:
 
-{{Query}}
+{{user_question}}
+
+And there are some web info about this query for your reference to better understand the topic and generate the outline: 
+
+#################################
+{{web_result_markdown_text}}
+#################################
 
 Please directly return the deeply thought-out and well-structured outline in JSON format:

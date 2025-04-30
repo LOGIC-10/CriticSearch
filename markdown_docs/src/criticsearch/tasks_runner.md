@@ -1,17 +1,33 @@
-## FunctionDef run_tasks(tasks, max_iterations, output_file)
-**run_tasks**: The function of run_tasks is to handle multiple tasks, run them iteratively, and log conversation history.
+## FunctionDef execute_multiple_tasks(tasks, max_iterations, output_file)
+**execute_multiple_tasks**: The function of execute_multiple_tasks is to execute a series of tasks iteratively, process them, and log the conversation history.
 
 **parameters**: The parameters of this Function.
-· tasks: list - A list of task strings (questions) to process.
-· max_iterations: int - Maximum number of iterations for each task (default is 10).
-· output_file: Path | str - Path to save the conversation history in sharegpt format (default is "conversation_history_sharegpt.jsonl").
+· tasks: list - A list of task strings (questions) that need to be processed.  
+· max_iterations: int - The maximum number of iterations allowed for each task, defaulting to 10.  
+· output_file: Path | str - The file path where the conversation history will be saved in ShareGPT format, defaulting to "conversation_history_sharegpt.jsonl".
 
-**Code Description**: The run_tasks function is designed to manage the execution of a series of tasks, iterating through each task and performing operations to generate responses while logging the conversation history. The function accepts a list of tasks, a maximum number of iterations for processing each task, and a file path for saving the conversation history.
+**Code Description**: The execute_multiple_tasks function is designed to handle the execution of multiple tasks in a systematic manner. It takes a list of tasks and processes each one individually by calling the process_single_task function. This function is responsible for executing a single task, which involves interacting with various agents to generate a comprehensive report based on the provided task and specified maximum iterations.
 
-For each task in the provided list, the function invokes the main function, which is responsible for processing the task and generating responses. The main function is called with the current task and the specified maximum number of iterations. This function is integral to the overall architecture, as it utilizes the BaseAgent class to manage conversations and interactions.
+During the execution of each task, the function checks if the setting to save conversation history is enabled. If it is, the function retrieves the conversation data from the BaseAgent's conversation manager and saves it to the specified output file using the write method. This ensures that the conversation history is logged for future reference.
 
-After executing the main function for a task, the run_tasks function retrieves the conversation data from the BaseAgent's conversation manager. It then writes this data to the specified output file using the write method of the conversation manager. This ensures that the conversation history is preserved in a structured format, allowing for future reference or analysis.
+The execute_multiple_tasks function is called by the start_task_execution function, which serves as the entry point for executing predefined tasks. In this context, start_task_execution initializes a list of tasks and specifies the maximum number of iterations before invoking execute_multiple_tasks to process the tasks.
 
-The run_tasks function is called by other components in the project, such as the main execution flow in the src/criticsearch/__main__.py file and potentially other scripts that require batch processing of tasks. This establishes a clear pathway for task management and response generation within the intelligent agent framework.
+The function relies on the proper functioning of the process_single_task function, which manages the execution of each individual task, and the BaseAgent class, which provides the necessary infrastructure for managing conversations and interactions with agents. Additionally, the write method from the ConversationManager class is utilized to handle the saving of conversation data.
 
-**Note**: When using this function, ensure that the tasks provided are well-defined and relevant to the capabilities of the underlying agent. Additionally, be mindful of the output file path, as the function appends data to the file, which may grow in size over time. If the file contains corrupt or non-JSON data, the function may start with an empty list, potentially overwriting previous content.
+**Note**: It is important to ensure that the tasks provided are well-defined and that the output file path is valid. The function's behavior is contingent upon the settings for saving conversation history, and proper error handling should be in place to manage any exceptions that may arise during the execution process.
+## FunctionDef start_task_execution
+**start_task_execution**: The function of start_task_execution is to serve as the entry point for executing predefined tasks.
+
+**parameters**: The parameters of this Function are not explicitly defined as it does not take any input parameters.
+
+**Code Description**: The start_task_execution function is designed to initiate the execution of a predefined list of tasks. In its current implementation, it contains a single task: "Write a report about 2024_Syrian_opposition_offensives event". The function sets a constant MAX_ITERATION to 2, which indicates the maximum number of times each task will be executed. 
+
+Upon invocation, the function attempts to execute the tasks by calling the execute_multiple_tasks function, passing the list of tasks and the MAX_ITERATION value as arguments. This function is responsible for handling the execution of multiple tasks iteratively and logging the conversation history associated with each task.
+
+The start_task_execution function includes error handling to manage interruptions. If a KeyboardInterrupt exception is raised (for example, if the user interrupts the execution with a keyboard command), the function will catch this exception and print a message indicating that the execution was interrupted by the user.
+
+From a functional perspective, start_task_execution is called within the main execution context of the application, specifically in the src/criticsearch/__main__.py file. This indicates that it serves as a primary function that triggers the task execution process when the application is run. 
+
+The relationship between start_task_execution and execute_multiple_tasks is crucial, as the former initializes the task execution process, while the latter carries out the actual processing of the tasks. The effectiveness of start_task_execution relies on the proper implementation of execute_multiple_tasks, which manages the iterative execution and logging of tasks.
+
+**Note**: It is important to ensure that the tasks defined within the start_task_execution function are relevant and well-structured. Additionally, users should be aware that the function does not accept parameters, and the execution can be interrupted by user input. Proper error handling is in place to manage such interruptions gracefully.

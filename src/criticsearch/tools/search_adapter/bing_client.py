@@ -1,6 +1,5 @@
 # critic_search/search_adapter/bing_client.py
 import httpx
-from loguru import logger
 from tenacity import (
     retry,
     retry_if_exception_type,

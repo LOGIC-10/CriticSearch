@@ -50,19 +50,22 @@ class ModelManager:
 
 def call_llm(
     model,
-    usr_prompt: str | Iterable[ChatCompletionMessageParam],
     config,
+    usr_prompt: str | Iterable[ChatCompletionMessageParam] = "Hello, how can I help you?",
     tools: List | None = None,
+    messages = None
 ) -> ChatCompletionMessage:
     model_manager = ModelManager(config)
     client = model_manager.create_client(model)
 
     # 从 ModelManager 获取配置
     model_config = model_manager.get_model_config(model)
-    if isinstance(usr_prompt, str):
-        messages = [ChatCompletionUserMessageParam(content=usr_prompt, role="user")]
-    else:
-        messages = usr_prompt
+
+    if messages is None:
+        if isinstance(usr_prompt, str):
+            messages = [ChatCompletionUserMessageParam(content=usr_prompt, role="user")]
+        else:
+            messages = usr_prompt
 
     try:
         response = client.chat.completions.create(

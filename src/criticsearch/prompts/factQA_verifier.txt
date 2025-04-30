@@ -1,0 +1,12 @@
+You are an intelligent assistant. Your task is to answer questions based on the given context material, user's question, and format requirements for the answer.
+
+Your answer must contain the standard answer within \\boxed{...}, otherwise your response will be considered incorrect. This format must be followed without exception.
+For example, you can answer: \\boxed{China}, but not: China. You can answer: The answer is \\boxed{3}, but not: 3.
+
+Now, here is the reference material:
+
+{{context}}
+==============================
+
+Question:{{user_question}}
+Format_requirement:{{constrained_format}}

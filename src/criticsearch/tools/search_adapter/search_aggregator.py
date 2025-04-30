@@ -3,7 +3,7 @@ from asyncio import gather
 from typing import Dict, List
 
 from criticsearch.config import settings
-from criticsearch.log import logger
+from criticsearch.rich_output import printer
 
 from .bing_client import BingClient
 from .exceptions import InvalidAPIKeyError, RetryError, UsageLimitExceededError
@@ -45,30 +45,30 @@ class SearchAggregator:
                 try:
                     # Call the asynchronous search method for the specified engine
                     result = await self.clients[engine].search(query)
-                    logger.info(f"{result.model_dump()}")
+                    printer.log(f"{result.model_dump()}")
                     return result
                 except RetryError:
-                    logger.warning(
+                    printer.log(
                         f"Engine '{engine}' for query: {query} failed after multiple retries. Marking as unavailable."
                     )
                     self.mark_engine_unavailable(engine)
                 except InvalidAPIKeyError:
-                    logger.error(
+                    printer.log(
                         f"Engine '{engine}' for query: {query} failed because of wrong api key. Marking as unavailable."
                     )
                     self.mark_engine_unavailable(engine)
                 except UsageLimitExceededError:
-                    logger.warning(
+                    printer.log(
                         f"Engine '{engine}' for query: {query} failed because of usage limit exceeded. Marking as unavailable."
                     )
                     self.mark_engine_unavailable(engine)
                 except Exception:
-                    logger.exception(
+                    printer.print_exception(
                         f"Engine '{engine}' encountered error. Marking as unavailable."
                     )
                     self.mark_engine_unavailable(engine)
 
-        logger.error("All specified search engines are unavailable.")
+        printer.log("All specified search engines are unavailable.", style="bold red")
         return SearchResponse(
             query=query,
             error_message="Search failed: No available search engines for this query.",

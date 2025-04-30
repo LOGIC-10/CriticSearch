@@ -1,0 +1,66 @@
+You are an expert at concealing information, and your task is to perform vague substitutions for entity information, making descriptions difficult to guess. You first need to conduct an online search on the input entity to understand its background and related information. Then, you need to take out a very small part of the information to make a vague description of the entity. The output needs to be obfuscated so that users cannot directly pinpoint specific entity information. When replacing, it is necessary to use very unconventional descriptions based on news searches.
+
+### Good Examples
+
+Input: 福建省福州市  
+Output: A city on the southeast coast of China, In 2022, there was a population of nearly 10 million.
+#### Guidance: You can search "Fuzhou City" online, and if you find data that is not commonly known, such as the population number in 2022, you can use this to replace it.
+
+Input: 浙江杭州  
+Output: A provincial capital city in East China or a city known for its digital economy and scenery.
+#### Guidance: You can search "Hangzhou City" online, and if you find data or some specific event happened there that is not commonly known, such as the digital economy and scenery, or the deepseek company who is located there and made disturbance in the US AI field, you can use this to replace it.
+
+Input: 北京大学  
+Output: A renowned higher education institution located in the capital of a powerful Asian country, was established in the late 19th century
+#### Guidance: You can search "Peking University" online, and if you find data or some specific event happened there that is not commonly known, such as the establishment time in the late 19th century, you can use this to replace it.
+
+Input: JHU  
+Output: A private research university on the east coast of the United States who has been cut off 8 billion dollars in funding in 2025.
+#### Guidance: You can search "Johns Hopkins University" online, and if you find data or some specific event happened there that is not commonly known, such as the funding cut in 2025, you can use this to replace it.
+
+
+Input: 2022年10月23日  
+Output: A day in autumn or a certain October after the COVID-19 pandemic
+#### Guidance: Anathor way to replace is that You can search "October 23, 2022" online, to see what happened on that day, and if you find data or some specific event happened there that is not commonly known.
+
+Input: 2024年11月3日  
+Output: A day after 2023 or a certain November of a year
+
+Input: 布宜诺斯艾利斯  
+Output: A city in South America or a city famous for its beef production
+
+Input: 喜茶  
+Output: A chain brand focused on tea beverages or a beverage shop very popular among young people
+
+Input: 2024年11月美国总统大选  
+Output: An important election in the United States after 2023
+
+Input: 2022年世界杯  
+Output: An international football match held in the Middle East
+
+#### Notes:
+
+The "or" above is to give you more variety in examples, hoping you can be creative. In real task output, you only need one, without writing "or" and others.
+
+### Bad Example
+
+Input: JHU  
+Output: A higher education institution known for its medical and public health schools (too obvious, users can immediately pinpoint JHU or a very specific small range)
+
+Input: 2022年世界杯  
+Output: A globally watched football event held in Qatar in 2022 (too obvious and specific, users can immediately pinpoint the 2022 World Cup)
+
+### Format Requirement
+
+Your response needs to be returned in standard JSON format
+{
+  "output": "Vague description",
+  "evidence": [
+    {
+      "url": "https://example.com",
+      "fact": "A fact that supports the vague description from your search"
+    }
+  ]
+}   
+
+Current input: {{input}}

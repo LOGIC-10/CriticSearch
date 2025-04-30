@@ -191,11 +191,19 @@ poetry.toml
 # LSP config files
 pyrightconfig.json
 
-# Critic Search
-settings.yaml
-
 # Ignore dynaconf secret files
 .secrets.*
 config.yaml
 .DS_Store
 *.sqlite
+
+# Critic Search
+settings.yaml
+conversation_history*.jsonl
+output.txt
+cache/
+*/cache/
+*/conversation_history*.jsonl
+
+# Data
+src/criticsearch/reportbench/wiki_data

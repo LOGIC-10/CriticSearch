@@ -1,6 +1,7 @@
 import yaml
 
 from .base_agent import BaseAgent
+from .rich_output import printer
 
 
 class CriticAgent(BaseAgent):
@@ -16,14 +17,14 @@ class CriticAgent(BaseAgent):
         data = self.get_data_for_critic()
 
         rendered_prompt = self.render_template(self.critic_prompt, data)
-        model_response = self.common_chat(usr_prompt=rendered_prompt, role="critic")
+        model_response = self.chat(usr_prompt=rendered_prompt, role="critic")
 
         try:
             formatted_yaml = self.extract_and_validate_yaml(model_response)
             return formatted_yaml
 
-        except yaml.YAMLError as exc:
-            print(f"Invalid YAML content: {exc}")
+        except yaml.YAMLError:
+            printer.print_exception(f"Invalid YAML content.")
             return None
 
     def receive_agent_answer(self, agent_answer):
