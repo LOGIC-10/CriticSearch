@@ -1,27 +1,42 @@
 ## ClassDef TavilyExtract
-**TavilyExtract**: The function of TavilyExtract is to facilitate the extraction of content from a list of URLs using the Tavily API.
+**TavilyExtract**: The function of TavilyExtract is to interact with the Tavily API to asynchronously extract content from a list of URLs.
 
-**attributes**: The attributes of this Class.
-· api_key: str - The API key used for authenticating requests to the Tavily API.  
-· base_url: str - The base URL for the Tavily API endpoint used for content extraction.  
-· headers: dict - The headers required for making requests to the Tavily API, including content type and authorization.
+**attributes**:
+· `base_url`: A string representing the base URL for the Tavily API (`"https://api.tavily.com/extract"`).
+· `_api_key`: A string storing the API key used for authorization with the Tavily API.
+· `headers`: A dictionary containing the HTTP headers for making requests to the Tavily API, including `Content-Type` and `Authorization`.
 
-**Code Description**: The TavilyExtract class is designed to interact with the Tavily API for the purpose of extracting content from specified URLs. Upon initialization, the class requires an API key, which is stored as a private attribute. The base URL for the Tavily API is set to "https://api.tavily.com/extract", and the necessary headers for making requests are constructed, including the content type and authorization using the provided API key.
+**Code Description**:  
+The `TavilyExtract` class is designed to interact with the Tavily API to extract content from a given list of URLs. It provides an asynchronous method, `extract_content`, which sends a POST request to the Tavily API for content extraction.
 
-The primary method of this class is `extract_content`, which accepts a list of URLs as its parameter. This method is asynchronous and utilizes the httpx library to send a POST request to the Tavily API. The request payload consists of the list of URLs, which is sent in JSON format. Upon receiving a response, the method attempts to parse the JSON data returned by the API. If the request is successful, the parsed data is returned. In the event of a request error, the method captures the exception and returns a structured error message indicating the nature of the issue.
+1. **Initialization (`__init__` method)**:
+   - This method accepts an `api_key` parameter, which is required to authenticate requests to the Tavily API.
+   - The `base_url` is set to the Tavily API endpoint (`"https://api.tavily.com/extract"`), and the `headers` dictionary is populated with the appropriate authentication headers using the provided `api_key`.
+  
+2. **Content Extraction (`extract_content` method)**:
+   - The `extract_content` method is an asynchronous function that accepts a list of URLs (`urls: List[str]`) and sends a POST request to the Tavily API to extract content from these URLs.
+   - A `payload` is created, containing the list of URLs, and a request is made using `httpx.AsyncClient` with HTTP/2 support for optimal performance.
+   - The method awaits the response, processes the returned data, and returns the parsed JSON content from the Tavily API response.
+   - If any errors occur during the request (e.g., network issues, invalid API response), a dictionary is returned containing an error message with the details of the issue.
 
-The TavilyExtract class is utilized within the `scrape` function found in the ContentScraper module. In this context, an instance of TavilyExtract is created using an API key sourced from the application settings. The `scrape` function calls the `extract_content` method of the TavilyExtract instance to retrieve content from the provided URLs. If the Tavily API returns an error, the function logs the error and resorts to a fallback web scraping method to ensure that content extraction continues. This integration allows for a seamless workflow where the TavilyExtract class serves as the primary means of content extraction, while also providing a backup mechanism in case of failure.
+**Relationship with Other Project Components**:
+- The `TavilyExtract` class is utilized by the `scrape` function in the `ContentScraper` module, which is designed to scrape content from multiple URLs.
+- The `scrape` function leverages the `extract_content` method of `TavilyExtract` to retrieve content from the Tavily API. If the API call is successful, the results are processed, and a `ScrapedDataList` is returned. If the Tavily API fails to extract content, the function falls back to using a secondary web scraping method via the `FallbackWebScraper` class.
+- The `scrape` function handles the aggregation of both successful and failed extraction results and ensures that content from URLs is collected despite any errors with the Tavily API.
 
-**Note**: When using this class, ensure that the API key is valid and that the URLs provided are accessible. Additionally, be mindful of the legal and ethical considerations surrounding web scraping, including compliance with the target website's terms of service.
+**Note**:  
+- Ensure that a valid API key is provided when instantiating the `TavilyExtract` class, as this key is required for authorization with the Tavily API.
+- The method `extract_content` is asynchronous and should be called within an asynchronous context (e.g., using `await`).
+- The content extracted from the URLs will be returned as a JSON object. If the extraction fails, an error message will be returned instead of the expected data.
 
-**Output Example**: A possible appearance of the code's return value could be:
+**Output Example**:  
+A possible appearance of the code's return value could be:
 ```
 {
-    "results": [
-        {"url": "http://example.com", "raw_content": "This is the main content of the page."},
-        {"url": "http://anotherexample.com", "raw_content": "No content available"}
-    ],
-    "failed_results": []
+    "data": [
+        {"url": "http://example.com", "title": "Example Title", "content": "This is the main content of the page."},
+        {"url": "http://anotherexample.com", "title": "Another Example", "content": "No content available"}
+    ]
 }
 ```
 ### FunctionDef __init__(self, api_key)
@@ -48,29 +63,30 @@ This constructor ensures that an instance of the `TavilyExtract` class is correc
 - The `base_url` and `headers` are automatically configured and cannot be modified directly through the constructor. Any changes to these values would require altering the code itself.
 ***
 ### FunctionDef extract_content(self, urls)
-**extract_content**: The function of extract_content is to asynchronously extract content from a list of provided URLs using the Tavily API.
+**extract_content**: The function of extract_content is to asynchronously send a request to an external API to extract content from a list of provided URLs.
 
-**parameters**: The parameters of this Function.
-· urls: List[str] - A list of URLs to scrape content from.
+**parameters**: The parameters of this function.
+· urls: List[str] - A list of URLs from which the content needs to be extracted.
 
-**Code Description**: The `extract_content` function is an asynchronous method that takes a list of URLs as input and sends a POST request to the Tavily API to extract content from those URLs. The function begins by constructing a payload that includes the provided URLs. It then utilizes the `httpx.AsyncClient` to create an asynchronous HTTP client capable of handling HTTP/2 requests.
+**Code Description**: The `extract_content` function is an asynchronous method responsible for extracting content from a list of URLs. It takes a list of URLs as an argument, constructs a payload with the URLs, and sends a POST request to a specified base URL using the HTTPX client with support for HTTP/2. This operation is performed inside a context manager to ensure proper resource management.
 
-Within a try-except block, the function attempts to send the POST request to the API endpoint specified by `self.base_url`, including necessary headers and the JSON payload. Upon receiving a response, the function parses the JSON data from the response and returns it. If a request error occurs during this process, the function catches the exception and returns a structured error message indicating the nature of the request error.
+The function begins by defining the payload containing the list of URLs, which is then sent in a POST request to the API endpoint. The request includes the appropriate headers, which are passed from the instance's configuration. The response from the API is expected to be in JSON format. Upon receiving the response, the function parses the JSON data and returns it to the caller.
 
-This function is called by the `scrape` function within the `ContentScraper` class. The `scrape` function orchestrates the content extraction process by first invoking `extract_content` to retrieve data from the Tavily API. If the API call is successful, the `scrape` function processes the results, creating `ScrapedData` objects for each successful extraction. In cases where the Tavily API returns an error or fails to extract content from certain URLs, the `scrape` function logs the error and may fall back to an alternative web scraping method.
+If an error occurs during the request (e.g., network issues, server errors), the function catches the `httpx.RequestError` exception. In this case, it returns a dictionary with an error message indicating the nature of the issue.
 
-The integration of `extract_content` within the `scrape` function highlights its role as a critical component in the content extraction workflow, enabling seamless interaction with the Tavily API to facilitate data retrieval from multiple URLs.
+This function is typically invoked in a larger process, where the content extracted from the URLs is further processed. For example, the `search_validator` method calls `extract_content` to retrieve content from search results. It uses the URLs of the top search results to fetch the content, then processes it by joining the raw content into a corpus, which is passed to an LLM model for further use.
 
-**Note**: When using this function, ensure that the URLs provided are valid and accessible. Additionally, be aware of the legal and ethical considerations surrounding web scraping, including compliance with the target website's terms of service.
+In summary, `extract_content` is a utility function designed to interact with an external content extraction API and handle errors gracefully by returning structured error information if needed.
 
-**Output Example**: A possible appearance of the code's return value could be:
+**Note**: Ensure that the URLs provided are valid and accessible. Network issues or incorrect configurations may result in a request error. The function is built to handle such cases by returning a structured error message.
+
+**Output Example**:
 ```
 {
-    "results": [
-        {"url": "http://example.com", "raw_content": "This is the main content of the page."},
-        {"url": "http://anotherexample.com", "raw_content": "No content available"}
-    ],
-    "failed_results": []
+    "data": [
+        {"url": "http://example.com", "title": "Example Title", "content": "This is the main content of the page."},
+        {"url": "http://anotherexample.com", "title": "Another Example", "content": "No content available"}
+    ]
 }
 ```
 ***

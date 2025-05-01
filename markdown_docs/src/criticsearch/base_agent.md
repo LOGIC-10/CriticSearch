@@ -1,79 +1,76 @@
 ## ClassDef BaseAgent
-**BaseAgent**: The function of BaseAgent is to serve as a foundational class for intelligent agents, providing essential functionalities for managing conversations, handling templates, and integrating various tools for search and content scraping.
+**BaseAgent**: The function of BaseAgent is to serve as a foundational class for intelligent agents, providing functionalities for managing conversations, executing searches, and interacting with various tools.
 
 **attributes**: The attributes of this Class.
-· queryDB: A set to store queries made by the agent, ensuring uniqueness and facilitating tracking of search queries.  
+· queryDB: A set to store unique search queries made by the agent.  
 · tool_registry: An instance of ToolRegistry that manages the schemas for tools used by the agent.  
+· search_aggregator: An instance of SearchAggregator responsible for managing and executing search queries across multiple search engines.  
 · user_question: A string that holds the current question posed by the user.  
-· conversation_manager: An instance of ConversationManager responsible for managing the conversation history.  
-· citationDB: A list of dictionaries that stores search queries and their corresponding results, specifically those praised by critics.  
-· search_aggregator: An instance of SearchAggregator that aggregates search results from various sources.  
-· search_aggregator_schema: A schema for the search aggregator tool, retrieved or created from the tool registry.  
-· content_scraper: An instance of ContentScraper that extracts content from web pages.  
-· content_scraper_schema: A schema for the content scraper tool, retrieved or created from the tool registry.  
-· repeat_turns: An integer that indicates the number of times the agent should repeat its search or response process.
+· training_data: A list that stores the training data related to the agent's interactions and responses.  
+· conversation_manager: An instance of ConversationManager that manages the history of conversations.  
+· memo: A set that stores notes extracted from search results to avoid duplication.
 
-**Code Description**: The BaseAgent class is designed to facilitate the operation of intelligent agents by providing a structured approach to managing user interactions and integrating various tools for enhanced functionality. Upon initialization, the class sets up its environment by determining the directory of the current script and establishing paths for template files. It initializes several key components, including a conversation manager to track the history of interactions, a tool registry to manage schemas for tools, and a citation database to store relevant search results.
+**Code Description**: The BaseAgent class is designed to facilitate the operations of intelligent agents by providing essential functionalities such as managing conversation history, executing search queries, and interacting with various tools. Upon initialization, the class sets up several class-level attributes that are shared across all instances, including a query database (queryDB) to keep track of unique queries, a tool registry (tool_registry) for managing tool schemas, and a search aggregator (search_aggregator) for executing searches across different engines.
 
-The class includes methods for loading and rendering templates, which are essential for generating dynamic responses based on user input. The `chat_with_template` and `chat_with_tools` methods allow the agent to interact with users and tools by rendering prompts and managing the conversation flow. The `common_chat` method serves as a core function that handles communication with the language model, allowing for flexible interactions based on user prompts and available tools.
+The constructor initializes the prompts directory, configuration settings, and citation database, which is structured as a list of dictionaries to store search queries and their corresponding results. The class also sets up schemas for the content scraper and search aggregator tools, ensuring that they are available for use during the agent's operations.
 
-Additionally, the BaseAgent class provides methods for updating answers based on user feedback, checking the model's confidence in its responses, and scraping web content from search results. The `search_and_browse` method integrates search functionality with web scraping, enabling the agent to gather and process information effectively.
+The BaseAgent class provides various methods for loading templates, rendering them with data, and facilitating chat interactions. The chat method is overloaded to handle different input types and can return responses in various formats, including strings and structured message objects. The agent can also update its answers based on user feedback and search results, check its confidence in responses, and scrape web content from search results.
 
-The BaseAgent is utilized by other classes, such as CriticAgent, which extends its capabilities to focus on generating critiques of responses. The CriticAgent leverages the functionalities provided by BaseAgent to manage conversations and interact with the language model, demonstrating the foundational role of BaseAgent in the overall architecture of the project.
+The class is utilized by other components in the project, such as the CriticAgent, which extends BaseAgent to focus on generating critiques of responses. The CriticAgent relies on the functionalities provided by BaseAgent to manage conversations and interact with the user. Additionally, the BaseAgent is called within the process_single_task function, which orchestrates the execution of tasks by coordinating interactions between multiple agents, including the search aggregator and verifier.
 
-**Note**: It is important to ensure that the templates used for rendering responses are correctly formatted and accessible, as the BaseAgent relies on these templates for generating dynamic content. Additionally, proper management of the conversation history and tool schemas is crucial for maintaining the integrity and efficiency of the agent's operations.
+**Note**: It is crucial to ensure that the tool registry is populated with the necessary schemas for the tools being used, as the functionality of the BaseAgent depends on these schemas. Proper handling of the conversation history and memoization is also important to maintain an efficient and coherent dialogue experience.
 
-**Output Example**: A possible appearance of the code's return value when rendering a template might look like this:
+**Output Example**: A possible appearance of the code's return value when executing a chat interaction might look like this:
 ```json
 {
-  "response": "Based on the search results, Google faced several challenges in 2019, including increased competition and regulatory scrutiny."
+  "response": {
+    "content": "The capital of France is Paris.",
+    "tool_calls": null
+  }
 }
 ```
 ### FunctionDef __init__(self)
-**__init__**: The function of __init__ is to initialize an instance of the BaseAgent class, setting up necessary directories, databases, and tools for the agent's operation.
+**__init__**: The function of __init__ is to initialize the BaseAgent class and set up its necessary components and attributes.
 
 **parameters**: The parameters of this Function.
-· None
+· No parameters are required for this function.
 
-**Code Description**: The __init__ method is the constructor for the BaseAgent class. It is responsible for initializing various components that the agent will use during its operation. 
+**Code Description**: The __init__ method of the BaseAgent class is responsible for setting up the initial state of an instance of the class. It begins by determining the directory of the current script using `os.path.dirname(os.path.abspath(__file__))`, which is essential for locating the prompts directory. The prompts directory is then constructed by joining the base directory with the "prompts" folder, allowing the agent to access necessary prompt files.
 
-1. **Directory Setup**: The method begins by determining the base directory of the current script using `os.path.dirname(os.path.abspath(__file__))`. This directory is essential for locating resources related to the agent, specifically the prompts directory, which is constructed by joining the base directory with the string "prompts".
+The method assigns the `settings` object to the `self.config` attribute, providing access to configuration settings throughout the class. It initializes `self.citationDB`, which is a list containing a dictionary that will store search queries and their corresponding results. This database is designed to hold only those search results that have received positive feedback from a critic, ensuring that only valuable information is retained.
 
-2. **Citation Database Initialization**: The `citationDB` attribute is initialized as a list containing a single dictionary. This dictionary is designed to store search queries as keys and their corresponding results as values. The comment indicates that only search results praised by a critic will be included in this database. Each entry in the citationDB is structured to hold a unique document identifier along with its associated metadata, such as URL, title, and content.
+Next, an instance of `SearchAggregator` is created and assigned to `self.search_aggregator`. This component is responsible for managing and aggregating search queries across multiple search engines, thus enhancing the agent's search capabilities. The method then retrieves or creates the tool schema for the search aggregator's search function using the `BaseAgent.tool_registry.get_or_create_tool_schema` method. This ensures that the necessary schema for the search functionality is available for use.
 
-3. **Search Aggregator Setup**: An instance of the `SearchAggregator` class is created and assigned to the `search_aggregator` attribute. This component is responsible for managing search queries across multiple search engines.
+Following this, an instance of `ContentScraper` is initialized and assigned to `self.content_scraper`. The content scraper is crucial for extracting content from URLs, which is a key part of the agent's functionality. Similar to the search aggregator, the method retrieves or creates the tool schema for the content scraper's scrape function, ensuring that the agent can effectively utilize this tool.
 
-4. **Tool Schema Creation**: The method retrieves or creates schemas for the search aggregator and content scraper tools using the `get_or_create_tool_schema` method from the `tool_registry`. This method ensures that the schemas for these tools are registered and available for use in the agent's operations. The schemas are stored in `search_aggregator_schema` and `content_scraper_schema` attributes, respectively.
+The available tools for the conversation manager are then updated to include the schemas for both the content scraper and the search aggregator. This integration allows the agent to utilize these tools during its operations, enhancing its ability to gather and process information.
 
-5. **Content Scraper Initialization**: An instance of the `ContentScraper` class is created and assigned to the `content_scraper` attribute. This component is responsible for scraping content from specified URLs.
+Finally, the method sets `self.repeat_turns` to 10, which likely indicates the number of times the agent will repeat certain actions or queries during its operation.
 
-6. **Updating Available Tools**: The method updates the `available_tools` attribute of the `conversation_manager` class variable in BaseAgent to include the schemas for both the content scraper and the search aggregator. This allows the agent to utilize these tools during interactions.
+Overall, the __init__ method establishes the foundational components of the BaseAgent, enabling it to perform searches, scrape content, and manage its interactions effectively.
 
-7. **Repeat Turns Configuration**: Finally, the `repeat_turns` attribute is initialized to 10, which likely indicates the number of times the agent can repeat a search or interaction before stopping.
-
-The __init__ method is crucial for setting up the BaseAgent instance with all necessary components and configurations, ensuring that it is ready to perform its intended functions effectively.
-
-**Note**: When using this method, it is important to ensure that the required directories and tools are correctly set up in the environment. Additionally, the proper functioning of the search aggregator and content scraper depends on the availability of their respective configurations and API keys.
+**Note**: When using the BaseAgent class, ensure that the necessary configurations are set up correctly, particularly the settings for the search engines and the content scraping service. The proper initialization of the search aggregator and content scraper is crucial for the agent's functionality.
 ***
-### FunctionDef load_template(self, filename)
+### FunctionDef load_template(self, filename, root_folder)
 **load_template**: The function of load_template is to load a template file from the prompts directory.
 
 **parameters**: The parameters of this Function.
-· filename: The name of the template file to load.
+· filename: The name of the template file to load.  
+· root_folder: An optional parameter that specifies a custom root folder from which to load the template file.
 
-**Code Description**: The load_template function is designed to retrieve the content of a specified template file from a predefined directory, referred to as prompts_dir. The function takes a single parameter, filename, which represents the name of the template file to be loaded.
+**Code Description**: The load_template function is a method within the BaseAgent class that is responsible for loading a specified template file from a designated directory. The function accepts two parameters: `filename`, which is the name of the template file to be loaded, and `root_folder`, which is an optional parameter that allows the caller to specify a different directory from which to load the file.
 
-The function constructs the full file path by joining the prompts_dir with the provided filename using the os.path.join method. It then checks if the constructed file path exists using os.path.exists. If the file does not exist, a FileNotFoundError is raised, providing a clear error message indicating that the specified template file could not be found in the prompts directory.
+When the function is invoked, it first checks if the `root_folder` parameter is provided. If it is, the function constructs the file path by joining the `root_folder` with the `filename`. If `root_folder` is not provided, it defaults to using the `prompts_dir` attribute of the BaseAgent instance to construct the file path.
 
-If the file exists, the function proceeds to open the file in read mode with UTF-8 encoding. It reads the content of the file and returns it as a string. This functionality is essential for the BaseAgent class, as it allows the agent to dynamically load templates that are used for generating prompts and responses in various interactions.
+The function then verifies the existence of the constructed file path using `os.path.exists()`. If the file does not exist, it raises a `FileNotFoundError`, providing a clear error message that indicates the missing template file. If the file exists, the function proceeds to open the file in read mode with UTF-8 encoding and returns its content as a string.
 
-The load_template function is called by several other methods within the BaseAgent class, including chat_with_template, chat_with_tools, and update_answer. These methods rely on load_template to fetch the appropriate template files needed for rendering prompts based on user queries and other contextual data. For example, in the chat_with_template method, load_template is used to retrieve the template specified by template_name, which is then rendered with the provided template_data to create a prompt for the chat model.
+The load_template function is called by several other methods within the BaseAgent class, such as `chat_with_template`, `chat_with_tools`, `update_answer`, and `model_confident`. Each of these methods relies on load_template to retrieve the appropriate template content necessary for generating prompts or responses. For instance, `chat_with_template` uses load_template to load a specified template file that will be rendered with user-provided data, while `update_answer` uses it to load a template that structures the agent's response based on user feedback and search results.
 
-**Note**: It is crucial to ensure that the filename passed to the load_template function corresponds to an existing template file in the prompts directory. Failure to do so will result in a FileNotFoundError, which will halt the execution of the calling function until the issue is resolved.
+**Note**: It is essential to ensure that the filename provided corresponds to an existing template file in the specified directory. If the file is not found, a FileNotFoundError will be raised, which must be handled appropriately by the calling functions to avoid runtime errors.
 
-**Output Example**: A possible return value from the load_template function could be a string containing the content of the template file, such as:
+**Output Example**: A possible return value from the load_template function could be a string containing the content of the loaded template, such as:
 ```
-"Hello, {{ user_name }}! How can I assist you today?"
+"Hello, {user_name}! How can I assist you today?"
 ```
 ***
 ### FunctionDef render_template(self, template_str, data)
@@ -83,198 +80,200 @@ The load_template function is called by several other methods within the BaseAge
 · template_str: Template content as a string.  
 · data: Dictionary of variables to replace in the template.  
 
-**Code Description**: The render_template function is designed to take a template string and a dictionary of data, and then produce a formatted string by replacing placeholders in the template with corresponding values from the data dictionary. It utilizes the Template class to create a template object from the provided template string. The method then calls the render function on this template object, unpacking the data dictionary to replace the placeholders with actual values.
+**Code Description**: The render_template function is a method within the BaseAgent class that facilitates the rendering of a template by substituting placeholders in the template string with actual values provided in a dictionary. This function takes two parameters: `template_str`, which contains the template content, and `data`, which is a dictionary mapping variable names to their corresponding values.
 
-This function is called by several other methods within the BaseAgent class, including chat_with_template, chat_with_tools, and update_answer. Each of these methods relies on render_template to generate a prompt that is sent to a conversational model. For instance, in chat_with_template, the method first loads a template based on the template_name provided, then uses render_template to format this template with the provided template_data before passing the rendered prompt to the common_chat method for interaction with the model. Similarly, chat_with_tools and update_answer also use render_template to prepare prompts that incorporate dynamic data, ensuring that the responses generated by the model are contextually relevant and tailored to the specific interaction.
+The function begins by creating a Template object from the provided `template_str`. It then calls the `render` method on this Template object, passing the unpacked `data` dictionary as keyword arguments. This process replaces any placeholders in the template with the values from the `data` dictionary, resulting in a fully rendered string that reflects the provided data.
 
-The render_template function is crucial for maintaining the flexibility and adaptability of the agent's responses, allowing it to generate contextually appropriate prompts based on varying inputs.
+The render_template function is called by several other methods within the BaseAgent class, including chat_with_template, chat_with_tools, update_answer, and model_confident. Each of these methods relies on render_template to generate contextually relevant prompts for interaction with a conversational model or to refine responses based on user queries and feedback.
 
-**Note**: It is essential to ensure that the template_str provided is correctly formatted and that the data dictionary contains all necessary keys corresponding to the placeholders in the template. Failure to do so may result in runtime errors during the rendering process.
+For instance, in the chat_with_template method, render_template is used to format the prompt that will be sent to the conversational model by replacing placeholders with actual data from the `template_data` dictionary. Similarly, in the update_answer method, render_template is employed to create a prompt that incorporates user feedback and search results, ensuring that the agent's response is informed and relevant.
 
-**Output Example**: A possible return value from the render_template function could be a string such as "Hello, John! Your balance is $100." if the template_str was "Hello, {name}! Your balance is ${balance}." and the data dictionary was {"name": "John", "balance": 100}.
+The render_template function is crucial for maintaining the dynamic nature of the agent's interactions, allowing for the generation of tailored prompts that enhance the quality and relevance of the responses provided by the conversational model.
+
+**Note**: It is essential to ensure that the `template_str` provided is a valid template and that the `data` dictionary contains all necessary keys corresponding to the placeholders in the template. Failure to do so may result in errors during the rendering process.
+
+**Output Example**: A possible return value from the render_template function could be a string such as:
+```
+"Hello, John! Your balance is $100."
+```
 ***
-### FunctionDef chat_with_template(self, template_name, template_data, model)
-**chat_with_template**: The function of chat_with_template is to provide a unified method for rendering templates and facilitating chat interactions with a conversational model.
+### FunctionDef chat_with_template(self, template_name, template_data, model, check_prompt, root_folder)
+**chat_with_template**: The function of chat_with_template is to provide a unified method for rendering templates and interacting with a conversational model.
 
 **parameters**: The parameters of this Function.
-· template_name: The name of the template file to be used for rendering the prompt.  
-· template_data: A dictionary containing the data that will be used to populate the template.  
-· model: An optional parameter that allows for overriding the default model used for the chat interaction.
+· template_name: The name of the template file to be loaded and rendered.  
+· template_data: A dictionary containing the data to be used for rendering the template.  
+· model: An optional parameter that allows for overriding the default model used for generating responses.  
+· check_prompt: A boolean flag indicating whether to log the full rendered prompt for debugging purposes.  
+· root_folder: An optional parameter specifying a custom root folder from which to load the template file.
 
-**Code Description**: The chat_with_template function is a method within the BaseAgent class that serves as a comprehensive utility for managing interactions with a conversational model through template rendering. This function first loads a specified template file using the load_template method, which retrieves the content of the template from a predefined directory. The template_name parameter is passed to load_template to identify the correct file.
+**Code Description**: The chat_with_template function is a method within the BaseAgent class designed to streamline the process of loading a template, rendering it with provided data, and then sending the rendered prompt to a conversational model for a response. 
 
-Once the template is loaded, the function utilizes the render_template method to format the template content by replacing placeholders with actual values from the template_data dictionary. This step is crucial as it ensures that the prompt sent to the conversational model is contextually relevant and tailored to the user's input.
+When invoked, the function first calls the load_template method to retrieve the specified template file. The template_name and root_folder parameters guide this loading process. Once the template is successfully loaded, the function utilizes the render_template method to format the template with the provided template_data, effectively replacing placeholders in the template with actual values.
 
-After rendering the prompt, chat_with_template calls the common_chat method, passing the rendered prompt along with the specified model (or the default model if none is provided). The common_chat method is responsible for sending the prompt to the conversational model and retrieving the generated response.
+If the check_prompt parameter is set to True, the function logs the fully rendered prompt using the log method from the RichPrinter class. This logging is beneficial for debugging and ensuring that the prompt sent to the model is as expected.
 
-The chat_with_template function is invoked in various contexts within the project, such as in the process_single_task function, where it is used to assess the confidence of the agent and to generate responses based on user queries. For example, it is called to create prompts for evaluating the agent's confidence level and for generating direct responses to user tasks. Additionally, it is utilized in the ReportVerifier class to verify questions against factual data, demonstrating its versatility and importance in ensuring accurate and context-aware interactions with the conversational model.
+Finally, the function calls the chat method to send the rendered prompt to the conversational model. It uses the model parameter to determine which model to utilize for generating the response, defaulting to the model specified in the settings if none is provided.
 
-**Note**: It is essential to ensure that the template_name provided corresponds to an existing template file in the prompts directory, and that the template_data dictionary contains all necessary keys for rendering. Failure to do so may result in errors during the template loading or rendering process.
+The chat_with_template function is called by various methods within the project, including method_choice, query_update, generate_seed, and gpt_search_generate_seed. Each of these methods relies on chat_with_template to generate contextually relevant prompts based on user input or other data, facilitating interactions with the conversational model. For instance, in the method_choice function, chat_with_template is used to determine the appropriate method for processing a question and answer pair, while in the query_update function, it generates prompts that incorporate search results and user feedback.
 
-**Output Example**: A possible return value from the chat_with_template function could be a string such as:
+**Note**: It is essential to ensure that the template_name corresponds to an existing template file in the specified directory. Additionally, the template_data dictionary must contain all necessary keys that match the placeholders in the template to avoid rendering errors.
+
+**Output Example**: A possible return value from the chat_with_template function could be a string containing the response from the conversational model, such as:
 ```
-"Hello, John! How can I assist you today?"
+"Based on the provided information, the recommended method is 'simple abstraction' with the following queries: [query1, query2]."
 ```
 ***
 ### FunctionDef chat_with_tools(self, template_name, template_data, tools, model)
-### `chat_with_tools` Method Documentation
+**chat_with_tools**: The function of chat_with_tools is to facilitate a conversation with tools by rendering a prompt template and interacting with a conversational model.
 
-#### Description
-The `chat_with_tools` method is a helper function within the `BaseAgent` class designed to facilitate communication with external tools during a conversation. This method is responsible for loading a template, rendering it with the provided data, and initiating a chat with specified tools using the rendered prompt. It abstracts the process of preparing a prompt from a template and interacting with the tools in a standardized manner.
+**parameters**: The parameters of this Function.
+· template_name: A string representing the name of the template to be loaded for rendering the prompt.  
+· template_data: A dictionary containing the data to be used for populating the template.  
+· tools: A list of tools that may assist in the chat interaction.  
+· model: An optional string specifying the model to be used for generating the response, defaulting to a predefined model if not provided.
 
-#### Parameters
-- **template_name** (`str`): The name of the template file to be loaded. This template defines the structure of the prompt to be used in the conversation.
-- **template_data** (`dict`): A dictionary containing the data that will be used to render the template. The dictionary's keys correspond to placeholders in the template, and the values are inserted into the template during the rendering process.
-- **tools** (`List`): A list of tools that will be used in the chat interaction. These tools may include models, external APIs, or other utilities that assist in processing the conversation.
-- **model** (`str`, optional): The model to be used for the chat interaction. If not provided, the method will default to using the model specified in the application's settings.
+**Code Description**: The chat_with_tools function is a method within the BaseAgent class that serves as a helper for engaging in conversations that utilize specific tools. The function begins by loading a template using the load_template method, which retrieves the content of the specified template file from the prompts directory. This is crucial as it allows for dynamic prompt generation based on the context provided by the template name.
 
-#### Return Type
-- **ChatCompletionMessage**: The method returns a `ChatCompletionMessage` object that represents the result of the chat interaction. This message encapsulates the response from the tools based on the rendered prompt.
+Once the template is loaded, the function proceeds to render the prompt using the render_template method. This method takes the loaded template content and substitutes placeholders with actual values from the template_data dictionary, resulting in a fully formatted prompt that is ready for interaction.
 
-#### Functionality Overview
-1. **Template Loading**: The method first loads the specified template using the `load_template` function. This function retrieves the content of the template file from a predefined directory.
-2. **Template Rendering**: After loading the template, it is rendered with the provided `template_data` using the `render_template` function. This process replaces placeholders in the template with actual data from the `template_data` dictionary.
-3. **Chat Interaction**: Finally, the rendered prompt is passed to the `common_chat` method along with the provided tools and model. The `common_chat` method handles the interaction with the tools, generating the response based on the prompt.
+After rendering the prompt, the function calls the chat method, passing the rendered prompt along with the tools and the specified model. The chat method is responsible for sending the prompt to the conversational model and generating a response based on the input. This interaction can leverage the tools provided to enhance the response generation process.
 
-#### Usage Example
-```python
-response = agent.chat_with_tools(
-    template_name="user_query_template.txt",
-    template_data={"user_name": "John", "query": "What is the weather like today?"},
-    tools=[weather_tool],
-    model="gpt-4"
-)
+The chat_with_tools function is integral to workflows that require interaction with a conversational model while utilizing external tools. It encapsulates the process of preparing a prompt and managing the conversation, ensuring that the agent can effectively communicate and respond to user queries.
+
+**Note**: It is essential to ensure that the template_name corresponds to an existing template file in the specified directory, and that the template_data dictionary contains all necessary keys for rendering the prompt. If the template file is not found, a FileNotFoundError will be raised. Additionally, the tools parameter should be defined appropriately to maximize the effectiveness of the chat interaction.
+
+**Output Example**: A possible return value from the chat_with_tools function could be a structured response from the conversational model, such as:
 ```
-
-#### Related Functions
-- **`load_template`**: Loads a template file based on the `template_name` provided.
-- **`render_template`**: Renders the template with the provided data, substituting placeholders with actual values.
-- **`common_chat`**: Handles the chat interaction with the specified tools and model, using the rendered prompt.
-
-#### Notes
-- Ensure that the template file specified in `template_name` exists in the appropriate directory, as the method will raise an error if the file cannot be found.
-- If no model is specified, the method will default to the model set in the application's settings.
+"Based on the information provided, here are the tools you can use to achieve your goal..."
+```
 ***
-### FunctionDef common_chat(self, usr_prompt, tools)
-**common_chat**: The function of common_chat is to facilitate communication with a conversational model by sending a user prompt and optionally utilizing specific tools.
+### FunctionDef chat(self, usr_prompt, tools)
+**chat**: The function of chat is to facilitate a conversation with a conversational model by sending a user prompt and optionally utilizing tools.
 
 **parameters**: The parameters of this Function.
-· usr_prompt: A list containing the prompt or message that the user wants to send to the conversational model.  
-· tools: An optional parameter that can be set to None or a list of tools that may be used during the chat interaction.
+· usr_prompt: A list containing the user's prompt that will be sent to the conversational model for processing.  
+· tools: An optional parameter that defaults to None, which can be a list of tools that may assist in the chat interaction.
 
-**Code Description**: The common_chat function is a method within the BaseAgent class designed to interact with a conversational model, processing user prompts and potentially utilizing additional tools to enhance the interaction. This function takes in a user prompt, which is expected to be a list, and an optional tools parameter that can specify any tools to be employed during the chat.
+**Code Description**: The chat function is a method within the BaseAgent class designed to manage interactions with a conversational model. It takes a user prompt as input and can optionally utilize tools to enhance the interaction. The function is expected to return a ChatCompletionMessage, which encapsulates the response generated by the model.
 
-The common_chat function is invoked by several other methods within the BaseAgent class, showcasing its central role in the communication process. For instance, the chat_with_template method utilizes common_chat to send a rendered prompt generated from a specified template and associated data. Similarly, the chat_with_tools method also calls common_chat, passing a rendered prompt along with a list of tools to facilitate a more enriched interaction.
+This function is integral to various workflows within the project, as it serves as the primary means of communication with the conversational model. For instance, it is invoked in the multi_verify method of the ReverseUpgradeWorkflow class, where it is used to validate whether a model can answer a given question. In this context, the chat function is called with a prompt that instructs the model to respond in a specific format, ensuring that the output is structured correctly for further processing.
 
-In the context of the update_answer function, common_chat is called to refine the agent's response based on new information and feedback. This highlights the function's importance in ensuring that the agent's replies are not only relevant but also informed by the latest data and user interactions.
+Additionally, the chat function is utilized in the evaluate function, where it generates responses based on questions extracted from a JSON file. This demonstrates its versatility in handling different types of prompts and contexts, allowing the agent to interact effectively with the model across various scenarios.
 
-The model_confident function also relies on common_chat to assess the confidence level of the model regarding a specific user query. By sending a rendered prompt that includes the user's question, common_chat helps determine whether the model is confident enough to provide a direct answer or if further actions are necessary.
+The chat function is also called in the generate_seed method, where it is used to obtain a unique seed fact that cannot be easily found through a simple search. This highlights its role in generating creative and contextually relevant content based on user-defined prompts.
 
-Furthermore, the web_scrape_results function employs common_chat to interact with a web scraper, sending a prompt that includes the user's question and initial search results. This demonstrates the versatility of common_chat in handling various types of interactions, from general conversation to specific tasks like web scraping.
+Overall, the chat function is a critical component of the BaseAgent class, enabling seamless communication with the conversational model and facilitating the execution of complex workflows that rely on dynamic interactions.
 
-Overall, common_chat serves as a fundamental method within the BaseAgent class, enabling seamless communication with the conversational model and supporting various functionalities that enhance the agent's capabilities.
-
-**Note**: It is essential to ensure that the usr_prompt parameter is well-formed and relevant to the context of the conversation. Additionally, the tools parameter should be appropriately defined if used, as it can influence the interaction with the model.
+**Note**: It is important to ensure that the usr_prompt parameter is well-formed and relevant to the context of the conversation. Additionally, if tools are provided, they should be compatible with the expected input and output of the chat function to avoid errors during execution.
 ***
-### FunctionDef common_chat(self, usr_prompt, tools)
-**common_chat**: The function of common_chat is to facilitate communication with a chat model by sending a user prompt and receiving a response.
+### FunctionDef chat(self, usr_prompt, tools)
+**chat**: The function of chat is to facilitate a conversation with a user by processing a prompt and utilizing specified tools to generate a response.
 
 **parameters**: The parameters of this Function.
-· usr_prompt: A string representing the prompt or message from the user that is to be sent to the chat model.  
-· tools: A list of tools that may be utilized during the chat interaction, which can enhance the model's response capabilities.
+· usr_prompt: A string representing the user's input prompt that needs to be processed.  
+· tools: A list of tools that may be utilized during the chat interaction to assist in generating the response.
 
-**Code Description**: The common_chat function is a core method within the BaseAgent class that serves as an interface for interacting with a chat model. It takes two parameters: `usr_prompt`, which is the input message from the user, and `tools`, which is an optional list of tools that can be employed to assist in generating a more informed response.
+**Code Description**: The chat function is a method within the BaseAgent class that serves as a primary interface for interacting with a conversational model. It takes two parameters: `usr_prompt`, which is the input prompt provided by the user, and `tools`, which is an optional list of tools that can be employed to enhance the response generation process.
 
-The function is designed to send the user prompt to the chat model and retrieve a response, encapsulating the interaction logic necessary for effective communication. This function is pivotal in various methods throughout the BaseAgent class, where it is invoked to handle user queries and generate responses based on templates and rendered prompts.
+The function begins by preparing the prompt for the conversational model. It may involve loading a specific template or formatting the input prompt to ensure it meets the requirements of the model. Once the prompt is ready, the function communicates with the conversational model, sending the prepared prompt along with any specified tools. The model processes the input and generates a response based on the context provided.
 
-For instance, the common_chat function is called within the chat_with_template method, where it receives a rendered prompt created from a specific template and associated data. This allows the agent to provide contextually relevant responses based on user input. Similarly, in the chat_with_tools method, common_chat is utilized to send a rendered prompt along with a list of tools, enabling the agent to leverage additional functionalities during the chat interaction.
+The chat function is invoked in various parts of the project, demonstrating its versatility and importance in facilitating user interactions. For instance, it is called within the `multi_verify` method of the ReverseUpgradeWorkflow class, where it is used to validate answers against a given question. In this context, the chat function processes prompts that include search results and user queries, allowing the model to generate responses that are relevant and contextually appropriate.
 
-Moreover, the common_chat function is also employed in other methods such as update_answer, model_confident, web_scrape_results, and search_and_browse, demonstrating its versatility and central role in the agent's operations. Each of these methods relies on common_chat to communicate with the chat model, ensuring that the agent can effectively process user queries, update responses based on new information, and interact with external tools.
+Additionally, the chat function is utilized in the `evaluate` function, where it is employed to assess the correctness of answers based on a set of predefined criteria. This highlights the function's role in ensuring that the conversational model can provide accurate and reliable responses based on user input and external data.
 
-**Note**: It is essential to ensure that the `usr_prompt` parameter is well-formed and relevant to the context of the conversation. Additionally, the `tools` parameter should be appropriately populated with valid tools to enhance the response generation process when applicable. Proper error handling should also be implemented to manage cases where the chat model does not return a valid response.
+Overall, the chat function is a critical component of the BaseAgent class, enabling seamless communication between the user and the conversational model while leveraging additional tools to enhance the quality of the interaction.
+
+**Note**: It is essential to ensure that the `usr_prompt` parameter is well-formed and relevant to the context of the conversation. The `tools` parameter should be appropriately defined to maximize the effectiveness of the chat interaction.
 ***
-### FunctionDef common_chat(self, usr_prompt, tools)
-**common_chat**: The function of common_chat is to facilitate communication with a conversational model by sending a user prompt and receiving a response.
+### FunctionDef chat(self, usr_prompt, tools)
+**chat**: The function of chat is to facilitate a conversation with a user by processing their input prompt and returning a response.
 
 **parameters**: The parameters of this Function.
-· usr_prompt: A string that represents the prompt or question provided by the user to the conversational model.  
-· tools: An optional parameter that can be used to specify any tools that may be required for the chat interaction. The default value is None.
+· usr_prompt: A string that represents the user's input prompt that needs to be processed.  
+· tools: An optional parameter that can be set to None, allowing for the inclusion of additional tools for the chat interaction.
 
-**Code Description**: The common_chat function is a method within the BaseAgent class that serves as a core component for interacting with a conversational model. This function takes a user-defined prompt (usr_prompt) and an optional tools parameter to facilitate the communication process. The primary role of common_chat is to send the rendered prompt to the model and retrieve the generated response.
+**Code Description**: The chat function is a method within the BaseAgent class that serves as a primary interface for interacting with a conversational model. The function takes in a user prompt (usr_prompt) and an optional tools parameter, which can be utilized to enhance the chat experience by integrating external functionalities.
 
-This function is called by several other methods within the BaseAgent class, including chat_with_template, chat_with_tools, update_answer, model_confident, web_scrape_results, and search_and_browse. Each of these methods utilizes common_chat to handle the interaction with the conversational model, ensuring that the prompts generated from various contexts are processed consistently.
+The function processes the usr_prompt by sending it to a conversational model, which generates a response based on the input. The tools parameter, if provided, allows the function to leverage additional capabilities or resources during the chat interaction. This flexibility enables the chat function to adapt to various contexts and requirements, enhancing the overall user experience.
 
-For instance, in the chat_with_template method, common_chat is invoked after rendering a template with specific data. The rendered prompt is passed to common_chat, which then communicates with the model to obtain a chat response. Similarly, in chat_with_tools, the rendered prompt is sent alongside any specified tools, allowing for a more dynamic interaction based on the user's needs.
+The chat function is invoked in several contexts throughout the project, demonstrating its versatility and importance in facilitating communication between the user and the intelligent agent. For instance, it is called within the multi_verify method of the ReverseUpgradeWorkflow class, where it is used to validate the model's ability to answer specific questions. The multi_verify method constructs a prompt based on the user's question and utilizes the chat function to assess the model's response, determining whether the model can provide an accurate answer.
 
-The update_answer method relies on common_chat to refine the agent's response by sending a newly constructed prompt that incorporates user feedback and search results. The model_confident method uses common_chat to assess the model's confidence level regarding a user query, while web_scrape_results and search_and_browse leverage common_chat to interact with the model for web scraping and searching tasks.
+Additionally, the chat function is employed in the evaluate function, where it is used to generate responses based on questions extracted from a JSON trace. This highlights the function's role in evaluating the performance of the conversational model against predefined ground truth answers.
 
-Overall, common_chat acts as a bridge between the user prompts generated by various methods and the conversational model, ensuring that the interaction is seamless and effective.
+In the context of the generate_seed method, the chat function is called to generate a unique seed question that cannot be easily answered through standard search queries. This showcases the function's capability to produce creative and contextually relevant responses based on user input.
 
-**Note**: It is important to ensure that the usr_prompt parameter is well-formed and relevant to the context of the conversation to receive an accurate response from the model. Additionally, the tools parameter should be used judiciously to enhance the functionality of the chat interaction when necessary.
+Overall, the chat function is a critical component of the BaseAgent class, enabling seamless interactions with the conversational model and supporting various functionalities across the project.
+
+**Note**: It is essential to ensure that the usr_prompt parameter is well-formed and relevant to the context of the conversation. The tools parameter should be used judiciously to enhance the chat experience without introducing unnecessary complexity.
 ***
-### FunctionDef common_chat(self, usr_prompt, tools, role, model)
-**common_chat**: The function of common_chat is to facilitate interaction with a language model by processing user prompts and returning generated responses.
+### FunctionDef chat(self, usr_prompt, tools, role, model)
+**chat**: The function of chat is to facilitate a conversation with a user by processing their prompt and generating a response using a language model.
 
 **parameters**: The parameters of this Function.
-· usr_prompt: A string or list representing the user's prompt to the model, which serves as the basis for generating a response.  
-· tools: An optional list of tools that the model can utilize during the interaction. If not provided, it defaults to None.  
-· role: A string indicating the role of the entity interacting with the model, defaulting to "assistant".  
+· usr_prompt: A string or list that contains the user's input prompt for the conversation. This can be a single string or a list of messages.
+· tools: An optional list of tools that may be utilized during the chat session to enhance the response.
+· role: A string indicating the role of the responding agent, defaulting to "assistant".
 · model: A string specifying the model to be used for generating the response, defaulting to the model defined in the settings.
 
-**Code Description**: The common_chat function is a method within the BaseAgent class that serves as a bridge for communication between the user and a language model. It begins by invoking the call_llm function, which interacts with the language model API to generate a response based on the provided user prompt (usr_prompt). The model parameter allows for flexibility in specifying which model to use, while the tools parameter enables the use of additional functionalities during the interaction.
+**Code Description**: The chat function is a method within the BaseAgent class that orchestrates the interaction between the user and a language model. It begins by calling the call_llm function, passing the necessary parameters such as the model, user prompt, configuration settings, and any tools that may be required. The call_llm function is responsible for communicating with the language model and generating a response based on the provided input.
 
-Upon receiving the response from the call_llm function, the common_chat function checks if any tools were specified. If tools are present, the function returns the model's response directly. If no tools are specified, it appends the model's response to the conversation history using the append_to_history method from the ConversationManager class. This method records the response along with the specified role, ensuring that the conversation flow is maintained.
+If the tools parameter is not None, the function directly returns the response generated by the language model without appending it to the conversation history. However, if tools are not provided, the function appends the generated response to the conversation history using the append_to_history method of the ConversationManager class. This method records the interaction by storing the role of the agent (in this case, "assistant") and the content of the response.
 
-The common_chat function is called by various methods within the BaseAgent class, such as chat_with_template and chat_with_tools. These methods utilize common_chat to handle user prompts that have been processed through templates or require the use of specific tools. Additionally, it is invoked in the update_answer and model_confident methods, where it plays a crucial role in refining the agent's responses based on user queries and feedback.
+The chat function is called in various contexts throughout the project, including the multi_verify function and the evaluate function. In these instances, it serves as a crucial component for generating responses based on user queries or for validating answers against expected outcomes.
 
-In summary, common_chat is essential for managing interactions with the language model, ensuring that user prompts are effectively processed and responses are accurately recorded in the conversation history. This functionality is vital for applications that rely on conversational agents, as it provides a structured approach to dialogue management.
+The call to the call_llm function is essential as it encapsulates the logic for interacting with the language model, while the append_to_history method ensures that the conversation flow is maintained by keeping a record of all interactions.
 
-**Note**: It is important to ensure that the usr_prompt parameter is well-formed and relevant to the context of the conversation. The tools parameter should only be used if supported by the model, and the role parameter should accurately reflect the entity's role in the conversation to avoid any inconsistencies.
+**Note**: It is important to ensure that the usr_prompt parameter is well-formed and relevant to the context of the conversation. Additionally, the tools parameter can enhance the functionality of the chat but is not mandatory for the basic operation of the function.
 
-**Output Example**: A possible return value from the common_chat function could be a string such as "The capital of France is Paris." This output reflects the model's generated response based on the user's prompt.
+**Output Example**: A possible return value from the chat function could be a string such as:
+"Hello! How can I assist you today?"
 ***
 ### FunctionDef update_answer(self, query, previous_answer, search_results, critic_feedback)
-**update_answer**: The function of update_answer is to refine the agent's response based on user feedback, previous answers, and search results.
+**update_answer**: The function of update_answer is to update the agent's response based on user feedback, previous answers, and search results.
 
 **parameters**: The parameters of this Function.
-· query: A string representing the user's current question or prompt that needs to be addressed.  
-· previous_answer: A string containing the agent's last response to the user's query, which serves as a reference for improvement.  
-· search_results: A string or structured data containing the results obtained from a search operation that may provide additional context or information relevant to the query.  
-· critic_feedback: A string containing feedback from a critic agent, which may include suggestions or evaluations of the previous answer.
+· query: A string representing the user's current question or task that needs to be addressed.  
+· previous_answer: A string containing the agent's last response to the user's query.  
+· search_results: A string or data structure that holds the results obtained from a search operation relevant to the query.  
+· critic_feedback: A string containing feedback from a CriticAgent that evaluates the previous answer and suggests improvements.
 
-**Code Description**: The update_answer function is a method within the BaseAgent class designed to enhance the quality of the agent's responses by integrating new information and feedback. This function takes four parameters: `query`, `previous_answer`, `search_results`, and `critic_feedback`. 
+**Code Description**: The update_answer function is a method within the BaseAgent class that facilitates the refinement of the agent's response to a user's query. This function takes four parameters: `query`, `previous_answer`, `search_results`, and `critic_feedback`, which collectively inform the agent's updated response.
 
-The function begins by organizing these parameters into a dictionary called `data`, which serves as a structured format for the information that will be utilized in generating a new response. The next step involves loading a template for the update process by calling the load_template method with the filename "agent_update_answer.txt". This template is crucial as it provides a predefined structure for the prompt that will be sent to the conversational model.
+Upon invocation, the function first constructs a dictionary named `data` that encapsulates the provided parameters. This dictionary serves as the basis for generating a structured prompt that the agent will use to interact with a conversational model.
 
-Once the template is loaded, the function renders it using the render_template method, passing in the `data` dictionary. This step replaces placeholders in the template with actual values from the provided parameters, creating a contextually relevant prompt.
+The function then calls the `load_template` method to retrieve a specific template file named "agent_update_answer.txt". This template is designed to format the prompt that will be sent to the conversational model. The `render_template` method is subsequently called with the loaded template and the `data` dictionary, which replaces placeholders in the template with actual values from the provided parameters. This results in a rendered prompt that is contextually relevant to the user's query and the agent's previous interactions.
 
-The rendered prompt is then sent to the common_chat method, which facilitates communication with the conversational model. This method processes the prompt and returns a response based on the updated context, effectively allowing the agent to generate a more informed and relevant answer.
+Next, the function utilizes the `chat` method to send the rendered prompt to the conversational model, which processes the input and generates a response based on the updated context. The response from the model is then returned as the output of the update_answer function.
 
-The update_answer function is called within the main function of the project, specifically during the iterative process of refining the agent's responses based on feedback from a critic agent. After the initial response is generated, the update_answer method is invoked to incorporate new search results and feedback, ensuring that the agent's final output is polished and aligned with user expectations.
+The update_answer function is called within the main function of the project, specifically during the iterative process of refining the agent's responses based on feedback from a CriticAgent. After the agent generates an initial answer, it receives feedback and may need to update its response accordingly. This iterative feedback loop is crucial for enhancing the quality and relevance of the agent's answers, ensuring that they align with user expectations and the latest information retrieved from searches.
 
-**Note**: It is important to ensure that the parameters passed to the update_answer function are well-formed and relevant to the context of the conversation. The effectiveness of the function relies on the quality of the previous answer, search results, and critic feedback provided.
+**Note**: It is essential to ensure that the parameters passed to the update_answer function are well-defined and relevant to the context of the conversation. The function relies on accurate and meaningful input to produce a refined response that effectively addresses the user's query.
 
-**Output Example**: A possible return value from the update_answer function could be a string such as "Based on the latest search results and your feedback, the updated answer is: The capital of France is Paris."
+**Output Example**: A possible return value from the update_answer function could be a string such as:
+```
+"Based on the latest search results and your feedback, here is the updated answer to your question: ..."
+```
 ***
 ### FunctionDef model_confident(self, query)
-**model_confident**: The function of model_confident is to check whether the model is confident in its response to the current user query.
+**model_confident**: The function of model_confident is to check whether the model is confident in answering the current query.
 
 **parameters**: The parameters of this Function.
-· query: A string representing the user's question that needs to be evaluated for the model's confidence.
+· query: A string representing the user's question or task that the agent needs to evaluate confidence for.
 
-**Code Description**: The model_confident function is a method within the BaseAgent class that assesses the confidence level of the model regarding a specific user query. It takes a single parameter, query, which is the user's question. The function begins by creating a data dictionary that includes the user's question under the key "user_question". 
+**Code Description**: The model_confident function is a method within the BaseAgent class that assesses the confidence level of the model in relation to a specific user query. When invoked, the function takes a single parameter, `query`, which is the user's input question. 
 
-Next, it calls the load_template method to retrieve a template from the prompts directory, specifically the "agent_confidence.txt" file. This template is used to formulate a prompt that will be sent to the conversational model. The rendered prompt is generated by passing the loaded template and the data dictionary to the render_template method, which replaces placeholders in the template with actual values from the data dictionary.
+The function begins by creating a dictionary named `data`, which contains the user's question under the key "user_question". This structured data is then used to prepare a prompt for the model. The function calls the load_template method to retrieve the content of a template file named "agent_confidence.txt". This template is designed to format the prompt that will be sent to the conversational model.
 
-Once the rendered prompt is prepared, the function invokes the common_chat method, passing the rendered prompt as the usr_prompt parameter. This method facilitates communication with the conversational model, sending the prompt and receiving a response that indicates the model's confidence level regarding the user's query.
+Once the template is loaded, the function utilizes the render_template method to substitute any placeholders in the template with the actual data from the `data` dictionary. This results in a fully rendered prompt that accurately reflects the user's question.
 
-The model_confident function is called within the main function of the project, specifically during the first iteration of a loop that processes user tasks. After initializing the task, the model_confident function is invoked to determine if the model is confident enough to provide a direct answer to the user's question. If the model indicates confidence, the common_chat method is called again to retrieve the answer. Conversely, if the model is not confident, the function initiates a search process to gather more information before attempting to answer the query.
+After rendering the prompt, the function calls the chat method, passing the rendered prompt as an argument. The chat method is responsible for sending the prompt to the conversational model and receiving the model's response. The response generated by the model indicates the level of confidence it has in answering the user's question.
 
-This function plays a critical role in ensuring that the agent only provides answers when it is confident in the information, thereby enhancing the reliability of the responses generated by the conversational model.
+The model_confident function is called within the main function of the project, specifically during the first iteration of the conversation process. In this context, it plays a crucial role in determining whether the agent should provide a direct answer to the user's question or initiate a search for additional information. If the model is confident, the agent proceeds to generate an answer directly; if not, it gathers more information to enhance the quality of its response.
 
-**Note**: It is essential to ensure that the query parameter passed to the model_confident function is well-formed and relevant to the context of the conversation. This will help in obtaining an accurate assessment of the model's confidence level.
+**Note**: It is essential to ensure that the query parameter is well-formed and relevant to the context of the conversation. The function relies on the existence of the template file "agent_confidence.txt" to generate the prompt, and any issues in loading this template may affect the function's ability to assess confidence accurately.
 
-**Output Example**: A possible return value from the model_confident function could be a string indicating the model's confidence level, such as:
+**Output Example**: A possible return value from the model_confident function could be a string indicating the confidence level, such as:
 ```
 "Confidence: true"
 ```
@@ -283,79 +282,69 @@ This function plays a critical role in ensuring that the agent only provides ans
 **web_scrape_results**: The function of web_scrape_results is to extract web content from search results using a web scraper.
 
 **parameters**: The parameters of this Function.
-· search_results: A string representing the initial search results to scrape from.
+· search_results: str - Initial search results to scrape from.
 
-**Code Description**: The web_scrape_results function is a method within the BaseAgent class that facilitates the extraction of web content based on initial search results provided as input. The function begins by loading a template for the web scraper using the load_template method, which retrieves the content of a specified template file from the prompts directory. This template is then rendered with the user question and the initial search results using the render_template method, which formats the template string by replacing placeholders with actual values from the provided data.
+**Code Description**: The web_scrape_results function is a method within the BaseAgent class that facilitates the extraction of web content based on provided search results. The function begins by loading a template for the web scraper from a file named "web_scraper.txt" using the load_template method. This template serves as a prompt for the web scraping operation.
 
-Following the preparation of the rendered prompt, the function interacts with a conversational model through the common_chat method, sending the rendered prompt along with any necessary tools defined in the content_scraper_schema. The response from this interaction is analyzed to determine if any tool calls were made. If no tool calls are present, the function returns the content of the response directly.
+Next, the function renders the loaded template by substituting placeholders with actual values, specifically the user question and the initial search results. This is achieved through the render_template method, which takes the template string and a dictionary containing the relevant data.
 
-In cases where tool calls are included in the response, the function appends these calls to the conversation history using the append_tool_call_to_history method. It then initializes an empty string to accumulate the final web scraping results. For each tool call, the function extracts the URLs from the arguments and invokes the content scraper's scrape method asynchronously to retrieve the content from the specified URLs. The results of these scraping operations are logged into the conversation history using the append_tool_call_result_to_history method.
+Following the preparation of the prompt, the function interacts with a conversational model via the chat method, sending the rendered prompt and specifying any tools that may assist in the scraping process. The response from this interaction is stored in the web_scraper_response variable.
 
-The web_scrape_results function is called within the search_and_browse method of the BaseAgent class, which orchestrates a two-step process of searching for information and subsequently scraping content based on the search results. This highlights the function's role in enhancing the agent's ability to provide accurate and relevant responses by leveraging real-time data from web sources.
-
-**Note**: It is essential to ensure that the search_results parameter is well-formed and contains relevant queries for the scraping process to function effectively. Additionally, proper error handling should be implemented to manage cases where the scraping operations do not yield results.
-
-**Output Example**: A possible return value from the web_scrape_results function could be a string formatted as follows:
-```
-"Here are the results from your search: 1. Title: Example Article, URL: http://example.com/article1, Content: This is a summary of the article. 2. Title: Another Example, URL: http://example.com/article2, Content: This is another summary."
-```
-***
-### FunctionDef search_and_browse(self, rendered_prompt)
-**search_and_browse**: The function of search_and_browse is to perform a search based on a user-provided prompt and subsequently scrape web content from the search results.
-
-**parameters**: The parameters of this Function.
-· rendered_prompt: A string that contains the user prompt formatted for the search operation.
-
-**Code Description**: The search_and_browse function is a method within the BaseAgent class that orchestrates a two-step process: first, it conducts a search using a conversational model based on the provided user prompt, and second, it scrapes web content from the results of that search. 
-
-The function begins by invoking the common_chat method, passing the rendered_prompt and a schema of tools (search_aggregator_schema) that may be utilized during the search interaction. The response from this method, search_with_tool_response, contains the results of the search operation.
-
-If the search_with_tool_response indicates that no tool calls were made (i.e., tool_calls is None), the function returns the content of the response directly. This allows for immediate feedback to the user without further processing.
+If the response indicates that no tool calls were made (i.e., tool_calls is None), the function returns the content of the response directly, indicating that scraping was either not necessary or could not be performed.
 
 In cases where tool calls are present, the function appends these calls to the conversation history using the append_tool_call_to_history method from the ConversationManager class. This ensures that all interactions with external tools are logged for future reference.
 
-The function then initializes an empty string, final_search_results, to accumulate the results from each tool call. It iterates through the tool calls, extracting the search query from the tool call's arguments. For each query, it invokes the search method from the SearchAggregator class asynchronously to perform the actual search. The results are awaited, and a brief sleep is introduced to manage rate limits.
+The function then initializes an empty string to accumulate the final web scraping results. It iterates through each tool call, extracting the URLs from the arguments of the tool call. For each set of URLs, it invokes the scrape method from the ContentScraper class asynchronously to perform the actual content scraping. The results from this scraping operation are logged into the conversation history using the append_tool_call_result_to_history method.
 
-After obtaining the search results, the function logs the results into the conversation history using the append_tool_call_result_to_history method. It also updates the query database with the executed query using the update method from the queryDB.
+Finally, the function concatenates all the scraped results and returns them as a single string. This structured approach allows the function to effectively gather and present web content based on user queries and search results, enhancing the overall response provided by the agent.
 
-Finally, the function compiles all the search results into the final_search_results string and returns the results after processing them through the web_scrape_results method. This method is responsible for extracting relevant web content based on the search results, enhancing the overall response provided to the user.
+The web_scrape_results function is called within the search_and_browse method, which orchestrates a two-step process: first performing a search based on user input and then scraping web content from the results of that search. This highlights the function's role in ensuring that the agent can provide accurate and relevant information by leveraging real-time data from web sources.
 
-The search_and_browse function is called within the process_single_task function, where it is utilized to refine the agent's responses based on user feedback and additional search queries. This highlights its role in ensuring that the agent can provide accurate and relevant information by leveraging real-time data from web sources.
+**Note**: It is essential to ensure that the search_results parameter is well-formed and contains valid data. Proper error handling should be implemented to manage cases where the scraping operation does not yield valid results.
 
-**Note**: It is important to ensure that the rendered_prompt parameter is well-formed and relevant to the context of the search. Proper error handling should be implemented to manage cases where the search operation does not yield valid results.
+**Output Example**: A possible return value from the web_scrape_results function could be a string formatted as follows:
+"Here are the scraped results: 1. Title: Latest Tech Innovations, Content: Discover the newest advancements in technology. 2. Title: AI in Healthcare, Content: Explore how AI is transforming the healthcare industry."
+***
+### FunctionDef search_and_browse(self, rendered_prompt)
+**search_and_browse**: The function of search_and_browse is to perform a search based on a user-provided prompt and retrieve relevant web content.
+
+**parameters**: The parameters of this Function.
+· rendered_prompt: str - A string containing the user prompt that will be sent to the conversational model for processing.
+
+**Code Description**: The search_and_browse function is a method within the BaseAgent class that orchestrates a two-step process: first, it interacts with a conversational model to initiate a search based on the provided user prompt, and second, it processes any tool calls generated during this interaction to gather additional information from the web.
+
+Upon invocation, the function begins by calling the chat method, passing the rendered_prompt and the search_aggregator_schema as tools. This interaction generates a response that may include tool calls for further actions. The response is logged for debugging purposes using the printer.log method.
+
+If the response contains no tool calls (i.e., tool_calls is None), the function immediately returns the content of the response, indicating that no further action is required. This allows for quick responses when the search does not necessitate additional processing.
+
+In cases where tool calls are present, the function appends these calls to the conversation history using the append_tool_call_to_history method from the ConversationManager class. This ensures that all interactions with external tools are logged for future reference.
+
+The function then initializes an empty string to accumulate the final search results. It iterates through each tool call, extracting the search query from the tool call's arguments. For each query, it invokes the search method from the search_aggregator, which performs the actual search operation asynchronously. The results are then logged into the conversation history using the append_tool_call_result_to_history method.
+
+Additionally, the function updates the query database with the executed query using the queryDB.update method. After processing all tool calls, the function concatenates the results and returns them by calling the web_scrape_results method, which further processes the gathered information to extract relevant web content.
+
+The search_and_browse function is called by various components within the project, including the generate_content_for_section function, which utilizes it to gather search results based on a specific section title. This highlights its role in enabling real-time search capabilities and content generation based on user queries.
+
+**Note**: It is essential to ensure that the rendered_prompt parameter is well-formed and relevant to the context of the search. Proper error handling should be implemented to manage scenarios where the search operation does not yield valid results.
 
 **Output Example**: A possible return value from the search_and_browse function could be a string formatted as follows:
-```
-"Here are the results from your search: 1. Title: Latest Tech Innovations, URL: http://example.com/latest-tech, Content: Discover the newest advancements in technology. 2. Title: AI in Healthcare, URL: http://example.com/ai-healthcare, Content: Explore how AI is transforming the healthcare industry."
-```
-***
-### FunctionDef receive_task(self, task)
-**receive_task**: The function of receive_task is to accept and store the original task provided to the agent.
-
-**parameters**: The parameters of this Function.
-· task: The original task that is being received and stored by the agent.
-
-**Code Description**: The receive_task function is a method defined within the BaseAgent class. Its primary purpose is to accept a task input, which is expected to be a string or a structured object representing the task details. Upon invocation, the function assigns the input task to the instance variable original_task, effectively storing it for later use within the agent's operations.
-
-This function plays a critical role in the workflow of the BaseAgent, as it serves as the initial point of interaction where the agent receives the task it needs to process. The stored task can later be utilized in various methods of the BaseAgent, such as when generating responses or conducting searches based on the task's requirements.
-
-The receive_task function is called by the CriticAgent within the process_single_task function located in the src/criticsearch/main.py file. In this context, the CriticAgent is responsible for evaluating the task and the responses generated by the common agent. By invoking receive_task, the CriticAgent ensures that it has access to the original task, which is essential for providing accurate feedback and evaluations based on the task's context.
-
-**Note**: It is important to ensure that the task parameter passed to receive_task is well-structured and relevant to the agent's capabilities, as this will directly influence the effectiveness of the agent's subsequent operations.
+"Here are the search results: 1. Title: Latest Innovations in AI, Content: Discover the advancements in artificial intelligence. 2. Title: The Future of Technology, Content: Explore the upcoming trends in technology."
 ***
 ### FunctionDef extract_and_validate_yaml(self, model_response)
-**extract_and_validate_yaml**: The function of extract_and_validate_yaml is to extract YAML content from a given string and validate its format.
+**extract_and_validate_yaml**: The function of extract_and_validate_yaml is to extract YAML content from a model response and validate its format.
 
 **parameters**: The parameters of this Function.
-· model_response: A string containing the response from a model, which is expected to include YAML content wrapped in specific delimiters.
+· model_response: A string containing the response from the model, which is expected to include YAML content wrapped in specific delimiters.
 
-**Code Description**: The extract_and_validate_yaml function is a method within the BaseAgent class that processes a string input, searching for YAML content encapsulated within triple backticks (```yaml```). The function utilizes regular expressions to identify and extract the relevant portion of the string. If the expected YAML content is not found, the function returns None, indicating a failure to extract valid content.
+**Code Description**: The extract_and_validate_yaml function is a method within the BaseAgent class that processes a string input, model_response, to extract and validate YAML content. It utilizes a regular expression to search for a specific pattern that indicates the presence of YAML content, which is expected to be enclosed within triple backticks and preceded by the keyword "yaml". If the pattern is not found, the function returns None, indicating that no valid YAML content was present in the input.
 
-Once the YAML content is extracted, the function attempts to parse it using the yaml.safe_load method. This method is designed to safely parse YAML strings into Python objects. If the parsing is successful, the function returns a formatted YAML string using yaml.dump, which can be utilized for further processing or output. However, if a yaml.YAMLError occurs during parsing, the function catches this exception, prints an error message indicating the invalid content, and returns None.
+Upon successfully finding a match, the function retrieves the matched YAML content, strips any leading or trailing whitespace, and attempts to parse it using the yaml.safe_load method. This method is part of the PyYAML library and is designed to safely parse YAML strings into Python objects. If the parsing is successful, the function then converts the parsed YAML back into a string format using yaml.dump, ensuring that the output is in a human-readable format with default flow style.
 
-The extract_and_validate_yaml function is called by other methods within the project, such as the critic method in the CriticAgent class. In this context, it is used to validate and extract YAML feedback from the model's response after generating a critique based on user input and agent responses. The successful extraction and validation of YAML content are crucial for the flow of information between the CriticAgent and the BaseAgent, as it directly influences the feedback mechanism and the overall interaction quality.
+In the event of a parsing error, the function catches the yaml.YAMLError exception, prints an error message indicating that the YAML content is invalid, and returns None. This error handling is crucial for maintaining the robustness of the application, as it prevents the propagation of malformed data.
 
-**Note**: It is essential to ensure that the model_response string contains valid YAML content wrapped in the correct delimiters. If the content is not valid YAML, the function will return None, which may disrupt the expected flow of the application.
+The extract_and_validate_yaml function is called by other methods within the project, such as the critic method in the CriticAgent class. In this context, it plays a vital role in processing the model's response after generating a critique based on the user's question and the agent's answer. The output of this function is essential for ensuring that the critique can be formatted and utilized effectively, as it provides structured feedback in YAML format that can influence subsequent actions in the application.
+
+**Note**: It is important to ensure that the model's response contains valid YAML content formatted correctly within the specified delimiters for the extract_and_validate_yaml method to function properly. If the content is not valid, the function will return None, which may disrupt the expected flow of the application.
 
 **Output Example**: A possible return value from the extract_and_validate_yaml function could be a YAML formatted string such as:
 
@@ -366,31 +355,102 @@ suggestions:
   - "Provide references to support claims."
 ```
 ***
-### FunctionDef extract_and_validate_json(self, model_response)
-**extract_and_validate_json**: The function of extract_and_validate_json is to extract JSON data from a given string and validate its correctness.
+### FunctionDef receive_task(self, task)
+**receive_task**: The function of receive_task is to receive and store the original task provided to the agent.
 
 **parameters**: The parameters of this Function.
-· model_response: A string that may contain JSON data, potentially wrapped in specific formatting.
+· task: A string representing the original task or question that the agent needs to process.
 
-**Code Description**: The extract_and_validate_json function is designed to process a string input, model_response, which is expected to contain JSON data. The function first attempts to locate JSON content that is enclosed within ```json``` code blocks using a regular expression. If such a block is found, it extracts the content and removes any leading or trailing whitespace. If no such block is found, it assumes that the entire input string is the JSON content and trims any whitespace accordingly.
+**Code Description**: The receive_task function is a method of the BaseAgent class, designed to accept a task input and store it as an instance variable. When this function is called, it takes the provided task string and assigns it to the instance variable `original_task`. This allows the agent to keep track of the task it is currently working on, which is essential for managing the agent's workflow and ensuring that the correct context is maintained throughout the processing of the task.
 
-Once the JSON content is identified, the function attempts to parse it using the json.loads method. If the parsing is successful, the parsed JSON object is returned. However, if a json.JSONDecodeError occurs during parsing, indicating that the content is not valid JSON, the function prints an error message detailing the issue and returns None.
+This function is called within the process_single_task function, which is responsible for executing a single task by coordinating interactions with various agents. In the context of process_single_task, the receive_task function is invoked immediately after initializing an instance of BaseAgent. By calling receive_task with the task parameter, the process_single_task function ensures that the agent has the necessary information to begin processing the task effectively.
 
-This function is called within the context of the BaseAgent class, specifically in methods such as process_single_task and main. In these methods, extract_and_validate_json is used to validate the structure of outlines generated from user queries or model responses. By ensuring that the outlines are valid JSON, the function plays a crucial role in maintaining the integrity of the data being processed, which is essential for subsequent operations such as flattening the outline and generating content for various sections.
+The relationship between receive_task and its caller, process_single_task, is crucial for the overall functionality of the task execution process. The receive_task method serves as the initial step in setting up the agent's context, allowing subsequent operations—such as confidence evaluation, information retrieval, and response generation—to be performed with the correct task information in mind.
 
-**Note**: It is important to ensure that the input string is formatted correctly to avoid JSON parsing errors. The function will return None if the input does not contain valid JSON, which should be handled appropriately by the calling functions to prevent further issues in the workflow.
+**Note**: It is important to ensure that the input task is clearly defined and relevant to the agent's capabilities, as this will directly impact the agent's ability to process the task effectively.
+***
+### FunctionDef extract_and_validate_json(self, model_response)
+### Function Documentation: `extract_and_validate_json`
 
-**Output Example**: A possible return value of the function could be a dictionary representing the parsed JSON, such as:
+#### **Function Name:**
+`extract_and_validate_json`
+
+#### **Class:**
+`BaseAgent`
+
+#### **Description:**
+The `extract_and_validate_json` function is responsible for extracting JSON data from a given model response. The response is expected to potentially contain a block of text wrapped in a ```json``` code block. The function attempts to locate this block, parse it as JSON, and return the parsed data. If no valid JSON block is found or if parsing fails, it returns `None` and prints an error message.
+
+#### **Parameters:**
+- `model_response` (`str`): A string containing the model's response, which may include a JSON block wrapped in triple backticks (```) for JSON. The function looks for this JSON block in the response and attempts to parse it.
+
+#### **Returns:**
+- `dict | None`: The function returns the parsed JSON data as a dictionary if the content inside the JSON block is valid JSON. If the JSON is invalid or no JSON block is found, it returns `None`.
+
+#### **Function Behavior:**
+1. **Extraction of JSON Block:**
+   The function uses a regular expression to search for a JSON block within the `model_response`. It looks for text wrapped in triple backticks followed by the keyword `json` (` ```json\n ... \n``` `). If a match is found, the content inside the block is extracted. If no match is found, the entire `model_response` is used as the JSON content.
+   
+2. **JSON Parsing:**
+   The extracted content is then stripped of any leading or trailing whitespace and passed to the `json.loads()` method to parse the string into a Python dictionary. The function handles potential parsing errors by catching `json.JSONDecodeError` exceptions.
+
+3. **Error Handling:**
+   If an error occurs during the JSON parsing process, an error message is printed indicating that the content is invalid JSON, and the function returns `None`.
+
+#### **Example Usage:**
+
+```python
+response = """
+Here is some text
+```json
 {
-    "sections": [
-        {
-            "title": "Introduction",
-            "content": "This is the introduction section."
-        },
-        {
-            "title": "Conclusion",
-            "content": "This is the conclusion section."
-        }
-    ]
+  "name": "John Doe",
+  "age": 30
 }
+```
+More text here.
+"""
+
+agent = BaseAgent()
+parsed_json = agent.extract_and_validate_json(response)
+if parsed_json:
+    print(parsed_json)
+else:
+    print("Failed to extract valid JSON.")
+```
+
+#### **Notes:**
+- The function uses Python’s built-in `re` (regular expression) module to locate the JSON block within the `model_response`.
+- If no JSON block is wrapped in triple backticks, the function assumes that the entire response is the intended JSON content and attempts to parse it directly.
+- In the case of a `json.JSONDecodeError`, the error message indicates the failure reason but does not interrupt the program's flow.
+
+#### **Error Handling:**
+The function prints the following message if JSON parsing fails:
+```
+Invalid JSON content: <error message>
+```
+***
+### FunctionDef taking_notes(self, web_results)
+**taking_notes**: The function of taking_notes is to extract information from search results and record it as notes.
+
+**parameters**: The parameters of this Function.
+· web_results: A string containing the search results from which notes will be extracted.
+
+**Code Description**: The taking_notes function is a method within the BaseAgent class that processes search results to extract and record relevant notes. It begins by invoking the chat_with_template method, which renders a template named "taking_notes.txt" using the provided web_results, the original task, and any previous notes stored in the agent's memo. This method facilitates interaction with a conversational model to generate a response based on the search results.
+
+The response from chat_with_template is then passed to the extract_notes function, which parses the response text to identify and extract notes formatted within specific tags. If the extracted notes are valid and non-empty, they are converted into a set to ensure uniqueness, effectively removing any duplicates. The new notes are then printed to the console using the printer's rule and print methods, enhancing the visibility of the newly added information.
+
+Subsequently, the unique notes are added to the agent's memo, which is a set designed to store all recorded notes. The function returns a list of the newly added notes. If no valid notes are found, a message indicating "No new notes." is printed, and an empty list is returned.
+
+The taking_notes function is called within the _action_router function and the process_single_task function. In both cases, it is used to record notes after conducting searches or web scraping activities. This integration highlights the function's role in maintaining an organized record of information that can be referenced in subsequent actions or decisions made by the agent.
+
+**Note**: It is crucial to ensure that the web_results parameter contains properly formatted data to facilitate accurate note extraction. The function relies on the correct implementation of the extract_notes function to validate and parse the notes effectively.
+
+**Output Example**: A possible return value from the taking_notes function could be a list of newly added notes, such as:
+```
+[
+    "Important information 1 with <citation>http://example1.com</citation>",
+    "Important information 2 with <citation>http://example2.com</citation>"
+]
+```
 ***

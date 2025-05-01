@@ -56,67 +56,73 @@ This constructor ensures that the `RichPrinter` class has the necessary setup fo
 **Note**: If a custom `Console` instance is passed, it will be used instead of the default one. Additionally, the default style settings can be overridden later in the class, but they serve as initial values for title and line separator styling.
 ***
 ### FunctionDef rule(self, title)
-**rule**: The function of rule is to create a formatted horizontal rule in the console output with a specified title.
+**rule**: The function of rule is to create a visual separator in the console output with a specified title.
 
 **parameters**: The parameters of this Function.
-· title: A string that represents the title to be displayed alongside the rule.
+· title: A string that represents the title to be displayed in the rule.
 
-**Code Description**: The rule function is a method defined within the RichPrinter class. Its primary purpose is to generate a visually distinct horizontal rule in the console output, which is useful for separating different sections of output for better readability. The function takes a single parameter, title, which is a string that specifies the text to be displayed as part of the rule. 
+**Code Description**: The rule function is a method of the RichPrinter class that utilizes the console's built-in functionality to generate a visually distinct horizontal line in the console output. This line serves as a separator, enhancing the readability of the output by clearly delineating different sections or important information.
 
-Internally, the function calls the console's rule method, passing a formatted string that combines a default title style with the provided title. The characters parameter is set to self.default_line_characters, which defaults to the '=' symbol, indicating that the horizontal rule will be represented by this character. This method enhances the visual structure of console output, making it easier for users to identify different sections of information.
+When the rule function is called, it takes a single parameter, title, which is a string. This title is formatted using a default style defined within the class, specifically `self.default_title_style`. The function then calls `self.console.rule`, passing the formatted title along with a character to be used for the line. By default, this character is set to `=`.
 
-The rule function is invoked in two different contexts within the project. First, it is called in the generate_content_for_section function, where it is used to indicate the generation of content for a specific section based on the title extracted from the section dictionary. This helps to clearly delineate the output related to that section.
+The rule function is invoked in several places within the project, particularly in the context of logging and displaying important stages or outputs during the execution of various workflows. For instance, it is called in the `call_llm`, `tavily_extract`, and `fallback_scrape` functions, among others. In these instances, the rule function is used to create headers for sections of output, such as "LLM Prompt", "Tavily Extract URLs", and "Fallback Scrape Results". This consistent use of the rule function helps maintain a structured and organized output format, making it easier for users to follow the flow of information.
 
-Second, it is also called in the process_single_task function, where it is used multiple times to indicate the start of iterations and to separate different outputs, such as the common agent's answer and the critic agent's response. This consistent use of the rule function throughout the codebase contributes to a well-organized and user-friendly console output.
-
-**Note**: When using the rule function, ensure that the title provided is meaningful and relevant to the context in which it is being used, as this will enhance the clarity of the console output.
+**Note**: When using the rule function, ensure that the title provided is concise and relevant to the content that follows. This will maximize the effectiveness of the visual separator in enhancing the clarity of the console output.
 ***
 ### FunctionDef log(self, message, style)
 **log**: The function of log is to print a styled log message to the console.
 
 **parameters**: The parameters of this Function.
-· message: str - The log message that will be printed to the console.
-· style: str (optional) - The style to be applied to the log message.
+· message: str - The message to be logged, which contains the content to be printed to the console.  
+· style: str (optional) - An optional parameter that specifies the style in which the message should be printed.
 
-**Code Description**: The log function is a method within the RichPrinter class that is responsible for outputting log messages to the console with optional styling. When invoked, it takes a string message as a mandatory parameter and an optional style parameter that specifies how the message should be formatted when displayed.
+**Code Description**: The log function is a method within the RichPrinter class that is designed to output log messages to the console with optional styling. The function takes two parameters: `message`, which is a string containing the content to be logged, and `style`, which is an optional string that defines the visual style of the output.
 
-The function utilizes the `self.console.log` method to print the message. This method is part of the Rich library, which allows for enhanced console output, including color and style formatting. The `style` parameter can be used to apply specific visual styles to the message, such as colors or bold formatting, enhancing the readability and visual appeal of the logs.
+When invoked, the log function calls `self.console.log(message, style=style)`, which utilizes the console's logging capabilities to print the message. The `style` parameter allows for customization of the message's appearance, enabling developers to highlight important information or differentiate between various types of log messages through color or formatting.
 
-The log function is called within other parts of the project, specifically in the `search_and_browse` method of the BaseAgent class and the `process_single_task` function in the main module. In `search_and_browse`, it is used to log the response from a search operation, providing visibility into the internal workings of the search process. In `process_single_task`, it logs the initiation of a conversation with a specific task, allowing developers to trace the flow of execution and understand the context of the operations being performed.
+The log function is called within various contexts in the project, notably in the `evaluate` function found in the abs_exp_1.py file. In this context, the log function is used to print formatted messages that indicate the current question being evaluated, the ground truth answer, and the model's predicted answer. This logging is crucial for tracking the evaluation process and understanding the performance of the model during assessments.
 
-By integrating the log function into these methods, the RichPrinter class plays a crucial role in maintaining a clear and informative logging system throughout the application. This logging capability is essential for debugging and monitoring the application's behavior, especially when dealing with asynchronous operations and complex workflows.
+Additionally, the log function is utilized in other parts of the project, such as within the `chat_with_template` function, where it logs the full rendered prompt when the `check_prompt` parameter is set to True. This feature aids in debugging by providing visibility into the prompts sent to the conversational model.
 
-**Note**: It is important to ensure that the message parameter is a well-formed string, and if a style is provided, it should be a valid style recognized by the Rich library. Proper usage of this function contributes to effective logging practices, aiding in the maintenance and troubleshooting of the application.
+Overall, the log function serves as an essential tool for maintaining transparency in the application's operations, allowing developers to monitor the flow of execution and capture important events or errors during runtime.
+
+**Note**: It is important to ensure that the `message` parameter is a well-formed string. The `style` parameter should be used judiciously to enhance readability without overwhelming the console output. Proper usage of this function contributes to effective logging practices within the application.
 ***
 ### FunctionDef print(self, message, style)
-**print**: The function of print is to output a message to the console with an optional styling.
+**print**: The function of print is to display a message to the console with an optional style.
 
 **parameters**: The parameters of this Function.
-· message: A string that contains the message to be printed to the console.
+· message: A string that contains the message to be printed.
 · style: An optional string that specifies the style in which the message should be printed.
 
-**Code Description**: The print function is designed to display a message on the console, utilizing the console's print method. It takes two parameters: 'message', which is a required string that represents the content to be printed, and 'style', which is an optional parameter that allows the user to specify a particular style for the output. If no style is provided, the message will be printed in the default format.
+**Code Description**: The print function is a method of the RichPrinter class, which is responsible for outputting messages to the console in a formatted manner. It takes two parameters: `message`, which is a string that represents the content to be displayed, and `style`, which is an optional parameter that allows the user to specify how the message should appear (for example, in bold or a specific color).
 
-This function is called within the context of other functions in the project, specifically in `generate_content_for_section` and `process_single_task`. In `generate_content_for_section`, the print function is used to output the generated content for a specific section, ensuring that the user is informed of the progress and results of the content generation process. Similarly, in `process_single_task`, the print function is employed to log various messages, including extracted thought processes, queries, and the final answers generated by the common agent. This highlights the function's role in providing feedback and information to the user throughout the execution of tasks.
+Internally, the function utilizes the `self.console.print()` method to render the message on the console. This method is part of the Rich library, which provides advanced formatting options for terminal output. If a style is provided, it is applied to the message, enhancing its visibility or aesthetic appeal.
 
-**Note**: It is important to ensure that the message parameter is always a string, as passing non-string types may lead to unexpected behavior. Additionally, when using the style parameter, users should be aware of the available styles supported by the console to achieve the desired output appearance.
+The print function is called in various parts of the codebase, particularly within the `call_llm`, `tavily_extract`, `fallback_scrape`, and other functions in the `src/criticsearch/abstract_substitution/abs_exp_1.py` file. For instance, in the `call_llm` function, the print method is used to display the prompt sent to the language model and the raw output received from it. This helps in debugging and understanding the flow of data through the application.
+
+In the context of the overall application, the print function serves as a crucial tool for logging and displaying information to the user, making it easier to track the progress of operations and the results of various tasks.
+
+**Note**: When using the print function, it is essential to ensure that the message is properly formatted and that the style, if used, is valid according to the Rich library's styling options. This will ensure that the output is both informative and visually appealing.
 ***
 ### FunctionDef print_exception(self, message, max_frames)
 **print_exception**: The function of print_exception is to log an error message and print the exception details to the console.
 
 **parameters**: The parameters of this Function.
-· message: str - The message to be logged, indicating the nature of the exception.
-· max_frames: int (optional) - The maximum number of stack frames to display when printing the exception details, defaulting to 5.
+· message: str - The message to be logged, which contains the content to be printed to the console.  
+· max_frames: int (optional) - The maximum number of stack frames to display when printing the exception, defaulting to 5.
 
-**Code Description**: The print_exception function is a method within the RichPrinter class that serves to handle and display exception information in a user-friendly manner. When invoked, it first logs the provided message using the log method, which formats the message in bold red style to draw attention to the error. This is achieved through the call to printer.log(f"{message}", style="bold red"). 
+**Code Description**: The print_exception method is a member of the RichPrinter class, designed to handle the logging and display of exception messages in a formatted manner. When invoked, it first calls the log method to print the provided message in bold red style, which serves to highlight the error and draw attention to it. This is particularly useful for debugging and monitoring purposes, as it allows developers to quickly identify issues within the application.
 
-Following the logging of the message, the function utilizes the self.console.print_exception method to print the actual exception details to the console. This method is part of the Rich library, which enhances console output by providing formatted and colored text. The max_frames parameter allows the user to control how many frames of the stack trace are displayed, with a default value of 5, which helps in limiting the amount of information shown while still providing enough context for debugging.
+Following the logging of the message, the method utilizes the console's print_exception functionality to display the exception details. The max_frames parameter controls how many frames of the stack trace are shown, allowing for a concise view of the error context without overwhelming the console output. By default, it limits the display to five frames, which is typically sufficient for diagnosing most issues.
 
-The print_exception function is called in the critic method of the CriticAgent class when an error occurs during the extraction and validation of YAML content. If the YAML extraction fails, the print_exception function is invoked with a specific message indicating the failure. This integration ensures that any issues encountered during the critique process are logged and displayed, allowing developers to trace errors effectively.
+The print_exception method is called in various contexts throughout the project, notably within the critic method of the CriticAgent class. In this context, it is used to log an error when the extraction and validation of YAML content from the model's response fails. This ensures that any issues encountered during the critique generation process are communicated clearly, allowing developers to address them promptly.
 
-By providing a clear logging mechanism and formatted output for exceptions, the print_exception function plays a crucial role in maintaining the robustness of the application. It aids in debugging by ensuring that error messages are visible and informative, thereby facilitating easier troubleshooting.
+Additionally, the print_exception method is invoked in the main function of the project when an exception occurs during the execution of the process_single_task function. This provides a mechanism for gracefully handling errors at the top level of the application, ensuring that users receive informative feedback when something goes wrong.
 
-**Note**: It is important to ensure that the message parameter is a well-formed string. The max_frames parameter should be set according to the level of detail required for debugging, keeping in mind that excessive stack trace information may clutter the console output. Proper usage of this function contributes to effective error handling practices within the application.
+The method is also referenced in the write method of the ConversationManager class, where it logs errors encountered during file writing operations. This consistent usage of print_exception across different parts of the codebase contributes to a robust error handling strategy, enhancing the overall reliability of the application.
+
+**Note**: It is important to ensure that the message parameter is a well-formed string. The max_frames parameter should be set according to the desired level of detail in the stack trace. Proper usage of this function aids in effective logging and debugging practices within the application.
 ***
 ### FunctionDef save_output_to_file(self, file_path)
 **save_output_to_file**: The function of save_output_to_file is to save the current console output to a specified file.

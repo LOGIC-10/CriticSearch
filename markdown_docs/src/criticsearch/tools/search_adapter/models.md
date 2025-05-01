@@ -121,78 +121,137 @@ CONTENT: Example content for result 2.
 ```
 ***
 ## ClassDef SearchResponseList
-### Class: `SearchResponseList`
+**SearchResponseList**: The `SearchResponseList` class is designed to encapsulate and manage a list of search responses, specifically handling the serialization and filtering of search results. It provides functionality to ensure unique content across multiple search responses while also allowing for the removal of irrelevant results, such as Wikipedia links.
 
-#### Overview:
-The `SearchResponseList` class is designed to represent a collection of `SearchResponse` objects. It provides functionality to serialize the list of search responses, ensuring unique content across all search queries by removing duplicates.
+### Detailed Analysis
+
+The `SearchResponseList` class inherits from `BaseModel`, indicating that it is part of a data model system that provides validation and serialization features, likely provided by frameworks such as Pydantic.
 
 #### Attributes:
-- **responses** (`List[SearchResponse]`): A list containing `SearchResponse` objects. Each `SearchResponse` encapsulates the results of a single search query, including the query string, a list of search results, and any error messages encountered during the search process. The list is initialized with an empty list by default.
+- **responses** (`List[SearchResponse]`): This attribute holds a list of `SearchResponse` objects. Each `SearchResponse` corresponds to a search query and contains the results or errors associated with that query.
 
 #### Methods:
-- **ser_model()** -> `str`:
-  The `ser_model` method serializes the list of `SearchResponse` objects into a string format. This method ensures that any duplicate content across the search results is removed. The serialization process proceeds as follows:
-  1. The method iterates over each `SearchResponse` in the `responses` list.
-  2. If the `SearchResponse` contains an error message, it logs the error and skips serialization for that particular response.
-  3. For each valid `SearchResponse`, the method checks for unique search results by comparing the `content` of each result to a global set of seen contents.
-  4. The results are filtered to retain only unique entries, and the count of unique results is updated.
-  5. After filtering, the method appends the serialized content of the `SearchResponse` to the result string.
-  6. A summary log is generated, indicating the total number of results, the number of unique results, and the number of duplicates removed.
-  
-  The method returns a formatted string containing the serialized results of the search responses.
 
-#### Example Usage:
-```python
-search_response_list = SearchResponseList(responses=[response1, response2])
-serialized_results = search_response_list.ser_model()
+1. **_is_wiki_url** (`url: str`) -> `bool`:  
+   This private method checks if a given URL belongs to a Wikipedia-related domain. It scans the URL for known Wikipedia-related domain names (e.g., "wikipedia.org", "wiki.", "fandom.com", etc.) and returns `True` if the URL matches any of these domains, and `False` otherwise. This method is used later in the class to filter out Wikipedia-related results from the search responses.
+
+2. **ser_model** () -> `str`:  
+   This method is responsible for serializing the search responses into a structured string format. It processes the list of `SearchResponse` objects, ensuring that only unique search results are included, while also filtering out Wikipedia-related URLs.  
+   
+   The serialization process involves the following key steps:
+   - **Global Deduplication**: The method maintains a `global_seen_contents` set to track and eliminate duplicate search results across all responses. If a result has already been encountered (based on its content), it is skipped.
+   - **Wiki Filtering**: The method calls `_is_wiki_url` to identify and exclude any search results that link to Wikipedia-related domains, effectively filtering out irrelevant results.
+   - **Error Handling**: If any search response contains an error message (i.e., `response.error_message` is not `None`), it is logged and skipped during serialization.
+   - **Result Counting**: The method also keeps track of the total number of results, the number of unique results, and the number of filtered Wikipedia results.
+   - **Final Serialization**: Once the filtering and deduplication processes are complete, the method constructs a serialized string by calling `model_dump()` on each `SearchResponse` object. This method is assumed to generate a string representation of the `SearchResponse` in a standardized format.
+   
+   At the end of the process, the method logs important statistics, including the total number of results, the number of unique results, the number of duplicates removed, and the number of Wikipedia links filtered. This information is logged using the `printer.log` method, which is likely a utility for logging output messages.
+
+   The final result of the method is a string representation of the serialized search responses.
+
+#### Usage Context:
+
+The `SearchResponseList` class is primarily used in the `search` method of the `SearchAggregator` class. This method performs concurrent searches using multiple search engines and aggregates the results into a `SearchResponseList` object. Once all search tasks are completed, the method calls `SearchResponseList.ser_model()` to serialize the results into a structured string.
+
+The serialized string is returned as the output of the `search` method. This output provides a clear, formatted representation of the search results, which can be used for further processing or presentation.
+
+### Key Notes:
+- The `responses` attribute must be a list of valid `SearchResponse` objects. Each `SearchResponse` should contain a properly formatted search query, a list of `SearchResult` objects, and optionally, an error message.
+- The `ser_model` method performs global deduplication and wiki filtering, which is crucial for ensuring that the final output contains only unique and relevant search results.
+- The `ser_model` method logs important statistics about the filtering process, which helps in tracking the effectiveness of deduplication and filtering steps.
+- The class depends on the `SearchResponse` class for individual search query responses and the `SearchResult` class for individual search results. Proper handling of these classes is essential for the correct functioning of `SearchResponseList`.
+
+### Example Output:
+The `ser_model` method might return a serialized string like this:
+```json
+{
+  "responses": [
+    {
+      "query": "latest technology news",
+      "results": [
+        {
+          "title": "Tech Innovations",
+          "url": "https://example.com/tech-innovations",
+          "content": "Explore the latest in technology."
+        },
+        {
+          "title": "Gadget Reviews",
+          "url": "https://example.com/gadget-reviews",
+          "content": "Read reviews on the newest gadgets."
+        }
+      ],
+      "error_message": null
+    }
+  ]
+}
 ```
-
-#### Notes:
-- The `responses` attribute must be populated with instances of the `SearchResponse` class.
-- The method `ser_model` performs de-duplication across all responses and presents the results in a human-readable format.
-- If any `SearchResponse` contains an error message, it will be skipped during serialization, ensuring that the final output only contains valid data.
-### FunctionDef ser_model(self)
-**ser_model**: The function of ser_model is to serialize a list of SearchResponse objects into a formatted string, ensuring unique content across different queries.
+This serialized output represents a list of search responses, each containing the query, the list of unique results, and any associated error messages.
+### FunctionDef _is_wiki_url(self, url)
+**_is_wiki_url**: The function of _is_wiki_url is to check if a given URL belongs to Wikipedia or related wiki sites.
 
 **parameters**: The parameters of this Function.
-- None
+· url: str - The URL string that needs to be checked for its affiliation with wiki-related domains.
 
-**Code Description**:  
-The `ser_model` method is designed to process a list of `SearchResponse` objects and serialize the relevant data into a string representation. The method ensures that content within the search responses is unique across all queries by removing duplicate results based on their content.
+**Code Description**: The _is_wiki_url method is designed to determine whether a specified URL is associated with Wikipedia or other wiki-related websites. It achieves this by checking the provided URL against a predefined list of wiki domains. The method converts the URL to lowercase to ensure that the comparison is case-insensitive. 
 
-1. **Global Deduplication Logic**:  
-   The function initializes a set called `global_seen_contents` to store content that has already been encountered. This set helps track which results have been seen across all queries, ensuring that duplicates are eliminated.
+The method utilizes a list called `wiki_domains`, which contains the following entries:
+- "wikipedia.org"
+- "wiki."
+- "fandom.com"
+- "wikimedia.org"
+- "wiktionary.org"
 
-2. **Processing Search Responses**:  
-   The method then iterates over each `response` in the `self.responses` list. If a response contains an `error_message`, it is skipped, and a log message is generated using the `printer.log` method to notify that the response was ignored due to an error. This ensures that only valid responses are processed.
+The core functionality of the method is implemented using a generator expression within the `any()` function. This expression iterates over each domain in the `wiki_domains` list and checks if any of these domains are present in the lowercase version of the provided URL. If at least one domain is found, the method returns `True`, indicating that the URL is indeed a wiki-related URL. If none of the domains match, it returns `False`.
 
-3. **Result Deduplication**:  
-   For each valid response, the method further iterates over the `results` in the response. It checks whether the `content` of each result has already been encountered by comparing it against the `global_seen_contents` set. If a result's content is unique, it is added to the list `unique_results`, and its content is stored in the set to prevent future duplicates. The method keeps track of both the total number of results and the number of unique results.
+This method is called within the `ser_model` function of the `SearchResponseList` class. In that context, it is used to filter out search results that link to wiki pages before performing serialization. Specifically, when processing each search response, the `ser_model` function checks each result's URL using the `_is_wiki_url` method. If the URL is identified as a wiki URL, that result is skipped, ensuring that only non-wiki content is included in the final serialized output. This filtering is crucial for maintaining the relevance and uniqueness of the search results being processed.
 
-4. **Updating the Response**:  
-   Once duplicates are removed, the `results` of the current `response` are updated to include only the unique results. The count of unique results is then updated.
+**Note**: It is important to ensure that the input URL is a valid string format. The method does not handle exceptions or errors related to malformed URLs; it simply checks for the presence of specified domains.
 
-5. **Result Serialization**:  
-   After processing all responses, the `model_dump` method is called on each `response` to obtain a serialized string representation of the response, which is concatenated into the `result_str` variable.
+**Output Example**: 
+For a URL input such as "https://en.wikipedia.org/wiki/Python_(programming_language)", the method would return `True`, while for "https://www.example.com", it would return `False`.
+***
+### FunctionDef ser_model(self)
+**ser_model**: The function of ser_model is to serialize a list of SearchResponse objects into a formatted string representation, ensuring unique content across queries.
 
-6. **Logging the Summary**:  
-   After completing the serialization process, a log message is printed using the `printer.log` method to summarize the operation. The message includes the total number of results, the number of unique results, and the number of duplicates removed.
+**parameters**: The parameters of this Function.
+· None
 
-7. **Return Value**:  
-   The method returns the concatenated string (`result_str`) representing all serialized and deduplicated search responses.
+**Code Description**: 
+The `ser_model` function is a method designed to process and serialize a collection of `SearchResponse` objects, ensuring that the serialized output contains only unique content across all queries. The function operates in the following steps:
 
-**Note**:  
-- The `model_dump` method is assumed to serialize each response object into a string format, and the exact format depends on its implementation.
-- The `printer.log` function is used for logging, which formats the messages in a styled manner to enhance readability in the console output.
-- It is important to ensure that all responses in `self.responses` are well-formed and contain the expected attributes, especially `error_message` and `results`. This method does not handle any unexpected data formats or missing attributes.
+1. **Initialization**: 
+   - A `global_seen_contents` set is created to track the content that has already been processed, ensuring uniqueness. This set will hold the content of search results, preventing duplicates.
+   - Counters such as `total_results`, `unique_results_count`, and `filtered_wiki_count` are initialized to track the number of total search results, unique results, and results filtered out due to being wiki-related content.
 
-**Output Example**:  
-Assuming a scenario where there are two search responses with some duplicate content, the output might look like:
+2. **Processing Each Response**: 
+   - The method iterates over the `responses` list, which contains the search results of a query. For each response, it checks if an error message is present. If an error exists, it logs the issue using the `printer.log` method and skips further processing for that particular response.
+   - If no error is present, it proceeds to process each result in the `response.results` list.
+
+3. **Filtering and Deduplication**: 
+   - For each search result (`res`), the method checks if the URL corresponds to a wiki-related page using the `_is_wiki_url` method. If the result is a wiki URL, it is skipped, and the `filtered_wiki_count` is incremented.
+   - For non-wiki results, the function checks if the result's content has been encountered previously (via the `global_seen_contents` set). If the content is unique (not found in the set), it is added to the set and appended to the list of `unique_results`.
+
+4. **Serialization**: 
+   - After processing all results for a given response, the filtered and unique results are stored back in the response's `results` list.
+   - The method then increments the `unique_results_count` by the number of unique results found and appends the serialized output of the current response (using `response.model_dump()`) to the `result_str`.
+
+5. **Logging and Summary**: 
+   - After all responses have been processed, a summary of the serialization process is logged using `printer.log`. This summary includes the total number of results processed, the number of unique results, the number of duplicates removed, and the number of wiki pages filtered.
+
+6. **Return Value**: 
+   - The method returns a concatenated string (`result_str`), which contains the serialized representation of all the processed and filtered search results.
+
+**Note**: 
+- It is important to note that the method relies on the `_is_wiki_url` method for filtering out wiki-related content. This filtering ensures that only non-wiki content is included in the final serialized output.
+- The `printer.log` function is used to provide logs regarding the serialization process, including skipped queries due to errors and a summary of the results after serialization.
+- The method does not perform any error handling for potential issues in the `response.model_dump()` function, assuming that the response objects are properly structured and serializable.
+
+**Output Example**:
+An example of the serialized string returned by the method could look like this:
 
 ```
-Serialization completed. Total results: 10, Unique results: 7, Duplicates removed: 3.
-<Serialized String of the Responses>
+"Response 1 serialized data... Response 2 serialized data... Response 3 serialized data..."
 ```
 
-The string returned would contain the serialized representations of the unique search responses, with any duplicates removed based on the content comparison.
+This string will include the serialized data of each `SearchResponse` object, formatted according to the `model_dump()` method of the respective `SearchResponse`.
 ***

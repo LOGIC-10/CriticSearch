@@ -45,24 +45,22 @@ A possible return value from the `scrape` method could be a serialized list of `
 }
 ```
 ### FunctionDef scrape(urls)
-**scrape**: The function of scrape is to asynchronously scrape content from a list of provided URLs, utilizing the Tavily API for extraction and falling back to a web scraping method if necessary.
+**scrape**: The function of scrape is to scrape content using the provided URLs.
 
 **parameters**: The parameters of this Function.
 · urls: List[str] - A list of URLs to scrape content from.
 
-**Code Description**: The `scrape` function is an asynchronous method designed to extract content from a list of URLs. It begins by initializing an instance of the `TavilyExtract` class using an API key sourced from the application settings. This instance is responsible for interacting with the Tavily API to retrieve content.
+**Code Description**: The `scrape` function is an asynchronous method designed to extract content from a list of URLs. It begins by retrieving the API key from the settings and initializing an instance of the `TavilyExtract` class, which is responsible for interacting with the Tavily API. The function then attempts to extract content using the `extract_content` method of the `TavilyExtract` instance, passing the provided URLs.
 
-The function then calls the `extract_content` method of the `TavilyExtract` instance, passing the provided list of URLs. This method sends a POST request to the Tavily API, which returns a structured response containing either the extracted content or error details.
+Upon receiving the results from the Tavily API, the function checks for any errors indicated in the response. If an error is detected, it logs the error message using the `log` method from the `RichPrinter` class, indicating that the Tavily API extraction has failed and that the function will fall back to a secondary scraping method. In this case, it invokes the `scrape` method of the `FallbackWebScraper` class to handle the URLs that failed during the Tavily extraction.
 
-Upon receiving the results from the Tavily API, the function checks for any errors indicated in the response. If an error is present, it logs the error message using the `log` method from the `RichPrinter` class, indicating that the Tavily API extraction has failed. In this case, the function falls back to the `FallbackWebScraper` class, invoking its `scrape` method to attempt content extraction from the original list of URLs.
+If the Tavily API returns successful results, the function processes these results by extracting the necessary data, such as the URL and raw content, and constructs `ScrapedData` objects for each successful extraction. It also checks for any failed results from the Tavily API and logs them, subsequently attempting to scrape the failed URLs using the fallback method.
 
-If the Tavily API returns successful results, the function processes these results by iterating through the list of extracted data. For each successful extraction, it creates a `ScrapedData` object, which encapsulates the URL and the raw content retrieved. The function also checks for any failed results returned by the Tavily API. If there are failed results, it logs a warning message and attempts to scrape content from the failed URLs using the `FallbackWebScraper`.
+Finally, the function aggregates both successful and failed results into a `ScrapedDataList` object, which is returned after being serialized through the `model_dump` method. This structured approach ensures that the function can handle both successful and unsuccessful scraping attempts, providing a comprehensive output of the scraping operation.
 
-Finally, the function aggregates both successful and failed results into a `ScrapedDataList` object, which is returned after being serialized. This structured approach ensures that the function handles both successful and failed scraping attempts effectively, providing a comprehensive output that includes all relevant data.
+The `scrape` function is called by the `web_scrape_results` method within the `BaseAgent` class, which orchestrates the process of searching for information and subsequently scraping content based on the search results. This highlights the function's role in enhancing the agent's ability to provide accurate and relevant responses by leveraging real-time data from web sources.
 
-The `scrape` function is called within the `web_scrape_results` method of the `BaseAgent` class. This method orchestrates the overall scraping process by rendering a prompt and interacting with the model. It collects the URLs from the tool calls and invokes the `scrape` function to retrieve content, ensuring that the agent can effectively extract information from web sources.
-
-**Note**: When using this function, ensure that the URLs provided are valid and accessible. Additionally, be aware of the legal and ethical considerations surrounding web scraping, including compliance with the target website's terms of service.
+**Note**: When using this function, ensure that the URLs provided are valid and accessible. Additionally, proper error handling is implemented to manage cases where the scraping operations do not yield results.
 
 **Output Example**: A possible appearance of the code's return value could be:
 ```

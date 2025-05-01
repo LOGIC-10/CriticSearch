@@ -420,35 +420,29 @@ The function will return a document structure like this:
 #### Usage:
 The `parse_markdown_to_structure` function is typically used when there's a need to convert a markdown document into a structured format, such as when processing or analyzing documents with hierarchical content. The parsed structure can be used for further processing, such as generating reports or extracting specific information from different sections.
 ## FunctionDef main(TASK, MAX_ITERATION)
-**main**: The function of main is to orchestrate the conversation process between a user and an intelligent agent, managing iterations of task execution and response refinement.
+**main**: The function of main is to orchestrate the conversation process between a user and an intelligent agent, managing iterations of response generation, feedback, and content refinement.
 
 **parameters**: The parameters of this Function.
-· TASK: A string representing the user's question or task that the agent is expected to address.
-· MAX_ITERATION: An integer indicating the maximum number of iterations the agent should perform to refine its response.
+· TASK: A string representing the user's question or task that the agent needs to address.  
+· MAX_ITERATION: An integer specifying the maximum number of iterations for refining the agent's response.
 
-**Code Description**: The main function serves as the entry point for executing the conversation logic of an intelligent agent. It begins by initializing a common agent instance of the BaseAgent class, which is responsible for handling user interactions, managing conversation history, and integrating various tools for search and content generation.
+**Code Description**: The main function serves as the central control point for the interaction between the user and the intelligent agent. It begins by initializing a common agent instance of the BaseAgent class and setting the user's question as the task. The function sets the logging level based on the configuration and logs the start of the conversation.
 
-The function sets the user question for the agent by assigning the TASK parameter to the agent's user_question attribute. It also configures the logging level based on the settings defined in the project, ensuring that relevant messages are logged throughout the execution.
+The conversation history is updated to include the user's initial question. The function then enters a loop that iterates up to the specified maximum number of iterations. During each iteration, it performs several key actions:
 
-The conversation process is structured around a loop that iterates up to MAX_ITERATION times. During each iteration, the function performs several key operations:
+1. **Initial Setup**: On the first iteration, it checks the agent's confidence in answering the task. If the agent is confident, it generates a direct answer. If not, it performs a search to gather information, constructs a report outline, and generates content for each section in parallel using threading.
 
-1. It checks the agent's confidence in its response to the TASK. If the agent is confident, it retrieves an answer directly using the common_chat method. If not, it initiates a search process to gather more information.
+2. **Content Generation**: The content for each section is generated based on search results, and the responses are collected. The generated content is then polished to create a final report, which is saved in Markdown format.
 
-2. In the first iteration, if the agent is not confident, it constructs a search prompt and retrieves initial search results. These results are used to generate an outline for the report, which is then flattened into a list of sections for parallel content generation.
+3. **Feedback Loop**: After generating the initial response, the function evaluates the answer using a CriticAgent. The CriticAgent provides feedback, which may lead to further iterations of content refinement. If the feedback indicates that the process should stop, the function logs the total iterations and returns the final answer.
 
-3. The function employs a ThreadPoolExecutor to generate content for each section concurrently, enhancing efficiency. Each section's content is generated based on the search results and the TASK context.
+4. **Subsequent Iterations**: For iterations beyond the first, the function updates the answer based on the previous response and the latest search results, incorporating feedback from the CriticAgent. It continues to refine the answer until the maximum number of iterations is reached or a stopping condition is met.
 
-4. After generating content for all sections, the function reconstructs the final Markdown document using the reconstructed_markdown function, which combines the outline structure with the generated content.
+The main function integrates various components of the project, including the BaseAgent for generating responses, the CriticAgent for evaluating those responses, and utility functions for content generation and Markdown reconstruction. This orchestration ensures a dynamic and iterative process that enhances the quality of the agent's responses through continuous feedback and refinement.
 
-5. The generated report is then polished and saved to a Markdown file. Additionally, the document structure is parsed and saved in JSON format for further use.
+**Note**: It is essential to ensure that the TASK parameter is well-defined and relevant to the agent's capabilities. The MAX_ITERATION parameter should be set appropriately to balance between thoroughness and efficiency in response generation.
 
-6. In subsequent iterations, the agent updates its answer based on feedback from a CriticAgent, which evaluates the agent's responses and provides suggestions for improvement. The process continues until either the maximum number of iterations is reached or the CriticAgent indicates that the conversation should stop.
-
-The main function effectively coordinates the interaction between the user, the intelligent agent, and the CriticAgent, ensuring that responses are refined based on real-time feedback and additional information gathered through searches.
-
-**Note**: It is crucial to ensure that the TASK parameter is well-defined and relevant to the agent's capabilities. The MAX_ITERATION parameter should be set appropriately to balance the need for thoroughness with the efficiency of the conversation process.
-
-**Output Example**: A possible return value from the main function could be a string summarizing the final answer provided by the agent, such as:
+**Output Example**: A possible appearance of the code's return value when executing the main function might look like this:
 ```
-"The comprehensive report on climate change highlights the significant impacts observed globally, including rising temperatures and extreme weather events."
+"Based on the gathered information and feedback, here is the final answer to your question: ..."
 ```

@@ -30,79 +30,278 @@ For example, when calling `count_tokens("Hello, world!")`, the function will ret
 4
 ```
 ## FunctionDef extract_queries_from_response(response_text)
-## `extract_queries_from_response` Function
+## `extract_queries_from_response` Function Documentation
 
-### Description
-The `extract_queries_from_response` function is designed to extract a list of queries from a given response text. The function supports multiple formats for the input text and processes them to return a list of queries. If no valid queries are found, the function returns an empty list.
-
-### Parameters
-- **response_text** (`str`): The input response text containing potential query information. The response text can be in one of the following formats:
-  - `<queries>[query1, query2]</queries>`
-  - `<queries>List[str] = [query1, query2]</queries>`
-  - `<queries> [query1, query2] </queries>`
-
-### Returns
-- **list**: A list of extracted queries. If no queries are found, an empty list is returned.
-
-### Functionality
-1. The function first strips any leading or trailing whitespace from the input `response_text`.
-2. It then attempts to match the text against two possible patterns:
-   - The first pattern matches a format where queries are wrapped in a `List[str] = [...]` structure.
-   - The second pattern matches the standard array-like format `[query1, query2]`.
-3. If a match is found, the queries are extracted and further processed:
-   - The extracted query string is split based on regular expressions, taking into account commas within quotes to avoid splitting queries incorrectly.
-   - Each part is cleaned of any surrounding quotes and extra whitespace.
-4. The cleaned queries are returned as a list.
-5. If no valid queries are extracted, the function returns an empty list.
-
-### Example
+### Function Signature:
 ```python
-response_text = "<queries>[\"query1\", \"query2\"]</queries>"
-queries = extract_queries_from_response(response_text)
-print(queries)  # Output: ['query1', 'query2']
+def extract_queries_from_response(response_text: str) -> list:
 ```
 
-### Notes
-- The function supports both single-quoted and double-quoted strings for the queries.
-- It uses regular expressions to identify and extract the query list, ensuring flexibility in handling different formatting variations.
+### Description:
+The `extract_queries_from_response` function processes a given string (`response_text`), which is expected to contain query data in specific formats, and extracts a list of queries from it. The function uses regular expressions to match and retrieve query data from the response text, handling two potential formats for the query data. After extracting the raw query string, the function further processes it by removing unnecessary characters, such as quotes and extra spaces.
+
+### Parameters:
+- **response_text** (`str`): The input string containing the response text from which queries will be extracted. This string must contain query data wrapped in specific XML-like tags (`<queries>`).
+
+### Returns:
+- **list**: A list of strings, where each string represents a query extracted from the `response_text`. If no queries are found or the input format is invalid, an empty list is returned.
+
+### Functionality:
+1. **Preprocessing**: The function first trims any leading or trailing whitespace from the `response_text`.
+2. **Pattern Matching**: It uses two regular expression patterns to match and extract the query data. The patterns are designed to handle two possible formats:
+   - `<queries>List[str] = [...]</queries>`
+   - `<queries>[...]</queries>`
+3. **Query Extraction**: Once a match is found, the function captures the part of the string that contains the queries. It then splits this string into individual queries, considering the possibility of quotes around query strings.
+4. **Cleaning**: Each extracted query is cleaned by stripping extra spaces and removing any surrounding quotes (either single or double quotes).
+5. **Return**: The function returns a list of cleaned queries. If no queries are found, it returns an empty list.
+
+### Example:
+#### Input:
+```python
+response_text = '<queries>[ "query1", "query2", "query3" ]</queries>'
+extract_queries_from_response(response_text)
+```
+
+#### Output:
+```python
+['query1', 'query2', 'query3']
+```
+
+### Usage:
+This function is typically used to parse response texts from various data sources (e.g., APIs, templates) where queries are embedded in a structured format. It is commonly invoked to extract search or task-related queries for further processing, such as sending them to a search engine or using them in a decision-making process.
+
+### Notes:
+- The function assumes that the queries are enclosed within the `<queries>` tag in the input text.
+- It can handle both `List[str]` and basic array-like representations of the queries within the `<queries>` tag.
+- The function is case-insensitive and allows for flexible formatting within the tags.
 ## FunctionDef extract_thought_from_response(response_text)
-**extract_thought_from_response**: The function of extract_thought_from_response is to extract the thought content from a given response text formatted with specific tags.
+## Function Documentation: `extract_thought_from_response`
 
-**parameters**: The parameters of this Function.
-· response_text: A string containing the response text that includes thought content formatted with `<\thought>...<\thought>`.
+### Description:
+The `extract_thought_from_response` function is responsible for extracting the content of the `<thought>` tag from a given response text. This function identifies the content enclosed within the `<thought>...</thought>` tags and returns it as a string. If no such content is found, the function returns an empty string.
 
-**Code Description**: The extract_thought_from_response function is designed to parse a string input, specifically looking for content enclosed within the tags `<thought>` and `</thought>`. It utilizes a regular expression pattern to identify and extract the desired content. The function first compiles a regex pattern that matches any text between the `<thought>` and `</thought>` tags. It then applies this pattern to the provided response_text using the re.search method, which allows for matching across multiple lines due to the re.DOTALL flag. If a match is found, the function returns the extracted thought content, stripped of any leading or trailing whitespace. If no match is found, it returns an empty string.
+### Parameters:
+- **response_text** (`str`): A string containing the response text in which the `<thought>...</thought>` tag is expected to appear. The content of the `<thought>` tag will be extracted.
 
-This function is called within the process_single_task function located in the src/criticsearch/main.py file. During the execution of process_single_task, after generating a response from an agent, extract_thought_from_response is invoked to retrieve the thought process from the agent's response. This extracted thought content is then logged and can be used for further processing, such as appending to conversation data or for debugging purposes. The function plays a crucial role in ensuring that the thought processes of the agent are captured and utilized effectively within the broader task processing workflow.
+### Returns:
+- **str**: The content extracted from within the `<thought>` tag. If no `<thought>` tag is found in the `response_text`, an empty string is returned.
 
-**Note**: It is important to ensure that the response_text provided to this function is correctly formatted with the appropriate thought tags; otherwise, the function will not be able to extract any content and will return an empty string.
+### Example Usage:
 
-**Output Example**: Given a response_text of "Here is my thought: <thought>This is the extracted thought content.</thought>", the function would return "This is the extracted thought content."
+```python
+response_text = "<thought>This is the thought content.</thought> Other content."
+thought = extract_thought_from_response(response_text)
+print(thought)  # Output: "This is the thought content."
+```
+
+### Implementation Details:
+The function uses a regular expression (`<thought>(.*?)</thought>`) to search for the content enclosed within the `<thought>` tags. The `re.DOTALL` flag is used to allow the dot (`.`) to match newline characters, while `re.IGNORECASE` ensures the search is case-insensitive. If a match is found, the content inside the `<thought>` tags is returned after stripping any leading or trailing whitespace. If no match is found, an empty string is returned.
+
+### Code Example:
+
+```python
+import re
+
+def extract_thought_from_response(response_text: str) -> str:
+    """
+    Extracts the thought content from a response text.
+
+    Args:
+        response_text (str): The response text containing <thought>...</thought> tags.
+
+    Returns:
+        str: The extracted thought content, or an empty string if no thought content is found.
+    """
+    thought_pattern = r'<thought>(.*?)</thought>'
+    thought_match = re.search(thought_pattern, response_text, re.DOTALL | re.IGNORECASE)
+    if thought_match:
+        return thought_match.group(1).strip()
+    return ""
+``` 
+
+### Summary:
+The `extract_thought_from_response` function is designed to efficiently extract specific thought content from structured response text. It is especially useful when working with formatted responses where certain pieces of information are encapsulated in custom tags.
 ## FunctionDef extract_answer_from_response(response_text)
-**extract_answer_from_response**: The function of extract_answer_from_response is to extract the content of the answer from a given response text formatted with specific tags.
+**extract_answer_from_response**: The function of extract_answer_from_response is to extract the content between `<answer>` and `</answer>` tags from a given response text.
 
-**parameters**: The parameters of this Function.
-· response_text: A string containing the response text that includes the answer enclosed within `<answer>` tags.
+**parameters**:  
+· response_text: A string that contains a response with content enclosed in `<answer>` and `</answer>` tags.
 
-**Code Description**: The extract_answer_from_response function is designed to parse a string input, specifically looking for content that is encapsulated within `<answer>` tags. It utilizes a regular expression pattern to identify and extract the text that appears between these tags. The function employs the `re.search` method from the `re` module, which searches the input string for the specified pattern. If a match is found, the function retrieves the matched content, trims any leading or trailing whitespace, and returns it as a string. If no match is found, the function returns an empty string.
+**Code Description**:  
+The function `extract_answer_from_response` is designed to extract the content of an `<answer>` tag from a provided `response_text` string. It uses a regular expression to search for the pattern that matches the content within `<answer>` and `</answer>` tags. If a match is found, it returns the extracted content, stripping any leading or trailing whitespace. If no such content is found, the function returns an empty string.
 
-This function is called within the process_single_task function located in the src/criticsearch/main.py file. In this context, extract_answer_from_response is utilized to extract the answer content from the section content generated by the common agent during the processing of a task. After generating the section content, the function is invoked to retrieve the answer, which is then stored in the conversation data structure along with other relevant information such as thought content and citations. This integration is crucial for maintaining the flow of information and ensuring that the generated reports contain the necessary answers derived from the agent's responses.
+The function operates as follows:
+1. It defines a regular expression pattern (`answer_pattern`) to match the content between `<answer>` and `</answer>` tags. The pattern `r'<answer>(.*?)</answer>'` utilizes non-greedy matching to ensure it captures everything between the tags.
+2. The function then uses `re.search` with the `re.DOTALL` and `re.IGNORECASE` flags. The `re.DOTALL` flag allows the dot (`.`) to match newline characters, while `re.IGNORECASE` makes the search case-insensitive.
+3. If a match is found, the function extracts the content using `group(1)`, which refers to the first captured group (the content inside the `<answer>` tags). The `strip()` method is applied to remove any leading or trailing whitespace.
+4. If no match is found, the function returns an empty string.
 
-**Note**: It is important to ensure that the response_text provided to this function is correctly formatted with the `<answer>` tags; otherwise, the function will return an empty string, indicating that no answer content was found.
+This function is used in the project primarily to retrieve the answer portion from a larger response that may contain other content. For example, in `src/criticsearch/main.py/_action_router`, after generating a section of content with `agent.chat_with_template`, the `extract_answer_from_response` function is invoked to extract the answer content from the generated response. The extracted answer is then processed and logged as part of the agent's training data.
 
-**Output Example**: If the input response_text is "Here is the answer: <answer>This is the extracted answer.</answer>", the function will return "This is the extracted answer."
+**Note**:  
+- The function relies on proper formatting of the input string, specifically the presence of the `<answer>` and `</answer>` tags. If these tags are missing or incorrectly formatted, the function will return an empty string.
+- This function is case-insensitive, meaning it will match tags like `<ANSWER>` and `<answer>` equally.
+- If the response text contains multiple `<answer>` sections, only the content of the first match will be returned.
+
+**Output Example**:  
+For a response text like:
+
+```html
+<response>
+    <answer>This is the extracted answer.</answer>
+</response>
+```
+
+The function will return:
+
+```python
+"This is the extracted answer."
+```
+
+If no `<answer>` tag is found in the response text, the function will return:
+
+```python
+""
+```
+## FunctionDef extract_boxed_content(answer)
+### Function: `extract_boxed_content`
+
+#### Purpose:
+The `extract_boxed_content` function extracts the content enclosed within a LaTeX `\boxed{}` expression from a given answer string. If the `\boxed{}` expression is not found, it returns the original answer string.
+
+#### Arguments:
+- **answer** (`str`): A string that may contain content enclosed in a `\boxed{}` expression. This argument represents the answer text without any tags.
+
+#### Returns:
+- **str**: The content inside the `\boxed{}` expression if it is found. If no such content is found, the function returns the original `answer` string.
+
+#### Description:
+This function searches for the LaTeX syntax `\boxed{}` in the provided `answer` string using a regular expression. If a match is found, it extracts and returns the content inside the `\boxed{}`. If no match is found, it returns the original input string unchanged.
+
+#### Example Usage:
+```python
+answer = "The solution is \\boxed{42}"
+result = extract_boxed_content(answer)
+print(result)  # Output: 42
+
+answer = "The solution is 42"
+result = extract_boxed_content(answer)
+print(result)  # Output: The solution is 42
+```
+
+#### Notes:
+- The function assumes that the `answer` string might contain LaTeX-style boxed content, and it will only extract content if it is enclosed within `\boxed{}`.
+- The function uses regular expressions to identify and extract the boxed content efficiently.
+
+---
+
+This function is primarily used to parse and extract boxed content from responses generated by models or other textual inputs in contexts such as automated evaluation or formatted output validation.
 ## FunctionDef extract_citations(text)
-**extract_citations**: The function of extract_citations is to extract all referenced URLs from a given text and ensure they are unique.
+**extract_citations**: The function of extract_citations is to extract all unique URLs from a given text that are enclosed within `<citation>` tags.
+
+**parameters**: The parameters of this Function are as follows:
+· text: A string containing text that includes URLs formatted as `<citation>URL</citation>`.
+
+**Code Description**: The extract_citations function is designed to identify and extract URLs from a provided text string that are enclosed within specific XML-like tags, namely `<citation>`. The function begins by defining a regular expression pattern that matches the content within these tags. It utilizes the `re.findall` method to search for all occurrences of this pattern in the input text, returning a list of matches.
+
+If matches are found, the function takes the first match and removes any newline characters, then attempts to clean and evaluate the string using `ast.literal_eval`. This method is preferred for safely evaluating strings that represent Python literals. If this evaluation fails due to a SyntaxError or ValueError, the function then attempts to replace single quotes with double quotes and uses `json.loads` to parse the cleaned string as JSON. If this also fails, it returns an empty list.
+
+The extract_citations function is called by other functions within the project, such as `process_section` and `parse_markdown_to_structure`. In `process_section`, it is used to extract citations from paragraphs of text, ensuring that any URLs present are captured and associated with their respective paragraphs. Similarly, in `parse_markdown_to_structure`, it extracts citations from markdown text as it is being parsed into a structured document format. This integration is crucial for maintaining the integrity of citations throughout the document processing workflow.
+
+**Note**: It is important to ensure that the input text is properly formatted with `<citation>` tags for the function to successfully extract URLs. If no valid citations are found, the function will return an empty list.
+
+**Output Example**: A possible return value from the extract_citations function could be:
+```python
+["http://example.com/citation1", "http://example.com/citation2"]
+```
+## FunctionDef extract_notes(response_text)
+**extract_notes**: The function of extract_notes is to extract a list of notes from a given response text formatted in a specific way.
 
 **parameters**: The parameters of this Function.
-· text: A string that contains text formatted with <\citation>URL<\citation> tags.
+· response_text: A string containing the response text that includes notes formatted as <note>...</note> within an <answer>...</answer> structure.
 
-**Code Description**: The extract_citations function is designed to identify and extract URLs that are enclosed within specific citation tags in a provided text. The function takes a single argument, 'text', which is expected to be a string containing one or more citations formatted as <\citation>URL<\citation>. 
+**Code Description**: The extract_notes function is designed to parse a string input, specifically looking for notes encapsulated within <note> tags. It utilizes a regular expression to find all occurrences of the note content in the provided response_text. The function ensures that only well-formed notes are included in the output list. A note is considered valid if it contains both <citation> and </citation> tags, and the counts of these tags must match, indicating that the citation is properly closed. 
 
-The function initializes an empty set called 'citations' to store the unique URLs. It then defines a regular expression pattern, `r'citation>(.*?)<'`, which is used to search for matches in the input text. This pattern looks for any substring that starts with 'citation>' and ends with '<', capturing the content in between. 
+The function returns a list of valid notes. If no valid notes are found, it returns an empty list. This function is particularly useful in contexts where responses from a chat or API may contain structured data, and there is a need to extract specific information for further processing or storage.
 
-Using the `re.findall` method, the function searches the input text for all occurrences that match the defined pattern. If any matches are found, they are added to the 'citations' set, which automatically handles duplicates by only retaining unique entries. Finally, the function returns the 'citations' set, which will contain all the extracted URLs. If no citations are found, an empty set is returned.
+The extract_notes function is called within the taking_notes method of the BaseAgent class. In this context, it processes the results obtained from a search operation. The results are passed to extract_notes to retrieve any notes that can be recorded. If valid notes are extracted, they are converted into a set to ensure uniqueness before being added to the agent's memo. This integration highlights the utility of extract_notes in managing and organizing information derived from external sources.
 
-**Note**: It is important to ensure that the input text is correctly formatted with the specified citation tags for the function to work effectively. The function relies on the presence of these tags to identify and extract URLs.
+**Note**: It is important to ensure that the response_text is formatted correctly according to the expected structure. Any deviations from the expected format may result in an empty list being returned, as the function is strict about the validity of the notes.
 
-**Output Example**: An example of the function's return value could be a set containing URLs such as {'http://example.com', 'http://anotherexample.com'} if those URLs were found in the input text. If no URLs are found, the output would be an empty set: set().
+**Output Example**: A possible appearance of the code's return value could be:
+[
+    "First note content with <citation>http://example1.com</citation>",
+    "Second note content with <citation>http://example2.com</citation>"
+]
+## FunctionDef extract_actions(text)
+**extract_actions**: The function of extract_actions is to extract all actions from a given text and ensure they are unique.
+
+**parameters**: The parameters of this Function.
+· text: A string containing text formatted with <action>...</action> tags.
+
+**Code Description**: The extract_actions function is designed to parse a string input, searching for specific patterns that denote actions within the text. It utilizes a regular expression to identify all occurrences of text enclosed within <action> and </action> tags. The function compiles these matches into a set, which inherently removes any duplicate entries, ensuring that the returned collection of actions is unique.
+
+The function begins by initializing an empty set named 'actions'. It then defines a regular expression pattern that matches any content between the specified action tags. The re.findall method is employed to search through the provided text, with the flags re.DOTALL and re.IGNORECASE allowing for multiline matches and case-insensitive searching, respectively. If any matches are found, they are stripped of leading and trailing whitespace and added to the 'actions' set. Finally, the function returns this set of unique actions. If no actions are found, an empty set is returned.
+
+The extract_actions function is called within the _model_action_decision function located in the src/criticsearch/main.py file. In this context, it processes the decision made by an agent, which is derived from a chat interaction. After obtaining the decision, the extract_actions function is invoked to retrieve any actions specified in the agent's response. The presence of actions is crucial for the subsequent logic in _model_action_decision, as it determines the flow of the program based on the actions identified (e.g., SEARCH, BROWSE, START_WRITING). If no actions are found, an exception is raised, indicating an invalid decision.
+
+**Note**: It is important to ensure that the input text is correctly formatted with the <action> tags for the function to work effectively. The function is case-insensitive, which allows for flexibility in the input format.
+
+**Output Example**: An example of the output when the input text is "<action>SEARCH</action><action>BROWSE</action>" would be a set containing: {'SEARCH', 'BROWSE'}. If the input text does not contain any action tags, the output would be an empty set: set().
+## FunctionDef extract_tag_content(text, tag)
+## Function Documentation: `extract_tag_content`
+
+### Overview
+The function `extract_tag_content` is designed to extract the content enclosed within a specified HTML-like tag from a given text. It supports case-insensitive searches and handles multiline text efficiently.
+
+### Function Signature
+```python
+def extract_tag_content(text: str, tag: str) -> str:
+```
+
+### Parameters
+- **`text`** (`str`): The input text that contains the tag. This text can include any HTML-like elements or other content.
+- **`tag`** (`str`): The name of the tag whose content is to be extracted. For example, if the tag is `<question>`, the value of `tag` would be `"question"`.
+
+### Returns
+- **`str`**: The content inside the specified tag. If the tag is not found, an empty string is returned. The extracted content will be stripped of leading and trailing whitespace.
+
+### Functionality
+The function constructs a regular expression pattern based on the provided `tag` and attempts to find the content within the tag in the `text`. The regular expression is case-insensitive and supports multiline content within the tag.
+
+### Example Usage
+```python
+text = "<question>What is the capital of France?</question>"
+tag = "question"
+result = extract_tag_content(text, tag)
+print(result)  # Output: "What is the capital of France?"
+```
+
+### Error Handling
+If the specified tag is not present in the `text`, the function returns an empty string.
+
+### Notes
+- The function handles both uppercase and lowercase tag names due to the use of `re.IGNORECASE`.
+- It is optimized to handle multiline content by using the `re.DOTALL` flag.
+## FunctionDef extract_and_validate_json(model_response)
+**extract_and_validate_json**: The function of extract_and_validate_json is to extract JSON content from a model response, whether it's wrapped in ```json``` fences or is just raw JSON text, and return the parsed object or None on failure.
+
+**parameters**: The parameters of this Function.
+· model_response: str - The string input representing the model's response that may contain JSON data.
+
+**Code Description**: The extract_and_validate_json function is designed to handle the extraction and validation of JSON data from a given string input, which represents a model's response. The function begins by attempting to identify and remove any Markdown-style fences that may be present in the input string. Specifically, it uses a regular expression pattern to search for content enclosed within ```json``` or ``` any-language ``` fences. If such fences are found, the content within them is extracted; if not, the entire input string is treated as the payload.
+
+Once the payload is isolated, the function attempts to parse it as JSON using the json.loads method. If this parsing is successful, the resulting Python object is returned. However, if a json.JSONDecodeError occurs, indicating that the content is not valid JSON, the function proceeds to clean the payload by removing any stray backticks and attempts to parse it again. If this second attempt also fails, the function logs an error message using the print_exception method from the RichPrinter class, providing details about the failure and the original model content. Ultimately, if both parsing attempts fail, the function returns None.
+
+The extract_and_validate_json function is called in various contexts throughout the project. For instance, it is utilized in the query_update and generate_seed methods of the ReverseUpgradeWorkflow class, where it processes responses from the agent's chat_with_template method. In these instances, the function is crucial for ensuring that the responses are valid JSON before further processing, such as extracting updated questions or evidence.
+
+Additionally, it is referenced in the gpt_search_generate_seed and gpt_search_query_update methods, where it validates the JSON structure of responses related to seed generation and query updates, respectively. The consistent use of extract_and_validate_json across these methods highlights its importance in maintaining the integrity of data handling within the application.
+
+**Note**: It is essential to ensure that the input string (model_response) is well-formed and contains valid JSON data or is formatted correctly to avoid parsing errors. Proper usage of this function aids in effective error handling and data validation practices within the application.
+
+**Output Example**: A possible return value of the function could be a dictionary representing the parsed JSON, such as:
+{
+    "updated_question": "What is the capital of France?",
+    "updated_evidence": ["Paris is the capital of France."]
+} 
+Or it could return None if the input was invalid or could not be parsed.

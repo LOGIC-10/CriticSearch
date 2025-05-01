@@ -1,23 +1,23 @@
 ## ClassDef SearchAggregator
-**SearchAggregator**: The function of SearchAggregator is to manage and execute search queries across multiple search engines.
+**SearchAggregator**: The function of SearchAggregator is to manage and aggregate search queries across multiple search engines, handling the initialization of clients and executing searches asynchronously.
 
 **attributes**: The attributes of this Class.
-· clients: A dictionary that holds instances of search engine clients, specifically TavilyClient and BingClient, keyed by their respective engine names.  
-· available_clients: A set that contains the names of currently available search engines that can be used for querying.
+· clients: A dictionary that holds instances of search engine clients (TavilyClient and BingClient) keyed by their respective engine names.  
+· available_clients: A set that maintains the names of currently available search engines that can be used for querying.
 
-**Code Description**: The SearchAggregator class is designed to facilitate searching through multiple search engines by managing their respective clients. Upon initialization, the class checks for the presence of API keys for Tavily and Bing. If the keys are available, it creates instances of TavilyClient and BingClient and stores them in the clients dictionary. The available_clients set is initialized to keep track of which search engines are currently available for use.
+**Code Description**: The SearchAggregator class is designed to facilitate the execution of search queries across multiple search engines by managing the initialization of client instances and handling search requests. Upon instantiation, the constructor initializes the clients for Tavily and Bing if their respective API keys are available in the settings. This ensures that only valid clients are available for use.
 
-The class provides two main functionalities: marking a search engine as unavailable and performing searches. The `mark_engine_unavailable` method allows the user to remove a search engine from the available_clients set if it encounters issues during a search operation. This is particularly useful for handling errors such as invalid API keys or usage limits being exceeded.
+The class provides a method `mark_engine_unavailable`, which allows marking a specific search engine as unavailable. This is particularly useful in scenarios where a search engine fails to respond or encounters an error during a search attempt. The method checks if the engine is in the set of available clients and removes it if it is.
 
-The `_search_single_query` method is an asynchronous function that attempts to execute a search query against the specified engines. It iterates through the provided list of engines, checking if they are available. If an engine is available, it calls its search method and logs the result. If an error occurs, it logs the error and marks the engine as unavailable. If all specified engines fail, it returns a SearchResponse indicating that no available search engines could handle the query.
+The core functionality of the class is encapsulated in the `_search_single_query` method, which performs an asynchronous search for a given query using the specified search engines. It iterates through the list of engines, checking their availability before attempting to execute a search. If a search engine fails due to various reasons (such as a RetryError, InvalidAPIKeyError, or UsageLimitExceededError), it logs the error and marks the engine as unavailable. If all specified engines are unavailable, it returns a SearchResponse indicating the failure.
 
-The `search` method allows users to perform searches using a list of queries. It gathers the available engines and creates tasks for concurrent execution of searches for each query. The results are awaited and returned as a SearchResponseList, which encapsulates the responses from the search engines.
+The `search` method allows for performing searches using a list of queries. It first checks the availability of search engines and raises a ValueError if none are available. It then creates asynchronous tasks for each query and gathers the responses. The results are returned as a SearchResponseList, which encapsulates the responses from the search engines.
 
-The SearchAggregator class is utilized in the BaseAgent class, where an instance of SearchAggregator is created to manage search queries. This integration allows the BaseAgent to leverage the capabilities of multiple search engines, enhancing its ability to gather information. Additionally, the SearchAggregator is instantiated in the process_single_task function, where it is used to execute search queries based on user tasks.
+The SearchAggregator class is utilized by the BaseAgent class, which serves as a foundational component for intelligent agents in the project. The BaseAgent initializes an instance of SearchAggregator, allowing it to perform searches as part of its operations. This integration highlights the importance of the SearchAggregator in enabling the agent to gather information from multiple sources effectively.
 
-**Note**: When using the SearchAggregator, ensure that the necessary API keys for the search engines are configured correctly in the settings. Additionally, be aware that if all search engines become unavailable, the search operation will fail, and an appropriate error message will be returned.
+**Note**: When using the SearchAggregator, it is essential to ensure that the API keys for the search engines are correctly configured in the settings. Additionally, the handling of unavailable engines is crucial for maintaining the reliability of search operations.
 
-**Output Example**: A possible appearance of the code's return value after executing a search query could look like this:
+**Output Example**: A possible appearance of the code's return value when executing a search might look like this:
 ```json
 {
   "responses": [
@@ -97,24 +97,22 @@ SearchResponse(
 This output illustrates a successful search response containing the original query, a list of search results, and no error messages.
 ***
 ### FunctionDef search(self, query)
-**search**: The function of search is to perform a search using the provided query, supporting various search techniques through special syntax.
+**search**: The function of search is to perform a search using the provided query.
 
 **parameters**: The parameters of this Function.
 · query: List[str] - A list of search queries to be executed.
 
-**Code Description**: The search function is an asynchronous method within the SearchAggregator class that facilitates searching across multiple search engines based on the provided list of queries. The function begins by retrieving the currently available search engines from the instance's available_clients attribute. If no engines are available, it raises a ValueError, indicating that the search cannot proceed.
+**Code Description**: The search function is an asynchronous method that facilitates the execution of multiple search queries concurrently using available search engines. It begins by retrieving a list of currently available search engines from the instance's `available_clients` attribute. If no search engines are available, it raises a ValueError, indicating that the search cannot be performed.
 
-To execute the search, the function creates a list of tasks, where each task corresponds to a single search query. These tasks are generated by calling the _search_single_query method, which is responsible for executing a search against the available engines. The search_single_query method is called for each query in the provided list, allowing for concurrent execution of searches.
+Next, the function constructs a list of tasks, where each task corresponds to a single query being processed by the `_search_single_query` method. This method is responsible for executing the search against the specified engines and returning the results encapsulated in a `SearchResponse` object.
 
-Once the tasks are created, the function uses the asyncio.gather method to run all tasks concurrently and await their results. This approach enhances efficiency by allowing multiple searches to be processed simultaneously rather than sequentially.
+The function then utilizes the `gather` method from the asyncio library to execute all the search tasks concurrently. This allows for efficient handling of multiple queries, leveraging the asynchronous capabilities of the framework. Once all tasks are completed, the responses are collected and passed to the `SearchResponseList` class, which is designed to manage and serialize the search results.
 
-After gathering the responses from all search tasks, the function constructs a SearchResponseList object, which encapsulates the results of the searches. This object is then serialized and returned as a string representation, providing a structured output of the search results.
+Finally, the serialized search responses are returned as a string representation, providing a structured output that can be utilized for further processing or presentation. The search function is called by various components within the project, including the `search_validator` method, which uses it to obtain search results based on a user-provided question. This integration highlights the function's role in enabling real-time search capabilities within the broader application context.
 
-The search method is called by various components within the project, including the search_and_browse method in the BaseAgent class. This method utilizes the search function to perform searches based on user prompts and integrates the results into a broader workflow that may involve web scraping and content generation.
+**Note**: It is essential to ensure that the `query` parameter is a list of valid search strings. The function relies on the availability of search engines and proper handling of exceptions to manage scenarios where no engines are available or if errors occur during the search process.
 
-**Note**: It is essential to ensure that the query parameter contains valid search terms and that the available_clients attribute is populated with active search engines. Proper error handling is implemented to manage cases where no engines are available, ensuring that the function fails gracefully.
-
-**Output Example**: A possible return value of the search function could be structured as follows:
+**Output Example**: A possible return value from the search function could be structured as follows:
 ```json
 {
   "responses": [
