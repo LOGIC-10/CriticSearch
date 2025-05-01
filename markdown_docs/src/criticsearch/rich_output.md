@@ -92,18 +92,18 @@ Overall, the log function serves as an essential tool for maintaining transparen
 **print**: The function of print is to display a message to the console with an optional style.
 
 **parameters**: The parameters of this Function.
-· message: A string that contains the message to be printed.
-· style: An optional string that specifies the style in which the message should be printed.
+· message: A string that contains the message to be printed to the console.
+· style: An optional string that specifies the style to be applied to the printed message.
 
-**Code Description**: The print function is a method of the RichPrinter class, which is responsible for outputting messages to the console in a formatted manner. It takes two parameters: `message`, which is a string that represents the content to be displayed, and `style`, which is an optional parameter that allows the user to specify how the message should appear (for example, in bold or a specific color).
+**Code Description**: The print function is a method defined within the RichPrinter class, which is responsible for outputting messages to the console in a formatted manner. The function takes two parameters: `message`, which is the text to be displayed, and `style`, which is an optional parameter that allows the user to specify how the message should be styled when printed.
 
-Internally, the function utilizes the `self.console.print()` method to render the message on the console. This method is part of the Rich library, which provides advanced formatting options for terminal output. If a style is provided, it is applied to the message, enhancing its visibility or aesthetic appeal.
+When the print method is called, it utilizes the console's print functionality to display the provided message. If a style is specified, it applies that style to the message, enhancing the visual presentation of the output. This is particularly useful for distinguishing different types of messages, such as warnings, errors, or informational messages, by using various styles (e.g., bold, italic, colored text).
 
-The print function is called in various parts of the codebase, particularly within the `call_llm`, `tavily_extract`, `fallback_scrape`, and other functions in the `src/criticsearch/abstract_substitution/abs_exp_1.py` file. For instance, in the `call_llm` function, the print method is used to display the prompt sent to the language model and the raw output received from it. This helps in debugging and understanding the flow of data through the application.
+The print method is invoked in various parts of the project, particularly in functions that require user feedback or logging of information. For example, it is called in the `call_llm`, `tavily_extract`, and `fallback_scrape` functions to display prompts, results, and other relevant information to the user. By centralizing the printing functionality in the RichPrinter class, the project maintains consistency in how messages are displayed across different components.
 
-In the context of the overall application, the print function serves as a crucial tool for logging and displaying information to the user, making it easier to track the progress of operations and the results of various tasks.
+The use of the print method enhances the user experience by providing clear and styled output, making it easier for users to follow the flow of information during the execution of the application.
 
-**Note**: When using the print function, it is essential to ensure that the message is properly formatted and that the style, if used, is valid according to the Rich library's styling options. This will ensure that the output is both informative and visually appealing.
+**Note**: When using the print function, it is important to ensure that the message is properly formatted and that any specified style is valid. If no style is provided, the message will be printed in the default format.
 ***
 ### FunctionDef print_exception(self, message, max_frames)
 **print_exception**: The function of print_exception is to log an error message and print the exception details to the console.
@@ -112,17 +112,17 @@ In the context of the overall application, the print function serves as a crucia
 · message: str - The message to be logged, which contains the content to be printed to the console.  
 · max_frames: int (optional) - The maximum number of stack frames to display when printing the exception, defaulting to 5.
 
-**Code Description**: The print_exception method is a member of the RichPrinter class, designed to handle the logging and display of exception messages in a formatted manner. When invoked, it first calls the log method to print the provided message in bold red style, which serves to highlight the error and draw attention to it. This is particularly useful for debugging and monitoring purposes, as it allows developers to quickly identify issues within the application.
+**Code Description**: The print_exception method is a member of the RichPrinter class, designed to handle the logging and display of exception messages in a visually distinct manner. When invoked, it first calls the log method to print the provided message in bold red style, ensuring that the error is immediately noticeable to the user. This is achieved through the line `printer.log(f"{message}", style="bold red")`, which utilizes the logging capabilities of the RichPrinter class.
 
-Following the logging of the message, the method utilizes the console's print_exception functionality to display the exception details. The max_frames parameter controls how many frames of the stack trace are shown, allowing for a concise view of the error context without overwhelming the console output. By default, it limits the display to five frames, which is typically sufficient for diagnosing most issues.
+Following the logging of the message, the method proceeds to print the actual exception details using the console's print_exception method, with the parameter max_frames controlling how many frames of the stack trace are displayed. This allows developers to quickly identify the source of the error and understand the context in which it occurred.
 
-The print_exception method is called in various contexts throughout the project, notably within the critic method of the CriticAgent class. In this context, it is used to log an error when the extraction and validation of YAML content from the model's response fails. This ensures that any issues encountered during the critique generation process are communicated clearly, allowing developers to address them promptly.
+The print_exception method is called in various parts of the project, notably within the critic method of the CriticAgent class and the main function of the main module. In the CriticAgent's critic method, it is used to log errors encountered during the parsing of YAML content from the model's response. If a yaml.YAMLError is raised, the print_exception method is invoked to provide clear feedback about the parsing failure, which is critical for debugging and resolving issues in the critique generation process.
 
-Additionally, the print_exception method is invoked in the main function of the project when an exception occurs during the execution of the process_single_task function. This provides a mechanism for gracefully handling errors at the top level of the application, ensuring that users receive informative feedback when something goes wrong.
+Similarly, in the main function, print_exception is called when an exception occurs during the processing of user tasks. This ensures that any errors encountered during the execution of the CriticSearch pipeline are logged and communicated to the user, enhancing the application's robustness and user experience.
 
-The method is also referenced in the write method of the ConversationManager class, where it logs errors encountered during file writing operations. This consistent usage of print_exception across different parts of the codebase contributes to a robust error handling strategy, enhancing the overall reliability of the application.
+Overall, the print_exception method serves as an essential tool for error handling within the application, providing a consistent approach to logging and displaying exceptions. Its integration into various components of the project underscores its importance in maintaining transparency and facilitating effective debugging.
 
-**Note**: It is important to ensure that the message parameter is a well-formed string. The max_frames parameter should be set according to the desired level of detail in the stack trace. Proper usage of this function aids in effective logging and debugging practices within the application.
+**Note**: It is important to ensure that the message parameter is a well-formed string. The max_frames parameter should be set according to the desired level of detail in the stack trace output. Proper usage of this function contributes to effective logging practices and aids in the swift resolution of issues within the application.
 ***
 ### FunctionDef save_output_to_file(self, file_path)
 **save_output_to_file**: The function of save_output_to_file is to save the current console output to a specified file.

@@ -1,36 +1,7 @@
 {
-  "doc_version": "89d9ab2d7d5ffca16ea074ce65a70cf45eb171b7",
+  "doc_version": "66deb2fb336a1da5fbd8971f6184f7598362da95",
   "in_generation_process": false,
   "fake_file_reflection": {},
   "jump_files": [],
-  "deleted_items_from_older_meta": [
-    [
-      "src/criticsearch/main.py/extract_citations",
-      "_function"
-    ],
-    [
-      "src/criticsearch/base_agent.py/BaseAgent/common_chat",
-      "_class_function"
-    ],
-    [
-      "src/criticsearch/base_agent.py/BaseAgent/common_chat",
-      "_class_function"
-    ],
-    [
-      "src/criticsearch/base_agent.py/BaseAgent/common_chat",
-      "_class_function"
-    ],
-    [
-      "src/criticsearch/base_agent.py/BaseAgent/common_chat",
-      "_class_function"
-    ],
-    [
-      "src/criticsearch/reportbench/report_benchmark.py/ReportBenchmark/run_fact_extraction",
-      "_class_function"
-    ],
-    [
-      "src/criticsearch/reportbench/report_benchmark.py/ReportBenchmark/process_section",
-      "_class_function"
-    ]
-  ]
+  "deleted_items_from_older_meta": []
 }
