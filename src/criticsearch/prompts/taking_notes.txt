@@ -19,4 +19,4 @@ Here is the previous note you have made:
 
 Remember, you only need to take incremental notes, which means you are not allowed to write down the information you have already noted in the previous note. if you think there is no new information to note, you can leave the note empty by providing an empty list [].
 
-Now, directly give your notes based on the new search results. Remember, you need to make notes in a certain format. Make sure to provide the citation for each note you make.
+Now, directly give your notes based on the new search results. Remember, you need to make notes in a certain format without the Markdown code fences. Make sure to provide the citation for each note you make.

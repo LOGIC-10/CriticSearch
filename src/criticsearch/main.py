@@ -5,6 +5,7 @@ import json
 import re
 import argparse
 import sys
+from pathlib import Path
 
 import yaml
 from rich.progress import Progress, BarColumn, TextColumn
@@ -353,13 +354,13 @@ def process_single_task(task, file_name=None):
 
     BaseAgent.conversation_manager.append_to_history(role="user", content=task)
 
-    # ============ 在这里插入进度条 =============
-    agent_report_sections = []
+    # ============ 进度条 =============
     progress = Progress(
         TextColumn("[bold cyan]Chapter Progress:"),
         BarColumn(bar_width=None),
         TextColumn("{task.completed}/{task.total}"),
         TextColumn("{task.percentage:>3.0f}%"),
+        disable=getattr(settings, "disable_progress", False),
     )
     with progress:
         section_task = progress.add_task("processing", total=len(outline))
@@ -378,7 +379,8 @@ def process_single_task(task, file_name=None):
         if agent_confident:
             agent_answer = agent.chat_with_template("direct_response.txt", {"task": task})
         else:
-            for item in outline:  # 按大纲走一次滑窗
+            agent_report_sections = []  # Initialize the list to store report sections
+            for item in outline:  # 按wiki的GT大纲走一次滑窗
                 # 更新进度
                 progress.advance(section_task)
 
@@ -403,7 +405,7 @@ def process_single_task(task, file_name=None):
                 queries_list = extract_queries_from_response(search_thought_and_queries)
                 printer.print(search_thought_and_queries)
                 search_results = asyncio.run(search_agg.search(queries_list))
-                agent.training_data.append({"from": "agent", "thought": thought_content, "action": "SEARCH", "action_content": queries_list, "action_result": search_results[:200]})
+                agent.training_data.append({"from": "agent", "thought": thought_content, "action": "SEARCH", "action_content": queries_list, "action_result": search_results})
                 # detailed_web_results = agent.web_scrape_results(search_results)
                 new_notes = agent.taking_notes(search_results); agent.training_data.append({"from": "agent", "action": "TAKING_NOTES", "action_content": new_notes})
 
@@ -420,10 +422,12 @@ def process_single_task(task, file_name=None):
 
             # 拼接完整的report
             agent_answer = "\n".join(agent_report_sections)
-            agent.training_data.append({"from": "agent", "final_report": agent_answer, "citation": extract_citations(agent_answer)})
-            # 保存到一个json文件
-            with open("conversation_data.json", "w", encoding="utf-8") as f:
-                json.dump(agent.training_data, f, indent=4, ensure_ascii=False)
+            agent.training_data.append({
+                "from": "agent",
+                "final_report": agent_answer,
+                "citation": extract_citations(agent_answer)
+            })
+            return agent.training_data
 
 # 新增：命令行入口
 def main():

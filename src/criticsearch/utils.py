@@ -108,29 +108,13 @@ def extract_boxed_content(answer: str) -> str:
 
 def extract_citations(text: str) -> list:
     """
-    从文本中提取所有引用的URLs并去重
-    优先使用ast.literal_eval，如果失败则尝试使用json.loads
-    
-    Args:
-        text: 包含<citation>URL</citation>格式的文本
-        
-    Returns:
-        list: 提取的URL列表,如果未找到则返回空列表
+    从文本中提取所有 <citation>URL</citation> 标签中的 URL 并去重
     """
     pattern = r'<citation>(.*?)</citation>'
     matches = re.findall(pattern, text, re.DOTALL | re.IGNORECASE)
-    if matches:
-        cleaned = matches[0].replace('\n', '').strip()
-        try:
-            return ast.literal_eval(cleaned)
-        except (SyntaxError, ValueError):
-            # 如果ast.literal_eval失败，尝试使用json.loads
-            try:
-                cleaned = cleaned.replace("'", '"')
-                return json.loads(cleaned)
-            except json.JSONDecodeError:
-                return []
-    return []
+    # 去除空白、换行，然后保留原始顺序去重
+    urls = [m.strip() for m in matches if m.strip()]
+    return list(dict.fromkeys(urls))
 
 def extract_notes(response_text: str) -> list:
     """
