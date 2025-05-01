@@ -1,5 +1,6 @@
-import argparse
 import json
+import argparse
+import traceback        # 新增
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
@@ -34,14 +35,17 @@ def execute_multiple_tasks(
     conv_dir.mkdir(parents=True, exist_ok=True)
 
     for task in tasks:
-        BaseAgent.conversation_manager.clear_history()
-        process_single_task(task, file_name=file_name)
+        try:
+            BaseAgent.conversation_manager.clear_history()
+            records = process_single_task(task, file_name=file_name)
+        except (FileNotFoundError, json.JSONDecodeError) as e:
+            print(f"[ERROR] skip task `{task}` due to invalid JSON file `{file_name}`: {e}")
+            continue
         ts = datetime.now().strftime("%Y%m%d_%H%M%S")
         prefix = Path(file_name).stem if file_name else task.replace(" ", "_")[:50]
         out_path = conv_dir / f"{prefix}_{ts}_conversation.json"
-        history = BaseAgent.conversation_manager.model_dump(context={"sharegpt": True})
         with out_path.open("w", encoding="utf-8") as f:
-            json.dump(history, f, ensure_ascii=False, indent=2)
+            json.dump(records, f, ensure_ascii=False, indent=2)
         print(f"[INFO] saved conversation to {out_path}")
 
 
@@ -70,25 +74,49 @@ def execute_from_mapping(
     Returns:
         None
     """
+    # 并发时禁止在 process_single_task 中启动 Rich Live 渲染
+    if concurrent:
+        from criticsearch.config import settings
+        setattr(settings, "disable_progress", True)
+
     conv_dir = Path(conv_dir)
     conv_dir.mkdir(parents=True, exist_ok=True)
 
-    mapping = json.loads(Path(mapping_file).read_text(encoding="utf-8"))
+    # 在这里单独处理 mapping.json 的 parse 错误
+    try:
+        mapping = json.loads(Path(mapping_file).read_text(encoding="utf-8"))
+    except json.JSONDecodeError as e:
+        print(f"[ERROR] 无法解析映射文件 {mapping_file}: {e}")
+        return
+
     items = list(mapping.items())
     if limit:
         items = items[:limit]
 
     def run(pair):
         file_name, task = pair
-        BaseAgent.conversation_manager.clear_history()
-        process_single_task(task, file_name=file_name)
+        try:
+            BaseAgent.conversation_manager.clear_history()
+            # 真正跑写作主流程
+            records = process_single_task(task, file_name=file_name)
+        except FileNotFoundError as e:
+            # GT JSON 不存在，才跳过
+            print(f"[ERROR] skip `{file_name}`: 文件不存在: {e}")
+            traceback.print_exc()                            # 打印详细堆栈
+            return
+        except Exception as e:
+            # 其余所有异常都打印但不当作“无效 JSON”跳过
+            print(f"[ERROR] task `{file_name}` 执行失败: {e}")
+            traceback.print_exc()                            # 打印详细堆栈
+            return
+
+        # 到这里说明 process_single_task 正常返回了 records
         ts = datetime.now().strftime("%Y%m%d_%H%M%S")
-        safe = Path(file_name).stem
-        out_path = conv_dir / f"{safe}_{ts}_conversation.json"
-        history = BaseAgent.conversation_manager.model_dump(context={"sharegpt": True})
+        out = Path(file_name).stem + f"_{ts}_conversation.json"
+        out_path = conv_dir / out
         with out_path.open("w", encoding="utf-8") as f:
-            json.dump(history, f, ensure_ascii=False, indent=2)
-        print(f"[INFO] saved {file_name} conversation to {out_path}")
+            json.dump(records, f, ensure_ascii=False, indent=2)
+        print(f"[INFO] saved {file_name} → {out_path}")
 
     if concurrent and workers > 1:
         with ThreadPoolExecutor(max_workers=workers) as exe:
@@ -119,7 +147,7 @@ def start_task_execution():
         -o, --output-file: 单任务模式下的历史保存文件，兼容旧版。
         --from-mapping: 批量模式开关。
         --mapping-file: 指定映射文件路径，默认 reportbench/instruction_mapping.json。
-        --concurrent: 批量模式下并发执行开关。
+        --concurrent: 批量模式下并发执行任务。
         -w, --workers: 并发时线程数，默认 5。
         --limit: 批量时最多执行条目数，默认无限制。
         --conv-dir: 对话历史保存目录，默认 conversation_histories。
@@ -185,26 +213,26 @@ if __name__ == "__main__":
 # Usage example:
 """
 1. 单任务模式（默认 GT JSON）：
-   criticsearch "给我写一份2024年叙利亚反对派进攻战役概述"
+criticsearch "给我写一份2024年叙利亚反对派进攻战役概述"
 
 2. 单任务模式 + 自定义 GT JSON：
-   criticsearch "写一篇关于2024年欧洲洪水的报告" -f 2024_European_floods.json
+criticsearch "写一篇关于2024年欧洲洪水的报告" -f 2024_European_floods.json
 
 3. 多任务顺序执行：
-   criticsearch "任务A描述" "任务B描述" --conv-dir my_history_dir
+criticsearch "任务A描述" "任务B描述" --conv-dir my_history_dir
 
 4. 从映射文件顺序批量执行：
-   criticsearch --from-mapping --mapping-file reportbench/instruction_mapping.json
+criticsearch --from-mapping --mapping-file reportbench/instruction_mapping.json
 
 5. 并发模式 + 指定线程数：
-   criticsearch --from-mapping --concurrent -w 10
+criticsearch --from-mapping --concurrent -w 10
 
 6. 并发模式 + 限制条目数：
-   criticsearch --from-mapping --concurrent -w 1 --limit 1
+criticsearch --from-mapping --concurrent --workers 3 --limit 3
 
 7. 自定义对话历史保存目录：
-   criticsearch --from-mapping --concurrent --limit 10 --conv-dir ./logs
+criticsearch --from-mapping --concurrent --limit 10 --conv-dir ./logs
 
 8. Python 模块方式直接运行（绕过 console‑script）：
-   python -m criticsearch.tasks_runner --from-mapping --concurrent -w 5
+python -m criticsearch.tasks_runner --from-mapping --concurrent -w 5
 """

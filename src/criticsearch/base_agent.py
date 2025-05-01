@@ -34,20 +34,6 @@ class BaseAgent:
         self.prompts_dir = os.path.join(base_dir, "prompts")
         self.config = settings  # 添加配置访问支持
         # self.env = Environment(loader=FileSystemLoader(self.prompts_dir))
-
-        # 对于citationDB,应该是一个字典，key是query，value是内容和来源
-        # 这个列表中的每个元素都是一个字典，代表一个搜索的问题以及对应的搜索结果
-        self.citationDB = [
-            {  # citationDB中只会把受到critic表扬的搜索结果加入
-                "why do we say google was facing challenges in 2019?": {
-                    "document_id": {  # 这个document_id是一个唯一的标识符，用于标识这个文档
-                        "url": "",
-                        "title": "",
-                        "content": "",
-                    }
-                }
-            }
-        ]
         self.search_aggregator = SearchAggregator()
 
         self.search_aggregator_schema = (
@@ -104,7 +90,13 @@ class BaseAgent:
         return template.render(**data)
 
     def chat_with_template(
-        self, template_name: str, template_data: dict, model: str = None, check_prompt: bool = False, root_folder: str = None,
+        self,
+        template_name: str,
+        template_data: dict,
+        model: str = None,
+        check_prompt: bool = False,
+        root_folder: str = None,
+        save_history: bool = True,
     ) -> str:
         """Unified helper method to handle template rendering and chat calling
 
@@ -123,7 +115,9 @@ class BaseAgent:
             printer.log(f"Full Rendered Prompt:\n{rendered_prompt}")
             
         return self.chat(
-            usr_prompt=rendered_prompt, model=model or settings.default_model
+            usr_prompt=rendered_prompt,
+            model=model or settings.default_model,
+            save_history=save_history,
         )
 
     def chat_with_tools(
@@ -155,6 +149,7 @@ class BaseAgent:
         tools: Optional[List] = None,
         role: str = "assistant",
         model: str = settings.default_model,  # 默认使用配置文件中的默认模型
+        save_history: bool = True,
     ) -> ChatCompletionMessage | str | None:
         llm_response = call_llm(
             model=model,  # 使用传入的model / 默认model
@@ -166,9 +161,10 @@ class BaseAgent:
         if tools is not None:
             return llm_response
 
-        BaseAgent.conversation_manager.append_to_history(
-            role=role, content=llm_response.content
-        )
+        if save_history:
+            BaseAgent.conversation_manager.append_to_history(
+                role=role, content=llm_response.content
+            )
 
         return llm_response.content
 

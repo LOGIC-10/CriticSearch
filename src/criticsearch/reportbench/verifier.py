@@ -27,7 +27,8 @@ class ReportVerifier:
             
             response = self.agent.chat_with_template(
                 "factQA_verifier.txt",
-                qa_data
+                qa_data,
+                save_history=False,
             )
             
             return self._check_answer(response, fact["answer"])

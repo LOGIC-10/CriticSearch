@@ -27,9 +27,19 @@ from criticsearch.utils import (
     extract_answer_from_response,
     extract_boxed_content,
 )
+from criticsearch.config import settings
 import os
 from pathlib import Path
 import hashlib
+
+# 在文件顶部添加：对模型调用 + JSON 解析 做重试
+@retry(stop=stop_after_attempt(settings.max_retries), wait=wait_fixed(1), reraise=True)
+def safe_chat_and_parse(agent, prompt: str, model: str):
+    """
+    调用 LLM 并解析返回的 JSON。解析失败会重试至 settings.max_retries。
+    """
+    response = agent.chat(usr_prompt=prompt, model=model)
+    return extract_and_validate_json(response)
 
 # %% [markdown]
 # ## ReportBenchmark Class Definition
@@ -253,27 +263,20 @@ class ReportBenchmark:
                     "UserQuery": self.user_query,
                 }
                 prompt = self.agent.render_template(template_str, data)
-                response = self.agent.chat(usr_prompt=prompt, model=model)
 
                 printer.print(f"Model: {model}")
-                printer.print("Response:")
-                printer.print(response)
+                # 通过 safe_chat_and_parse 完成模型调用 + JSON 解析
+                candidate = safe_chat_and_parse(self.agent, prompt, model)
+                # 如果拿到的是 list，则继续处理
+                if isinstance(candidate, list):
+                    parsed_data = self.parse_tagged_data_to_table(candidate)
+                    return {"model": model, "data": parsed_data}
+                else:
+                    printer.print(f"[WARN] 模型 {model} 返回非列表结构: {candidate}")
+                    return None
 
-                if not isinstance(response, list):
-                    if not response.strip():
-                        return None
-                    try:
-                        candidate = extract_and_validate_json(response)
-                        if isinstance(candidate, list):
-                            parsed_data = self.parse_tagged_data_to_table(candidate)
-                            return {"model": model, "data": parsed_data}
-                    except Exception:
-                        printer.print(f"[ERROR] Failed to parse JSON response: {response}")
-                        return None
-                return {"model": model, "data": self.parse_tagged_data_to_table(response)}
             except Exception as e:
-                # 打印完整 traceback
-                printer.print(f"[ERROR] model={model} exception:\n{traceback.format_exc()}")
+                printer.print(f"[ERROR] model={model} failed after {settings.max_retries} retries:\n{e}")
                 return None
 
         results = []
@@ -328,7 +331,6 @@ class ReportBenchmark:
     def process_window_content(self, content, max_retries=10):
         """修改现有的处理方法以使用多模型"""
         # 从settings中直接获取extract_models配置
-        from criticsearch.config import settings
         models = settings.extract_models if hasattr(settings, 'extract_models') else ["gpt-4o"]
         
         for attempt in range(max_retries):
@@ -383,22 +385,17 @@ class ReportBenchmark:
         data = {
             "question": item["question"],
             "format": item["format"],
-            "answer": utils.extract_boxed_content(item["answer"]),
+            "answer": extract_boxed_content(item["answer"]),
         }
         try:
-            response = self.agent.chat_with_template("verify_qa_format.txt", data, model="gpt-4o", check_prompt=False)
-            result = extract_and_validate_json(response)
+            template_str = self.agent.load_template("verify_qa_format.txt")
+            prompt = self.agent.render_template(template_str, data)
+            # 同样使用 safe_chat_and_parse 重试模型验证
+            result = safe_chat_and_parse(self.agent, prompt, model="gpt-4o")
             printer.log(f"\nVerification Result: \n{result}\n")
-            if result["result"] == True:
-                printer.log(f"Verification passed")
-                return True
-            else:
-                # 打印出验证失败的情况
-                printer.log(f"Verification failed: The answer is: {item['answer']}, fail reason is: {result['reason']}")
-                return False
-            
+            return result.get("result") is True
         except Exception as e:
-            printer.print_exception(f"Error during the validation and verification: {str(e)}")
+            printer.print(f"[ERROR] 验证失败 after {settings.max_retries} retries: {e}")
             return False
 
     def parse_tagged_data_to_table(self, entries, csv_path=None):
