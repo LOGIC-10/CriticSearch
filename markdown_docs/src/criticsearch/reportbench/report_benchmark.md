@@ -29,42 +29,49 @@ This function plays a critical role in the overall workflow of the application, 
 **ReportBenchmark**: The function of ReportBenchmark is to generate report evaluations by building ground truths and facilitating fact extraction through various models.
 
 **attributes**: The attributes of this Class.
-· json_path: A string representing the path to the JSON input file containing the data for report evaluation.  
-· agent: An instance of the BaseAgent class, which is responsible for interacting with the models and handling prompts.  
-· breadth_gt: A dictionary that holds the ground truth data extracted from the JSON file, specifically for report breadth.  
-· article_content: A string containing the markdown content extracted from the JSON file.  
+· json_path: A string representing the path to the JSON input file containing the report data.  
+· agent: An instance of the BaseAgent class used for interacting with models and templates.  
+· breadth_gt: A dictionary containing the ground truth data extracted from the JSON file, specifically focusing on the breadth of the report.  
+· article_content: A string containing the markdown content extracted from the input JSON file.  
 · sections: A list of sections extracted from the markdown content.  
-· section_content_pairs: A list of section content pairs derived from the JSON input.  
-· user_query: A string that represents the user's query for generating a comprehensive report.  
-· cache_dir: A Path object pointing to the directory where benchmark results will be cached.
+· section_content_pairs: A list of pairs containing section titles and their corresponding content.  
+· user_query: A string representing the user's query or a generated query for report generation.  
+· cache_dir: A Path object representing the directory where cached results are stored.
 
-**Code Description**: The ReportBenchmark class is designed to facilitate the evaluation of reports by generating ground truths and processing content through various models. Upon initialization, it takes a JSON input path and an optional user query. It extracts necessary data from the JSON file, including the breadth ground truth, article content, and sections. The user query is constructed based on the title of the breadth ground truth if not provided.
+**Code Description**: The ReportBenchmark class is designed to facilitate the evaluation of reports by generating ground truths and processing content through various models. Upon initialization, it takes a JSON input path and an optional user query. It extracts relevant data from the JSON file, including the breadth ground truth, article content, and section details. The class also manages caching of results to optimize performance.
 
-The class includes methods for caching results, loading from cache, and saving to cache, which optimize performance by avoiding redundant computations. The sliding_window_pairing method creates a sliding window of section content, merging sections while respecting token limits, which is crucial for processing large reports efficiently.
+The class includes several key methods:
+- **_get_cache_key**: Generates a unique cache key based on the input file path and user query, ensuring that cached results can be accurately retrieved.
+- **_load_from_cache**: Loads results from the cache if available and non-empty, providing a mechanism to avoid redundant processing.
+- **_save_to_cache**: Saves results to the cache for future use, enhancing efficiency.
+- **sliding_window_pairing**: Creates sliding windows of section content, merging sections while respecting token limits, which is essential for processing large reports.
+- **run_factualqa**: Executes a FactualQA evaluation using the BaseAgent, leveraging the generated ground truths.
+- **process_section_with_models**: Processes a section of text using multiple models in parallel, allowing for efficient fact extraction.
+- **aggregate_model_results**: Aggregates results from multiple models, ensuring uniqueness and providing a comprehensive output.
+- **generate_benchmark_item**: Generates benchmark items while optionally utilizing cached results, facilitating the evaluation process.
 
-The run_factualqa method evaluates the factual accuracy of the generated content by utilizing a template and the BaseAgent's chat capabilities. The process_section_with_models method allows for parallel processing of sections using multiple models, enhancing the efficiency of fact extraction.
+The ReportBenchmark class is called by the process_single_task function in the main module of the project. This function initializes an instance of ReportBenchmark with the path to the JSON file containing ground truth data. It then generates benchmark items that guide the report generation process. The generated items are used to evaluate the agent's performance and ensure the accuracy of the generated content against the ground truths.
 
-The aggregate_model_results method consolidates results from different models, ensuring uniqueness and providing a comprehensive output. The generate_benchmark_item method incorporates caching support, generating benchmark items while checking for previously cached results to improve performance.
+**Note**: When using the ReportBenchmark class, it is crucial to ensure that the input JSON file is correctly formatted and contains the necessary data for generating ground truths. Proper management of the cache directory is also important to avoid unnecessary processing and to improve performance.
 
-The ReportBenchmark class is called within the process_single_task function found in the src/criticsearch/main.py file. This function initializes an instance of ReportBenchmark with the loaded JSON file, generates a benchmark item, and orchestrates the overall task execution workflow. The generated benchmark item is then used to guide the report generation process, ensuring that the content aligns with the ground truths extracted from the JSON file.
-
-**Note**: It is essential to ensure that the input JSON file is correctly formatted and contains valid data, as this directly impacts the functionality of the ReportBenchmark class. Additionally, the caching mechanism should be managed to optimize performance and avoid redundant computations.
-
-**Output Example**: A possible return value from the generate_benchmark_item method could look like this:
+**Output Example**: A possible appearance of the code's return value when executing the generate_benchmark_item method could look like this:
 ```json
 [
     {
-        "path": "Chapter 1 -> Section 1.1",
-        "merged_section_window_content": "## Section 1.1 Content\nThis section discusses...",
+        "path": "Chapter 1 -> Section 1",
+        "merged_section_window_content": "## Section 1 Title\nContent of section 1...",
         "extracted_facts": [
-            {
-                "question": "What is the main topic of Section 1.1?",
-                "format": "Answer in one sentence.",
-                "answer": "The main topic of Section 1.1 is..."
-            }
+            {"question": "What is the main topic?", "format": "text", "answer": "The main topic is..."},
+            {"question": "What are the key points?", "format": "list", "answer": "1. Point one\n2. Point two"}
         ]
     },
-    ...
+    {
+        "path": "Chapter 1 -> Section 2",
+        "merged_section_window_content": "## Section 2 Title\nContent of section 2...",
+        "extracted_facts": [
+            {"question": "What is discussed in this section?", "format": "text", "answer": "This section discusses..."}
+        ]
+    }
 ]
 ```
 ### FunctionDef __init__(self, json_input_path, user_query)
@@ -160,95 +167,104 @@ The cache mechanism is critical in scenarios where performance optimization is n
 **Note**: It is essential that the cache directory exists and is properly set up before calling this function. Additionally, the correct functioning of `_get_cache_key` is crucial, as it determines the uniqueness of the cache file's name. If either the cache directory or the cache key generation logic is misconfigured, the function may not work as expected.
 ***
 ### FunctionDef sliding_window_pairing(self, max_token_length)
-## `sliding_window_pairing` Function Documentation
+### `sliding_window_pairing` Function Documentation
 
-### Purpose
-The `sliding_window_pairing` function is designed to create sliding windows of section content, merging as many sections as possible within a specified token limit. This function ensures that sections are grouped in a way that maximizes content within the constraints of a token limit, which is essential for processing and inputting into models that have token limitations.
+#### Overview
 
-### Arguments
+The `sliding_window_pairing` function is designed to create sliding windows of section content, aiming to merge as many sections as possible while respecting a maximum token length. This is particularly useful in scenarios where content needs to be processed in manageable chunks, ensuring that each chunk does not exceed a predefined token limit.
 
-- **max_token_length (int, optional)**: 
-  - The maximum number of tokens allowed in each window. The default value is 2000 tokens. This argument determines the size of each content window created by the function. Sections will be combined until the token limit is reached.
+#### Parameters
 
-### Returns
+- **`max_token_length`** (int, default = 2000):
+  - This parameter specifies the maximum number of tokens allowed in each window. The function will attempt to group sections together without exceeding this limit.
 
-- **List[Dict]**: 
-  - A list of dictionaries, where each dictionary represents a merged window of sections. Each window contains:
-    - **highest_title** (str): The title of the highest-level section within the window.
-    - **merged_section_window_content** (str): The combined content of the sections within the window.
-    - **section_window_path** (list): A list of dictionaries representing the hierarchical path of titles and their respective depths within the window.
-    - **section_window_path_text** (str): A string representation of the section path, formatted with depth information.
-    - **section_window_tokens** (int): The total number of tokens in the window, calculated based on the combined content of the sections.
+#### Returns
 
-### Functionality
+- **List[Dict]**:
+  - The function returns a list of dictionaries, where each dictionary represents a window. Each window includes the following keys:
+    - **`id`** (str): A unique identifier for the section.
+    - **`title`** (str): The title of the section.
+    - **`content`** (str): The content of the section.
+    - **`depth`** (int): The depth of the section in the hierarchical structure.
+    - **`path`** (list): A list representing the path to the section, with each element containing a dictionary with the title and depth of the section.
+    - **`tokens`** (int): The number of tokens in the section content.
 
-1. **Section Extraction**: 
-   The function starts by recursively extracting the titles and content of all sections from the provided data structure (`self.section_content_pairs`). For each section, it records the title, content, depth, path, and token count.
+#### Functionality
 
-2. **Section Sorting**: 
-   The sections are sorted by their depth and title path to ensure that parent sections appear before their children. This sorting helps in maintaining a logical structure when creating the sliding windows.
+1. **Section Extraction**:
+   The function recursively extracts section titles, content, and other relevant metadata, such as depth and path. Sections are identified as either dictionaries with specific titles and content or as children of other sections.
 
-3. **Sliding Window Creation**: 
-   The function then iterates through the sorted sections, creating windows of sections that fit within the specified token limit. It merges sections if the total token count of the merged content does not exceed the `max_token_length`.
+2. **Depth Calculation**:
+   The depth of each section is dynamically calculated based on its `id` (if available). If the section has an `id` with a dot notation (e.g., "4.3.5"), the function determines its depth by counting the number of segments in the `id`.
 
-4. **Path Formatting**: 
-   Each window includes a formatted path that displays the hierarchical structure of the sections within that window. The path is represented as a sequence of titles, with each title preceded by a number of hash (`#`) symbols indicating its depth level.
+3. **Token Counting**:
+   The number of tokens in each section's content is calculated using the `count_tokens` function. This ensures that the function respects the `max_token_length` limit.
 
-5. **Token Counting**: 
-   The function uses the `count_tokens` function to calculate the number of tokens in each section's content and the combined content of each window. This is crucial for ensuring that the windows respect the token limit.
+4. **Sliding Window Creation**:
+   The sections are grouped into sliding windows, attempting to maximize the number of sections in each window without exceeding the `max_token_length` constraint. This process continues until all sections have been grouped into windows.
 
-6. **Window Finalization**: 
-   For each window, the function compiles the content and metadata (title, path, and token count) into a dictionary and adds it to the list of windows. The function continues to the next window, ensuring that the token limit is adhered to at all times.
+#### Example Use Case
 
-### Example Use Case
+This function can be used when processing large documents that need to be split into smaller, token-limited chunks for further analysis, such as text processing tasks or API calls that have token limits.
 
-This function is particularly useful in scenarios where content needs to be preprocessed into manageable chunks for model input, such as when dealing with natural language processing models that have token limits (e.g., GPT-3 or GPT-4). The sliding windows allow for efficient content grouping, ensuring that the model receives input without exceeding token constraints.
+#### Notes
 
-### Dependencies
-
-- **count_tokens**: The function relies on `count_tokens` to calculate the number of tokens in a section's content. The tokenization is model-specific and ensures that the content remains within acceptable limits for the processing model.
-
----
-
-This function provides an efficient method for handling and processing large sets of hierarchical content, especially when working with token-limited systems. By ensuring that content is grouped and tokenized appropriately, it helps optimize the preparation of content for further processing or analysis.
+- The function handles hierarchical structures by recursively processing children sections and calculating their depth based on their `id`.
+- It ensures that the content does not exceed the specified token length by adjusting the number of sections grouped together in each window.
 #### FunctionDef extract_sections(data, path, depth)
-**extract_sections**: The function of extract_sections is to recursively extract the titles, content, depth, and path of all sections in a given hierarchical data structure.
+**extract_sections**: The function of extract_sections is to recursively extract the title, content, depth, and path of all sections from a given data structure.
 
-**parameters**:
-· data: The input data which can be a dictionary containing the details of a section, including title, content, id, and potentially nested child sections.
-· path: A list used to track the hierarchical path of sections (default is an empty list).
-· depth: An integer representing the current depth of recursion within the section hierarchy (default is 0).
+**parameters**: The parameters of this function.
+· data: A dictionary representing the section data, which may include fields like 'title', 'content', and 'children'. This is the primary data structure from which sections are extracted.
+· path: A list representing the current path of section titles and their respective depths in the recursive structure. It is used to keep track of the path traversed so far. The default is an empty list.
+· depth: An integer representing the current depth in the hierarchical structure of sections. The default is 0.
 
-**Code Description**: 
-The `extract_sections` function is designed to recursively traverse a hierarchical data structure, typically representing sections of a document or report, extracting specific details about each section such as its title, content, depth, and hierarchical path. It processes the data in a depth-first manner, identifying and handling nested sections (children) as it proceeds.
+**Code Description**: The `extract_sections` function is designed to recursively process a nested dictionary structure containing hierarchical section data. The function performs the following steps:
 
-1. **Base Case (Dictionary Check)**: The function first checks if the input `data` is a dictionary. This is necessary because each section is expected to be represented as a dictionary, containing specific keys such as `'title'`, `'content'`, and `'id'`. If the data is not a dictionary, the function does not process it, and the recursion moves back.
+1. **Initial Checks and Data Extraction**: 
+   - The function begins by verifying if the current data is a dictionary.
+   - It then attempts to extract the 'title' and 'content' fields from the dictionary. If these fields are present, they represent the title and content of the current section.
+   
+2. **Depth Calculation**: 
+   - The depth of the current section is determined. Initially, it is set to the given depth value incremented by one.
+   - If the section contains an 'id' field and that ID follows a dot-separated format (e.g., "4.3.5"), the depth is recalculated based on the number of parts in the ID. This ensures that the section's depth reflects its position in the hierarchy accurately.
 
-2. **Extracting Section Information**: For each valid section dictionary, the function extracts the title and content of the section. If the title and content are present, the function then calculates the depth of the section in the hierarchy. The depth is incremented by 1 for each recursive call, which represents moving one level deeper into the section structure. Additionally, if the section has an `id`, the depth can be recalculated based on the format of the `id`. For example, an `id` like "4.3.5" indicates the section is at depth 3, since "4" is level 1, "4.3" is level 2, and "4.3.5" is level 3.
+3. **Section Extraction and Recording**:
+   - If both the 'title' and 'content' are present, the section’s information is recorded. A dictionary containing the section's 'id', 'title', 'content', 'depth', and the current path is appended to the `sections` list. Additionally, the number of tokens in the 'content' is calculated by calling the `count_tokens` function (as described in the related `count_tokens` documentation).
 
-3. **Storing Section Data**: If both the title and content of the section are found, the function stores the section's information in the `sections` list. Each entry in this list includes the title, content, calculated depth, the path of the section (a list of parent sections leading up to this one), and the number of tokens in the content. The `count_tokens` function is called to determine the token count of the section's content, which can be used for various purposes, such as ensuring that sections do not exceed token limits when processed by AI models.
+4. **Recursive Traversal of Children**:
+   - The function checks if the current section has any children by verifying if a 'children' field exists and is non-empty.
+   - If children exist, the function recursively calls `extract_sections` on each child, passing the updated path and incremented depth to ensure the path and depth are properly tracked for each child section.
 
-4. **Processing Children Sections**: After handling the current section, the function checks if the section contains any child sections under the `'children'` key. If there are children, the function recursively calls `extract_sections` for each child, passing along the updated path and depth. This allows the function to extract and process nested sections, ensuring that all levels of the hierarchy are traversed and their details are captured.
+This function is integral for processing hierarchical section data in a structured manner, extracting detailed information about each section, including its title, content, depth, and path. The result is a comprehensive list of sections, which can then be used for further processing or analysis. 
 
-5. **Path and Depth**: The `path` parameter is used to keep track of the section’s place in the hierarchy. As the function recurses, it appends the current section's title and depth to the path. This helps in maintaining a record of where in the document structure the current section resides. The depth provides insight into how deep the current section is in the hierarchy.
+The `extract_sections` function relies on the `count_tokens` function to calculate the number of tokens in the content of each section, a crucial step for handling text-based data within token-limited environments, such as those involving machine learning models or document processing pipelines. The function efficiently handles nested structures by leveraging recursion, ensuring all sections and their sub-sections are processed appropriately.
 
 **Note**:
-- The `extract_sections` function relies on the presence of certain keys (`'title'`, `'content'`, `'id'`, and `'children'`) in the section data. If these keys are missing or structured differently, the function may not behave as expected.
-- The function is recursive and can handle deeply nested structures. However, it assumes that the input `data` is a dictionary and that the sections are consistently formatted with the expected fields.
-- The function uses the `count_tokens` function to calculate the number of tokens in each section's content. The `count_tokens` function itself relies on the `tiktoken` library, and the results may vary depending on the model used for tokenization.
-- The `sections` list, which stores the extracted data, is assumed to be defined outside of this function. It holds the processed sections for further use or analysis.
+- The function assumes that the input data is structured in a specific way, where each section is a dictionary with optional fields such as 'title', 'content', 'id', and 'children'.
+- The depth calculation based on the section ID (e.g., "4.3.5") is only applicable when the ID field follows a specific hierarchical format. If no ID is provided, the function uses a default depth calculation.
+- The recursive nature of the function means that it is well-suited for processing deeply nested section data, but care must be taken with very large or deeply nested structures to avoid potential recursion limits.
+
 ***
 #### FunctionDef path_sort_key(section)
-**path_sort_key**: The function of path_sort_key is to generate a sorting key based on the length and titles of a given path in a section.
+**path_sort_key**: The function of path_sort_key is to convert a section identifier string into a tuple of integers for sorting.
 
-**parameters**: The parameters of this Function.
-· section: A dictionary containing a key 'path', which is a list of dictionaries, each having a 'title' key.
+**parameters**: The parameters of this function.
+· section: This is a dictionary object that must contain a key named "id". The value associated with this key should be a string representing a path identifier, which may include multiple segments separated by periods (e.g., "3.2.1" or "5").
 
-**Code Description**: The path_sort_key function takes a single parameter, section, which is expected to be a dictionary. This dictionary must contain a key named 'path', which should be a list of dictionaries. Each dictionary in this list must have a 'title' key. The function first calculates the length of the path by determining the number of elements in the section['path'] list. It then constructs a list of titles by extracting the 'title' from each dictionary in the path list. Finally, the function returns a tuple consisting of the path length and a tuple of the titles. This tuple can be used as a sorting key, allowing for comparison based on the length of the path and the lexicographical order of the titles.
+**Code Description**: The `path_sort_key` function is used to generate a tuple of integers from a section identifier string (which is expected to be in the "id" field of the input dictionary). The function first retrieves the "id" value from the provided `section` dictionary. If the "id" is not found, the function defaults to "0". The string value of the "id" is then split by the period (".") separator, and each resulting segment is converted into an integer. The function returns a tuple consisting of these integers. If there is an error during the conversion (e.g., a non-numeric value), the function returns a default tuple `(0,)`.
 
-**Note**: It is important to ensure that the 'path' key exists in the section dictionary and that it contains a list of dictionaries with 'title' keys. If these conditions are not met, the function may raise an error.
+The main purpose of this function is to convert hierarchical path strings like "3.2.1" or "5" into a format suitable for sorting, where each segment of the path corresponds to an integer value in the tuple. This enables numerical sorting of path components.
 
-**Output Example**: An example return value of the function could be (3, ('Title A', 'Title B', 'Title C')) if the section['path'] contained three dictionaries with those titles.
+**Note**: 
+- The function assumes that the `section` parameter is a dictionary and that the "id" key exists within it, although a default value of "0" is used if it is missing.
+- If any part of the "id" string is not a valid integer, the function will catch the exception and return the default value `(0,)`.
+- The function is intended to support path-like strings consisting of numeric segments separated by periods.
+
+**Output Example**: 
+- For an input `section = {"id": "3.2.1"}`, the output will be `(3, 2, 1)`.
+- For an input `section = {"id": "5"}`, the output will be `(5,)`.
+- For an input `section = {"id": "invalid.id"}`, the output will be `(0,)` due to the ValueError exception being caught.
 ***
 #### FunctionDef format_path_with_depth(path_nodes)
 **format_path_with_depth**: The function of format_path_with_depth is to format a list of path nodes into a string representation that visually indicates the depth of each node.

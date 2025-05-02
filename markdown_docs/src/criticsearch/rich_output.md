@@ -56,54 +56,50 @@ This constructor ensures that the `RichPrinter` class has the necessary setup fo
 **Note**: If a custom `Console` instance is passed, it will be used instead of the default one. Additionally, the default style settings can be overridden later in the class, but they serve as initial values for title and line separator styling.
 ***
 ### FunctionDef rule(self, title)
-**rule**: The function of rule is to create a visual separator in the console output with a specified title.
+**rule**: The function of rule is to print a visual separator in the console output with a specified title.
 
 **parameters**: The parameters of this Function.
-· title: A string that represents the title to be displayed in the rule.
+· title: A string that contains the title to be displayed in the rule.
 
-**Code Description**: The rule function is a method of the RichPrinter class that utilizes the console's built-in functionality to generate a visually distinct horizontal line in the console output. This line serves as a separator, enhancing the readability of the output by clearly delineating different sections or important information.
+**Code Description**: The rule function is a method within the RichPrinter class that enhances console output by creating a visually distinct separator line with an accompanying title. This function utilizes the console's built-in capabilities to format and display the title in a styled manner, making it easier for users to identify different sections of output in the console.
 
-When the rule function is called, it takes a single parameter, title, which is a string. This title is formatted using a default style defined within the class, specifically `self.default_title_style`. The function then calls `self.console.rule`, passing the formatted title along with a character to be used for the line. By default, this character is set to `=`.
+When the rule function is called, it constructs a formatted string that combines the default title style with the provided title. The separator line is created using a default character, which is typically an equals sign (`=`), ensuring that the output is clear and visually appealing. The function then invokes the console's rule method to render this formatted string, effectively creating a visual break in the output.
 
-The rule function is invoked in several places within the project, particularly in the context of logging and displaying important stages or outputs during the execution of various workflows. For instance, it is called in the `call_llm`, `tavily_extract`, and `fallback_scrape` functions, among others. In these instances, the rule function is used to create headers for sections of output, such as "LLM Prompt", "Tavily Extract URLs", and "Fallback Scrape Results". This consistent use of the rule function helps maintain a structured and organized output format, making it easier for users to follow the flow of information.
+The rule function is called by various other functions within the project, such as call_llm, tavily_extract, fallback_scrape, and others. These functions utilize the rule method to enhance the readability of their outputs by clearly delineating different sections of information, such as prompts, results, and error messages. This consistent use of the rule function across the project contributes to a more organized and user-friendly console interface.
 
-**Note**: When using the rule function, ensure that the title provided is concise and relevant to the content that follows. This will maximize the effectiveness of the visual separator in enhancing the clarity of the console output.
+**Note**: When using the rule function, ensure that the title provided is concise and relevant to the context of the output. This will help maintain clarity and improve the overall user experience when interacting with the console output.
 ***
 ### FunctionDef log(self, message, style)
 **log**: The function of log is to print a styled log message to the console.
 
 **parameters**: The parameters of this Function.
-· message: str - The message to be logged, which contains the content to be printed to the console.  
-· style: str (optional) - An optional parameter that specifies the style in which the message should be printed.
+· message: A string representing the message to be logged.  
+· style: An optional string that specifies the style to be applied to the log message.
 
-**Code Description**: The log function is a method within the RichPrinter class that is designed to output log messages to the console with optional styling. The function takes two parameters: `message`, which is a string containing the content to be logged, and `style`, which is an optional string that defines the visual style of the output.
+**Code Description**: The log function is designed to output a log message to the console with optional styling. It takes two parameters: `message`, which is the text to be displayed, and `style`, which allows for customization of the message's appearance. The function utilizes the `self.console.log` method to print the message, applying the specified style if provided.
 
-When invoked, the log function calls `self.console.log(message, style=style)`, which utilizes the console's logging capabilities to print the message. The `style` parameter allows for customization of the message's appearance, enabling developers to highlight important information or differentiate between various types of log messages through color or formatting.
+This function is called within various parts of the project to log important information, such as the evaluation results in the evaluate function and the rendered prompts in the chat_with_template function. For instance, in the evaluate function, the log method is used to print the details of each question being processed, including the ground truth answer and the model's predicted answer. This logging is crucial for tracking the evaluation process and understanding the model's performance.
 
-The log function is called within various contexts in the project, notably in the `evaluate` function found in the abs_exp_1.py file. In this context, the log function is used to print formatted messages that indicate the current question being evaluated, the ground truth answer, and the model's predicted answer. This logging is crucial for tracking the evaluation process and understanding the performance of the model during assessments.
+The log function enhances the visibility of the application's operations by providing styled output, making it easier for developers and users to follow the flow of information and identify key events in the execution of the program.
 
-Additionally, the log function is utilized in other parts of the project, such as within the `chat_with_template` function, where it logs the full rendered prompt when the `check_prompt` parameter is set to True. This feature aids in debugging by providing visibility into the prompts sent to the conversational model.
-
-Overall, the log function serves as an essential tool for maintaining transparency in the application's operations, allowing developers to monitor the flow of execution and capture important events or errors during runtime.
-
-**Note**: It is important to ensure that the `message` parameter is a well-formed string. The `style` parameter should be used judiciously to enhance readability without overwhelming the console output. Proper usage of this function contributes to effective logging practices within the application.
+**Note**: It is important to ensure that the message parameter is a well-formed string. The style parameter should correspond to valid styling options recognized by the console logging mechanism. Proper usage of this function contributes to effective logging practices and aids in monitoring the application's behavior.
 ***
 ### FunctionDef print(self, message, style)
-**print**: The function of print is to display a message to the console with an optional style.
+**print**: The function of print is to display a message in the console with optional styling.
 
 **parameters**: The parameters of this Function.
 · message: A string that contains the message to be printed to the console.
 · style: An optional string that specifies the style to be applied to the printed message.
 
-**Code Description**: The print function is a method defined within the RichPrinter class, which is responsible for outputting messages to the console in a formatted manner. The function takes two parameters: `message`, which is the text to be displayed, and `style`, which is an optional parameter that allows the user to specify how the message should be styled when printed.
+**Code Description**: The print function is a method within the RichPrinter class that facilitates the output of messages to the console. It utilizes the console's print method to display the provided message, applying any specified styling to enhance the visual presentation of the output.
 
-When the print method is called, it utilizes the console's print functionality to display the provided message. If a style is specified, it applies that style to the message, enhancing the visual presentation of the output. This is particularly useful for distinguishing different types of messages, such as warnings, errors, or informational messages, by using various styles (e.g., bold, italic, colored text).
+The function begins by accepting two parameters: `message`, which is a string representing the content to be printed, and `style`, which is an optional parameter that allows the user to define the styling of the output (e.g., bold, italic, colored). If a style is provided, it is passed to the console's print method, which applies the desired formatting to the message before displaying it.
 
-The print method is invoked in various parts of the project, particularly in functions that require user feedback or logging of information. For example, it is called in the `call_llm`, `tavily_extract`, and `fallback_scrape` functions to display prompts, results, and other relevant information to the user. By centralizing the printing functionality in the RichPrinter class, the project maintains consistency in how messages are displayed across different components.
+This print function is called in various contexts throughout the project, particularly in functions that require user feedback or logging of information. For instance, it is used in the call_llm function to print prompts and responses during interactions with the OpenAI chat completion API. Additionally, it is utilized in the tavily_extract and fallback_scrape functions to display URLs being processed and results obtained from web scraping.
 
-The use of the print method enhances the user experience by providing clear and styled output, making it easier for users to follow the flow of information during the execution of the application.
+The integration of the print function within these contexts ensures that important information is communicated effectively to the user, enhancing the overall usability of the application. By providing visual feedback through styled output, the print function contributes to a more engaging and informative user experience.
 
-**Note**: When using the print function, it is important to ensure that the message is properly formatted and that any specified style is valid. If no style is provided, the message will be printed in the default format.
+**Note**: When using the print function, it is important to ensure that the message is clear and concise. The optional style parameter should be used judiciously to maintain readability and avoid excessive formatting that could detract from the message's clarity.
 ***
 ### FunctionDef print_exception(self, message, max_frames)
 **print_exception**: The function of print_exception is to log an error message and print the exception details to the console.
