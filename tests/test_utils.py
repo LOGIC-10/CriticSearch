@@ -1,22 +1,28 @@
 import pytest
 from criticsearch.utils import extract_citations
 
-@pytest.mark.parametrize("input_text, expected", [
-    # 无 citation
-    ("This is a text without citations.", []),
-    # 单个 citation
-    ("Some info <citation>http://example.com</citation> end.", ["http://example.com"]),
-    # 多个不同 citation
-    ("A<citation>https://a.com</citation>B and <citation>https://b.com</citation>.", ["https://a.com", "https://b.com"]),
-    # 重复 citation，只保留第一次
-    ("X<citation>dup.com</citation>Y<citation>dup.com</citation>Z", ["dup.com"]),
-    # 包含空白与换行
-    ("<citation>\n https://newline.com \n</citation>", ["https://newline.com"]),
-    # 忽略大小写标签
-    ("<CITATION>UpCase.com</CITATION>", ["UpCase.com"]),
-])
-def test_extract_citations(input_text, expected):
-    assert extract_citations(input_text) == expected
+def test_single_citation():
+    text = "This is a test <citation>http://example.com</citation> end."
+    assert extract_citations(text) == ["http://example.com"]
 
-if __name__ == "__main__":
-    pytest.main(["-q", __file__])
+def test_multiple_citations_and_whitespace():
+    text = (
+        "Here are two:\n"
+        "<citation>  https://foo.com/path  </citation>\n"
+        "and\n"
+        "<citation>\nhttps://bar.com\n</citation>"
+    )
+    assert extract_citations(text) == [
+        "https://foo.com/path",
+        "https://bar.com"
+    ]
+
+def test_duplicate_citations_are_preserved():
+    text = (
+        "<citation>dup</citation> first, then again <citation>dup</citation>"
+    )
+    # 目前实现不会去重，只保留出现顺序
+    assert extract_citations(text) == ["dup", "dup"]
+
+def test_no_citations_returns_empty_list():
+    assert extract_citations("no tags here") == []

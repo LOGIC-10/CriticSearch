@@ -1,3 +1,4 @@
+
 import json
 from typing import List
 import httpx
@@ -11,7 +12,7 @@ class TavilyExtract:
         self._api_key = api_key
         self.headers = {
             "Content-Type": "application/json",
-            "Authorization": f"Bearer {self._api_key}",
+            "Authorization": self._api_key,
         }
         self._client = httpx.AsyncClient(http2=True)
 
@@ -21,7 +22,11 @@ class TavilyExtract:
         向 Tavily API 发送请求并解析 JSON。若网络请求或解析失败，
         会自动重试最多 settings.max_retries 次，再失败则抛出。
         """
-        payload = {"urls": urls}
+        payload = {
+            "urls": urls,
+            "include_images": False,
+            "extract_depth": "basic",
+        }
         try:
             resp = await self._client.post(self.base_url, headers=self.headers, json=payload)
             resp.raise_for_status()

@@ -1,4 +1,4 @@
-from typing import Callable, Dict, List
+from typing import Any, Callable, Dict, List
 
 from ..rich_output import printer
 from .models import Tool
@@ -52,3 +52,36 @@ class ToolRegistry:
             schemas.append(self._tools[func_name])
 
         return schemas
+
+
+    def register_tool(
+        self,
+        name: str,
+        func: Callable,
+        description: str,
+        parameters: Dict[str, Any] = None
+    ) -> Dict[str, Any]:
+        """
+        手动注册一个工具（Function Call 或 MCP）。
+        Args:
+            name: MCP 工具名或函数名
+            func: 实际执行该工具的 Python 函数
+            description: 工具描述
+            parameters: 可选，函数参数 JSON Schema，若不传则自动从 func 签名生成
+        Returns:
+            schema: 一个符合 OpenAI function call/Tool 格式的 dict
+        """
+        # 创建 schema
+        if parameters is None:
+            schema = Tool.create_schema_from_function(func)
+        else:
+            schema = {
+                "name": name,
+                "description": description,
+                "parameters": parameters,
+                "type": "function"
+            }
+        # 存入注册表
+        self._tools[name] = schema
+        printer.log(f"Registered tool: {name}, schema: {schema}")
+        return schema

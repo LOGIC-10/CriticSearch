@@ -132,6 +132,7 @@ class ReportBenchmark:
                 if title and content:
                     current_path = path + [{"title": title, "depth": current_depth}]
                     sections.append({
+                        "id": section_id,                      # 新增：保存 id
                         "title": title,
                         "content": content,
                         "depth": current_depth,
@@ -149,15 +150,18 @@ class ReportBenchmark:
         # 从 section_content_pairs 中提取所有 section
         extract_sections(self.section_content_pairs)
         
-        # 按深度和标题路径排序，确保父节点在子节点之前
-        # 使用路径长度和路径中的标题字符串进行排序
+        # 改为按 id 数值序列排序
         def path_sort_key(section):
-            path_len = len(section['path'])
-            # 将路径转换为可比较的字符串序列
-            path_titles = [p["title"] for p in section['path']]
-            return (path_len, tuple(path_titles))
+            try:
+                # "3.2.1" -> (3,2,1)，"5" -> (5,)
+                return tuple(int(x) for x in section.get("id", "0").split("."))
+            except ValueError:
+                return (0,)
             
         sections.sort(key=path_sort_key)
+        printer.rule(f"Extracted {len(sections)} sections from the report.")
+        printer.print(json.dumps(sections, indent=2))
+        
         
         # 创建滑动窗口
         windows = []
@@ -237,6 +241,9 @@ class ReportBenchmark:
             # 下一个窗口的起始位置
             i = j if j > i + 1 else i + 1
         
+        printer.rule(f"Created {len(windows)} sliding windows.")
+        printer.print(json.dumps(windows, indent=2))
+                
         return windows
 
     def run_factualqa(self):
