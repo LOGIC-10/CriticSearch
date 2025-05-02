@@ -347,7 +347,7 @@ def process_single_task(task, file_name=None):
         json_file = str(json_file_path)
 
     benchmark = ReportBenchmark(json_file)
-    outline = benchmark.generate_benchmark_item(max_window_tokens=1, use_cache=False)
+    outline = benchmark.generate_benchmark_item(max_window_tokens=1, use_cache=True)
 
     # initialize the task
     agent.user_question = task

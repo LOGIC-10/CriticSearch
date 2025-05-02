@@ -228,7 +228,7 @@ criticsearch --from-mapping --mapping-file reportbench/instruction_mapping.json
 criticsearch --from-mapping --concurrent -w 10
 
 6. 并发模式 + 限制条目数：
-criticsearch --from-mapping --concurrent --workers 3 --limit 3
+criticsearch --from-mapping --concurrent --workers 20 --limit 2
 
 7. 自定义对话历史保存目录：
 criticsearch --from-mapping --concurrent --limit 10 --conv-dir ./logs
