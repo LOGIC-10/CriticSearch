@@ -347,7 +347,7 @@ def process_single_task(task, file_name=None):
         json_file = str(json_file_path)
 
     benchmark = ReportBenchmark(json_file)
-    outline = benchmark.generate_benchmark_item(max_window_tokens=200)
+    outline = benchmark.generate_benchmark_item(max_window_tokens=1, use_cache=False)
 
     # initialize the task
     agent.user_question = task
@@ -360,13 +360,18 @@ def process_single_task(task, file_name=None):
     progress = Progress(
         TextColumn("[bold cyan]Chapter Progress:"),
         BarColumn(bar_width=None),
-        TextColumn("{task.completed}/{task.total}"),
+        # 显示 completed(name)/total
+        TextColumn("{task.completed}({task.fields[section_name]})/{task.total}"),
         TextColumn("{task.percentage:>3.0f}%"),
         disable=getattr(settings, "disable_progress", False),
     )
     with progress:
-        section_task = progress.add_task("processing", total=len(outline))
+        # 初始时用第一个 section 的 name 作为 section_name
+        first_name = outline[0]["path"].split("->")[-1].strip().lstrip("# ").strip()
+        section_task = progress.add_task("processing", total=len(outline), section_name=first_name)
+
         printer.rule("BEGIN SECTION‑BY‑SECTION GENERATION")
+
         # 先判断一次模型信心
         agent_confident = agent.chat_with_template("agent_confidence.txt", {"user_question": task})
         agent_confident_yaml = agent.extract_and_validate_yaml(agent_confident)
@@ -383,7 +388,11 @@ def process_single_task(task, file_name=None):
         else:
             agent_report_sections = []  # Initialize the list to store report sections
             for item in outline:  # 按wiki的GT大纲走一次滑窗
-                # 更新进度
+                # 提取当前窗口的“名称”，这里直接用 path 文本，或者你也可以进一步 split 拿最后的标题
+                current_name = item["path"].split("->")[-1].strip().lstrip("# ").strip()
+                # 更新进度条里的字段
+                progress.update(section_task, section_name=current_name)
+                # 推进“节”计数
                 progress.advance(section_task)
 
                 section_path = item["path"]

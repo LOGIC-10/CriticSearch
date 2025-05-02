@@ -216,7 +216,7 @@ if __name__ == "__main__":
 criticsearch "给我写一份2024年叙利亚反对派进攻战役概述"
 
 2. 单任务模式 + 自定义 GT JSON：
-criticsearch "写一篇关于2024年欧洲洪水的报告" -f 2024_European_floods.json
+criticsearch "写一个报告讨论一下2024_Tuvaluan_general_election事件，要求简单清晰即可" -f 2024_Tuvaluan_general_election.json
 
 3. 多任务顺序执行：
 criticsearch "任务A描述" "任务B描述" --conv-dir my_history_dir

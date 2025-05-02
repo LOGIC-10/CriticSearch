@@ -47,7 +47,10 @@ class SearchResponseList(BaseModel):
             "wiki.",
             "fandom.com",
             "wikimedia.org",
-            "wiktionary.org"
+            "wiktionary.org",
+            "wikidata.org",
+            "wikiwand",
+            "wikihow.com",
         ]
         return any(domain in url.lower() for domain in wiki_domains)
     
