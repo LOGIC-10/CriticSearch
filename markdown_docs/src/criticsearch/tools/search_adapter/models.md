@@ -121,51 +121,25 @@ CONTENT: Example content for result 2.
 ```
 ***
 ## ClassDef SearchResponseList
-**SearchResponseList**: The `SearchResponseList` class is designed to encapsulate and manage a list of search responses, specifically handling the serialization and filtering of search results. It provides functionality to ensure unique content across multiple search responses while also allowing for the removal of irrelevant results, such as Wikipedia links.
+**SearchResponseList**: The function of SearchResponseList is to manage and serialize a list of search responses, ensuring unique content across queries while filtering out unwanted results.
 
-### Detailed Analysis
+**attributes**: The attributes of this Class.
+· responses: A list of `SearchResponse` objects that encapsulate the results of individual search queries.
 
-The `SearchResponseList` class inherits from `BaseModel`, indicating that it is part of a data model system that provides validation and serialization features, likely provided by frameworks such as Pydantic.
+**Code Description**: The `SearchResponseList` class inherits from `BaseModel` and is designed to handle multiple `SearchResponse` objects, which represent the results of search queries. The primary attribute of this class is `responses`, which is a list that stores instances of `SearchResponse`. Each `SearchResponse` contains details about a specific search query, including the query string, a list of search results, and any error messages encountered during the search process.
 
-#### Attributes:
-- **responses** (`List[SearchResponse]`): This attribute holds a list of `SearchResponse` objects. Each `SearchResponse` corresponds to a search query and contains the results or errors associated with that query.
+The class includes a private method `_is_wiki_url`, which checks if a given URL belongs to a Wikipedia or related domain. This method is utilized within the `ser_model` method to filter out search results that are deemed irrelevant, specifically those that link to Wikipedia or similar sites. The filtering is based on a predefined list of wiki-related domains.
 
-#### Methods:
+The `ser_model` method is responsible for serializing the list of `SearchResponse` objects into a formatted string representation. It ensures that the content across different queries is unique by maintaining a global set of seen contents. The method iterates through each `SearchResponse` in the `responses` list, checking for errors and filtering out results that are identified as wiki URLs. It counts the total number of results, the number of unique results, and the number of filtered wiki pages, logging this information for user feedback.
 
-1. **_is_wiki_url** (`url: str`) -> `bool`:  
-   This private method checks if a given URL belongs to a Wikipedia-related domain. It scans the URL for known Wikipedia-related domain names (e.g., "wikipedia.org", "wiki.", "fandom.com", etc.) and returns `True` if the URL matches any of these domains, and `False` otherwise. This method is used later in the class to filter out Wikipedia-related results from the search responses.
+The `SearchResponseList` class is called by the `search` method in the `SearchAggregator` class, which performs multiple search queries concurrently. After executing the search queries, the responses are collected and passed to the `SearchResponseList` for serialization. This integration allows for efficient handling of search results, providing a structured output that can be utilized for further processing or presentation.
 
-2. **ser_model** () -> `str`:  
-   This method is responsible for serializing the search responses into a structured string format. It processes the list of `SearchResponse` objects, ensuring that only unique search results are included, while also filtering out Wikipedia-related URLs.  
-   
-   The serialization process involves the following key steps:
-   - **Global Deduplication**: The method maintains a `global_seen_contents` set to track and eliminate duplicate search results across all responses. If a result has already been encountered (based on its content), it is skipped.
-   - **Wiki Filtering**: The method calls `_is_wiki_url` to identify and exclude any search results that link to Wikipedia-related domains, effectively filtering out irrelevant results.
-   - **Error Handling**: If any search response contains an error message (i.e., `response.error_message` is not `None`), it is logged and skipped during serialization.
-   - **Result Counting**: The method also keeps track of the total number of results, the number of unique results, and the number of filtered Wikipedia results.
-   - **Final Serialization**: Once the filtering and deduplication processes are complete, the method constructs a serialized string by calling `model_dump()` on each `SearchResponse` object. This method is assumed to generate a string representation of the `SearchResponse` in a standardized format.
-   
-   At the end of the process, the method logs important statistics, including the total number of results, the number of unique results, the number of duplicates removed, and the number of Wikipedia links filtered. This information is logged using the `printer.log` method, which is likely a utility for logging output messages.
+**Note**: It is essential to ensure that the `responses` attribute contains valid `SearchResponse` objects. The `ser_model` method relies on the proper structure of these objects to generate meaningful output. Additionally, the filtering mechanism is crucial for excluding unwanted results, which enhances the relevance of the search output.
 
-   The final result of the method is a string representation of the serialized search responses.
-
-#### Usage Context:
-
-The `SearchResponseList` class is primarily used in the `search` method of the `SearchAggregator` class. This method performs concurrent searches using multiple search engines and aggregates the results into a `SearchResponseList` object. Once all search tasks are completed, the method calls `SearchResponseList.ser_model()` to serialize the results into a structured string.
-
-The serialized string is returned as the output of the `search` method. This output provides a clear, formatted representation of the search results, which can be used for further processing or presentation.
-
-### Key Notes:
-- The `responses` attribute must be a list of valid `SearchResponse` objects. Each `SearchResponse` should contain a properly formatted search query, a list of `SearchResult` objects, and optionally, an error message.
-- The `ser_model` method performs global deduplication and wiki filtering, which is crucial for ensuring that the final output contains only unique and relevant search results.
-- The `ser_model` method logs important statistics about the filtering process, which helps in tracking the effectiveness of deduplication and filtering steps.
-- The class depends on the `SearchResponse` class for individual search query responses and the `SearchResult` class for individual search results. Proper handling of these classes is essential for the correct functioning of `SearchResponseList`.
-
-### Example Output:
-The `ser_model` method might return a serialized string like this:
+**Output Example**: A possible return value from the `ser_model` method could be structured as follows:
 ```json
 {
-  "responses": [
+  "results": [
     {
       "query": "latest technology news",
       "results": [
@@ -184,31 +158,27 @@ The `ser_model` method might return a serialized string like this:
     }
   ]
 }
-```
-This serialized output represents a list of search responses, each containing the query, the list of unique results, and any associated error messages.
+``` 
+This output illustrates a successful serialization of search responses, containing the original query, a list of relevant search results, and no error messages.
 ### FunctionDef _is_wiki_url(self, url)
 **_is_wiki_url**: The function of _is_wiki_url is to check if a given URL belongs to Wikipedia or related wiki sites.
 
 **parameters**: The parameters of this Function.
-· url: str - The URL string that needs to be checked for its affiliation with wiki-related domains.
+· url: str - The URL string that needs to be checked for wiki-related domains.
 
-**Code Description**: The _is_wiki_url method is designed to determine whether a specified URL is associated with Wikipedia or other wiki-related websites. It achieves this by checking the provided URL against a predefined list of wiki domains. The method converts the URL to lowercase to ensure that the comparison is case-insensitive. 
+**Code Description**: The `_is_wiki_url` function is a method designed to determine whether a specified URL is associated with Wikipedia or other wiki-related websites. It achieves this by maintaining a predefined list of wiki domains, which includes popular sites such as "wikipedia.org", "fandom.com", and "wikihow.com". 
 
-The method utilizes a list called `wiki_domains`, which contains the following entries:
-- "wikipedia.org"
-- "wiki."
-- "fandom.com"
-- "wikimedia.org"
-- "wiktionary.org"
+The function operates as follows:
+1. It accepts a single parameter, `url`, which is expected to be a string representing the URL to be evaluated.
+2. The method converts the URL to lowercase to ensure that the comparison is case-insensitive.
+3. It then checks if any of the domains in the `wiki_domains` list are present in the provided URL using a generator expression combined with the `any()` function. This approach efficiently evaluates each domain against the URL.
+4. If any domain from the list is found within the URL, the function returns `True`, indicating that the URL is indeed a wiki-related link. If none of the domains match, it returns `False`.
 
-The core functionality of the method is implemented using a generator expression within the `any()` function. This expression iterates over each domain in the `wiki_domains` list and checks if any of these domains are present in the lowercase version of the provided URL. If at least one domain is found, the method returns `True`, indicating that the URL is indeed a wiki-related URL. If none of the domains match, it returns `False`.
+The `_is_wiki_url` function is called within the `ser_model` method of the `SearchResponseList` class. In this context, it plays a crucial role in filtering search results. Specifically, during the serialization process of search responses, the `ser_model` method utilizes `_is_wiki_url` to identify and exclude any results that are links to wiki pages. This filtering ensures that the final serialized output contains only unique and relevant content, thereby enhancing the quality of the search results presented to the user.
 
-This method is called within the `ser_model` function of the `SearchResponseList` class. In that context, it is used to filter out search results that link to wiki pages before performing serialization. Specifically, when processing each search response, the `ser_model` function checks each result's URL using the `_is_wiki_url` method. If the URL is identified as a wiki URL, that result is skipped, ensuring that only non-wiki content is included in the final serialized output. This filtering is crucial for maintaining the relevance and uniqueness of the search results being processed.
+**Note**: The function is designed to be straightforward and efficient, focusing solely on the presence of specific domains within the URL. It is essential for maintaining the integrity of the search results by preventing wiki-related content from being included in the final output.
 
-**Note**: It is important to ensure that the input URL is a valid string format. The method does not handle exceptions or errors related to malformed URLs; it simply checks for the presence of specified domains.
-
-**Output Example**: 
-For a URL input such as "https://en.wikipedia.org/wiki/Python_(programming_language)", the method would return `True`, while for "https://www.example.com", it would return `False`.
+**Output Example**: The function will return a boolean value, such as `True` for a URL like "https://en.wikipedia.org/wiki/Example" and `False` for a URL like "https://example.com".
 ***
 ### FunctionDef ser_model(self)
 **ser_model**: The function of ser_model is to serialize a list of SearchResponse objects into a formatted string representation, ensuring unique content across queries.

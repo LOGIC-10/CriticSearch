@@ -1,7 +1,12 @@
 {
-  "doc_version": "66deb2fb336a1da5fbd8971f6184f7598362da95",
+  "doc_version": "4fe102c75286ff5f93181e3f35eb19d6b8b287c1",
   "in_generation_process": false,
   "fake_file_reflection": {},
   "jump_files": [],
-  "deleted_items_from_older_meta": []
+  "deleted_items_from_older_meta": [
+    [
+      "tests/test_utils.py/test_extract_citations",
+      "_function"
+    ]
+  ]
 }

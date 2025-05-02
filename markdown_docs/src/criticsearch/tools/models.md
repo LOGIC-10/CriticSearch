@@ -187,136 +187,119 @@ The Function class is utilized within the Tool class, where it is defined as the
 
 **Note**: When using the Function class, ensure that all attributes (name, description, and parameters) are provided, as they are essential for defining a complete function representation. The integration with the Parameters class is critical for maintaining a structured approach to function parameter definitions.
 ## ClassDef Tool
-**Tool**: The function of Tool is to create a structured representation of a function, encapsulating its metadata and schema.
+**Tool**: The function of Tool is to encapsulate a function definition along with its metadata, enabling the creation of structured tool schemas from Python functions.
 
 **attributes**: The attributes of this Class.
 · type: str - The type of the tool, typically set to 'function'.  
-· function: Function - An instance of the Function class that defines the function's name, description, and parameters.
+· function: Function - An instance of the Function class that defines the schema for the tool's function, including its name, description, and parameters.
 
-**Code Description**: The Tool class is a subclass of BaseModel, designed to encapsulate the details of a function within a structured schema. It includes two primary attributes: `type`, which indicates the nature of the tool (defaulting to 'function'), and `function`, which is an instance of the Function class. The Function class itself represents a structured definition of a function, including its name, description, and a schema for its parameters.
+**Code Description**: The Tool class is a subclass of BaseModel, which indicates its role in a data modeling framework that provides validation and serialization capabilities. This class is designed to represent a tool that is based on a specific function, encapsulating essential details such as the function's name, description, and a structured schema for its parameters.
 
-A key feature of the Tool class is the class method `create_schema_from_function`. This method takes a target function as an argument and extracts essential metadata, such as the function's name and documentation string. It parses the documentation to generate sections that include a description and a list of parameters. The method utilizes the inspect module to retrieve the function's signature, allowing it to identify required parameters and their types.
+The `type` attribute is a string that specifies the type of the tool. In this case, it is typically set to 'function', indicating that the Tool instance is associated with a callable function.
 
-The extracted information is then organized into a Function instance, which is returned as part of the Tool instance. This process facilitates the creation of a comprehensive schema that can be used to represent the function in a structured manner.
+The `function` attribute is an instance of the Function class, which holds the structured representation of the function. This includes the function's name, a detailed description of its purpose, and a schema for its parameters defined by the Parameters class. This integration ensures that each Tool instance has a well-defined function representation, promoting clarity and maintainability in the code.
 
-The Tool class is utilized within the ToolRegistry's `get_or_create_tool_schema` method. This method retrieves or creates tool schemas for specified functions. If a function's schema is not already registered, it invokes `Tool.create_schema_from_function` to generate the schema and add it to the registry. This integration ensures that function definitions are consistently represented and easily accessible within the application.
+The Tool class includes a class method, `create_schema_from_function`, which is responsible for generating a Tool schema from a provided target function. This method extracts metadata from the target function, such as its name and documentation string, and organizes this information into the Function and Parameters structures. The method also handles the extraction of parameter details, including types and descriptions, ensuring that the resulting schema is comprehensive and accurate.
 
-**Note**: When using the Tool class, ensure that the `function` attribute is properly defined as an instance of the Function class, as this is critical for maintaining a structured representation of the function's metadata.
+The Tool class is utilized within the ToolRegistry class, specifically in methods like `get_or_create_tool_schema` and `register_tool`. In `get_or_create_tool_schema`, the Tool class is called to create a schema for functions that are not already registered, ensuring that the necessary tool schemas are available for the provided functions. The `register_tool` method also leverages the Tool class to create a schema from a function if no parameters are provided, thereby facilitating the manual registration of tools.
 
-A possible appearance of the code's return value when invoking `Tool.create_schema_from_function` might look like this:
-```json
-{
-    "type": "function",
-    "function": {
-        "name": "example_function",
-        "description": "This function serves as an example.",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "param1": {
-                    "type": "int",
-                    "description": "The first parameter."
-                },
-                "param2": {
-                    "type": "str",
-                    "description": "The second parameter."
-                }
-            },
-            "required": ["param1"],
-            "additionalProperties": false
-        }
-    }
-}
-```
-### FunctionDef create_schema_from_function(cls, target_function)
-### `create_schema_from_function`
+**Note**: When using the Tool class, it is essential to ensure that the function provided to `create_schema_from_function` is well-documented and follows the expected format, as the method relies on the function's docstring and signature to generate the schema accurately.
 
-#### Overview
-
-The `create_schema_from_function` method is a class method designed to generate a schema for a tool based on a target function. This schema includes the function's name, description, and parameters, providing a structured format for the tool. The method processes the function's docstring to extract relevant information and constructs a JSON-like schema, which can be used for further automation or documentation purposes.
-
-#### Parameters
-- **cls** (`type`): The class that is calling the method. This is implicitly passed when the method is invoked.
-- **target_function** (`function`): The function from which the schema will be created. The method inspects the function's name, docstring, and parameters to build the schema.
-
-#### Method Description
-
-1. **Extracting Function Metadata**: 
-   - The method starts by extracting the function's name and docstring using the `__name__` attribute and `inspect.getdoc()`, respectively.
-   - If the docstring is empty, a default message of "No description provided." is used.
-
-2. **Parsing the Docstring**: 
-   - The docstring is parsed using the `Docstring` class, which is assumed to support Google-style docstrings.
-   - Sections of the docstring are identified and classified into text and parameters sections.
-
-3. **Processing the Parameters**: 
-   - The method iterates through the parsed sections to extract the description of the function and its parameters.
-   - It then inspects the function's signature using the `inspect.signature()` method to identify the types, default values, and required status of each parameter.
-   - Parameters are classified into required and optional based on whether they have default values or not.
-
-4. **Building the Schema**: 
-   - A `Function` schema is constructed using the extracted information. The function's parameters are detailed in the schema with their types and descriptions. If any parameter is of list type, the `get_list_type_annotation` function is used to determine the type of elements in the list.
-   - The `Parameters` class is utilized to define the structure of the parameters, including their types, descriptions, required status, and whether additional properties are allowed.
-
-5. **Returning the Schema**: 
-   - Finally, the schema is returned as a serialized model, excluding any `None` values.
-
-#### Return Value
-The method returns a serialized model of the function schema, including:
-- **name**: The name of the function.
-- **description**: The description extracted from the function's docstring.
-- **parameters**: A structured schema of the function's parameters, which includes their names, types, descriptions, and required status.
-
-#### Example
-
-Assume a function `example_function` with the following signature:
-
-```python
-def example_function(arg1: int, arg2: List[str] = []):
-    """
-    Example function to demonstrate schema creation.
-
-    Args:
-        arg1 (int): The first argument.
-        arg2 (List[str], optional): The second argument, which is a list of strings.
-    """
-    pass
-```
-
-The `create_schema_from_function` method would generate a schema with the following structure:
-
+**Output Example**: A possible return value from the `create_schema_from_function` method might look like this:
 ```json
 {
   "type": "function",
   "function": {
     "name": "example_function",
-    "description": "Example function to demonstrate schema creation.",
+    "description": "This function serves as an example.",
     "parameters": {
       "type": "object",
       "properties": {
-        "arg1": {
+        "param1": {
           "type": "int",
-          "description": "The first argument."
+          "description": "An integer parameter."
         },
-        "arg2": {
-          "type": "list",
-          "items": {
-            "type": "str"
-          },
-          "description": "The second argument, which is a list of strings."
+        "param2": {
+          "type": "str",
+          "description": "A string parameter."
         }
       },
-      "required": ["arg1"],
+      "required": ["param1"],
       "additionalProperties": false
     }
   }
 }
 ```
+### FunctionDef create_schema_from_function(cls, target_function)
+### `create_schema_from_function` Method Documentation
+
+#### Overview
+The `create_schema_from_function` method is designed to generate a schema for a function, which includes the function's name, description, and parameters. It extracts this information from the provided target function and returns it in a structured format suitable for use in a tool schema.
+
+#### Parameters
+- `cls` (Type): The class that calls this method. Typically, it would be a subclass of a model class.
+- `target_function` (Function): The function for which the schema is being created. The method inspects the function's name, docstring, and parameters.
+
+#### Returns
+- Returns a dictionary representing the function schema. This schema includes the function's name, description, and parameters, formatted as per the JSON Schema standard.
+
+#### Method Behavior
+1. **Extract Function Name and Docstring:**
+   The method first extracts the name of the target function using `target_function.__name__`. It also retrieves the docstring associated with the function using `inspect.getdoc(target_function)`. If no docstring is provided, a default message "No description provided." is used.
+
+2. **Parse the Docstring:**
+   The docstring is parsed using the `Docstring` class, specifically following the Google-style format. The parsed sections are analyzed to extract textual descriptions and parameters. The method supports Google-style docstrings and divides the docstring into sections such as text (for description) and parameters.
+
+3. **Extract Description and Parameters:**
+   - **Description:** The method extracts the general description from the docstring.
+   - **Parameters:** The method gathers information on each parameter defined in the function's signature by examining the parsed sections and the docstring.
+
+4. **Inspect Function Signature:**
+   The function signature is inspected using the `inspect.signature(target_function)`, which allows the method to extract details about each parameter. The method checks if each parameter has a default value and whether it is required or optional.
+
+5. **Build Schema for Parameters:**
+   - For each parameter, the method determines its type (either from the function signature or from the docstring).
+   - It identifies whether a parameter is required or optional based on the presence of a default value.
+   - If the parameter is of a list type, the method calls `get_list_type_annotation()` to determine the type of items in the list.
+
+6. **Build the Final Schema:**
+   After processing the function’s name, description, and parameters, the method constructs a final schema using the `Function` and `Parameters` classes. The schema includes:
+   - **Name:** The function's name.
+   - **Description:** The function's description extracted from the docstring.
+   - **Parameters:** A detailed list of parameters, including their types, descriptions, and required status.
+
+7. **Return Schema:**
+   The function schema is returned as a model, with `exclude_none=True` ensuring that any optional attributes with `None` values are omitted from the final output.
+
+#### Example Usage
+
+```python
+from some_module import Tool
+
+def example_function(param1: str, param2: int = 10, param3: List[str] = None):
+    """
+    This is an example function.
+
+    Args:
+        param1 (str): A required string parameter.
+        param2 (int, optional): An optional integer parameter. Defaults to 10.
+        param3 (List[str], optional): A list of strings. Defaults to an empty list.
+
+    Returns:
+        str: A sample return value.
+    """
+    return str(param1)
+
+# Create schema from the example function
+schema = Tool.create_schema_from_function(example_function)
+```
+
+In this example, the `create_schema_from_function` method processes the `example_function` to generate a schema that includes the function's name, description, and parameter details.
 
 #### Notes
-- The method currently supports Google-style docstrings and expects parameters to be described in a specific format within the docstring.
-- It relies on the `get_list_type_annotation` function to determine the type of elements in list-type parameters.
-- The `Parameters` class is used to define the structure of the parameters, ensuring a consistent schema for function input validation.
+- The method currently supports only Google-style docstrings. If the docstring format differs, it may not parse correctly.
+- The function also processes the parameter type annotations, extracting and formatting them to conform to the JSON Schema specification. For list-type parameters, it uses the helper function `get_list_type_annotation()` to determine the type of items in the list.
+- The generated schema is returned in a format that can be used directly for tool integration or validation.
 ***
 ## FunctionDef get_delivery_date(order_id, delivery_type)
 **get_delivery_date**: The function of get_delivery_date is to retrieve the delivery date for a customer's order based on the provided order ID and delivery type.
