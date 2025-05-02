@@ -276,6 +276,8 @@ def _action_router(
     # 获取模型的行动决策
     thought, action, data = _model_action_decision(agent, search_results, task, current_section)
 
+    printer.log(f"data: {data}")
+
     # 根据不同的行动类型进行处理
     if action == "SEARCH":
         # 执行新的搜索

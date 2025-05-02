@@ -108,13 +108,39 @@ def extract_boxed_content(answer: str) -> str:
 
 def extract_citations(text: str) -> list:
     """
-    从文本中提取所有 <citation>URL</citation> 标签中的 URL 并去重
+    从文本中提取所有 <citation>…</citation> 标签中的 URL，
+    支持单个 URL 或者以 Python 列表形式包裹的多个 URL。
+
+    Args:
+        text: 包含 <citation>...</citation> 格式的文本
+
+    Returns:
+        list[str]: 按出现顺序提取的 citation 内容列表
     """
     pattern = r'<citation>(.*?)</citation>'
     matches = re.findall(pattern, text, re.DOTALL | re.IGNORECASE)
-    # 去除空白、换行，然后保留原始顺序去重
-    urls = [m.strip() for m in matches if m.strip()]
-    return list(dict.fromkeys(urls))
+
+    result = []
+    for m in matches:
+        content = m.strip()
+        if not content:
+            continue
+        # 如果是列表形式，就解析成 Python list
+        if content.startswith('[') and content.endswith(']'):
+            try:
+                # ast.literal_eval 只会执行字面量解析，比 eval 安全
+                urls = ast.literal_eval(content)
+                # 过滤并添加
+                for u in urls:
+                    if isinstance(u, str) and u.strip():
+                        result.append(u.strip())
+            except (SyntaxError, ValueError):
+                # 解析失败时，退回当作普通字符串处理
+                result.append(content)
+        else:
+            # 单个 URL 直接加入
+            result.append(content)
+    return result
 
 def extract_notes(response_text: str) -> list:
     """
