@@ -1,18 +1,45 @@
 models:
-  # NOTE: Ensure you provide at least a GPT-4o API key.
   gpt-4o:
     api_key: 
     base_url: 
-    max_tokens: 
+  gpt-4o-mini:
+    api_key: 
+    base_url: 
+    max_tokens: 8192
+  # 可以添加更多模型配置
+  llama3.2:
+    api_key: "dummy_api"
+    base_url: "http://localhost:11434"
+    model: "llama3.2:3b"
+    max_tokens: 8192
 
 tavily:
   api_key: 
 
 search_engine:
+  tavily:
+    api_key: 
   bing:
     api_key: 
 
-default_model: gpt-4o
+# 做正确答案抽取的多个模型
+extract_models:
+  - gpt-4o
+
+# model configuration
+default_model: gpt-4o-mini
+temperature: 0.9
+top_p: 1.0
+frequency_penalty: 0.0
+timeout: 720
 max_retries: 5
+
+# tools
+search_api_endpoint: "http://localhost:8000/"
+
+# general settings
+log_level: info
+no_color: false
+theme: dark
 save_sharegpt: false
-max_results: 10 # Default number of results returned by the search engine
+max_results: 10
