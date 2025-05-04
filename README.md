@@ -62,7 +62,7 @@ Critic Search 是一个基于大型语言模型（LLM）的自动化报告生�
 
 ![Report Pipeline](images/report_pipeline.png)
 
-> **图 2** 展示 Wikipedia → 滑动窗口抽取 → 多模型验证 → QA 过滤 → 准确率回馈的流程。
+> **图 2** Wikipedia → 滑动窗口抽取 → 多模型验证 → QA 过滤 → 准确率回馈流程。
 
 ---
 
@@ -93,49 +93,50 @@ flowchart TD
     N1 --> N2 --> W --> RB
     RB --下一章节--> loop
     loop -->|完成| C1 --> C2
+```
 
-⸻
 
-强化学习回路
+### 强化学习回路
 
-(state = {outline, notes, partial_report, ...})
-       │
-[action = {search, scrape, note, retrieve, write}]
-       │
-[next_state] ──► Report Bench 打分 ──► reward r_t
-       ▲
-       └──────── policy / value model ◄────────┘
+![Reinforcement Learning Loop](images/RL_route.png)
 
-	•	每个章节结束即计算 r_t
-	•	默认支持 PPO / REINFORCE，可替换其他算法
+> **图 3** 从章节生成结束到 reward 计算及策略更新的完整强化学习循环流程。
 
-⸻
+• 每个章节结束即计算 r_t  
+• 默认支持 PPO / REINFORCE，可替换其他算法
 
-使用示例
 
-# 安装依赖
+
+## 使用示例
+
+**安装依赖**
+```bash
 poetry install
 # or
 pip install -r requirements.txt
+```
 
-# 配置 API Key
+**配置 API Key**
+```bash
 cp settings.yaml.template settings.yaml
 # 编辑 settings.yaml，填入 Tavily、Bing、OpenAI 等密钥
+```
 
-# 运行单任务模式
+**运行示例**
+```bash
+# 交互式模式
 criticsearch "写一份 2024 年叙利亚反对派进攻战役概述"
 
 # 并发批量模式（从映射文件）
 criticsearch --from-mapping \
   --mapping-file reportbench/instruction_mapping.json \
   --concurrent -w 5 --limit 10
+```
 
 
+## 目录结构
 
-⸻
-
-目录结构
-
+```bash
 /criticsearch
 ├── base_agent.py        # Agent 核心逻辑
 ├── main.py              # 主流程入口
@@ -150,22 +151,19 @@ criticsearch --from-mapping \
     ├── report_benchmark.py
     └── verifier.py
 
+```
+
+## 开发 & 扩展
+
+| 扩展项       | 操作说明                                                         |
+| ------------ | ---------------------------------------------------------------- |
+| 新增搜索引擎 | 继承 `BaseSearchClient`，实现 `search` 方法并注册到 `SearchAggregator` |
+| 扩展爬取策略 | 修改 `fallback_scrape` 或 添加新的 `Scraper` 类                  |
+| 强化学习集成 | 利用 `agent.training_data` 与 `accuracy` 自定义 reward           |
 
 
-⸻
 
-开发 & 扩展
-	•	新增搜索引擎：继承 BaseSearchClient，实现 search 方法并注册到 SearchAggregator
-	•	扩展爬取策略：修改 fallback_scrape 或添加新的 Scraper 类
-	•	强化学习集成：利用 agent.training_data 与 accuracy 自定义 reward
+## 致谢
 
-⸻
-
-致谢
-
-开源工具：Httpx、BeautifulSoup4、Tenacity、Rich、Jinja2
+[留空]
 欢迎贡献与讨论！
-
-> **验证方式**：将上述文本保存为 `README.md`，在 GitHub 或 VS Code Markdown Preview 中预览，排版与图片应保持与示例截图一致。如仍有错位，请确认：  
-> 1) 图片路径是否为 `images/...`；  
-> 2) 渲染器是否启用自定义样式（部分主题会放大一级标题字体）。
