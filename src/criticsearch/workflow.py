@@ -1,17 +1,28 @@
 import json
+import uuid  # 已有导入
 from pathlib import Path
 from jinja2 import Template
 from .base_agent import BaseAgent
 from .tools.tool_registry import ToolRegistry
 from .utils import extract_tag_content
+from .tools.note_manager import set_session, taking_notes, retrieve_notes  # 新增导入笔记工具
 
 def run_workflow(user_query: str) -> list[dict]:
     # Initialize agent and registry
     agent = BaseAgent()
     registry = agent.tool_registry
+    # 生成唯一session_id用于笔记绑定
+    session_id = str(uuid.uuid4())
+    # 设置当前Session ID到上下文
+    set_session(session_id)
 
-    # Register tools and generate schemas
-    tool_funcs = [agent.search_aggregator.search, agent.content_scraper.scrape]
+    # Register tools and generate schemas (包含搜索、爬取及笔记工具)
+    tool_funcs = [
+        agent.search_aggregator.search,
+        agent.content_scraper.scrape,
+        taking_notes,
+        retrieve_notes,
+    ]
     schemas = []
     for func in tool_funcs:
         schemas.extend(registry.get_or_create_tool_schema(func))
@@ -21,7 +32,7 @@ def run_workflow(user_query: str) -> list[dict]:
     tpl_str = tpl_path.read_text(encoding="utf-8")
     system_prompt = Template(tpl_str).render(
         AVAILABLE_TOOLS=json.dumps(schemas),
-        USER_QUERY=user_query
+        USER_QUERY=user_query,
     )
 
     # Initialize chat history
@@ -77,5 +88,5 @@ if __name__ == "__main__":
 ### use example
 """
 
-python -m criticsearch.workflow --query "你的问题"
+python -m criticsearch.workflow --query "请你从网上搜索黄金最新的新闻并且记一下笔记，要求一定要使用记笔记的工具然后你还需要retrieve一下笔记检查一下保存的是否正确。如果正确再检索一下贸易战的新闻并且记笔记同时检索笔记看是否加入了新的笔记，需要全部进行验证。"
 """

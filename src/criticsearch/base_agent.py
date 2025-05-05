@@ -15,6 +15,7 @@ from .llm_service import ChatCompletionMessage, call_llm
 from .models import ConversationManager
 from .rich_output import printer
 from .tools import ContentScraper, SearchAggregator, ToolRegistry
+from .tools.note_manager import taking_notes as note_save, retrieve_notes as note_retrieve
 from .utils import *
 
 class BaseAgent:
@@ -52,6 +53,12 @@ class BaseAgent:
             self.content_scraper_schema,
             self.search_aggregator_schema,
         ]
+
+        # 注册笔记工具schema并加入可用工具
+        note_schemas = BaseAgent.tool_registry.get_or_create_tool_schema(
+            note_save, note_retrieve
+        )
+        BaseAgent.conversation_manager.available_tools.extend(note_schemas)
 
         self.repeat_turns = 10
 
