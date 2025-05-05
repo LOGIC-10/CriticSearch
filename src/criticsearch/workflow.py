@@ -30,32 +30,34 @@ def run_workflow(user_query: str) -> list[dict]:
         {"role": "user", "content": user_query}
     ]
 
-    # First turn: model suggests a tool call in XML
-    response = agent.chat(usr_prompt=history)
-    history.append({"role": "assistant", "content": response})
+    # Iteratively handle tool calls: model emits <tool_use>, execute tool, feed result back
+    while True:
+        # Assistant suggests next action or final answer
+        response = agent.chat(usr_prompt=history)
+        history.append({"role": "assistant", "content": response})
 
-    # Parse the <tool_use> XML block
-    tool_use_xml = extract_tag_content(response, "tool_use")
-    if tool_use_xml:
+        # Check if model wants to use a tool
+        tool_use_xml = extract_tag_content(response, "tool_use")
+        if not tool_use_xml:
+            # no more tool calls; workflow ends
+            break
+
+        # Parse tool name and arguments
         tool_name = extract_tag_content(tool_use_xml, "name")
         args_str = extract_tag_content(tool_use_xml, "arguments")
         args = json.loads(args_str)
 
-        # Execute the tool function
+        # Invoke the tool and capture result
         result = registry.invoke_tool(tool_name, args)
 
-        # Append tool result event to history
+        # Append tool result to history for next turn
         tool_result_xml = (
             f"<tool_use_result>"
             f"<name>{tool_name}</name>"
-            f"<result>{json.dumps(result)}</result>"
+            f"<result>{json.dumps(result, ensure_ascii=False, indent=2)}</result>"
             f"</tool_use_result>"
         )
         history.append({"role": "user", "content": tool_result_xml})
-
-        # Second turn: model consumes tool result and replies
-        final_response = agent.chat(usr_prompt=history)
-        history.append({"role": "assistant", "content": final_response})
 
     return history
 
