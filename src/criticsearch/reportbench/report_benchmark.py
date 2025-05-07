@@ -430,65 +430,68 @@ class ReportBenchmark:
         # Check if the fact extraction result is meaningful enough and correct.
         pass
 
+    @classmethod
+    def generate_for_folder(
+        cls,
+        folder_path: str,
+        use_cache: bool = True,
+        max_workers: int = 50,
+        max_window_tokens: int = 1
+    ) -> dict:
+        """批量为文件夹中所有 JSON 生成基准测试项，使用缓存并行执行"""
+        import os
+        from pathlib import Path
+        from tqdm import tqdm
+        from concurrent.futures import ThreadPoolExecutor, as_completed
+
+        if not os.path.isdir(folder_path):
+            printer.print(f"[ERROR] {folder_path} 不是有效的文件夹路径。")
+            return {}
+        json_files = sorted(Path(folder_path).glob("*.json"))
+        if not json_files:
+            printer.print(f"[WARN] 文件夹 {folder_path} 不包含任何 json 文件。")
+            return {}
+
+        results = {}
+        to_process = []
+        for fp in json_files:
+            bench = cls(str(fp))
+            if use_cache:
+                cached = bench._load_from_cache()
+                if cached is not None:
+                    printer.print(f"[CACHE] 加载 {fp.name} 缓存")
+                    results[fp.name] = cached
+                    continue
+            to_process.append(fp)
+
+        def _proc(fp: Path):
+            printer.rule(f"Processing {fp.name}")
+            bench = cls(str(fp))
+            return fp.name, bench.generate_benchmark_item(
+                use_cache=use_cache,
+                max_window_tokens=max_window_tokens
+            )
+
+        with ThreadPoolExecutor(max_workers=max_workers) as executor:
+            futures = {executor.submit(_proc, fp): fp for fp in to_process}
+            for fut in tqdm(as_completed(futures),
+                            total=len(futures),
+                            desc="⏳ Processing files",
+                            unit="file"):
+                fp = futures[fut]
+                try:
+                    name, res = fut.result()
+                    results[name] = res
+                except Exception as e:
+                    printer.print(f"[ERROR] 处理 {fp.name} 失败：{e}")
+
+        return results
+
 
 # %% [markdown]
 # ## Example Usage
 
 # %%
-def generate_benchmarks_for_folder(
-    folder_path: str,
-    use_cache: bool = True,
-    max_workers: int = 50,
-    max_window_tokens: int = 1
-) -> dict:
-    """批量生成文件夹中所有 json 文件的基准测试项，使用缓存并行执行"""
-    if not os.path.isdir(folder_path):
-        printer.print(f"[ERROR] {folder_path} 不是有效的文件夹路径。")
-        return {}
-    json_files = sorted(Path(folder_path).glob("*.json"))
-    if not json_files:
-        printer.print(f"[WARN] 文件夹 {folder_path} 不包含任何 json 文件。")
-        return {}
-
-    results = {}
-    to_process = []
-    # 先检查缓存，命中则直接加载
-    for fp in json_files:
-        bench = ReportBenchmark(str(fp))
-        if use_cache:
-            cached = bench._load_from_cache()
-            if cached is not None:
-                printer.print(f"[CACHE] 加载 {fp.name} 缓存")
-                results[fp.name] = cached
-                continue
-        to_process.append(fp)
-
-    # 并行处理未命中的文件
-    def _process_file(fp: Path):
-        printer.rule(f"Processing {fp.name}")
-        bench = ReportBenchmark(str(fp))
-        return fp.name, bench.generate_benchmark_item(
-            use_cache=use_cache,
-            max_window_tokens=max_window_tokens
-        )
-
-    with ThreadPoolExecutor(max_workers=max_workers) as executor:
-        futures = {executor.submit(_process_file, fp): fp for fp in to_process}
-        for fut in tqdm(
-            as_completed(futures),
-            total=len(futures),
-            desc="⏳ Processing files",
-            unit="file"
-        ):
-            fp = futures[fut]
-            try:
-                name, res = fut.result()
-                results[name] = res
-            except Exception as e:
-                printer.print(f"[ERROR] 处理 {fp.name} 失败：{e}")
-
-    return results
-
 if __name__ == "__main__":
     if len(sys.argv) < 2:
         print("Usage: python report_benchmark.py <json_file_or_folder>")
@@ -496,7 +499,7 @@ if __name__ == "__main__":
 
     input_path = sys.argv[1]
     if os.path.isdir(input_path):
-        all_results = generate_benchmarks_for_folder(input_path)
+        all_results = ReportBenchmark.generate_for_folder(input_path)
         print(json.dumps(all_results, indent=2, ensure_ascii=False))
     else:
         results = ReportBenchmark(input_path).generate_benchmark_item(use_cache=True)
@@ -505,7 +508,7 @@ if __name__ == "__main__":
 # %%
 """
 # 处理单个 json
-python report_benchmark.py data/report1.json
+python src/criticsearch/reportbench/report_benchmark.py src/criticsearch/reportbench/wiki_data/2024_Washington_summit.json
 
 # 或者处理整个文件夹
 python src/criticsearch/reportbench/report_benchmark.py src/criticsearch/reportbench/wiki_data
