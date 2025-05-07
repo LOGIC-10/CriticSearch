@@ -121,5 +121,5 @@ Here are the rules you should always follow to solve your task:
 Here is your polished response text, including a reference where needed <citation>http://example.com/source</citation>.
 </answer>
 
-Now Begin! If you solve the task correctly, you will receive a reward of $1,000,000.
+Now Begin! Please use the same language as the user's question for reasoning and answering, unless the user explicitly requests otherwise. If you solve the task correctly, you will receive a reward of $1,000,000.
 
