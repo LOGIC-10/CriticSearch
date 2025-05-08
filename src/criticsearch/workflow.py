@@ -6,9 +6,11 @@ from .base_agent import BaseAgent
 from .tools.tool_registry import ToolRegistry
 from .utils import extract_tag_content
 from .tools.note_manager import set_session, taking_notes, retrieve_notes
+from .reportbench.report_benchmark import ReportBenchmark
+from .reportbench.verifier import ReportVerifier
 import argparse
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from typing import Tuple, Dict  
+from typing import List, Tuple, Dict  
 
 class WorkflowExecutor:
     def __init__(self, user_query: str):
@@ -47,6 +49,7 @@ class WorkflowExecutor:
         self._step_count = 0
         self._traj = []
 
+
     def step(self, action: str) -> Tuple[str, float, bool, Dict]:
         """
         执行一次 action：记录、工具解析与调用，并返回 (observation, reward, done, info)
@@ -54,16 +57,13 @@ class WorkflowExecutor:
         self._step_count += 1
         self.history.append({"role": "assistant", "content": action})
 
-        # 超步数直接终止
-        if self._step_count > self.agent.cfg.max_steps:
-            msg = "<error>max_steps_exceeded</error>"
-            self.history.append({"role": "user", "content": msg})
-            return msg, self.agent.cfg.invalid_penalty, True, {}
-
         tool_xml = extract_tag_content(action, "tool_use")
         if not tool_xml:
             # 最终回答
-            obs, reward, done = action, 1.0, True
+            obs = action
+            # evaluate reports for reward
+            reward = 1 # TODO: 这里需要根据reportbenchmark当前section的extracted_facts考试来得到真实的acc（程序悖论）
+            done = True
         else:
             # 解析工具调用
             tool_name = extract_tag_content(tool_xml, "name")
@@ -99,7 +99,8 @@ class WorkflowExecutor:
         # 记录轨迹
         self._traj.append({"a": action, "r": reward})
         obs_str = json.dumps(obs, ensure_ascii=False) if isinstance(obs, (dict, list)) else str(obs)
-        return obs_str[: self.agent.cfg.max_tokens], reward, done, {}
+        self._last_obs = obs_str
+        return self._last_obs, reward, done, {}
 
 # ------------ run_workflow使用 WorkflowExecutor.step ------------
 def run_workflow(user_query: str) -> list[dict]:
@@ -114,6 +115,78 @@ def run_workflow(user_query: str) -> list[dict]:
 
     return runner.history
 
+def iterate_traj():
+    """
+    Evaluate a single section's factual accuracy as reward.
+    """
+    agent = BaseAgent()
+    # For per-section evaluation, load mapping to find current JSON and prompt
+    mapping_path = Path(__file__).parent / "reportbench" / "instruction_mapping.json"
+    try:
+        mapping = json.loads(mapping_path.read_text(encoding="utf-8"))
+    except Exception:
+        print(f"[WARN] Cannot load instruction mapping from {mapping_path}")
+        return 0.0
+    # find JSON file matching this user_query
+    benchmark_dir = Path(__file__).parent / "reportbench" / "wiki_data"
+    for fname, user_prompt in mapping.items(): # 我在这里遍历构建的所有的user prompt来运行不同的section trajectory
+        
+        candidate = benchmark_dir / fname
+        if not candidate.exists():
+            print(f"[WARN] JSON file {candidate} not found")
+            continue
+
+        # generate benchmark items for sections
+        bench = ReportBenchmark(str(candidate), user_query=user_prompt)
+        benchmark_items = bench.generate_benchmark_item(use_cache=True) #  benchmark_items是一个json list
+
+        # 从这里开始构建 背景信息+section信息+之前写作段落信息的 context供模型参考来写当前的section，然后进行verify得到当前section的reward
+        # 1) 背景信息 就是 user_query
+        # 2) section信息 就是 section的title，section内容要模型自己写
+        # 3) 之前写作段落信息 就是之前answer tag里面的内容，所有的拼接起来
+
+        report = ''
+        trajectory_list = []
+
+        for section in benchmark_items:
+            verifier = ReportVerifier(agent)
+            section_title :str = section["path"]
+            section_extracted_facts : List[dict] = section["extracted_facts"] # 有了模型的section answer和这里的extracted_facts就可以调用verifier来验证了
+            
+            # 调用step函数来得到section answer
+            full_prompt = (
+                user_prompt + "\n" +
+                f"Now, based on the background information above, do not generate a complete report, but instead generate the content of the section I am requesting. The section you need to generate currently is: {section_title}\n" +
+                (f"Here is the content of the previous section you wrote for you reference: {report}\n You should keep writing the current section based on what you have already wrote" if section != benchmark_items[0] else "")+
+                "Use the tools immediately in your answer, no spamming, and do not use the tools in the middle of the answer. "
+
+            )
+
+            runner = WorkflowExecutor(full_prompt)
+            from IPython import embed; embed()
+        
+            while True:
+                # Assistant suggests next action或最终回答
+                response = runner.agent.chat(usr_prompt=runner.history)
+                obs, reward, done, _ = runner.step(response)
+                if done:
+                    section_content = extract_tag_content(obs,"answer")
+                    break   
+            
+            section_reward = verifier.verify_section(section_content, section_extracted_facts)
+
+            # 逐渐拼接每个section的内容作为前文写作的背景
+            report += f"Section: {section_title}\n"
+            report += f"\n{section_content}\n"
+
+            trajectory_list.append({
+                "full_prompt": full_prompt,
+                "section_content": section_content,
+                "section_traj": runner._traj,
+                "section_reward": section_reward,
+            })
+        
+    yield trajectory_list
 
 def main():
     parser = argparse.ArgumentParser(description="Run XML-based tool use workflow")
@@ -152,7 +225,8 @@ def main():
         print(json.dumps(history, ensure_ascii=False, indent=2))
 
 if __name__ == "__main__":
-    main()
+    # main()
+    iterate_traj()
 
 
 ### use example
