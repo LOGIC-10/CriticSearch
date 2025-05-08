@@ -440,7 +440,6 @@ def process_single_task(task, file_name=None):
             })
             return agent.training_data
 
-# 新增：命令行入口
 def main():
     parser = argparse.ArgumentParser(description="Run CriticSearch pipeline")
     parser.add_argument("task", help="用户任务描述")

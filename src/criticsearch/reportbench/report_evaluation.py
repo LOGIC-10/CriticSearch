@@ -1,12 +1,11 @@
 import json
-from report_benchmark import ReportBenchmark  # 引入 ReportBenchmark
-from tree_comparison import tree_similarity
+from criticsearch.reportbench import ReportBenchmark
+from criticsearch.reportbench.tree_comparison import tree_similarity
 
 class ReportEvaluation:
     def __init__(self, report_benchmark: ReportBenchmark, student_report: str):
         # 使用 ReportBenchmark 实例获得 ground truths
         self.report_benchmark = report_benchmark
-        # 新增的 StudentReport 字段
         self.student_report = student_report
 
     def examinees_outline_generation(self):
@@ -39,7 +38,6 @@ class ReportEvaluation:
         return response
 
     def extract_student_tree_structure(self):
-        # 新增函数：从 student_report 中抽取目录树逻辑结构
         template_str = self.report_benchmark.agent.load_template("student_tree_extraction.txt")
         data = {"StudentReport": self.student_report}
         prompt = self.report_benchmark.agent.render_template(template_str, data)

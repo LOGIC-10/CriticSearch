@@ -1,6 +1,6 @@
 import json
 import argparse
-import traceback        # 新增
+import traceback        
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
@@ -177,7 +177,6 @@ def start_task_execution():
                         help="对话历史保存目录")
     args = parser.parse_args()
 
-    # —— 新增：如果用户传入的是相对路径，则以当前脚本所在目录为基础去找文件 —— 
     if args.from_mapping:
         mf = args.mapping_file
         if not mf.is_absolute():

@@ -31,6 +31,8 @@ from criticsearch.config import settings
 import os
 from pathlib import Path
 import hashlib
+import sys
+from tqdm import tqdm
 
 # 在文件顶部添加：对模型调用 + JSON 解析 做重试
 @retry(stop=stop_after_attempt(settings.max_retries), wait=wait_fixed(1), reraise=True)
@@ -132,7 +134,7 @@ class ReportBenchmark:
                 if title and content:
                     current_path = path + [{"title": title, "depth": current_depth}]
                     sections.append({
-                        "id": section_id,                      # 新增：保存 id
+                        "id": section_id,                
                         "title": title,
                         "content": content,
                         "depth": current_depth,
@@ -216,8 +218,6 @@ class ReportBenchmark:
                     # 不是子节点或平级节点，跳过
                     break
             
-            # 创建窗口对象
-            # 修改这里，将路径文本包含标题的层级信息
             def format_path_with_depth(path_nodes):
                 formatted_titles = []
                 for node in path_nodes:
@@ -336,7 +336,6 @@ class ReportBenchmark:
         return unique_results
 
     def process_window_content(self, content, max_retries=10):
-        """修改现有的处理方法以使用多模型"""
         # 从settings中直接获取extract_models配置
         models = settings.extract_models if hasattr(settings, 'extract_models') else ["gpt-4o"]
         
@@ -351,41 +350,40 @@ class ReportBenchmark:
         
         return []  # 如果所有尝试都失败则返回空列表
 
-    def generate_benchmark_item(self, use_cache=True, max_window_tokens=300):
+    def generate_benchmark_item(self, use_cache=True, max_window_tokens=1):
         """添加缓存支持的基准测试项生成方法"""
         if use_cache:
             cached_results = self._load_from_cache()
             if cached_results is not None:
                 printer.print("Loading results from cache...")
                 return cached_results
-        
-        # 原有的生成逻辑
-        results = []
+
         windows = self.sliding_window_pairing(max_token_length=max_window_tokens)
-        
-        # 准备抽取任务的输入
-        window_contents = []
-        window_paths = []
-        for window in windows:  
-            window_contents.append(window["merged_section_window_content"])
-            window_paths.append(window["section_window_path_text"])
-        
-        # 组合抽取结果和路径信息
-        final_results = []
-        for path, content in zip(window_paths, window_contents):
-            parsed_data = self.process_window_content(content)
-            if parsed_data:
-                final_results.append({
-                    "path": path,
-                    "merged_section_window_content": content,
-                    "extracted_facts": parsed_data
-                })
-        
-        # 保存结果到缓存
+
+        # 并发处理所有窗口
+        results = []
+        with ThreadPoolExecutor(max_workers=50) as executor:
+            futures = {
+                executor.submit(self.process_window_content, w["merged_section_window_content"]): w
+                for w in windows
+            }
+            for fut in tqdm(as_completed(futures),
+                            total=len(futures),
+                            desc="⏳ Processing windows",
+                            unit="win"):
+                w = futures[fut]
+                parsed = fut.result()
+                if parsed:
+                    results.append({
+                        "path": w["section_window_path_text"],
+                        "merged_section_window_content": w["merged_section_window_content"],
+                        "extracted_facts": parsed
+                    })
+
         if use_cache:
-            self._save_to_cache(final_results)
-            
-        return final_results
+            self._save_to_cache(results)
+
+        return results
 
     def verify_qa_format(self, item: dict) -> bool:
         """验证问答对是否符合格式约束"""
@@ -428,17 +426,92 @@ class ReportBenchmark:
         # Check if the fact extraction result is meaningful enough and correct.
         pass
 
+    @classmethod
+    def generate_for_folder(
+        cls,
+        folder_path: str,
+        use_cache: bool = True,
+        max_workers: int = 50,
+        max_window_tokens: int = 1
+    ) -> dict:
+        """批量为文件夹中所有 JSON 生成基准测试项，使用缓存并行执行"""
+        import os
+        from pathlib import Path
+        from tqdm import tqdm
+        from concurrent.futures import ThreadPoolExecutor, as_completed
 
+        if not os.path.isdir(folder_path):
+            printer.print(f"[ERROR] {folder_path} 不是有效的文件夹路径。")
+            return {}
+        json_files = sorted(Path(folder_path).glob("*.json"))
+        if not json_files:
+            printer.print(f"[WARN] 文件夹 {folder_path} 不包含任何 json 文件。")
+            return {}
+
+        results = {}
+        to_process = []
+        for fp in json_files:
+            bench = cls(str(fp))
+            if use_cache:
+                cached = bench._load_from_cache()
+                if cached is not None:
+                    printer.print(f"[CACHE] 加载 {fp.name} 缓存")
+                    results[fp.name] = cached
+                    continue
+            to_process.append(fp)
+
+        def _proc(fp: Path):
+            printer.rule(f"Processing {fp.name}")
+            bench = cls(str(fp))
+            return fp.name, bench.generate_benchmark_item(
+                use_cache=use_cache,
+                max_window_tokens=max_window_tokens
+            )
+
+        with ThreadPoolExecutor(max_workers=max_workers) as executor:
+            futures = {executor.submit(_proc, fp): fp for fp in to_process}
+            for fut in tqdm(as_completed(futures),
+                            total=len(futures),
+                            desc="⏳ Processing files",
+                            unit="file"):
+                fp = futures[fut]
+                try:
+                    name, res = fut.result()
+                    results[name] = res
+                except Exception as e:
+                    printer.print(f"[ERROR] 处理 {fp.name} 失败：{e}")
+
+        return results
+
+
+
+"""
+我需要先根据InstructionMapping.json这个文件去找它的key 因为它的每一个key都是一个json文件的文件名 然后到指定的folder下面去找到这个json文件 如果没有这个json文件就跳过 如果找到这个json文件 就提取出在InstructionMapping.json中的 这个json文件名的key对应的value 这个value的值就是instruction
+
+同时还是要跟着这个Key 找到当前这个Key所代表的JSON文件 然后去把它提取出来 跑一遍WindowSection的划分 也就是ReportBenchmark里面的 提取Window的Section内容的部分 然后 有一个 对于每一个Section 提取出Section的Title 结合进Prompt 结合进刚才的 Instruction 拼在一起 变成一个真正的完整的Prompt
+"""
 # %% [markdown]
 # ## Example Usage
 
 # %%
 if __name__ == "__main__":
-    json_file = "/workspaces/CriticSearch/src/criticsearch/reportbench/wiki_data/2024_Syrian_opposition_offensives.json"
-    benchmark = ReportBenchmark(json_file)
-    # print(benchmark.section_content_pairs)
-    print(json.dumps(benchmark.sliding_window_pairing(max_token_length=800), indent=2))
-    results = benchmark.generate_benchmark_item(use_cache=True)
-    print("Benchmark Item curation Results:")
-    print(json.dumps(results, indent=2))
+    if len(sys.argv) < 2:
+        print("Usage: python report_benchmark.py <json_file_or_folder>")
+        sys.exit(1)
+
+    input_path = sys.argv[1]
+    if os.path.isdir(input_path):
+        all_results = ReportBenchmark.generate_for_folder(input_path)
+        print(json.dumps(all_results, indent=2, ensure_ascii=False))
+    else:
+        results = ReportBenchmark(input_path).generate_benchmark_item(use_cache=True)
+        print("Benchmark Item curation Results:")
+        print(json.dumps(results, indent=2, ensure_ascii=False))
 # %%
+"""
+# 处理单个 json
+python src/criticsearch/reportbench/report_benchmark.py src/criticsearch/reportbench/wiki_data/2024_Washington_summit.json
+
+# 或者处理整个文件夹
+python src/criticsearch/reportbench/report_benchmark.py src/criticsearch/reportbench/wiki_data
+"""
