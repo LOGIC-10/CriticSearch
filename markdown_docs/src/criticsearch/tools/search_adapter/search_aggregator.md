@@ -100,17 +100,17 @@ This output illustrates a successful search response containing the original que
 **search**: The function of search is to perform a search using the provided query.
 
 **parameters**: The parameters of this Function.
-· query: List[str] - A list of search queries to be executed.
+· query: List[str] - A list of search queries.
 
-**Code Description**: The search function is an asynchronous method that facilitates the execution of multiple search queries concurrently using available search engines. It begins by retrieving a list of currently available search engines from the instance's `available_clients` attribute. If no search engines are available, it raises a ValueError, indicating that the search cannot be performed.
+**Code Description**: The search function is an asynchronous method designed to execute search queries across multiple available search engines. It begins by retrieving the list of currently available search engines from the instance's `available_clients` attribute. If no search engines are available, the function raises a ValueError, indicating that a search cannot be performed.
 
-Next, the function constructs a list of tasks, where each task corresponds to a single query being processed by the `_search_single_query` method. This method is responsible for executing the search against the specified engines and returning the results encapsulated in a `SearchResponse` object.
+Next, the function creates a list of tasks, where each task corresponds to a single search query. This is achieved by calling the `_search_single_query` method for each query in the provided list, passing the list of available engines as an argument. The tasks are then executed concurrently using the `gather` function from the asyncio library, which allows for efficient handling of multiple asynchronous operations.
 
-The function then utilizes the `gather` method from the asyncio library to execute all the search tasks concurrently. This allows for efficient handling of multiple queries, leveraging the asynchronous capabilities of the framework. Once all tasks are completed, the responses are collected and passed to the `SearchResponseList` class, which is designed to manage and serialize the search results.
+Once all tasks are completed, the function collects the responses and constructs a `SearchResponseList` object, which is responsible for managing and serializing the search results. The `model_dump` method of the `SearchResponseList` is called to return the serialized output, which is a structured representation of the search results.
 
-Finally, the serialized search responses are returned as a string representation, providing a structured output that can be utilized for further processing or presentation. The search function is called by various components within the project, including the `search_validator` method, which uses it to obtain search results based on a user-provided question. This integration highlights the function's role in enabling real-time search capabilities within the broader application context.
+The search function is called by various components within the project, including the `search_validator` function in the `ReverseUpgradeWorkflow` class. This function utilizes the search method to validate the correctness of a model's answer by performing a search based on the input question and comparing the results against the expected answer. Additionally, the search method is invoked in the `_action_router` function, which manages the decision-making process for the intelligent agent, guiding it through actions such as searching and browsing based on the context and results.
 
-**Note**: It is essential to ensure that the `query` parameter is a list of valid search strings. The function relies on the availability of search engines and proper handling of exceptions to manage scenarios where no engines are available or if errors occur during the search process.
+**Note**: It is essential to ensure that the `query` parameter is a well-formed list of strings, as the function relies on valid input to perform searches effectively. The proper functioning of the search engines is also crucial for obtaining meaningful results.
 
 **Output Example**: A possible return value from the search function could be structured as follows:
 ```json
@@ -135,5 +135,5 @@ Finally, the serialized search responses are returned as a string representation
   ]
 }
 ``` 
-This output illustrates a successful search response containing the original query, a list of search results, and no error messages.
+This output illustrates a successful serialization of search responses, containing the original query, a list of relevant search results, and no error messages.
 ***

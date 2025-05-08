@@ -253,40 +253,24 @@ The extract_actions function is called within the _model_action_decision functio
 
 **Output Example**: An example of the output when the input text is "<action>SEARCH</action><action>BROWSE</action>" would be a set containing: {'SEARCH', 'BROWSE'}. If the input text does not contain any action tags, the output would be an empty set: set().
 ## FunctionDef extract_tag_content(text, tag)
-## Function Documentation: `extract_tag_content`
+**extract_tag_content**: The function of extract_tag_content is to extract content enclosed within specified XML-like tags from a given text.
 
-### Overview
-The function `extract_tag_content` is designed to extract the content enclosed within a specified HTML-like tag from a given text. It supports case-insensitive searches and handles multiline text efficiently.
+**parameters**: The parameters of this Function.
+· text: A string containing the text that includes the specified tags.
+· tag: A string representing the name of the tag to be extracted (e.g., "question", "answer").
 
-### Function Signature
-```python
-def extract_tag_content(text: str, tag: str) -> str:
+**Code Description**: The extract_tag_content function is designed to facilitate the extraction of content from text that is formatted with specific tags. It utilizes a regular expression pattern to identify and capture the content that lies between the opening and closing tags of the specified type. The function takes two arguments: 'text', which is the input string containing the tagged content, and 'tag', which specifies the particular tag to search for.
+
+The function constructs a regular expression pattern dynamically using the provided tag name, allowing it to match both the opening and closing tags in a case-insensitive manner. The re.search method is employed to find the first occurrence of the specified tag in the text. If a match is found, the content between the tags is returned after stripping any leading or trailing whitespace. If no match is found, the function returns an empty string.
+
+This function is called by several other functions within the project, such as method_choice, query_update, and gpt_search_query_update. In these contexts, extract_tag_content plays a crucial role in processing the output from a conversational model or other sources that return structured data in a tagged format. For instance, in the method_choice function, it extracts the suggested method and associated queries from the model's response, ensuring that the workflow can adapt based on real-time suggestions. Similarly, in query_update and gpt_search_query_update, it retrieves updated questions and evidence from the model's output, which are essential for refining the question-answer pairs being processed.
+
+**Note**: It is important to ensure that the input text is well-formed and contains the specified tags; otherwise, the function may return an empty string, indicating that no content was found for the given tag.
+
+**Output Example**: A possible return value from the extract_tag_content function could be:
 ```
-
-### Parameters
-- **`text`** (`str`): The input text that contains the tag. This text can include any HTML-like elements or other content.
-- **`tag`** (`str`): The name of the tag whose content is to be extracted. For example, if the tag is `<question>`, the value of `tag` would be `"question"`.
-
-### Returns
-- **`str`**: The content inside the specified tag. If the tag is not found, an empty string is returned. The extracted content will be stripped of leading and trailing whitespace.
-
-### Functionality
-The function constructs a regular expression pattern based on the provided `tag` and attempts to find the content within the tag in the `text`. The regular expression is case-insensitive and supports multiline content within the tag.
-
-### Example Usage
-```python
-text = "<question>What is the capital of France?</question>"
-tag = "question"
-result = extract_tag_content(text, tag)
-print(result)  # Output: "What is the capital of France?"
+"How does the process work?"
 ```
-
-### Error Handling
-If the specified tag is not present in the `text`, the function returns an empty string.
-
-### Notes
-- The function handles both uppercase and lowercase tag names due to the use of `re.IGNORECASE`.
-- It is optimized to handle multiline content by using the `re.DOTALL` flag.
 ## FunctionDef extract_and_validate_json(model_response)
 **extract_and_validate_json**: The function of extract_and_validate_json is to extract JSON content from a model response, whether it's wrapped in ```json``` fences or is just raw JSON text, and return the parsed object or None on failure.
 

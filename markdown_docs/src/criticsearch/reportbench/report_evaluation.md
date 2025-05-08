@@ -1,77 +1,70 @@
 ## ClassDef ReportEvaluation
-**ReportEvaluation**: The function of ReportEvaluation is to evaluate a student report against predefined benchmarks, specifically assessing the breadth, depth, and factual accuracy of the student's work using the provided report benchmarking tools.
+**ReportEvaluation**: The function of ReportEvaluation is to evaluate student reports against a benchmark using various assessment methods.
 
 **attributes**: The attributes of this Class.
-· report_benchmark: An instance of the ReportBenchmark class, used to access the ground truths for evaluating the student report.  
-· student_report: A string representing the student's report that will be evaluated.
-
-**Code Description**: The `ReportEvaluation` class is designed to assess the quality of a student’s report by comparing it with a benchmark. It is initialized with two primary parameters: a `report_benchmark` object and the `student_report` string.
-
-- The `__init__` method initializes the class with a `report_benchmark` object, which holds various tools such as templates and ground truth data, and a `student_report` string that contains the student's submission. This method effectively prepares the class for later evaluation tasks.
-  
-- The `examinees_outline_generation` method uses the `ReportBenchmark` class's `BaseAgent` to generate an outline or tree structure for the student’s report. It loads the necessary template (`outline_generation.txt`) and uses it to create a prompt with the user query. This prompt is then sent to the agent, which returns a response representing the student’s report tree structure. This method is a key part of generating a student’s report structure that will later be used in evaluations.
-
-- The `evaluate_breadth` method evaluates the breadth of the student report by utilizing the `examinees_outline_generation` method to generate a student report tree. The generated tree is compared with the benchmark's breadth ground truth using a function called `tree_similarity`. This comparison results in a score that indicates how well the student’s report matches the expected breadth of coverage.
-
-- The `evaluate_factualqa` method evaluates the factual accuracy of the student report. It first loads the appropriate template (`factual_qa.txt`) and prepares a data dictionary that includes the user query, breadth ground truth, and the student report. The data is then used to create a prompt, which is sent to the agent. The response received is the factual QA evaluation result for the student report, indicating how factually accurate the report is in relation to the given benchmarks.
-
-- The `extract_student_tree_structure` method extracts the logical tree structure of the student report. By loading the `student_tree_extraction.txt` template and providing the student report, it generates a prompt that, when sent to the agent, returns a JSON representation of the student report’s structural elements. This allows for further processing or evaluation of how the student's report is organized.
-
-- The `evaluate_depth` method is a placeholder function intended for evaluating the depth of the student report. While not yet implemented, it is expected that this method will eventually use factual QA results to assess the accuracy of answers related to the depth of the student report and compute a final score based on the comparison.
-
-**Note**: 
-- The `evaluate_depth` method is not yet implemented and may require future development to complete the depth evaluation process.
-- This class relies on external templates such as `outline_generation.txt`, `factual_qa.txt`, and `student_tree_extraction.txt` to generate prompts for the evaluation process, which means the templates should be available and properly configured in the environment.
-- The method `tree_similarity` is used in `evaluate_breadth` to compare the student report’s tree structure with the benchmark’s ground truth; however, the specifics of the `tree_similarity` function are not provided in the current class context.
-
-**Output Example**: 
-- The `examinees_outline_generation` method might return a JSON structure like this:
-```json
-{
-  "student_tree": [
-    {"section": "Introduction", "content": "Introduction text here..."},
-    {"section": "Methodology", "content": "Methodology text here..."},
-    {"section": "Conclusion", "content": "Conclusion text here..."}
-  ]
-}
-```
-- The `evaluate_breadth` method might return a similarity score, such as:
-```json
-{
-  "breadth_similarity_score": 0.85
-}
-```
-- The `evaluate_factualqa` method might return a factual accuracy response like:
-```json
-{
-  "factual_accuracy_score": 0.92,
-  "detailed_feedback": "The report accurately represents the core facts from the benchmark."
-}
-```
-- The `extract_student_tree_structure` method might return a structured representation like:
-```json
-{
-  "student_report_structure": {
-    "Introduction": {"section_start": 0, "section_end": 120},
-    "Methodology": {"section_start": 121, "section_end": 200},
-    "Conclusion": {"section_start": 201, "section_end": 240}
-  }
-}
-```
-### FunctionDef __init__(self, report_benchmark, student_report)
-**__init__**: The function of __init__ is to initialize an instance of the ReportEvaluation class with a ReportBenchmark instance and a student report string.
-
-**parameters**: The parameters of this Function.
-· report_benchmark: An instance of the ReportBenchmark class, which is used to obtain ground truths for report evaluations.  
+· report_benchmark: An instance of the ReportBenchmark class that provides ground truths and evaluation metrics.
 · student_report: A string representing the student's report that is to be evaluated.
 
-**Code Description**: The __init__ function is the constructor for the ReportEvaluation class. It takes two parameters: report_benchmark and student_report. The report_benchmark parameter is expected to be an instance of the ReportBenchmark class, which is responsible for generating report evaluations by building ground truths and performing fact extraction. The student_report parameter is a string that contains the report of a student, which will be evaluated against the ground truths provided by the ReportBenchmark instance.
+**Code Description**: The ReportEvaluation class is designed to facilitate the evaluation of student reports by comparing them against established benchmarks. It utilizes an instance of the ReportBenchmark class to access necessary data and templates for generating assessments.
 
-Upon initialization, the constructor assigns the report_benchmark instance to the instance variable self.report_benchmark, allowing the ReportEvaluation class to access the methods and attributes of the ReportBenchmark class for further processing. Additionally, the student_report string is stored in the instance variable self.student_report, which will be used in the evaluation process.
+The constructor method `__init__` initializes the ReportEvaluation object with two parameters: `report_benchmark`, which is an instance of the ReportBenchmark class, and `student_report`, which is a string containing the student's report. This setup allows the class to leverage the functionalities provided by the ReportBenchmark instance throughout its methods.
 
-The relationship between the ReportEvaluation class and the ReportBenchmark class is crucial, as the ReportEvaluation class relies on the functionalities provided by the ReportBenchmark instance to perform its evaluations. This constructor sets up the necessary context for the ReportEvaluation class to operate effectively, ensuring that it has access to the required ground truths and the specific report that needs to be evaluated.
+The method `examinees_outline_generation` generates an outline of the student's report by utilizing a template for outline generation. It retrieves the template from the ReportBenchmark's agent, populates it with the user query, and then renders it to create a prompt. This prompt is sent to the agent's chat function to obtain a response, which represents the generated outline.
 
-**Note**: When using the ReportEvaluation class, ensure that the report_benchmark instance is properly initialized with valid data, as it directly influences the evaluation process of the student report.
+The `evaluate_breadth` method assesses the breadth of the student's report by first generating the student's tree structure using the `examinees_outline_generation` method. It then calculates the similarity score between the generated student tree and the ground truth breadth provided by the ReportBenchmark instance using the `tree_similarity` function.
+
+The `evaluate_factualqa` method performs a FactualQA evaluation based on the student's report. It loads a specific template for factual QA, fills it with the user query, ground truth breadth, and the student's report, and then sends this prompt to the agent's chat function to receive a response.
+
+The `extract_student_tree_structure` method is responsible for extracting the structure of the student's report. It uses a template for student tree extraction, populates it with the student's report, and retrieves the response from the agent's chat function, which is then parsed from JSON format.
+
+The `evaluate_depth` method is currently not implemented but is intended to evaluate the depth of the student's report based on the results from the FactualQA evaluation. It is designed to calculate the accuracy of answers extracted from the student report.
+
+**Note**: Users should ensure that the ReportBenchmark instance is properly initialized with the necessary data before creating a ReportEvaluation object. Additionally, the evaluate_depth method is a placeholder and does not currently perform any evaluation.
+
+**Output Example**: 
+For the `examinees_outline_generation` method, a possible return value could be:
+{
+  "Outline": [
+    "Introduction",
+    "Main Argument",
+    "Supporting Evidence",
+    "Conclusion"
+  ]
+} 
+
+For the `evaluate_breadth` method, a possible score could be:
+{
+  "BreadthScore": 0.85
+} 
+
+For the `evaluate_factualqa` method, a possible response could be:
+{
+  "FactualQAResult": {
+    "CorrectAnswers": 5,
+    "TotalQuestions": 10,
+    "Accuracy": 0.5
+  }
+} 
+
+For the `extract_student_tree_structure` method, a possible return value could be:
+{
+  "StudentTree": {
+    "Nodes": [
+      {"Title": "Introduction", "Content": "This is the introduction."},
+      {"Title": "Main Argument", "Content": "This is the main argument."}
+    ]
+  }
+}
+### FunctionDef __init__(self, report_benchmark, student_report)
+**__init__**: The function of __init__ is to initialize an instance of the ReportEvaluation class with a report benchmark and a student report.
+
+**parameters**: The parameters of this Function.
+· report_benchmark: An instance of the ReportBenchmark class that provides the ground truths for evaluation.  
+· student_report: A string representing the report submitted by the student for evaluation.
+
+**Code Description**: The __init__ function is a constructor for the ReportEvaluation class. It takes two parameters: report_benchmark and student_report. The report_benchmark parameter is expected to be an instance of the ReportBenchmark class, which is utilized to obtain the ground truths necessary for evaluating the student's report. The student_report parameter is a string that contains the content of the report submitted by the student. Within the constructor, these parameters are assigned to instance variables self.report_benchmark and self.student_report, respectively. This setup allows the ReportEvaluation class to access the benchmark data and the student's report for further processing and evaluation.
+
+**Note**: It is important to ensure that the report_benchmark parameter is indeed an instance of the ReportBenchmark class to avoid type-related errors during evaluation. Additionally, the student_report should be a valid string representing the report content to ensure proper functionality of the class methods that may utilize these attributes.
 ***
 ### FunctionDef examinees_outline_generation(self)
 **examinees_outline_generation**: The function of examinees_outline_generation is to generate a structured outline of student data, referred to as the "student tree," by utilizing a template rendering system and agent communication.
@@ -179,48 +172,34 @@ An example of the output might be a response from the `chat` method, such as:
 This output would be generated based on the evaluation of the provided StudentReport in relation to the query.
 ***
 ### FunctionDef extract_student_tree_structure(self)
-**extract_student_tree_structure**: The function of extract_student_tree_structure is to extract a hierarchical tree structure from a student report.
+**extract_student_tree_structure**: The function of extract_student_tree_structure is to extract and return the structured representation of a student's report by utilizing a template and a chat interface.
 
-**parameters**: The function does not accept any parameters.
+**parameters**: The parameters of this Function.
+· None
 
-**Code Description**:  
-The `extract_student_tree_structure` function is designed to process a student report and generate a hierarchical tree structure based on its content. The function performs the following steps:
+**Code Description**: The extract_student_tree_structure function is designed to facilitate the extraction of a student's report structure. It begins by loading a template from a file named "student_tree_extraction.txt" using the load_template method of the report_benchmark.agent. This template serves as a blueprint for how the student's report data will be formatted. 
 
-1. **Loading Template**: It begins by loading a template file called `student_tree_extraction.txt` using the `load_template` method of the `agent` object. This template is presumably designed to define how the student report's structure should be interpreted.
+Next, the function prepares a data dictionary containing the key "StudentReport" which is assigned the value of the instance variable self.student_report. This dictionary is then passed to the render_template method of the report_benchmark.agent, which processes the template string with the provided data to create a prompt.
 
-2. **Rendering Template**: After loading the template, the function prepares the necessary data to feed into the template. This data is a dictionary with the key `"StudentReport"` mapped to the `student_report` attribute of the current object. The template is then rendered by the `render_template` method of the `agent` object, which takes the loaded template and the data dictionary to generate a prompt for further processing.
+The generated prompt is subsequently sent to a chat interface through the chat method of the report_benchmark.agent, which is expected to return a response based on the prompt. Finally, the function parses the response using json.loads to convert the JSON formatted string into a Python object, which is then returned as the output of the function.
 
-3. **Generating Response**: The generated prompt is passed to the `chat` method of the `agent` object. The chat function appears to simulate a conversation or query processing with the prompt, returning a response, which is expected to be a string containing structured information.
+**Note**: It is important to ensure that the "student_tree_extraction.txt" template file is correctly formatted and accessible. Additionally, the response from the chat method should be in valid JSON format to avoid errors during the parsing step.
 
-4. **Parsing JSON Response**: Finally, the function parses the response from the `chat` method using Python's `json.loads()` to convert the string into a Python dictionary or list, which represents the hierarchical tree structure of the student report.
-
-**Note**: 
-- The function depends on the availability and correctness of the `student_report` attribute and the `agent` object methods such as `load_template`, `render_template`, and `chat`.
-- The template file `student_tree_extraction.txt` must be properly formatted and located in the correct directory for it to be loaded successfully.
-- The response returned by the `chat` method must be a valid JSON string, as the function relies on `json.loads()` to convert it into a Python object.
-
-**Output Example**:  
-Assuming the student report contains a hierarchical structure, the output might look like the following after parsing the JSON response:
-
-```json
+**Output Example**: A possible appearance of the code's return value could be:
 {
-  "root": {
-    "title": "Student Report",
-    "sections": [
-      {
-        "title": "Personal Information",
-        "content": "Details about the student."
-      },
-      {
-        "title": "Academic Performance",
-        "content": "Summary of grades and achievements."
-      }
-    ]
-  }
+    "student_id": "12345",
+    "name": "John Doe",
+    "grades": {
+        "math": "A",
+        "science": "B+",
+        "literature": "A-"
+    },
+    "attendance": {
+        "total_classes": 30,
+        "present": 28,
+        "absent": 2
+    }
 }
-```
-
-This structure represents a tree with a root node titled "Student Report" and two child sections: "Personal Information" and "Academic Performance", each with their own content. The actual structure will depend on the content and formatting of the student report.
 ***
 ### FunctionDef evaluate_depth(self)
 **evaluate_depth**: The function of evaluate_depth is to evaluate the depth of a report based on factual QA results and compute the accuracy of student-generated responses.

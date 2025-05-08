@@ -1,160 +1,155 @@
 ## ClassDef ToolRegistry
-# ToolRegistry Class Documentation
+**ToolRegistry**: The function of ToolRegistry is to manage tools by storing and retrieving their schemas based on function names.
 
-## Overview
+**attributes**: The attributes of this Class.
+· _tools: A dictionary mapping function names to their respective schemas.  
+· _funcs: A dictionary mapping function names to their actual callable functions.  
 
-The `ToolRegistry` class is designed to manage a collection of tools using their function names as keys. It allows for efficient retrieval and creation of tool schemas, supporting seamless tool management by providing methods to register new tools and retrieve or create schemas for existing ones. This registry facilitates easy access and reuse of tools in different contexts.
+**Code Description**: The ToolRegistry class serves as a centralized registry for managing tools, allowing for the retrieval and creation of schemas associated with specific functions. Upon initialization, it sets up two private dictionaries: `_tools`, which holds the schemas of the tools indexed by their function names, and `_funcs`, which stores the actual callable functions corresponding to those names.
 
-## Attributes
+The primary method, `get_or_create_tool_schema`, accepts one or more functions as arguments. It checks if a schema for each function is already registered. If not, it creates a new schema using the `Tool.create_schema_from_function` method and logs the creation process. This method returns a list of schemas corresponding to the provided functions, ensuring that tools can be reused efficiently without the need for redundant schema creation.
 
-- **_tools** (`Dict[str, dict]`): A dictionary that stores tool schemas, where the keys are function names (as strings) and the values are the corresponding schemas. This registry helps track and manage tool schemas for various functions.
+Another important method, `register_tool`, allows for the manual registration of tools. It requires the tool's name, the function that implements the tool, a description, and optional parameters. If parameters are not provided, it automatically generates them from the function's signature. This method updates the `_tools` and `_funcs` dictionaries with the new tool's schema and logs the registration.
 
-## Methods
+The `invoke_tool` method enables the invocation of a registered tool by its name, passing the specified arguments to the corresponding function. If the function is not found in the registry, it raises a KeyError. This method also handles asynchronous function calls, ensuring that if the invoked function returns an awaitable, it is executed properly.
 
-### `__init__(self) -> None`
-Initializes an empty registry for storing tool schemas.
+The ToolRegistry class is utilized within the BaseAgent class, which serves as a foundational component for intelligent agents. The BaseAgent creates an instance of ToolRegistry to manage tool schemas, allowing it to retrieve and register tools as needed during its operations. This relationship is crucial as it enables the BaseAgent to leverage various tools for executing tasks, managing conversation history, and performing searches.
 
-- **Description**: This method sets up the initial state of the `ToolRegistry` class by creating an empty dictionary to hold the tool schemas. Each tool is stored with its function name as the key.
+**Note**: It is essential to ensure that tools are properly registered before invoking them to avoid KeyErrors. Additionally, when registering tools, providing accurate descriptions and parameters will enhance the usability and clarity of the tool schemas.
 
-- **Attributes**: 
-  - `_tools`: An empty dictionary that will later store tool schemas.
-
----
-
-### `get_or_create_tool_schema(self, *target_functions: Callable) -> List[Dict]`
-Retrieves or creates tool schemas for the given functions.
-
-- **Arguments**:
-  - `*target_functions` (`Callable`): One or more functions for which schemas are to be retrieved or created.
-
-- **Returns**:
-  - `List[Dict]`: A list of schemas corresponding to the provided functions. If a schema does not exist for a function, it will be created and added to the registry.
-
-- **Description**: This method checks if the schema for a given function is already registered. If the schema is not found, it will use the `Tool.create_schema_from_function` method to generate and register a new schema. The resulting schemas are then returned in a list.
-
----
-
-### `register_tool(self, name: str, func: Callable, description: str, parameters: Dict[str, Any] = None) -> Dict[str, Any]`
-Manually registers a new tool with its associated function and schema.
-
-- **Arguments**:
-  - `name` (`str`): The name of the tool (either the function name or an identifier for a function call).
-  - `func` (`Callable`): The actual Python function that performs the tool's task.
-  - `description` (`str`): A description of the tool's functionality.
-  - `parameters` (`Dict[str, Any]`, optional): A dictionary representing the function's parameters in JSON schema format. If not provided, it will be automatically generated from the function's signature.
-
-- **Returns**:
-  - `Dict[str, Any]`: The schema of the registered tool, in a format compatible with OpenAI function calls or tool specifications.
-
-- **Description**: This method allows for the manual registration of a tool in the registry. It creates a schema for the provided function (either from the function's signature or the provided parameters) and adds it to the `_tools` registry. The schema is then returned for use in the system.
-
----
-
-## Usage Example
-
-```python
-tool_registry = ToolRegistry()
-
-# Register a tool manually
-def sample_function(param1: str, param2: int):
-    return f"Received {param1} and {param2}"
-
-tool_schema = tool_registry.register_tool(
-    name="sample_tool",
-    func=sample_function,
-    description="A sample tool for demonstration purposes"
-)
-
-# Retrieve or create schemas for a function
-schemas = tool_registry.get_or_create_tool_schema(sample_function)
-```
-
-## Conclusion
-
-The `ToolRegistry` class provides an essential service for managing and organizing tool schemas within an application. By supporting the automatic creation and retrieval of tool schemas, as well as manual registration, it simplifies the integration and management of various tools in a consistent manner.
-### FunctionDef __init__(self)
-**__init__**: The function of __init__ is to initialize an empty registry for storing tool schemas.
-
-**parameters**: The parameters of this Function.
-· There are no parameters for this function.
-
-**Code Description**: The __init__ function is a constructor method that is called when an instance of the ToolRegistry class is created. This function initializes an instance variable named _tools, which is a dictionary. The purpose of this dictionary is to map function names (as strings) to their respective schemas (as dictionaries). By initializing _tools as an empty dictionary, the function sets up a clean state for the ToolRegistry instance, allowing it to store tool schemas that can be added later. This design ensures that the registry starts without any pre-existing data, providing a fresh environment for subsequent operations.
-
-**Note**: It is important to understand that this function does not take any parameters and does not return any value. It solely serves the purpose of setting up the initial state of the ToolRegistry instance. Users should ensure that the _tools dictionary is populated with valid tool schemas through other methods provided in the ToolRegistry class after the instance is initialized.
-***
-### FunctionDef get_or_create_tool_schema(self)
-## Method: `get_or_create_tool_schema`
-
-### Description:
-The `get_or_create_tool_schema` method retrieves or creates tool schemas for the given functions. If the schema for a function is not already registered, it will be created using the `Tool.create_schema_from_function` method and added to the registry. This ensures that the necessary tool schemas are available for the provided functions.
-
-### Parameters:
-- `*target_functions` (Callable): One or more functions for which schemas are to be retrieved or created. The parameter accepts a variable number of function arguments.
-
-### Returns:
-- `List[Dict]`: A list of schemas corresponding to the provided functions. Each schema is returned as a dictionary.
-
-### Behavior:
-1. The method iterates through each provided function in `target_functions`.
-2. For each function, it checks if its schema already exists in the registry (using the function's name).
-3. If the schema is not registered:
-   - The schema is created by calling `Tool.create_schema_from_function` with the target function.
-   - The schema is added to the registry.
-   - A log message is printed indicating the creation of the schema.
-4. Finally, the method returns a list of schemas corresponding to the provided functions, whether they were newly created or retrieved from the registry.
-
-### Example Usage:
-```python
-tool_registry = ToolRegistry()
-schemas = tool_registry.get_or_create_tool_schema(function1, function2)
-```
-
-### Notes:
-- The method leverages the `Tool.create_schema_from_function` to generate the schema when necessary.
-- Logging of schema creation is handled by the `printer.log` function, providing feedback on the schema creation process.
-***
-### FunctionDef register_tool(self, name, func, description, parameters)
-**register_tool**: The function of register_tool is to manually register a tool (Function Call or MCP) by providing its name, execution function, description, and optional parameters.
-
-**parameters**: The parameters of this Function.
-· name: A string representing the name of the MCP tool or function.  
-· func: A Callable that is the actual Python function executing the tool.  
-· description: A string that describes the tool.  
-· parameters: An optional dictionary representing the function parameters in JSON Schema format. If not provided, it will be automatically generated from the func signature.
-
-**Code Description**: The register_tool function is designed to facilitate the manual registration of tools within the ToolRegistry class. It accepts four parameters: `name`, `func`, `description`, and an optional `parameters`. The primary purpose of this function is to create a structured schema for the tool being registered.
-
-When the function is called, it first checks if the `parameters` argument is provided. If it is not provided, the function utilizes the `Tool.create_schema_from_function(func)` method to generate a schema based on the provided function's signature and documentation. This method extracts the function's name, description, and parameter details, ensuring that the schema is comprehensive and accurately reflects the function's capabilities.
-
-If the `parameters` argument is supplied, the function constructs a schema dictionary that includes the `name`, `description`, and the provided `parameters`, along with a type set to "function". This structured schema is then stored in the `_tools` dictionary of the ToolRegistry instance, using the `name` as the key.
-
-The function also logs the registration process using the `printer.log` method, which outputs a styled log message to the console, indicating that the tool has been successfully registered along with its schema. This logging is crucial for tracking the registration of tools and ensuring that developers can monitor the tools available within the registry.
-
-Finally, the function returns the constructed schema, which is formatted to comply with the OpenAI function call/Tool format. This return value can be utilized by other components of the system that require access to the registered tool's metadata.
-
-**Note**: It is important to ensure that the `func` parameter is a well-defined Python function with appropriate documentation, as the schema generation relies on the function's signature and docstring. Additionally, the `name` parameter must be unique within the ToolRegistry to avoid overwriting existing tool registrations.
-
-**Output Example**: A possible return value from the register_tool function might look like this:
+**Output Example**: A possible appearance of the code's return value when invoking a registered tool might look like this:
 ```json
 {
-  "name": "example_tool",
-  "description": "This tool serves as an example.",
-  "parameters": {
-    "type": "object",
-    "properties": {
-      "param1": {
-        "type": "int",
-        "description": "An integer parameter."
-      },
-      "param2": {
-        "type": "str",
-        "description": "A string parameter."
-      }
-    },
-    "required": ["param1"],
-    "additionalProperties": false
-  },
-  "type": "function"
+  "result": "Tool executed successfully.",
+  "tool_name": "example_tool",
+  "arguments": {
+    "arg1": "value1",
+    "arg2": "value2"
+  }
+}
+```
+### FunctionDef __init__(self)
+**__init__**: The function of __init__ is to initialize an empty registry for storing tool schemas and associated callable functions.
+
+**parameters**: This function does not accept any parameters.
+
+**Code Description**: 
+The `__init__` method is the constructor for the class it is a part of. It is responsible for initializing two attributes when an instance of the class is created:
+1. **_tools**: A dictionary that is intended to store tool schemas. Each entry in this dictionary maps a tool's name (as a string) to its corresponding schema, which is stored as a dictionary.
+2. **_funcs**: A dictionary that holds callable functions. Each entry in this dictionary maps a tool's name (as a string) to its associated callable function.
+
+These attributes, `_tools` and `_funcs`, are both initialized as empty dictionaries. The `_tools` dictionary will later store mappings between tool names and their schemas, and the `_funcs` dictionary will store mappings between tool names and their callable functions.
+
+**Note**: 
+- The method does not take any parameters as it only sets up the initial state of the class instance.
+- The two dictionaries, `_tools` and `_funcs`, are essential for the subsequent operation of the class, which likely involves storing and managing tool-related information and callable functions.
+
+***
+### FunctionDef get_or_create_tool_schema(self)
+## `get_or_create_tool_schema` Function Documentation
+
+### Description
+
+The `get_or_create_tool_schema` function is responsible for retrieving or creating tool schemas for one or more given functions. If a schema for a function is not already registered, the function will create a new schema using the `Tool.create_schema_from_function` method and add it to the registry. This ensures that the tool schema for each function is available for use within the system.
+
+### Parameters
+
+- `*target_functions` (`Callable`): One or more functions for which schemas are to be retrieved or created. Each function is expected to be callable.
+
+### Returns
+
+- `List[Dict]`: A list of dictionaries, each representing the schema corresponding to one of the provided functions. These schemas are either retrieved from the registry or newly created.
+
+### Behavior
+
+- For each function in the `target_functions` argument:
+  1. The function's name is extracted.
+  2. If the function’s schema is not already registered (i.e., not present in the internal `_tools` dictionary), a new schema is created using the `Tool.create_schema_from_function` method.
+  3. The newly created schema is added to the `_tools` registry and the function is registered in the `_funcs` dictionary.
+  4. A log message is generated indicating the creation of the new tool schema, using the `printer.log` method.
+  5. The schema for the function is appended to the result list.
+
+### Example Usage
+
+```python
+tool_registry.get_or_create_tool_schema(func1, func2)
+```
+
+In this example, the function `get_or_create_tool_schema` will retrieve or create schemas for the functions `func1` and `func2`. The corresponding schemas will be returned in a list.
+
+### Notes
+
+- The function relies on the internal `_tools` and `_funcs` dictionaries to manage the function schemas and their corresponding callable functions.
+- If a schema already exists for a function, it will simply be retrieved from the `_tools` registry without modification.
+***
+### FunctionDef register_tool(self, name, func, description, parameters)
+### Function Documentation: `register_tool`
+
+#### Description:
+The `register_tool` function is responsible for manually registering a tool (either a Function Call or an MCP) into a registry. It creates a structured schema for the tool and stores it alongside its corresponding function. This function is a critical part of the tool management system, ensuring that tools can be easily registered and accessed in a standardized format.
+
+#### Arguments:
+- **name** (`str`): The name of the MCP tool or function. This serves as the identifier for the tool in the registry.
+- **func** (`Callable`): The Python function that implements the tool's logic. This function will be executed when the tool is called.
+- **description** (`str`): A textual description of the tool's purpose or functionality.
+- **parameters** (`Dict[str, Any]`, optional): A dictionary representing the JSON schema for the function's parameters. If not provided, the schema will be automatically generated from the function signature.
+
+#### Returns:
+- **schema** (`Dict[str, Any]`): A dictionary representing the tool schema, formatted according to the OpenAI function call/Tool standard. This schema includes the tool's name, description, parameters, and type.
+
+#### Functionality:
+1. **Schema Creation**: 
+   If the `parameters` argument is not provided, the function utilizes the `Tool.create_schema_from_function` method to generate a schema from the provided function (`func`). If the `parameters` are supplied, a schema is manually constructed with the provided values for `name`, `description`, and `parameters`.
+   
+2. **Tool Registration**: 
+   The function registers the created schema in the internal registry (`self._tools`) under the provided `name`. Additionally, the function itself is stored in `self._funcs` under the same `name`.
+
+3. **Logging**: 
+   A log message is generated to confirm the registration of the tool, including the tool's name and its schema.
+
+#### Example Usage:
+```python
+def sample_tool_function(param1: int, param2: str):
+    """A sample tool function."""
+    return f"Received {param1} and {param2}"
+
+tool_registry.register_tool(
+    name="sample_tool",
+    func=sample_tool_function,
+    description="A sample tool function that demonstrates tool registration.",
+    parameters=None
+)
+```
+
+In the above example, the `register_tool` function registers a new tool named `sample_tool`. The tool's schema is automatically created from the `sample_tool_function` signature, and the tool is added to the registry.
+
+#### Important Notes:
+- If `parameters` are not provided, the function relies on the `Tool.create_schema_from_function` method to automatically generate the schema based on the function's signature and docstring.
+- The logging feature provides visibility into the tool registration process, helping to track the tools registered in the system.
+- It is important to ensure that the `func` provided is a valid Python callable function and that its signature is well-defined for proper schema generation.
+***
+### FunctionDef invoke_tool(self, name, arguments)
+**invoke_tool**: The function of invoke_tool is to invoke a registered tool by name with provided arguments and return its result.
+
+**parameters**: The parameters of this Function.
+· name: A string representing the name of the tool to be invoked.
+· arguments: A dictionary containing the arguments to be passed to the tool.
+
+**Code Description**: The invoke_tool function is designed to execute a tool that has been previously registered within the ToolRegistry class. It first retrieves the function associated with the provided tool name from the internal dictionary `_funcs`. If the tool name does not exist in the registry, it raises a KeyError, indicating that the requested tool is not available. 
+
+Once the function is retrieved, it is called with the unpacked arguments provided in the `arguments` dictionary. The function checks if the result of the function call is an awaitable (i.e., a coroutine). If it is, the function uses `asyncio.run()` to execute the coroutine synchronously and return the result. If the result is not awaitable, it simply returns the result directly.
+
+This function is called within the `step` method of the WorkflowExecutor class. In this context, the `step` method processes an action that may involve invoking a tool. It extracts the tool's name and arguments from the action string, then calls `invoke_tool` to execute the tool and handle its output. The results of the tool invocation are formatted into XML and appended to the history for tracking purposes. If any exceptions occur during the tool invocation, they are caught, and an error message is returned in a structured format.
+
+**Note**: It is important to ensure that the tool name provided to invoke_tool corresponds to a registered tool; otherwise, a KeyError will be raised. Additionally, the arguments must be structured correctly as a dictionary to avoid runtime errors.
+
+**Output Example**: An example of a possible return value from invoke_tool could be a dictionary representing the result of the tool's execution, such as:
+```json
+{
+    "status": "success",
+    "data": {
+        "result": "Tool executed successfully"
+    }
 }
 ```
 ***
