@@ -50,20 +50,22 @@ A possible return value from the `scrape` method could be a serialized list of `
 **parameters**: The parameters of this Function.
 · urls: List[str] - A list of URLs to scrape content from.
 
-**Code Description**: The scrape function is an asynchronous method designed to extract content from a list of URLs. It begins by retrieving the API key from the settings configuration, which is essential for authenticating requests to the Tavily API. An instance of the TavilyExtract class is then created using this API key, enabling interaction with the Tavily API for content extraction.
+**Code Description**: The scrape function is an asynchronous method designed to extract content from a list of URLs. It begins by retrieving an API key from the settings, which is essential for authenticating requests to the Tavily API. An instance of the TavilyExtract class is then created using this API key.
 
-The function attempts to extract content from the provided URLs by calling the extract_content method of the TavilyExtract instance. This method sends a request to the Tavily API and returns a response containing the results of the extraction. If the Tavily API response indicates an error (identified by the presence of a "detail" key), the function logs the error message using the RichPrinter's log method and falls back to a secondary scraping method provided by the FallbackWebScraper class.
+The function attempts to extract content using the Tavily API by calling the extract_content method of the TavilyExtract instance. If the extraction is successful, the results are processed to create a list of ScrapedData objects, which encapsulate the URL and the raw content retrieved.
 
-In the case of a successful extraction from the Tavily API, the function processes the results by iterating through the returned data. For each successful result, it constructs a ScrapedData object containing the URL and the raw content extracted from that URL. If there are any failed results in the Tavily response, these URLs are logged, and the function calls the FallbackWebScraper's scrape method to attempt to retrieve content from those URLs as well.
+In the event that the Tavily API returns an error or if there are failed results, the function logs an appropriate message using the RichPrinter's log method, indicating the failure and the fallback to web scraping. It then invokes the scrape method of the FallbackWebScraper class to handle the URLs that failed during the Tavily extraction.
 
-Finally, the function merges both successful and failed results into a ScrapedDataList object, which is returned after being serialized using the model_dump method. This structured approach ensures that the scrape function effectively handles both successful and failed content extraction attempts, providing a comprehensive output that includes all relevant data.
+The final results, which may include both successfully scraped data and any fallback results, are aggregated into a ScrapedDataList object. This object is then serialized and returned, providing a structured output of the scraping operation.
 
-The scrape function is called within the BaseAgent class, specifically in the web_scrape_results method, which orchestrates the web scraping process based on search results. It is also invoked in the _action_router function, where it plays a critical role in the decision-making process of the intelligent agent, allowing it to gather content from various sources as needed.
+The scrape function is called within the ContentScraper class, which is instantiated in the BaseAgent class. The BaseAgent class initializes the ContentScraper and registers its schema for use in the agent's operations. Additionally, the scrape function is invoked by the web_scrape_results method in the BaseAgent class, which facilitates web content extraction based on search results.
 
-**Note**: It is important to ensure that the URLs provided are valid and accessible. The function is built to handle errors and retries, but the initial input must be correct for optimal performance.
+This function plays a critical role in the overall content scraping workflow, ensuring that data is retrieved accurately and efficiently from external sources. Its design emphasizes error handling and resilience, making it a vital component of the content extraction process.
+
+**Note**: It is essential to ensure that the URLs provided are valid and accessible. The function is built to handle errors and retries, but the initial input must be correct for optimal performance.
 
 **Output Example**: A possible appearance of the code's return value could be:
-```
+```json
 {
     "data": [
         {"url": "http://example.com", "content": "This is the main content of the page."},

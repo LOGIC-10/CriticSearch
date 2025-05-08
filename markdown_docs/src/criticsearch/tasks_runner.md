@@ -80,25 +80,44 @@ The run function is a crucial part of the task execution workflow, as it encapsu
 ```
 ***
 ## FunctionDef start_task_execution
-**start_task_execution**: The function of start_task_execution is to serve as the command-line interface (CLI) entry point for parsing command-line arguments and executing tasks.
+## Function: `start_task_execution`
 
-**parameters**: The parameters of this Function are as follows:
-· tasks (positional): A list of tasks to be executed; if not specified, a default task will be used.
-· -f, --file-name: The name of the GT JSON file in single-task mode.
-· -o, --output-file: The file where conversation history will be saved in single-task mode, compatible with older versions.
-· --from-mapping: A flag to indicate whether to execute tasks in bulk mode from a mapping file.
-· --mapping-file: The path to the mapping file, defaulting to reportbench/instruction_mapping.json.
-· --concurrent: A flag to enable concurrent execution of tasks in bulk mode.
-· -w, --workers: The number of threads to use for concurrent execution, defaulting to 5.
-· --limit: The maximum number of tasks to execute in bulk mode, defaulting to no limit.
-· --conv-dir: The directory where conversation histories will be saved, defaulting to conversation_histories.
+### Description:
+The `start_task_execution` function serves as the Command Line Interface (CLI) entry point for initiating the execution of tasks. It processes command-line arguments, allowing users to execute tasks either in a single-task mode or a batch mode using a mapping file. The function also supports controlling concurrency and limiting the number of tasks executed. Additionally, it manages the saving of conversation histories during task execution.
 
-**Code Description**: The start_task_execution function is designed to facilitate the execution of tasks based on user input from the command line. It begins by initializing an argument parser to handle various command-line options that dictate how tasks should be executed. The function supports both single-task execution and bulk execution from a mapping file, allowing users to switch modes using the --from-mapping flag.
+### CLI Parameters:
+- `tasks` (positional, list of str): A list of tasks to be executed. If not provided, the function defaults to a predefined task list.
+- `-f`, `--file-name` (str, optional): In single-task mode, specifies the name of the GT JSON file.
+- `-o`, `--output-file` (Path, optional): Specifies the file where conversation history will be saved. This is used in single-task mode and maintains compatibility with previous versions.
+- `--from-mapping` (flag, optional): Activates batch mode, where tasks are executed from a mapping file.
+- `--mapping-file` (Path, optional): Specifies the path to the mapping file used in batch mode. The default value is `reportbench/instruction_mapping.json`.
+- `--concurrent` (flag, optional): Enables concurrent execution of tasks in batch mode.
+- `-w`, `--workers` (int, optional): Specifies the number of threads to use for concurrent execution. The default is 5.
+- `--limit` (int, optional): Limits the number of tasks to be executed in batch mode. By default, there is no limit.
+- `--conv-dir` (Path, optional): Defines the directory for saving conversation histories. The default directory is `conversation_histories`.
 
-Upon parsing the command-line arguments, the function checks if the user has opted for bulk execution. If so, it ensures that the mapping file path is absolute; if a relative path is provided, it resolves it based on the current script's directory. The function then calls execute_from_mapping, passing the relevant parameters to manage the bulk execution of tasks. This function handles reading the mapping file, executing tasks either sequentially or concurrently, and saving the conversation history.
+### Returns:
+- `None`: This function does not return any value.
 
-If the user has not specified the --from-mapping flag, the function defaults to executing a list of tasks provided in the command line or a predefined default task. In this case, it calls execute_multiple_tasks, which is responsible for executing each task in sequence and saving the corresponding conversation history.
+### Functionality:
+1. **Argument Parsing**: The function starts by parsing the command-line arguments using `argparse`. Based on the arguments provided, it determines whether to run tasks in a single-task mode or batch mode.
 
-The start_task_execution function is called from the main entry point of the application, which is typically located in src/criticsearch/__main__.py. This establishes a clear relationship between user input and the underlying task execution logic, allowing for a seamless execution flow based on command-line arguments.
+2. **Mapping File Handling**: If the `--from-mapping` flag is set, the function checks the validity of the provided mapping file path and adjusts it if necessary. The function then passes the mapping file and other relevant arguments to the task execution functions.
 
-**Note**: Users should ensure that the provided tasks are valid and well-defined. Additionally, when using the --from-mapping option, the mapping file must be correctly formatted in JSON and accessible to avoid parsing errors. The output_file parameter is currently not utilized in the function, and its presence is primarily for backward compatibility.
+3. **Task Execution**:
+    - **Batch Mode**: When the `--from-mapping` flag is specified, the function delegates task execution to the `execute_from_mapping` function. This function handles the processing of tasks listed in the provided mapping file. It also supports concurrency and allows task execution to be limited by the specified `--limit`.
+    - **Single-Task Mode**: If no mapping file is provided, the function uses the `execute_multiple_tasks` function to execute tasks individually. The tasks can be specified via the `tasks` argument or default to a predefined list.
+
+4. **Error Handling**: In case of a user interruption (e.g., via `KeyboardInterrupt`), the function gracefully handles the exception and prints a message indicating that execution was interrupted.
+
+### Usage Example:
+```bash
+python tasks_runner.py task1 task2 --from-mapping --mapping-file /path/to/mapping.json --concurrent --workers 10 --limit 100 --conv-dir /path/to/history
+```
+
+This example will execute tasks `task1` and `task2` in batch mode, using a specified mapping file and enabling concurrent execution with 10 workers. The results will be saved in the specified conversation history directory, with a limit of 100 tasks.
+
+### Dependencies:
+- The function requires the `argparse` library for command-line argument parsing.
+- It calls the functions `execute_from_mapping` and `execute_multiple_tasks` for task execution.
+
