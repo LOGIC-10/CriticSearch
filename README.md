@@ -153,16 +153,6 @@ criticsearch --from-mapping \
 
 ```
 
-## 开发 & 扩展
-
-| 扩展项       | 操作说明                                                         |
-| ------------ | ---------------------------------------------------------------- |
-| 新增搜索引擎 | 继承 `BaseSearchClient`，实现 `search` 方法并注册到 `SearchAggregator` |
-| 扩展爬取策略 | 修改 `fallback_scrape` 或 添加新的 `Scraper` 类                  |
-| 强化学习集成 | 利用 `agent.training_data` 与 `accuracy` 自定义 reward           |
-
-
-
 ## 致谢
 
 [留空]

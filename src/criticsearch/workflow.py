@@ -115,79 +115,6 @@ def run_workflow(user_query: str) -> list[dict]:
 
     return runner.history
 
-def iterate_traj():
-    """
-    Evaluate a single section's factual accuracy as reward.
-    """
-    agent = BaseAgent()
-    # For per-section evaluation, load mapping to find current JSON and prompt
-    mapping_path = Path(__file__).parent / "reportbench" / "instruction_mapping.json"
-    try:
-        mapping = json.loads(mapping_path.read_text(encoding="utf-8"))
-    except Exception:
-        print(f"[WARN] Cannot load instruction mapping from {mapping_path}")
-        return 0.0
-    # find JSON file matching this user_query
-    benchmark_dir = Path(__file__).parent / "reportbench" / "wiki_data"
-    for fname, user_prompt in mapping.items(): # 我在这里遍历构建的所有的user prompt来运行不同的section trajectory
-        
-        candidate = benchmark_dir / fname
-        if not candidate.exists():
-            print(f"[WARN] JSON file {candidate} not found")
-            continue
-
-        # generate benchmark items for sections
-        bench = ReportBenchmark(str(candidate), user_query=user_prompt)
-        benchmark_items = bench.generate_benchmark_item(use_cache=True) #  benchmark_items是一个json list
-
-        # 从这里开始构建 背景信息+section信息+之前写作段落信息的 context供模型参考来写当前的section，然后进行verify得到当前section的reward
-        # 1) 背景信息 就是 user_query
-        # 2) section信息 就是 section的title，section内容要模型自己写
-        # 3) 之前写作段落信息 就是之前answer tag里面的内容，所有的拼接起来
-
-        report = ''
-        trajectory_list = []
-
-        for section in benchmark_items:
-            verifier = ReportVerifier(agent)
-            section_title :str = section["path"]
-            section_extracted_facts : List[dict] = section["extracted_facts"] # 有了模型的section answer和这里的extracted_facts就可以调用verifier来验证了
-            
-            # 调用step函数来得到section answer
-            full_prompt = (
-                user_prompt + "\n" +
-                f"Now, based on the background information above, do not generate a complete report, but instead generate the content of the section I am requesting. The section you need to generate currently is: {section_title}\n" +
-                (f"Here is the content of the previous section you wrote for you reference: {report}\n You should keep writing the current section based on what you have already wrote" if section != benchmark_items[0] else "")+
-                "Use the tools immediately in your answer, no spamming, and do not use the tools in the middle of the answer. "
-
-            )
-
-            runner = WorkflowExecutor(full_prompt)
-            # from IPython import embed; embed()
-        
-            while True:
-                # Assistant suggests next action或最终回答
-                response = runner.agent.chat(usr_prompt=runner.history)
-                obs, reward, done, _ = runner.step(response)
-                if done:
-                    section_content = extract_tag_content(obs,"answer")
-                    break   
-            
-            section_reward = verifier.verify_section(section_content, section_extracted_facts)
-
-            # 逐渐拼接每个section的内容作为前文写作的背景
-            report += f"Section: {section_title}\n"
-            report += f"\n{section_content}\n"
-
-            trajectory_list.append({
-                "full_prompt": full_prompt,
-                "section_content": section_content,
-                "section_traj": runner._traj,
-                "section_reward": section_reward,
-            })
-            # 每产生一个 section 的轨迹就立刻产出
-            yield trajectory_list
-
 def main():
     parser = argparse.ArgumentParser(description="Run XML-based tool use workflow")
     group = parser.add_mutually_exclusive_group(required=True)
@@ -224,19 +151,8 @@ def main():
         history = run_workflow(queries[0])
         print(json.dumps(history, ensure_ascii=False, indent=2))
 
-# if __name__ == "__main__":
-#     # main()
-#     iterate_traj()
-
 if __name__ == "__main__":
-    import json
-    # 尝试最多只打印 2 条 trajectory_list
-    count = 0
-    for traj in iterate_traj():
-        print(json.dumps(traj, ensure_ascii=False, indent=2))
-        count += 1
-        if count >= 2:
-            break
+    main()
 
 ### use example
 """
@@ -248,7 +164,6 @@ python -m criticsearch.workflow \
     "请你检索比特币价格走势并且记一下笔记，然后retrieve一下笔记检查是否正确。检查后自己核实你检索回来的笔记和你自己记录的笔记是不是完全一致的然后告诉我结果" \
     "请你查询全球气候变化最新报告并且记一下笔记，然后retrieve一下笔记检查是否正确。检查后自己核实你检索回来的笔记和你自己记录的笔记是不是完全一致的然后告诉我结果" \
     "请你搜索量子计算应用前景并且记一下笔记，然后retrieve一下笔记检查是否正确。检查后自己核实你检索回来的笔记和你自己记录的笔记是不是完全一致的然后告诉我结果" \
-    "请你调研电动汽车市场分析并且记一下笔记，然后retrieve一下笔记检查是否正确。检查后自己核实你检索回来的笔记和你自己记录的笔记是不是完全一致的然后告诉我结果" \
   --workers 5
 
 python -m criticsearch.workflow --query "请你调研电动汽车市场分析并且记一下笔记，然后retrieve一下笔记检查是否正确。检查后自己核实你检索回来的笔记和你自己记录的笔记是不是完全一致的然后告诉我结果" 
