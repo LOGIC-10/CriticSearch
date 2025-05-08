@@ -2,7 +2,7 @@ import sqlite3
 import threading
 import uuid
 from pathlib import Path
-import contextvars  # 新增
+import contextvars 
 
 _DB_PATH = Path(__file__).parent.parent.parent / 'notes.db'
 # 确保数据库目录存在

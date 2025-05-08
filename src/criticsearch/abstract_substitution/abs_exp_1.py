@@ -54,7 +54,7 @@ For example, you can answer: \\boxed{China}, but not: China. You can answer: The
 # === Initialization ===
 agent = BaseAgent()
 
-# 新增日志配置
+# 日志配置
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 fh = logging.FileHandler('abs_exp_1.log', encoding='utf-8')

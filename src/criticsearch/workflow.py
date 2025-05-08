@@ -1,99 +1,118 @@
 import json
-import uuid  # 已有导入
+import uuid
 from pathlib import Path
 from jinja2 import Template
 from .base_agent import BaseAgent
 from .tools.tool_registry import ToolRegistry
 from .utils import extract_tag_content
-from .tools.note_manager import set_session, taking_notes, retrieve_notes  # 新增导入笔记工具
+from .tools.note_manager import set_session, taking_notes, retrieve_notes
 import argparse
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from typing import Tuple, Dict  
 
+class WorkflowExecutor:
+    def __init__(self, user_query: str):
+        # Initialize agent and registry
+        self.agent = BaseAgent()
+        self.registry = self.agent.tool_registry
+
+        # 生成唯一 session_id 用于笔记绑定
+        session_id = str(uuid.uuid4())
+        set_session(session_id)
+
+        # 注册工具并生成 schema
+        tool_funcs = [
+            self.agent.search_aggregator.search,
+            self.agent.content_scraper.scrape,
+            taking_notes,
+            retrieve_notes,
+        ]
+        schemas = []
+        for func in tool_funcs:
+            schemas.extend(self.registry.get_or_create_tool_schema(func))
+
+        # 加载并渲染 system prompt
+        tpl_path = Path(self.agent.prompts_dir) / "tool_use.txt"
+        tpl_str = tpl_path.read_text(encoding="utf-8")
+        system_prompt = Template(tpl_str).render(
+            AVAILABLE_TOOLS=json.dumps(schemas),
+            USER_QUERY=user_query,
+        )
+
+        # 初始化对话历史、步数与轨迹
+        self.history = [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_query}
+        ]
+        self._step_count = 0
+        self._traj = []
+
+    def step(self, action: str) -> Tuple[str, float, bool, Dict]:
+        """
+        执行一次 action：记录、工具解析与调用，并返回 (observation, reward, done, info)
+        """
+        self._step_count += 1
+        self.history.append({"role": "assistant", "content": action})
+
+        # 超步数直接终止
+        if self._step_count > self.agent.cfg.max_steps:
+            msg = "<error>max_steps_exceeded</error>"
+            self.history.append({"role": "user", "content": msg})
+            return msg, self.agent.cfg.invalid_penalty, True, {}
+
+        tool_xml = extract_tag_content(action, "tool_use")
+        if not tool_xml:
+            # 最终回答
+            obs, reward, done = action, 1.0, True
+        else:
+            # 解析工具调用
+            tool_name = extract_tag_content(tool_xml, "name")
+            arg_str = extract_tag_content(tool_xml, "arguments") or "{}"
+            try:
+                args = json.loads(arg_str)
+            except json.JSONDecodeError:
+                error_xml = (
+                    f"<tool_use_result><name>{tool_name}</name>"
+                    f"<error>arguments_not_json</error></tool_use_result>"
+                )
+                self.history.append({"role": "user", "content": error_xml})
+                return error_xml, self.agent.cfg.invalid_penalty, False, {}
+
+            # 执行工具
+            try:
+                result = self.registry.invoke_tool(tool_name, args)
+                result_xml = (
+                    f"<tool_use_result><name>{tool_name}</name>"
+                    f"<result>{json.dumps(result, ensure_ascii=False)}</result>"
+                    f"</tool_use_result>"
+                )
+                self.history.append({"role": "user", "content": result_xml})
+                obs, reward, done = result, 0.0, False
+            except Exception as exc:
+                error_xml = (
+                    f"<tool_use_result><name>{tool_name}</name>"
+                    f"<error>{str(exc)}</error></tool_use_result>"
+                )
+                self.history.append({"role": "user", "content": error_xml})
+                return error_xml, self.agent.cfg.invalid_penalty, False, {}
+
+        # 记录轨迹
+        self._traj.append({"a": action, "r": reward})
+        obs_str = json.dumps(obs, ensure_ascii=False) if isinstance(obs, (dict, list)) else str(obs)
+        return obs_str[: self.agent.cfg.max_tokens], reward, done, {}
+
+# ------------ run_workflow使用 WorkflowExecutor.step ------------
 def run_workflow(user_query: str) -> list[dict]:
-    # Initialize agent and registry
-    agent = BaseAgent()
-    registry = agent.tool_registry
-    # 生成唯一session_id用于笔记绑定
-    session_id = str(uuid.uuid4())
-    # 设置当前Session ID到上下文
-    set_session(session_id)
+    runner = WorkflowExecutor(user_query)
 
-    # Register tools and generate schemas (包含搜索、爬取及笔记工具)
-    tool_funcs = [
-        agent.search_aggregator.search,
-        agent.content_scraper.scrape,
-        taking_notes,
-        retrieve_notes,
-    ]
-    schemas = []
-    for func in tool_funcs:
-        schemas.extend(registry.get_or_create_tool_schema(func))
-
-    # Load and render system prompt from XML tool_use template
-    tpl_path = Path(agent.prompts_dir) / "tool_use.txt"
-    tpl_str = tpl_path.read_text(encoding="utf-8")
-    system_prompt = Template(tpl_str).render(
-        AVAILABLE_TOOLS=json.dumps(schemas),
-        USER_QUERY=user_query,
-    )
-
-    # Initialize chat history
-    history = [
-        {"role": "system", "content": system_prompt},
-        {"role": "user", "content": user_query}
-    ]
-
-    # Iteratively handle tool calls: model emits <tool_use>, execute tool, feed result back
     while True:
-        # Assistant suggests next action or final answer
-        response = agent.chat(usr_prompt=history)
-        history.append({"role": "assistant", "content": response})
-
-        # Check if model wants to use a tool
-        tool_use_xml = extract_tag_content(response, "tool_use")
-        if not tool_use_xml:
-            # no more tool calls; workflow ends
+        # Assistant suggests next action或最终回答
+        response = runner.agent.chat(usr_prompt=runner.history)
+        obs, reward, done, _ = runner.step(response)
+        if done:
             break
 
-        # Parse tool name and arguments
-        tool_name = extract_tag_content(tool_use_xml, "name")
-        args_str = extract_tag_content(tool_use_xml, "arguments")
-        # 捕获 JSON 解析及工具执行过程中所有错误，反馈给模型
-        try:
-            args = json.loads(args_str)
-            # 执行工具调用
-            result = registry.invoke_tool(tool_name, args)
-        except json.JSONDecodeError as e:
-            error_xml = (
-                f"<tool_error>"
-                f"<name>{tool_name}</name>"
-                f"<message>JSON解析失败：{e}</message>"
-                f"<arguments>{args_str}</arguments>"
-                f"</tool_error>"
-            )
-            history.append({"role": "user", "content": error_xml})
-            continue
-        except Exception as e:
-            error_xml = (
-                f"<tool_error>"
-                f"<name>{tool_name}</name>"
-                f"<message>工具执行失败：{e}</message>"
-                f"<arguments>{args_str}</arguments>"
-                f"</tool_error>"
-            )
-            history.append({"role": "user", "content": error_xml})
-            continue
-
-        # 正常情况下，将工具输出以 XML 形式反馈给模型
-        output_xml = (
-            f"<tool_output>"
-            f"<name>{tool_name}</name>"
-            f"<result>{json.dumps(result, ensure_ascii=False)}</result>"
-            f"</tool_output>"
-        )
-        history.append({"role": "user", "content": output_xml})
-
-    return history
+    return runner.history
 
 
 def main():

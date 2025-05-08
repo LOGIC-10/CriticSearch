@@ -56,7 +56,7 @@ For example, you can answer: \\boxed{China}, but not: China. You can answer: The
 # === Initialization ===
 agent = BaseAgent()
 
-# 新增日志配置
+# 日志配置
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 # Ensure the log file handler is added only once even if the module is reloaded
@@ -690,7 +690,7 @@ def evaluate(
     cache_file: Path | None = None,
     eval_concurrency: int = 10,
     search_model: str = "gpt-4o-search-preview",  # Added search_model parameter
-    level: Optional[int] = None                   # 新增 level 参数
+    level: Optional[int] = None                 
 ):
     """
     Evaluate level-5 items in a JSON trace, using concurrency for LLM calls.

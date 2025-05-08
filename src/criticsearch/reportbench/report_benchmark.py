@@ -134,7 +134,7 @@ class ReportBenchmark:
                 if title and content:
                     current_path = path + [{"title": title, "depth": current_depth}]
                     sections.append({
-                        "id": section_id,                      # 新增：保存 id
+                        "id": section_id,                
                         "title": title,
                         "content": content,
                         "depth": current_depth,
@@ -218,8 +218,6 @@ class ReportBenchmark:
                     # 不是子节点或平级节点，跳过
                     break
             
-            # 创建窗口对象
-            # 修改这里，将路径文本包含标题的层级信息
             def format_path_with_depth(path_nodes):
                 formatted_titles = []
                 for node in path_nodes:
@@ -338,7 +336,6 @@ class ReportBenchmark:
         return unique_results
 
     def process_window_content(self, content, max_retries=10):
-        """修改现有的处理方法以使用多模型"""
         # 从settings中直接获取extract_models配置
         models = settings.extract_models if hasattr(settings, 'extract_models') else ["gpt-4o"]
         
@@ -383,7 +380,6 @@ class ReportBenchmark:
                         "extracted_facts": parsed
                     })
 
-        # 缓存保存同原来
         if use_cache:
             self._save_to_cache(results)
 
@@ -488,6 +484,12 @@ class ReportBenchmark:
         return results
 
 
+
+"""
+我需要先根据InstructionMapping.json这个文件去找它的key 因为它的每一个key都是一个json文件的文件名 然后到指定的folder下面去找到这个json文件 如果没有这个json文件就跳过 如果找到这个json文件 就提取出在InstructionMapping.json中的 这个json文件名的key对应的value 这个value的值就是instruction
+
+同时还是要跟着这个Key 找到当前这个Key所代表的JSON文件 然后去把它提取出来 跑一遍WindowSection的划分 也就是ReportBenchmark里面的 提取Window的Section内容的部分 然后 有一个 对于每一个Section 提取出Section的Title 结合进Prompt 结合进刚才的 Instruction 拼在一起 变成一个真正的完整的Prompt
+"""
 # %% [markdown]
 # ## Example Usage
 
