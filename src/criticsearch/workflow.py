@@ -163,7 +163,7 @@ def iterate_traj():
             )
 
             runner = WorkflowExecutor(full_prompt)
-            from IPython import embed; embed()
+            # from IPython import embed; embed()
         
             while True:
                 # Assistant suggests next action或最终回答
@@ -185,8 +185,8 @@ def iterate_traj():
                 "section_traj": runner._traj,
                 "section_reward": section_reward,
             })
-        
-    yield trajectory_list
+            # 每产生一个 section 的轨迹就立刻产出
+            yield trajectory_list
 
 def main():
     parser = argparse.ArgumentParser(description="Run XML-based tool use workflow")
@@ -224,10 +224,19 @@ def main():
         history = run_workflow(queries[0])
         print(json.dumps(history, ensure_ascii=False, indent=2))
 
-if __name__ == "__main__":
-    # main()
-    iterate_traj()
+# if __name__ == "__main__":
+#     # main()
+#     iterate_traj()
 
+if __name__ == "__main__":
+    import json
+    # 尝试最多只打印 2 条 trajectory_list
+    count = 0
+    for traj in iterate_traj():
+        print(json.dumps(traj, ensure_ascii=False, indent=2))
+        count += 1
+        if count >= 2:
+            break
 
 ### use example
 """
