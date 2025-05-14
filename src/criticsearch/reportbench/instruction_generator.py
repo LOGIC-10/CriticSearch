@@ -104,10 +104,56 @@ class InstructionGenerator:
                 return fname
         return None
 
+    def get_all_section_level_instructions(self):
+        """
+        遍历现在的wiki_data目录下的所有json文件，找到对应在mapping里面的instructions，再本函数内部再拼接成section level的instruction
+        """
+
+        all_section_level_instructions_and_facts_info = []
+        project_root = Path(__file__).resolve().parent.parent.parent.parent
+
+        for fname, instr in self.mapping.items():
+            # 首先遍历这个文件下面的所有section topic
+            benchmark_filename = fname.replace(".json", "_benchmark.json")
+            cached_json_file_bench = project_root / "cache" / "benchmark_results" / benchmark_filename
+            
+            if not cached_json_file_bench.exists():
+                # print(f"[WARN] Cache JSON file {cached_json_file_bench} not found")
+                continue
+            
+            with cached_json_file_bench.open("r", encoding="utf-8") as f:
+                data = json.load(f)
+
+            for section in data:
+                section_level_info = {
+                    "section_full_prompt": '',
+                    "extracted_facts": []
+                }
+                section_title: str = section["path"]    
+                section_extracted_facts: list = section["extracted_facts"]
+                
+                section_full_prompt = (
+                    instr + "\n"
+                    f"Now, based on the background information above, do not generate a complete report, but instead generate the content of the section I am requesting. The section you need to generate currently is: {section_title}\n"
+                    "Please strictly adhere to the markdown level of the section instructions I am currently giving you when writing, and use markdown format for the entire text.\n"
+                    "Use the tools immediately in your answer, no spamming, and do use the tools during the task. "
+                )
+                section_level_info["section_full_prompt"] = section_full_prompt
+                section_level_info["extracted_facts"] = section_extracted_facts
+            
+                all_section_level_instructions_and_facts_info.append(section_level_info)
+                
+        return all_section_level_instructions_and_facts_info
 
 if __name__ == "__main__":
     gen = InstructionGenerator()
-    mapping = gen.generate_instructions(max_workers=100, overwrite=True)
-    print("保存的映射关系示例：")
-    for f, instr in mapping.items():
-        print(f"{f}: {instr}")
+    prompts = gen.get_all_section_level_instructions()
+    print("生成的指令示例：")   
+    for i, prompt in enumerate(prompts):
+        print(f"Prompt {i+1}: {prompt}\n\n")
+        if i >= 2:  # 只打印前 3 条
+            break
+    # mapping = gen.generate_instructions(max_workers=100, overwrite=True)
+    # print("保存的映射关系示例：")
+    # for f, instr in mapping.items():
+    #     print(f"{f}: {instr}")

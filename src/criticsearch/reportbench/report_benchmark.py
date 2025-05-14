@@ -76,9 +76,9 @@ class ReportBenchmark:
 
     def _get_cache_key(self):
         """生成缓存文件的唯一标识"""
-        # 使用输入文件路径和查询作为缓存key的基础
-        content = f"{self.json_path}_{self.user_query}"
-        return hashlib.md5(content.encode()).hexdigest()
+        # 使用输入文件的文件名 + "_benchmark" 作为缓存key
+        file_stem = Path(self.json_path).stem  # 获取文件名（不含扩展名）
+        return f"{file_stem}_benchmark"
 
     def _load_from_cache(self) -> Optional[Any]:
         """Load results from cache if available and non-empty."""

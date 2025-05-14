@@ -29,3 +29,7 @@ class RatelimitException(SearchClientError):
 class TimeoutException(SearchClientError):
     def __init__(self, message: str = "Timeout occurred."):
         super().__init__(message)
+
+class TavilySearchError(SearchClientError):
+    def __init__(self, message: str = "Tavily search error."):
+        super().__init__(message)

@@ -1,3 +1,4 @@
+import json
 import sqlite3
 import threading
 import uuid
@@ -34,7 +35,6 @@ def set_session(session_id: str):
     """设置当前会话的 session_id"""
     _current_session_id.set(session_id)
 
-# 将原有函数重命名为私有实现
 def _taking_notes(session_id: str, note: str) -> dict:
     """私有：在指定会话存储笔记"""
     note_id = str(uuid.uuid4())
@@ -94,7 +94,6 @@ def taking_notes(note: str) -> dict:
     if not session_id:
         raise RuntimeError("Session ID 未设置，无法存储笔记。")
     # Parse input string to list
-    import json
     try:
         notes_list = json.loads(note)
     except json.JSONDecodeError as e:

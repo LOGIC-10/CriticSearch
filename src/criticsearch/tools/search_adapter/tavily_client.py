@@ -13,7 +13,7 @@ from tenacity import (
 from ...config import settings
 from ...rich_output import printer
 from .base_search_client import BaseSearchClient
-from .exceptions import InvalidAPIKeyError, RatelimitException, UsageLimitExceededError
+from .exceptions import InvalidAPIKeyError, RatelimitException, UsageLimitExceededError, TavilySearchError
 from .models import SearchResponse
 
 
@@ -77,12 +77,20 @@ class TavilyClient(BaseSearchClient):
                     f"Failed to process 429 response. Response: {response.text}"
                 )
                 raise RatelimitException()  # 抛出通用限流异常
-
-            raise RatelimitException()
         elif response.status_code == 401:
             raise InvalidAPIKeyError()
+        elif response.status_code == 400:  # 新增对 400 Bad Request 的显式处理
+            error_detail = "Bad Request"
+            try:
+                error_data = response.json()
+                error_detail = error_data.get("detail", {}).get("error", response.text)
+            except Exception:
+                error_detail = response.text  # 如果响应不是JSON或解析失败
+            printer.log(f"Tavily API Error 400 for query '{query}': {error_detail}", style="bold red")
+            raise TavilySearchError(f"Tavily API Error (400) for query '{query}': {error_detail}")
         else:
-            return SearchResponse(
-                query=query,
-                error_message=f"Unexpected status code: {response.status_code}. Response: {response.text}",
+            # 对于所有其他未明确处理的错误状态码，也应该抛出异常
+            printer.log(f"Tavily API Unexpected status code {response.status_code} for query '{query}'. Response: {response.text}", style="bold red")
+            raise TavilySearchError(
+                f"Unexpected status code from Tavily API: {response.status_code}. Response: {response.text}"
             )
