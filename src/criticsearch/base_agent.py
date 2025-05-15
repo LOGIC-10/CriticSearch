@@ -157,12 +157,14 @@ class BaseAgent:
         role: str = "assistant",
         model: str = settings.default_model,  # 默认使用配置文件中的默认模型
         save_history: bool = True,
+        messages: Optional[List[dict]] = None,  # 新增参数
     ) -> ChatCompletionMessage | str | None:
         llm_response = call_llm(
             model=model,  # 使用传入的model / 默认model
             usr_prompt=usr_prompt,
             config=settings,
             tools=tools,
+            messages=messages  # 新增传递
         )
 
         if tools is not None:
