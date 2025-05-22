@@ -428,7 +428,8 @@ def process_single_task(task, file_name=None):
                 agent_report_sections.append(answer_content)
 
                 # 使用verifier进行factual QA验证，得到这个段落写作的reward分数（也就是准确率）
-                accuracy = verifier.verify_section(answer_content, extracted_facts)
+                # accuracy = verifier.verify_section(answer_content, extracted_facts)
+                accuracy = 0.000
                 agent.training_data.append({"from": "verifier", "section": section_path, "accuracy": accuracy})
 
             # 拼接完整的report
