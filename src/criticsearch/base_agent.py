@@ -345,9 +345,10 @@ class BaseAgent:
         )
 
         # Interact with the model for web scraping
+        # 使用统一的工具获取方式，支持所有可用工具而不是单一工具
         web_scraper_response = self.chat(
             usr_prompt=web_scraper_rendered_prompt,
-            tools=self.content_scraper_schema,
+            tools=BaseAgent.available_tools,
         )
 
         # If no tool calls, return the response immediately
@@ -373,8 +374,9 @@ class BaseAgent:
         return final_web_scraper_results
 
     def search_and_browse(self, rendered_prompt) -> str | None:
+        # 使用统一的工具获取方式，支持所有可用工具而不是单一工具
         search_with_tool_response = self.chat(
-            usr_prompt=rendered_prompt, tools=self.search_aggregator_schema
+            usr_prompt=rendered_prompt, tools=BaseAgent.available_tools
         )
 
         printer.log(f"search_with_tool_response:\n{search_with_tool_response}")
