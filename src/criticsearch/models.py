@@ -30,7 +30,6 @@ class HistoryItem(BaseModel):
 class ConversationManager(BaseModel):
     history: List[HistoryItem] = []
     max_history_length: int = 10  # Limit for conversation history
-    available_tools: List = []
     save_path: Path = Path("conversation_history.jsonl")
     delete_on_init: bool = True  # Flag to delete file on initialization
 
@@ -105,9 +104,11 @@ class ConversationManager(BaseModel):
                     conversations.append({"from": role, "value": value})
 
             # Build final output structure
+            # 获取可用工具列表，如果没有提供则使用空列表
+            available_tools = info.context.get("available_tools", []) if info.context else []
             result = {
                 "conversations": conversations,
-                "tools": json.dumps(self.available_tools, ensure_ascii=True),
+                "tools": json.dumps(available_tools, ensure_ascii=True),
             }
 
         return result

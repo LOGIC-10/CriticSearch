@@ -400,7 +400,8 @@ def process_single_task(task, file_name=None):
                 extracted_facts = item["extracted_facts"]
 
                 agent_report = "\n".join(agent_report_sections)
-
+                
+                # 这里的prompt是引导模型根据section GT内容进行逆向工程产生的thought以及搜索query。
                 search_thought_and_queries = agent.chat_with_template(
                     "guided_search_thought.txt",
                     {
