@@ -9,8 +9,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from tqdm import tqdm
 
 from criticsearch.base_agent import BaseAgent
-from criticsearch.tools.tool_registry import ToolRegistry
-from criticsearch.tools.note_manager import set_session, taking_notes, retrieve_notes
+from criticsearch.tools.note_manager import set_session  # Only import session management
 from criticsearch.utils import extract_tag_content
 from criticsearch.reportbench.instruction_generator import InstructionGenerator
 # from criticsearch.reportbench.verifier import ReportVerifier
@@ -46,8 +45,7 @@ class DeepResearchEnvChat:
             self.logger.addHandler(file_handler)
             self.logger.propagate = False
 
-        self.agent = BaseAgent()
-        self.registry = ToolRegistry()
+        self.agent = BaseAgent()  # BaseAgent will auto-discover tools by default
         self.instruction_generator = InstructionGenerator()
         self.section_level_samples = self.instruction_generator.get_all_section_level_instructions()
         self.current_facts = None
@@ -71,15 +69,8 @@ class DeepResearchEnvChat:
         user_prompt = "User Query: " + sample["section_full_prompt"]
         self.current_facts = sample["extracted_facts"]
 
-        # 获取工具schema
-        schemas = []
-        for fn in [
-            self.agent.search_aggregator.search,
-            self.agent.content_scraper.scrape,
-            taking_notes,
-            retrieve_notes,
-        ]:
-            schemas.extend(self.registry.get_or_create_tool_schema(fn))
+        # 获取所有自动发现的工具schemas
+        schemas = self.agent.get_all_tool_schemas()
 
         # 构建系统提示
         tpl = Path(self.agent.prompts_dir) / "tool_use_short.txt"
@@ -163,14 +154,14 @@ class DeepResearchEnvChat:
                     obs, reward, done, info = error_xml, self.cfg.invalid_penalty, False, {}
                 else:
                     try:
-                        result = self.registry.invoke_tool(tool_name, args)
+                        result = self.agent.tool_registry.invoke_tool(tool_name, args)
                         result_xml = (
                             f"<tool_use_result><name>{tool_name}</name>"
                             f"<result>{json.dumps(result, ensure_ascii=False)}</result>"
                             f"</tool_use_result>"
                         )
                         print("tool_xml:\n", result_xml)
-                        print("end of tool xml")
+                        # print("end of tool xml")
 
                         remarks = f"Tool call success: {tool_name}"
                         self.render_cache = result_xml
@@ -265,15 +256,8 @@ def process_single_section(section_sample: dict) -> List[dict]:
         # 构建user query
         user_prompt = "User Query: " + section_sample["section_full_prompt"]
         
-        # 获取工具schema
-        schemas = []
-        for fn in [
-            env.agent.search_aggregator.search,
-            env.agent.content_scraper.scrape,
-            taking_notes,
-            retrieve_notes,
-        ]:
-            schemas.extend(env.registry.get_or_create_tool_schema(fn))
+        # 获取所有自动发现的工具schemas
+        schemas = env.agent.get_all_tool_schemas()
 
         # 构建系统提示
         tpl = Path(env.agent.prompts_dir) / "tool_use_short.txt"
@@ -373,4 +357,5 @@ if __name__ == "__main__":
 
 
 # 运行命令示例
-# python convert_to_sharegpt_chat.py --num_sections 10
+
+# python src/criticsearch/sharegpt_sft_data_gen.py --num_sections 2
