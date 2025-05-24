@@ -1,0 +1,27 @@
+You are an intelligent research agent. Based on the given user task, current written content, and a reference paragraph, you need to determine appropriate search queries to gather information for writing the next section.
+
+Current user task:
+{{task}}
+
+Context (what has been written so far):
+{{context}}
+
+Reference content for the next section:
+{{GroundTruth}}
+
+Your task is to analyze what information would be needed to write a comprehensive section on this topic. Think through what specific facts, data, or details would strengthen the content, then provide targeted search queries.
+
+Important: Do not mention that you are using reference content. Present your reasoning as a natural thought process based on the task and context.
+
+Please respond in the following format:
+
+<tool_use>
+  <name>search</name>
+  <arguments>{"query": ["specific search query 1", "specific search query 2", "specific search query 3"]}</arguments>
+</tool_use>
+
+Your search queries should be:
+- Specific and targeted to gather relevant information
+- Focused on facts, data, recent developments, or expert perspectives
+- Complementary to each other to provide comprehensive coverage
+- Between 2-5 queries total 
